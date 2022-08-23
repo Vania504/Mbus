@@ -1,8 +1,10 @@
 <template>
-  <v-row justify="start" class="mt-15" no-gutters>
-    <v-container>
+  <v-container>
+    <v-row justify="start" class="mt-15" no-gutters>
       <v-col cols="4" class="px-0">
-        <h2 style="color: #243949; font-size: 32px; text-align: left;">Контакти</h2>
+        <h2 style="color: #243949; font-size: 32px; text-align: left">
+          Контакти
+        </h2>
         <v-row no-gutters align="start" class="mt-10">
           <v-icon large color="#085895">mdi-email-outline</v-icon>
           <v-col cols="8" style="text-align: left" class="ml-2">
@@ -32,14 +34,19 @@
           </v-col>
         </v-row>
       </v-col>
-    </v-container>
-
-    <v-col cols="7"> </v-col>
-  </v-row>
+      <v-col cols="7">
+        <main-contact-form />
+      </v-col> </v-row
+  ></v-container>
 </template>
 
 <script>
-export default {};
+import mainContactForm from "./mainContactForm.vue";
+export default {
+  components: {
+    mainContactForm,
+  },
+};
 </script>
 
 <style>

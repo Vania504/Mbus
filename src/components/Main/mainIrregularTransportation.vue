@@ -38,7 +38,7 @@
                 >Детальніше</v-btn
               >
             </v-col>
-            <img src="@/assets/innregularTransporImg.svg" />
+            <img src="@/assets/img/innregularTransporImg.svg" />
             <div
             style="
               position: absolute;

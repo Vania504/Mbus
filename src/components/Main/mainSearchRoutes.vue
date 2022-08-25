@@ -16,7 +16,7 @@
               width="24px"
               height="20px"
               v-if="item.img == 'viber'"
-              src="@/assets/viberIconBlack.svg"
+              src="@/assets/img/viberIconBlack.svg"
               alt="viber"
               class="mb-1 mt-1"
             />
@@ -24,7 +24,7 @@
               width="20px"
               height="18px"
               v-if="item.img == 'telegram'"
-              src="@/assets/telegramIconBlack.svg"
+              src="@/assets/img/telegramIconBlack.svg"
               alt="telegram"
               class="mb-1"
             />
@@ -53,7 +53,7 @@
               cursor: pointer;
             "
           >
-            <img src="@/assets/reverseIcon.svg" class="mt-2" />
+            <img src="@/assets/img/reverseIcon.svg" class="mt-2" />
           </div>
           <v-col cols="2" class="px-0">
             <v-autocomplete
@@ -115,7 +115,7 @@ export default {
 <style>
 .mainBackground {
   height: 700px;
-  background-image: url("@/assets/temporaryBackground.svg");
+  background-image: url("@/assets/img/temporaryBackground.svg");
   text-align: center;
 }
 .mainText {

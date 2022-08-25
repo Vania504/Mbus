@@ -28,7 +28,7 @@
     >
       <swiper-slide v-for="i in 9" :key="i">
         <v-card class="mx-10">
-          <img width="305px" src="@/assets/test.svg" />
+          <img width="305px" src="@/assets/img/test.svg" />
           <v-col class="px-0">
             <h3 style="font-weight: 500; font-size: 20px">
               Свіноуйсьце–Камінець-Подільський

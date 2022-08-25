@@ -38,7 +38,7 @@
               height="346px"
               width="454px"
               class="ml-10"
-              src="@/assets/logoMBus.svg"
+              src="@/assets/img/logoMBus.svg"
             />
           </v-row>
         </v-col>

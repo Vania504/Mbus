@@ -5,7 +5,7 @@
         <img
           width="136px"
           height="90px"
-          src="@/assets/logoMBus.svg"
+          src="@/assets/img/logoMBus.svg"
           alt="logo"
         />
       </v-col>
@@ -20,8 +20,8 @@
         >
           <v-icon small color="white" class="mr-2">mdi-phone</v-icon>
           <span>{{ item.number }}</span>
-          <img v-if="item.type == 'UA'" src="@/assets/UA.svg" class="ml-2" />
-          <img v-else src="@/assets/PL.svg" class="ml-2" />
+          <img v-if="item.type == 'UA'" src="@/assets/img/UA.svg" class="ml-2" />
+          <img v-else src="@/assets/img/PL.svg" class="ml-2" />
         </v-row>
       </v-col>
       <v-col class="white--text" style="text-align: left">
@@ -51,8 +51,8 @@
             :href="item.link"
             class="mr-2"
             ><v-icon v-if="item.icon" color="white">{{ item.icon }}</v-icon>
-            <img width="24px" height="24.84px" v-if="item.img == 'viber'" src="@/assets/viberIcon.svg" alt="viber"/>
-             <img width="24px" height="24.84px" v-if="item.img == 'telegram'" src="@/assets/telegramIcon.svg" alt="telegram"/>
+            <img width="24px" height="24.84px" v-if="item.img == 'viber'" src="@/assets/img/viberIcon.svg" alt="viber"/>
+             <img width="24px" height="24.84px" v-if="item.img == 'telegram'" src="@/assets/img/telegramIcon.svg" alt="telegram"/>
           </a>
         </v-row>
       </v-col>

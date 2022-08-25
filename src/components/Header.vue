@@ -4,7 +4,7 @@
       <v-row align="center" no-gutters justify="center">
         <v-col cols="2">
           <v-row no-gutters justify="start">
-            <img src="@/assets/logoMBus.svg" />
+            <img src="@/assets/img/logoMBus.svg" />
           </v-row>
         </v-col>
         <v-col cols="8" style="align-self: center">
@@ -45,7 +45,7 @@
                 </div>
               </v-col>
             </v-menu>
-            <router-link to="/autopark"><span class="headerItems">Автопарк</span></router-link>
+            <router-link to="/our_fleet"><span class="headerItems">Автопарк</span></router-link>
             <router-link to="/contact"><span class="headerItems">Контакти</span></router-link>
           </v-row>
         </v-col>
@@ -54,7 +54,7 @@
             <template v-slot:activator="{ on, attrs }">
               <div v-bind="attrs" v-on="on">
                 <v-row no-gutters align="center" justify="end">
-                  <img src="@/assets/UA.svg" />
+                  <img src="@/assets/img/UA.svg" />
                   <span style="margin-left: 5px">+38(098)000-00-00</span>
                   <v-icon>mdi-chevron-down</v-icon>
                 </v-row>
@@ -72,10 +72,10 @@
                     >
                       <img
                         v-if="number.type == 'UA'"
-                        src="@/assets/UA.svg"
+                        src="@/assets/img/UA.svg"
                         class="mr-2"
                       />
-                      <img v-else src="@/assets/PL.svg" class="mr-2" />
+                      <img v-else src="@/assets/img/PL.svg" class="mr-2" />
                       <span>{{ number.number }}</span>
                     </v-row>
                   </v-col>

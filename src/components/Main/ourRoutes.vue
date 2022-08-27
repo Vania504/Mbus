@@ -27,28 +27,7 @@
       :options="swiperOption"
     >
       <swiper-slide v-for="i in 9" :key="i">
-        <v-card class="mx-10">
-          <img width="305px" src="@/assets/img/test.svg" />
-          <v-col class="px-0">
-            <h3 style="font-weight: 500; font-size: 20px">
-              Свіноуйсьце–Камінець-Подільський
-            </h3>
-          </v-col>
-          <v-card-actions>
-            <v-row justify="center" no-gutters>
-              <v-btn
-                :outlined="i !== indexItem"
-                @mousemove="indexItem = i"
-                @mouseleave="indexItem = 0"
-                :class="i !== indexItem ? '' : 'white--text'"
-                color="#085895"
-                width="144px"
-                height="34px"
-                >Детальніше</v-btn
-              >
-            </v-row>
-          </v-card-actions>
-        </v-card>
+        <routes-card />
       </swiper-slide>
       <div class="swiper-button-prev" slot="button-prev"></div>
       <div class="swiper-button-next" slot="button-next"></div>
@@ -59,12 +38,14 @@
 <script>
 import { Swiper, SwiperSlide } from "vue-awesome-swiper";
 import "swiper/css/swiper.css";
+import routesCard from "../Routes/routesCard.vue";
 export default {
   name: "swiper-example-loop-group",
   title: "Loop mode with multiple slides per group",
   components: {
     Swiper,
     SwiperSlide,
+    routesCard,
   },
   data() {
     return {

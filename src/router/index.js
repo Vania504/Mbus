@@ -14,6 +14,16 @@ const routes = [
         name: 'main',
         component: () => import('@/views/ourFleet.vue'),
     },
+    {
+        path: '/routes',
+        name: 'routes',
+        component: () => import('@/views/Routes.vue'),
+    },
+    {
+        path: '/routes/:id',
+        name: 'routes',
+        component: () => import('@/views/routeDetailPage.vue'),
+    },
 ];
 const router = new VueRouter({
     mode: 'history',

@@ -11,7 +11,7 @@ const routes = [
     },
     {
         path: '/our_fleet',
-        name: 'main',
+        name: 'ourFleet',
         component: () => import('@/views/ourFleet.vue'),
     },
     {
@@ -28,6 +28,11 @@ const routes = [
         path: '/transportation_rules',
         name: 'main',
         component: () => import('@/views/transportationRules.vue'),
+    },
+    {
+        path: '/irregular_transportation',
+        name: 'irrgularTransportation',
+        component: () => import('@/views/irregularTransportation.vue'),
     },
 ];
 const router = new VueRouter({

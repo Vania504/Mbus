@@ -19,9 +19,8 @@ export default {
 </script>
 
 <style lang="scss">
-@import '@/assets/layouts/mainStyles.scss';
 #app {
-  font-family: Avenir, Helvetica, Arial, sans-serif;
+  font-family: 'Roboto';
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   text-align: center;

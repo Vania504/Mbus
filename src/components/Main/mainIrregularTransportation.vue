@@ -5,17 +5,10 @@
         <p class="mainTitle mb-10">Нерегулярні перевезення</p>
         <v-container>
           <v-row justify="center" align="center">
-             <div
-            style="
-              position: absolute;
-              width: 60px;
-              height: 70px;
-              border-top: 2px solid #085895;
-              border-left: 2px solid #085895;
-              margin-right: 80%;
-              margin-bottom: 350px;
-            "
-          ></div>
+            <div
+              class="irregularTransportationBorderTopLeft"
+              style="margin-right: 80%; margin-bottom: 350px"
+            ></div>
             <v-col cols="5">
               <p style="color: #243949; font-size: 24px">Шопінг-тур в Польщу</p>
               <p style="color: #243949; font-size: 20px">
@@ -40,16 +33,9 @@
             </v-col>
             <img src="@/assets/img/innregularTransporImg.svg" />
             <div
-            style="
-              position: absolute;
-              width: 60px;
-              height: 70px;
-              border-bottom: 2px solid #085895;
-              border-right: 2px solid #085895;
-              margin-left: 82%;
-              margin-top: 380px;
-            "
-          ></div>
+              class="irregularTransportationBorderBottomRight"
+              style="margin-left: 82%; margin-top: 380px"
+            ></div>
           </v-row>
         </v-container>
       </v-col>

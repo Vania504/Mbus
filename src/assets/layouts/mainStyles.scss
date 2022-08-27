@@ -7,14 +7,36 @@
     color: black;
 }
 
+.blueSpan {
+    color: #085895;
+}
+
 .mainTitle {
     text-align: center;
     color: #243949;
     font-size: 32px;
 }
+
 .pointer {
     cursor: pointer;
 }
+
 .drivingSeats {
     color: #960909;
+}
+
+.irregularTransportationBorderTopLeft {
+    position: absolute;
+    width: 60px;
+    height: 70px;
+    border-top: 2px solid #085895;
+    border-left: 2px solid #085895;
+}
+
+.irregularTransportationBorderBottomRight {
+    position: absolute;
+    width: 60px;
+    height: 70px;
+    border-bottom: 2px solid #085895;
+    border-right: 2px solid #085895;
 }

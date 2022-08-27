@@ -24,6 +24,11 @@ const routes = [
         name: 'routes',
         component: () => import('@/views/routeDetailPage.vue'),
     },
+    {
+        path: '/transportation_rules',
+        name: 'main',
+        component: () => import('@/views/transportationRules.vue'),
+    },
 ];
 const router = new VueRouter({
     mode: 'history',

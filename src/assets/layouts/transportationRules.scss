@@ -1,0 +1,101 @@
+@font-face {
+    font-family: 'SeoulHangang';
+    src:url('SeoulHangang-CM.ttf.woff') format('woff'),
+        url('SeoulHangang-CM.ttf.svg#SeoulHangang-CM') format('svg'),
+        url('SeoulHangang-CM.ttf.eot'),
+        url('SeoulHangang-CM.ttf.eot?#iefix') format('embedded-opentype'); 
+    font-weight: normal;
+    font-style: normal;
+}
+.main_title_transportation{
+    color: #243949;
+    font-style: normal;
+    font-weight: 400;
+    font-size: 32px;
+    line-height: 32px;
+    letter-spacing: 0.1em;
+    font-family: SeoulHangang;
+    margin-top: 50px;
+}
+
+.main_conditions{
+    margin-top: 50px;
+    text-align: left;
+    display: block;
+    &__title{
+        font-family: 'Roboto';
+        font-style: normal;
+        font-weight: 500;
+        font-size: 20px;
+        line-height: 23px;
+        letter-spacing: 0.1em;
+        
+    }
+    
+    &__desc{
+        margin-top: 10px;
+        ul{
+            list-style: none;
+            padding: 0;
+            margin: 0;
+            // list-style-type:unset;
+            list-style-position:outside;
+            
+        }
+        li{
+            font-family: 'Roboto';
+            font-style: normal;
+            font-weight: 400;
+            font-size: 16px;
+            line-height: 25px;
+            letter-spacing: 0.1em; 
+            margin-left: 8px;
+            
+        }
+
+        li:before{
+            padding-right: 8px;
+            content: "-";
+        }
+        
+    }
+}
+.prohibited{
+    margin-top: 50px;
+    &__title{
+        color: #960909;
+        font-family: 'SeoulHangang';
+        font-style: normal;
+        font-weight: 400;
+        font-size: 32px;
+        line-height: 32px;
+        letter-spacing: 0.1em;
+    }
+    &__desc{
+        text-align: left;
+        margin-left: 50px;
+        margin-top: 30px;
+        margin-bottom: 50px;
+        ul{
+            list-style: none;
+            padding: 0;
+            margin: 0;
+            list-style-image: url(../img/no-stoppingorg.png);
+            list-style-position:outside;
+            
+        }
+        li{
+            font-family: 'Roboto';
+            font-style: normal;
+            font-weight: 400;
+            font-size: 16px;
+            line-height: 25px;
+            letter-spacing: 0.1em;
+            
+        }
+
+        li:before{
+            padding-right: 8px;
+        }
+    }
+}

@@ -5,6 +5,7 @@ import router from './router'
 import * as VueGoogleMaps from 'vue2-google-maps'
 import VueMask from 'v-mask'
 import Vuelidate from 'vuelidate'
+import './assets/layouts/index.scss'
 
 Vue.config.productionTip = false
 

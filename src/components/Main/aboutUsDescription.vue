@@ -39,6 +39,7 @@
               width="454px"
               class="ml-10"
               src="@/assets/img/logoMBus.svg"
+              style="opacity: 0.4"
             />
           </v-row>
         </v-col>

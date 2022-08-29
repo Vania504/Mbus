@@ -26,7 +26,7 @@ const routes = [
     },
     {
         path: '/transportation_rules',
-        name: 'main',
+        name: 'transportationRules',
         component: () => import('@/views/transportationRules.vue'),
     },
     {
@@ -34,6 +34,12 @@ const routes = [
         name: 'irrgularTransportation',
         component: () => import('@/views/irregularTransportation.vue'),
     },
+    {
+        path: '/contact',
+        name: 'contact',
+        component: () => import('@/views/Contact.vue'),
+    },
+
 ];
 const router = new VueRouter({
     mode: 'history',

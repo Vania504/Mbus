@@ -3,7 +3,7 @@
 </template>
 
 <script>
-import mainComponent from "@/components/Main/mainComponent.vue";
+import mainComponent from "@/components/forUser/Main/mainComponent.vue";
 export default {
   name: "mainView",
   components: {

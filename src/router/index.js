@@ -7,37 +7,37 @@ const routes = [
     {
         path: '/',
         name: 'main',
-        component: () => import('@/views/Main.vue'),
+        component: () => import('@/views/forUser/Main.vue'),
     },
     {
         path: '/our_fleet',
         name: 'ourFleet',
-        component: () => import('@/views/ourFleet.vue'),
+        component: () => import('@/views/forUser/ourFleet.vue'),
     },
     {
         path: '/routes',
         name: 'routes',
-        component: () => import('@/views/Routes.vue'),
+        component: () => import('@/views/forUser/Routes.vue'),
     },
     {
         path: '/routes/:id',
         name: 'routes',
-        component: () => import('@/views/routeDetailPage.vue'),
+        component: () => import('@/views/forUser/routeDetailPage.vue'),
     },
     {
         path: '/transportation_rules',
         name: 'transportationRules',
-        component: () => import('@/views/transportationRules.vue'),
+        component: () => import('@/views/forUser/transportationRules.vue'),
     },
     {
         path: '/irregular_transportation',
         name: 'irrgularTransportation',
-        component: () => import('@/views/irregularTransportation.vue'),
+        component: () => import('@/views/forUser/irregularTransportation.vue'),
     },
     {
         path: '/contact',
         name: 'contact',
-        component: () => import('@/views/Contact.vue'),
+        component: () => import('@/views/forUser/Contact.vue'),
     },
 
 ];

@@ -3,7 +3,7 @@
 </template>
 
 <script>
-import routeDetailPage from '@/components/Routes/routeDetailPage/routeDetailPage.vue';
+import routeDetailPage from '@/components/forUser/Routes/routeDetailPage/routeDetailPage.vue';
 export default {
     components: {
         routeDetailPage

@@ -8,7 +8,7 @@
 
 <script>
 import routesList from './routesList.vue';
-import routesHeader from '../UI/routesHeader.vue';
+import routesHeader from '@/components/UI/routesHeader.vue';
 export default {
   components: {
     routesList,

@@ -3,7 +3,7 @@
 </template>
 
 <script>
-import transportationRulesComponent from "@/components/forPassengers/transportationRulesComponents.vue";
+import transportationRulesComponent from "@/components/forUser/forPassengers/transportationRulesComponents.vue";
 export default {
   components: {
     transportationRulesComponent,

@@ -9,7 +9,7 @@
 
 <script>
 import busCard from './busCard.vue';
-import busDetailDialog from '@/components/ourFleet/busDetailDialog'
+import busDetailDialog from '@/components/forUser/ourFleet/busDetailDialog'
 export default {
     components: {
         busCard,

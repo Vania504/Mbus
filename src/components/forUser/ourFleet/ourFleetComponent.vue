@@ -32,7 +32,7 @@
 </template>
 
 <script>
-import busList from '@/components/ourFleet/busList'
+import busList from '@/components/forUser/ourFleet/busList'
 export default {
   components: {
     busList

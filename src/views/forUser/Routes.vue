@@ -3,7 +3,7 @@
 </template>
 
 <script>
-import routesComponent from '@/components/Routes/routesComponent.vue';
+import routesComponent from '@/components/forUser/Routes/routesComponent.vue';
 export default {
     name: 'RoutesView',
     components: {

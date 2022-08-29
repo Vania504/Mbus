@@ -3,7 +3,7 @@
 </template>
 
 <script>
-import contactComponent from '@/components/Contact/contactComponent.vue';
+import contactComponent from '@/components/forUser/Contact/contactComponent.vue';
 export default {
     name: 'contactView',
     components: {

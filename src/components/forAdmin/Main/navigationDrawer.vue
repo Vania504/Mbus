@@ -1,6 +1,6 @@
 <template>
-  <v-card>
-    <v-navigation-drawer permanent expand-on-hover height="300px" width="210px">
+  <v-card color="#F4F4F4">
+    <v-navigation-drawer permanent height="300px" width="210px" color="#F4F4F4">
       <v-list nav dense>
         <v-list-item-group v-model="selectedItem" color="#007ddc">
           <v-list-item link>

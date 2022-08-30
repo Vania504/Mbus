@@ -19,6 +19,8 @@
               placeholder="Звідки"
               v-model="route.route_name_start"
               color="#085895"
+              :error-messages="routeNameStartError"
+              @blur="$v.route.route_name_start.$touch()"
             />
             <!-- :error-messages="modelNameError"
               @blur="$v.bus.model_name.$touch()" -->
@@ -32,6 +34,8 @@
               placeholder="Куди"
               v-model="route.route_name_end"
               color="#085895"
+              :error-messages="routeNameEndError"
+              @blur="$v.route.route_name_end.$touch()"
             />
             <!-- :error-messages="modelNameError"
               @blur="$v.bus.model_name.$touch()" -->
@@ -128,6 +132,8 @@
               placeholder="Setra S 417 GT-HD"
               v-model="route.bus"
               color="#085895"
+              :error-messages="busError"
+              @blur="$v.route.bus.$touch()"
             />
             <!-- :error-messages="modelNameError"
               @blur="$v.bus.model_name.$touch()" -->
@@ -150,9 +156,9 @@
               @keypress="isNumber($event)"
               inputmode="numeric"
               v-mask="'##'"
+              :error-messages="quantitySeatsError"
+              @blur="$v.route.quantity_seats.$touch()"
             />
-            <!-- :error-messages="modelNameError"
-              @blur="$v.bus.model_name.$touch()" -->
           </v-col>
         </v-row>
         <!-- /Quantity seats  -->
@@ -171,10 +177,10 @@
                 v-mask="'##:##'"
                 v-model="route.departure_time"
                 color="#085895"
+                :error-messages="departureTimeError"
+                @blur="$v.route.departure_time.$touch()"
               />
             </v-col>
-            <!-- :error-messages="modelNameError"
-              @blur="$v.bus.model_name.$touch()" -->
           </v-col>
         </v-row>
         <!-- /Departure time -->
@@ -247,8 +253,6 @@
                 </v-col>
               </v-row>
               <!-- /Add other country city -->
-              <!-- :error-messages="modelNameError"
-              @blur="$v.bus.model_name.$touch()" -->
             </v-col>
           </v-col>
         </v-row>
@@ -275,7 +279,10 @@
 <script>
 import modalHeader from "@/components/UI/modalHeader.vue";
 import routeShedule from "./routeShedule.vue";
+import { validationMixin } from "vuelidate";
+import { required } from "vuelidate/lib/validators";
 export default {
+  mixins: [validationMixin],
   components: {
     modalHeader,
     routeShedule,
@@ -334,6 +341,25 @@ export default {
       },
     ],
   }),
+  validations: {
+    route: {
+      route_name_start: {
+        required,
+      },
+      route_name_end: {
+        required,
+      },
+      bus: {
+        required,
+      },
+      quantity_seats: {
+        required,
+      },
+      departure_time: {
+        required,
+      },
+    },
+  },
   props: {
     visible: {
       require: true,
@@ -344,8 +370,11 @@ export default {
   },
   methods: {
     createRoute() {
-      alert("Function creatRoute work success");
-      this.$emit("close");
+      this.$v.$touch();
+      if (!this.$v.$invalid) {
+        alert("Function creatRoute work success");
+        this.$emit("close");
+      }
     },
     addNewDriverPhoneNumber() {
       this.route.driver_phone_number.push({
@@ -377,7 +406,7 @@ export default {
       }
     },
     closeModal() {
-      let close = confirm("Ви дійсно хочете закрити модальне вікно?");
+      let close = confirm("Ви дійсно хочете закрити модальне вікно, внесені зміни не буде збережено?");
       close ? this.$emit("close") : "";
     },
   },
@@ -386,6 +415,50 @@ export default {
       get() {
         return this.visible;
       },
+    },
+    routeNameStartError() {
+      const errors = [];
+      if (!this.$v.route.route_name_start.$dirty) {
+        return errors;
+      }
+      !this.$v.route.route_name_start.required &&
+        errors.push("Поле звідки обов'язкове");
+      return errors;
+    },
+    routeNameEndError() {
+      const errors = [];
+      if (!this.$v.route.route_name_end.$dirty) {
+        return errors;
+      }
+      !this.$v.route.route_name_end.required &&
+        errors.push("Поле куда обов'язкове");
+      return errors;
+    },
+    busError() {
+      const errors = [];
+      if (!this.$v.route.bus.$dirty) {
+        return errors;
+      }
+      !this.$v.route.bus.required && errors.push("Поле автобус обов'язкове");
+      return errors;
+    },
+    quantitySeatsError() {
+      const errors = [];
+      if (!this.$v.route.quantity_seats.$dirty) {
+        return errors;
+      }
+      !this.$v.route.quantity_seats.required &&
+        errors.push("");
+      return errors;
+    },
+    departureTimeError() {
+      const errors = [];
+      if (!this.$v.route.departure_time.$dirty) {
+        return errors;
+      }
+      !this.$v.route.departure_time.required &&
+        errors.push("");
+      return errors;
     },
   },
 };

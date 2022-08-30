@@ -17,8 +17,8 @@
       />
       <card-add-new
         title="Новий маршрут"
-        width="305px"
-        height="305px"
+        width="330px"
+        height="385px"
         class="mt-5 mx-5"
         @addNew="$emit('addNew')"
       />

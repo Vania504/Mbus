@@ -1,5 +1,5 @@
 <template>
-  <v-card class="mr-5 mb-10" :width="forAdmin ? '350px' : '405px'">
+  <v-card class="mx-3 mb-10" :width="forAdmin ? '350px' : '405px'">
     <div
       class="hover"
       :style="{

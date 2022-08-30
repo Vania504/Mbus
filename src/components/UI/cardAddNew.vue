@@ -1,5 +1,5 @@
 <template>
-  <v-card width="350px" height="350px" class="pointer" @click="$emit('addNew')">
+  <v-card :width="width" :height="height" class="pointer" @click="$emit('addNew')">
     <v-row justify="center" align="center">
       <v-col>
         <img src="@/assets/img/plusIcon.svg" style="margin-top: 98px;"/>
@@ -15,6 +15,12 @@ export default {
     title: {
       require: true,
     },
+    width: {
+      require: true,
+    },
+    height: {
+      require: true,
+    }
   },
 };
 </script>

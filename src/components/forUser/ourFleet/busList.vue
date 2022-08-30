@@ -9,7 +9,7 @@
         @delete="$emit('delete')"
         :forAdmin="forAdmin"
       />
-      <card-add-new title="Додати автобус" v-if="forAdmin" @addNew="$emit('addNew')"/>
+      <card-add-new title="Додати автобус" width="350px" height="350px" v-if="forAdmin" @addNew="$emit('addNew')"/>
     </v-row>
     <bus-detail-dialog :visible="visible" @close="visible = false" />
   </v-col>

@@ -1,22 +1,20 @@
 <template>
   <div>
     <v-row justify="center" class="mt-15 mb-15">
-        <div
-          style="width: 740px; height: 740px; position: absolute;  margin-right: 70%;"
-          :style="{
-            backgroundImage: `url(
-      ${require('@/assets/img/contactBackgroundImg.svg')})`,
-            backgroundSize: 'cover',
-            backgroundRepeat: 'norepeat',
-          }"
-        ></div>
-      <v-col cols="4">
-        <contact-info />
-      </v-col>
       <v-col cols="7">
         <contact-user-form />
       </v-col>
+      <v-col cols="4">
+        <contact-info />
+      </v-col>
     </v-row>
+    <div style="background-color: #243949; width: 100%; height: 31px"></div>
+    <GmapMap
+      :center="{ lat: 48.920551, lng: 24.706484 }"
+      :zoom="10"
+      map-type-id="roadmap"
+      style="width: 100%; height: 545px"
+    ></GmapMap>
   </div>
 </template>
 

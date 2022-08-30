@@ -1,6 +1,6 @@
 <template>
   <div>
-    <v-col cols="10" class="px-0">
+    <v-col cols="10" class="px-0 ml-15">
       <p style="color: #243949; font-size: 32px; text-align: left">
         Контакти
       </p>

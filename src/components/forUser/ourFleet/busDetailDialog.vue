@@ -1,16 +1,7 @@
 <template>
   <v-dialog v-model="visibility" height="630px" width="80%">
-    <v-card>
-      <div style="height: 58px; background-color: #243949; align-self: center">
-        <v-row justify="start" align="center" no-gutters class="pt-1 px-5"
-          ><span style="font-size: 32px; color: white">Setra S 417 GT-HD</span>
-          <v-row justify="end"
-            ><v-icon large color="white" class="pointer" @click="$emit('close')"
-              >mdi-close</v-icon
-            ></v-row
-          ></v-row
-        >
-      </div>
+    <v-card> 
+      <modal-header title="Setra S 417 GT-HD" @close="$emit('close')"/>
       <v-row no-gutters class="mt-5">
         <v-col cols="7" class="py-0">
           <swiper
@@ -155,12 +146,14 @@
 <script>
 import { Swiper, SwiperSlide } from "vue-awesome-swiper";
 import "swiper/css/swiper.css";
+import modalHeader from '@/components/UI/modalHeader';
 export default {
   name: "swiper-example-loop-group",
   title: "Loop mode with multiple slides per group",
   components: {
     Swiper,
     SwiperSlide,
+    modalHeader,
   },
   data: () => ({
     swiperOption: {

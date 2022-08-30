@@ -7,8 +7,8 @@
             <img src="@/assets/img/logoMBus.svg" />
           </v-row>
         </v-col>
-        <v-col cols="8" style="align-self: center">
-          <v-row justify="center" align="center">
+        <v-col :cols="isAdmin ? '6' : '8'" style="align-self: center">
+          <v-row :justify="isAdmin ? 'end' : 'center'" align="center">
             <router-link to="/">
               <span class="headerItems">Головна</span></router-link
             >
@@ -47,6 +47,13 @@
             </v-menu>
             <router-link to="/our_fleet"><span class="headerItems">Автопарк</span></router-link>
             <router-link to="/contact"><span class="headerItems">Контакти</span></router-link>
+            <router-link to="/admin" v-if="isAdmin"><span class="headerItems">Адмін</span></router-link>
+          </v-row>
+        </v-col>
+        <v-col v-if="isAdmin">
+          <v-row justify="end">
+            <v-icon>mdi-account</v-icon>
+            <span>Увійти/Реєстрація</span>
           </v-row>
         </v-col>
         <v-col cols="2" style="align-self: center; align-items: center">
@@ -128,6 +135,7 @@ export default {
       },
     ],
     isActiveMenu: "",
+    isAdmin: true,
   }),
 };
 </script>

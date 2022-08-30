@@ -10,7 +10,7 @@
         />
       </v-col>
       <v-col class="white--text" style="text-align: left">
-        <span>ТЕЛЕФОНИ ДИСПЕЧЕРІВ</span>
+        <span>ТЕЛЕФОНИ ДИСПЕТЧЕРІВ</span>
         <v-row
           align="center"
           no-gutters

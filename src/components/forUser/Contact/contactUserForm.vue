@@ -12,7 +12,7 @@
       :error-messages="nameError"
       @blur="$v.userMessage.name.$touch()"
     />
-    <v-row no-gutters>
+    <v-row no-gutters align="start">
       <v-col
         ><span class="blackSpan">Email<span class="requireColor">*</span></span>
         <v-text-field
@@ -24,7 +24,7 @@
           :error-messages="emailError"
           @blur="$v.userMessage.email.$touch()"
       /></v-col>
-      <v-col cols="5" class="ml-5"
+      <v-col cols="6" lg="5" md="5" sm="5" xl="5" class="ml-5"
         ><span class="blackSpan"
           >Номер телефону<span class="requireColor">*</span></span
         >

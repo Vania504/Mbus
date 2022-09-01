@@ -1,6 +1,6 @@
 <template>
   <div>
-    <v-col cols="10" class="px-0 ml-15">
+    <v-col cols="12" lg="10" md="10" sm="10" xl="10" :class="$vuetify.breakpoint.xs ? 'px-0' : 'px-0 ml-15'">
       <p style="color: #243949; font-size: 32px; text-align: left">
         Контакти
       </p>

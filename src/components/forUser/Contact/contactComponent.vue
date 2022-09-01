@@ -1,6 +1,6 @@
 <template>
   <div>
-    <v-row justify="center" class="mt-15 mb-15">
+    <v-row justify="center" class="mt-15 mb-15" v-if="!$vuetify.breakpoint.xs">
       <v-col cols="7">
         <contact-user-form />
       </v-col>
@@ -8,6 +8,14 @@
         <contact-info />
       </v-col>
     </v-row>
+    <v-col v-else class="px-0">
+      <v-col>
+        <contact-user-form />
+      </v-col>
+      <v-col>
+        <contact-info />
+      </v-col>
+    </v-col>
     <div style="background-color: #243949; width: 100%; height: 31px"></div>
     <GmapMap
       :center="{ lat: 48.920551, lng: 24.706484 }"

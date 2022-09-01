@@ -10,10 +10,10 @@
     </v-row>
     <v-col v-else class="px-0">
       <v-col>
-        <contact-user-form />
+        <contact-info />
       </v-col>
       <v-col>
-        <contact-info />
+        <contact-user-form />
       </v-col>
     </v-col>
     <div style="background-color: #243949; width: 100%; height: 31px"></div>

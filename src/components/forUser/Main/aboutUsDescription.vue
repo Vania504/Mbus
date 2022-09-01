@@ -7,7 +7,7 @@
             Про нас
           </h3>
           <v-row align="end" class="mt-2">
-            <v-col cols="6">
+            <v-col cols="12" xl="6" lg="6" md="6" sm="">
               <span style="font-size: 16px; color: #243949"
                 ><span style="color: #085895; font-weight: 600">MBUS</span> -
                 передова компанія, що здійснює регулярні міжнародні пасажирські
@@ -36,7 +36,7 @@
             </v-col>
             <img
               height="346px"
-              width="454px"
+              :width="$vuetify.breakpoint.xs ? '280px' : '454px'"
               class="ml-10"
               src="@/assets/img/logoMBus.svg"
               style="opacity: 0.4"

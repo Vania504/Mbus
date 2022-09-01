@@ -1,7 +1,8 @@
 <template>
-<div>
+<div style="overflow-x: hidden;">
     <main-search-routes />
-    <about-us />
+    <about-us v-if="!$vuetify.breakpoint.xs" />
+    <about-us-mobile v-else/>
     <our-routes />
      <main-irregular-transportation />
     <about-us-description />
@@ -12,6 +13,7 @@
 <script>
 import mainSearchRoutes from './mainSearchRoutes.vue';
 import aboutUs from './aboutUs.vue';
+import aboutUsMobile from './aboutUsMobile.vue';
 import mainIrregularTransportation from './mainIrregularTransportation.vue';
 import ourRoutes from '@/components/forUser/Main/ourRoutes'
 import aboutUsDescription from './aboutUsDescription.vue';
@@ -21,6 +23,7 @@ export default {
     components: {
         mainSearchRoutes,
         aboutUs,
+        aboutUsMobile,
         mainIrregularTransportation,
         ourRoutes,
         aboutUsDescription,

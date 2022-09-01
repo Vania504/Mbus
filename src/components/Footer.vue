@@ -1,6 +1,6 @@
 <template>
   <v-footer color="#122B3E" height="223px">
-    <v-row justify="start">
+    <v-row justify="start" v-if="!$vuetify.breakpoint.xs">
       <v-col style="text-align: left">
         <img
           width="136px"

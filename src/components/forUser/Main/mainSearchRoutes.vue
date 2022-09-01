@@ -1,8 +1,8 @@
 <template>
   <div class="mainBackground">
-    <h1 class="mainText">Подорожуйте разом з нами!</h1>
-    <v-row justify="start" align="center">
-      <v-col cols="1" class="px-0">
+    <h1 class="mainText" :style="$vuetify.breakpoint.xs ? 'padding-top: 80px;' : 'padding-top: 180px;'">Подорожуйте разом з нами!</h1>
+    <v-row :justify="$vuetify.breakpoint.xs ? 'center' : 'start'" align="center">
+      <v-col cols="1" class="px-0" v-if="!$vuetify.breakpoint.xs">
         <v-row
           justify="start"
           no-gutters
@@ -33,7 +33,8 @@
       </v-col>
       <v-col cols="10" style="margin-top: 30px">
         <h4 class="searchRoutes">Пошук автобусних рейсів:</h4>
-        <v-row justify="center">
+        <search-routes-field-mobile v-if="$vuetify.breakpoint.xs" />
+        <v-row justify="center" v-else>
           <v-col cols="2" class="px-0">
             <v-autocomplete
               background-color="white"
@@ -79,7 +80,11 @@
 </template>
 
 <script>
+import searchRoutesFieldMobile from "./searchRoutesFieldMobile.vue";
 export default {
+  components: {
+    searchRoutesFieldMobile,
+  },
   data: () => ({
     socialNetworks: [
       {
@@ -117,13 +122,13 @@ export default {
   height: 700px;
   background-image: url("@/assets/img/temporaryBackground.svg");
   text-align: center;
+  width: 100%;
 }
 .mainText {
   font-weight: 400;
   font-size: 40px;
   letter-spacing: 0.1em;
   color: #243949;
-  padding-top: 180px;
 }
 .searchRoutes {
   font-style: normal;

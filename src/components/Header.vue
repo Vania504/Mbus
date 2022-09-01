@@ -45,15 +45,25 @@
                 </div>
               </v-col>
             </v-menu>
-            <router-link to="/our_fleet"><span class="headerItems">Автопарк</span></router-link>
-            <router-link to="/contact"><span class="headerItems">Контакти</span></router-link>
-            <router-link to="/admin" v-if="isAdmin"><span class="headerItems">Адмін</span></router-link>
+            <router-link to="/our_fleet"
+              ><span class="headerItems">Автопарк</span></router-link
+            >
+            <router-link to="/contact"
+              ><span class="headerItems">Контакти</span></router-link
+            >
+            <router-link to="/admin" v-if="isAdmin"
+              ><span class="headerItems">Адмін</span></router-link
+            >
           </v-row>
         </v-col>
         <v-col v-if="isAdmin">
           <v-row justify="end">
             <v-icon>mdi-account</v-icon>
-            <span>Увійти/Реєстрація</span>
+            <span class="pointer" @click="signInVisibleModal = true"
+              >Увійти</span
+            >/<span class="pointer" @click="signUpVisibleModal = true"
+              >Реєстрація</span
+            >
           </v-row>
         </v-col>
         <v-col cols="2" style="align-self: center; align-items: center">
@@ -92,13 +102,31 @@
           </v-menu>
         </v-col>
       </v-row>
+      <sign-in-modal
+        v-if="signInVisibleModal"
+        :visible="signInVisibleModal"
+        @close="signInVisibleModal = false"
+        @goToSignUp="(signUpVisibleModal = true), (signInVisibleModal = false)"
+      />
+      <sign-up-modal
+        v-if="signUpVisibleModal"
+        :visible="signUpVisibleModal"
+        @close="signUpVisibleModal = false"
+        @goToSignIn="(signUpVisibleModal = false), (signInVisibleModal = true)"
+      />
     </v-app-bar>
   </div>
 </template>
 
 <script>
+import signInModal from "./forAdmin/signInModal.vue";
+import signUpModal from "./forAdmin/signUpModal.vue";
 export default {
   name: "appHeader",
+  components: {
+    signInModal,
+    signUpModal,
+  },
   data: () => ({
     phoneNumbers: [
       {
@@ -136,6 +164,8 @@ export default {
     ],
     isActiveMenu: "",
     isAdmin: true,
+    signInVisibleModal: false,
+    signUpVisibleModal: false,
   }),
 };
 </script>

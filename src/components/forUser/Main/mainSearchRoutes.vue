@@ -1,6 +1,6 @@
 <template>
   <div class="mainBackground">
-    <h1 class="mainText" :style="$vuetify.breakpoint.xs ? 'padding-top: 80px;' : 'padding-top: 180px;'">Подорожуйте разом з нами!</h1>
+    <h1 class="mainText" :style="$vuetify.breakpoint.xs ? 'padding-top: 80px;' : ''">Подорожуйте разом з нами!</h1>
     <v-row :justify="$vuetify.breakpoint.xs ? 'center' : 'start'" align="center">
       <v-col cols="1" class="px-0" v-if="!$vuetify.breakpoint.xs">
         <v-row
@@ -129,6 +129,7 @@ export default {
   font-size: 40px;
   letter-spacing: 0.1em;
   color: #243949;
+  padding-top: 180px;
 }
 .searchRoutes {
   font-style: normal;

@@ -1,6 +1,6 @@
 <template>
   <v-row justify="center">
-    <v-col>
+    <v-col style="margin-left: 40px" class="px-0">
       <v-autocomplete
         background-color="white"
         prepend-inner-icon="mdi-map-marker-outline"
@@ -10,19 +10,6 @@
         class="rounded-t-lg"
         hide-details
       />
-      <div
-        style="
-          background-color: white;
-          width: 295px;
-          height: 38px;
-          margin-top: 0px!important;
-          cursor: pointer;
-          border-left: 2px solid silver;
-          border-right: 2px solid silver;
-        "
-      >
-        <img src="@/assets/img/reverseIcon.svg" style="transform: rotate(90deg);" class="mt-2" />
-      </div>
       <v-autocomplete
         background-color="white"
         prepend-inner-icon="mdi-map-marker-outline"
@@ -36,9 +23,34 @@
         width="150px"
         height="38px"
         color="#085895"
-        ><v-icon color="white">mdi-magnify</v-icon></v-btn
+        ><v-icon color="white mr-2">mdi-magnify</v-icon
+        ><span
+          style="
+            text-transform: none;
+            color: white;
+            font-weight: 400;
+            font-size: 14px;
+          "
+          >Пошук</span
+        ></v-btn
       >
     </v-col>
+    <div
+      style="
+        background-color: transparent;
+        width: 40px;
+        height: 35px;
+        margin-top: 0px !important;
+        margin-top: 35px;
+        cursor: pointer;
+      "
+    >
+      <img
+        src="@/assets/img/reverseIcon.svg"
+        style="transform: rotate(90deg)"
+        class="mt-2"
+      />
+    </div>
   </v-row>
 </template>
 

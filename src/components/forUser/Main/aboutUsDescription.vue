@@ -3,7 +3,7 @@
     ><v-container>
       <v-row justify="center">
         <v-col style="text-align: left">
-          <h3 style="font-weight: 500; font-size: 32px; color: #243949">
+          <h3 :class="$vuetify.breakpoint.xs ? 'mainTitleMobile' : 'mainTitle'">
             Про нас
           </h3>
           <v-row align="end" class="mt-2">

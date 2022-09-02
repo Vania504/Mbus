@@ -1,7 +1,7 @@
 <template>
   <div>
     <v-col cols="12" lg="10" md="10" sm="10" xl="10" :class="$vuetify.breakpoint.xs ? 'px-0' : 'px-0 ml-15'">
-      <p style="color: #243949; font-size: 32px; text-align: left">
+      <p :class="$vuetify.breakpoint.xs ? 'mainTitleMobile' : 'mainTitle'" style="text-align: left;">
         Контакти
       </p>
       <v-row no-gutters align="start" class="mt-10">

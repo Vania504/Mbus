@@ -2,13 +2,13 @@
   <v-container class="mt-8">
     <v-row
       no-gutters
-      class="mb-2 text-center"
+      class="mb-2"
       justify="center"
-      style="font-weight: 500; font-size: 32px; color: #243949"
     >
-      <v-col cols="9" class="pa-0">Наші маршрути</v-col>
+      <v-col cols="9" class="pa-0"><span :class="$vuetify.breakpoint.xs ? 'mainTitleMobile' : 'mainTitle'">Наші маршрути</span></v-col>
     </v-row>
     <v-row
+      v-if="!$vuetify.breakpoint.xs"
       no-gutters
       class="mb-2 text-center"
       justify="center"
@@ -31,6 +31,30 @@
       </swiper-slide>
       <div class="swiper-button-prev" slot="button-prev"></div>
       <div class="swiper-button-next" slot="button-next"></div>
+    </swiper>
+    <swiper
+      class="d-none d-lg-block pt-5 pb-5"
+      :style="{
+        '--swiper-navigation-color': '#000000',
+      }"
+      :options="swiperMediumOption"
+    >
+      <swiper-slide v-for="i in 9" :key="i">
+        <routes-card/>
+      </swiper-slide>
+      <div class="swiper-button-prev" slot="button-prev"></div>
+      <div class="swiper-button-next" slot="button-next"></div>
+    </swiper>
+    <swiper
+      class="swiper d-block d-md-none"
+      :style="{
+        '--swiper-navigation-color': '#000000',
+      }"
+      :options="swiperMobileOption"
+    >
+      <swiper-slide v-for="i in 9" :key="i">
+        <routes-card />
+      </swiper-slide>
     </swiper>
   </v-container>
 </template>
@@ -56,6 +80,7 @@ export default {
         slidesPerGroup: 3,
         loop: false,
         loopFillGroupWithBlank: false,
+        lazy: true,
         pagination: {
           el: ".swiper-pagination",
           clickable: true,
@@ -66,8 +91,8 @@ export default {
         },
       },
       swiperMobileOption: {
-        slidesPerView: 1,
-        spaceBetween: 0,
+        slidesPerView: 2,
+        spaceBetween: 50,
         slidesPerGroup: 1,
         loop: false,
         loopFillGroupWithBlank: false,

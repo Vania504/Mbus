@@ -4,7 +4,8 @@
     <about-us v-if="!$vuetify.breakpoint.xs" />
     <about-us-mobile v-else/>
     <our-routes />
-     <main-irregular-transportation />
+    <irregular-transportation-mobile v-if="$vuetify.breakpoint.xs"/>
+     <main-irregular-transportation v-else/>
     <about-us-description />
     <main-contact />
 </div>
@@ -13,8 +14,9 @@
 <script>
 import mainSearchRoutes from './mainSearchRoutes.vue';
 import aboutUs from './aboutUs.vue';
-import aboutUsMobile from './aboutUsMobile.vue';
+import aboutUsMobile from './mainMobile/aboutUsMobile.vue';
 import mainIrregularTransportation from './mainIrregularTransportation.vue';
+import irregularTransportationMobile from './mainMobile/irregularTransportationMobile.vue';
 import ourRoutes from '@/components/forUser/Main/ourRoutes'
 import aboutUsDescription from './aboutUsDescription.vue';
 import mainContact from './mainContact.vue';
@@ -25,6 +27,7 @@ export default {
         aboutUs,
         aboutUsMobile,
         mainIrregularTransportation,
+        irregularTransportationMobile,
         ourRoutes,
         aboutUsDescription,
         mainContact

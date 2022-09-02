@@ -1,7 +1,22 @@
 <template>
-  <div class="mainBackground">
-    <h1 class="mainText" :style="$vuetify.breakpoint.xs ? 'padding-top: 80px;' : ''">Подорожуйте разом з нами!</h1>
-    <v-row :justify="$vuetify.breakpoint.xs ? 'center' : 'start'" align="center">
+  <div
+    class="mainBackground"
+    :style="$vuetify.breakpoint.xs ? 'height: 300px' : ''"
+  >
+    <h1
+      class="mainText"
+      :style="
+        $vuetify.breakpoint.xs
+          ? 'padding-top: 20px; font-size: 16px;'
+          : ' font-size: 40px;'
+      "
+    >
+      Подорожуйте разом з нами!
+    </h1>
+    <v-row
+      :justify="$vuetify.breakpoint.xs ? 'center' : 'start'"
+      align="center"
+    >
       <v-col cols="1" class="px-0" v-if="!$vuetify.breakpoint.xs">
         <v-row
           justify="start"
@@ -32,7 +47,14 @@
         </v-row>
       </v-col>
       <v-col cols="10" style="margin-top: 30px">
-        <h4 class="searchRoutes">Пошук автобусних рейсів:</h4>
+        <h4
+          class="searchRoutes"
+          :style="
+            $vuetify.breakpoint.xs ? 'font-size: 16px;' : ' font-size: 20px;'
+          "
+        >
+          Пошук автобусних рейсів:
+        </h4>
         <search-routes-field-mobile v-if="$vuetify.breakpoint.xs" />
         <v-row justify="center" v-else>
           <v-col cols="2" class="px-0">
@@ -80,7 +102,7 @@
 </template>
 
 <script>
-import searchRoutesFieldMobile from "./searchRoutesFieldMobile.vue";
+import searchRoutesFieldMobile from "./mainMobile/searchRoutesFieldMobile.vue";
 export default {
   components: {
     searchRoutesFieldMobile,
@@ -126,7 +148,6 @@ export default {
 }
 .mainText {
   font-weight: 400;
-  font-size: 40px;
   letter-spacing: 0.1em;
   color: #243949;
   padding-top: 180px;
@@ -134,7 +155,6 @@ export default {
 .searchRoutes {
   font-style: normal;
   font-weight: 400;
-  font-size: 20px;
   letter-spacing: 0.1em;
   color: #243949;
   margin-bottom: 20px;

@@ -1,5 +1,5 @@
 <template>
-  <v-card :width="width" :height="height" class="pointer" @click="$emit('addNew')">
+  <v-card :width="width" :height="height" class="pointer mx-3" @click="$emit('addNew')">
     <v-row justify="center" align="center">
       <v-col>
         <img src="@/assets/img/plusIcon.svg" style="margin-top: 98px;"/>

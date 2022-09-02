@@ -5,8 +5,8 @@
         v-for="i in 9"
         :key="i"
         @detailInfo="visible = true"
-        @edit="$emit('edit')"
-        @delete="$emit('delete')"
+        @edit="$emit('edit', i)"
+        @delete="$emit('delete', i)"
         :forAdmin="forAdmin"
       />
       <card-add-new title="Додати автобус" width="350px" height="350px" v-if="forAdmin" @addNew="$emit('addNew')"/>

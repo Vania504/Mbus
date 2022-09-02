@@ -53,7 +53,7 @@
     </div>
 
     <v-divider
-      style="margin-left: 110px"
+      style="margin-left: 80px"
       color="#4C5D6C"
       width="200px"
       class="mt-2"

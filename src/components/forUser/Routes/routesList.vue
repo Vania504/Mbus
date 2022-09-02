@@ -12,8 +12,8 @@
         :key="i"
         class="mt-5 mb-5"
         :forAdmin="forAdmin"
-        @edit="$emit('edit')"
-        @delete="$emit('delete')"
+        @edit="$emit('edit', i)"
+        @delete="$emit('delete', i)"
       />
       <card-add-new
         title="Новий маршрут"

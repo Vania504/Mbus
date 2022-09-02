@@ -42,9 +42,9 @@
         </v-row>
         <v-row align="start" justify="start" no-gutters>
           <v-col cols="2"><p class="itemTitle">Кількість місць</p></v-col>
-          <v-col cols="1" class="ml-2">
+          <v-col cols="1" class="px-2">
             <v-text-field
-              class="rounded-lg"
+              class="rounded-lg centered-input"
               outlined
               dense
               placeholder="0"
@@ -52,7 +52,6 @@
               color="#085895"
               @keypress="isNumber($event)"
               inputmode="numeric"
-              type="number"
               :error-messages="quantitySeatsError"
               @blur="$v.bus.quantity_seats.$touch()"
             />
@@ -98,6 +97,7 @@
               class="mr-2"
               width="50px"
               height="50px"
+              style="object-fit: cover;"
             />
             <img
               src="@/assets/img/addImageIcon.svg"
@@ -292,7 +292,7 @@ export default {
 };
 </script>
 
-<style>
+<style scoped>
 .itemTitle {
   font-weight: 400;
   font-size: 16px;
@@ -300,4 +300,7 @@ export default {
   color: #243949;
   margin-top: 7px;
 }
+.centered-input >>> input {
+      text-align: center
+    }
 </style>

@@ -18,6 +18,7 @@
 <script>
 import busList from "@/components/forUser/ourFleet/busList.vue";
 import addNewBusModal from "@/components/forAdmin/ourFleet/addNewBusModal";
+import ourFleetService from "@/requests/admin/ourFleetService";
 export default {
   components: {
     busList,
@@ -28,7 +29,9 @@ export default {
     isEdit: false,
   }),
   methods: {
-    async deleteBus() {
+
+    async deleteBus(uuid) {
+      await ourFleetService.deleteBus(uuid)
       alert("Function deleteBus work success");
     },
   },

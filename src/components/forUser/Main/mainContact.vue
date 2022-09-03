@@ -9,10 +9,10 @@
       </v-col>
     </v-row>
     <v-col v-else class="px-0">
-      <v-col>
+      <v-col class="px-0">
         <contact-info />
       </v-col>
-      <v-col>
+      <v-col class="px-0">
         <contact-user-form />
       </v-col>
     </v-col>

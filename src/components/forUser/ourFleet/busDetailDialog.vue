@@ -1,5 +1,5 @@
 <template>
-  <v-dialog v-model="visibility" height="630px" width="80%">
+  <v-dialog v-model="visibility" height="630px" width="90%">
     <v-card> 
       <modal-header title="Setra S 417 GT-HD" @close="$emit('close')"/>
       <v-row no-gutters class="mt-5">

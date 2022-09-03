@@ -1,8 +1,8 @@
 <template>
-  <v-row justify="center">
+  <v-row justify="start">
     <div
-      style="width: 100%; height: 400px; text-align: center;"
-      :style="{
+      style="width: 100%; height: 170px; text-align: start;"
+      :style="$vuetify.breakpoint.xs ? {
         backgroundImage: `linear-gradient(
         0deg,
         rgba(18, 43, 62, 0.64),
@@ -11,6 +11,17 @@
       ${require('@/assets/img/ourFleetMainBackground.svg')})`,
         backgroundSize: 'cover',
         backgroundRepeat: 'norepeat',
+        height: '170px',
+      } : {
+        backgroundImage: `linear-gradient(
+        0deg,
+        rgba(18, 43, 62, 0.64),
+        rgba(18, 43, 62, 0.64)
+      ), url(
+      ${require('@/assets/img/ourFleetMainBackground.svg')})`,
+        backgroundSize: 'cover',
+        backgroundRepeat: 'norepeat',
+        height: '400px',
       }"
     >
       <span

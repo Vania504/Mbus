@@ -21,8 +21,9 @@
       <v-btn
         style="margin-top: 13px"
         width="150px"
-        height="38px"
+        height="30px"
         color="#085895"
+        class="rounded-lg"
         ><v-icon color="white mr-2">mdi-magnify</v-icon
         ><span
           style="

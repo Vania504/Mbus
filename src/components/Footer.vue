@@ -1,5 +1,5 @@
 <template>
-  <v-footer color="#122B3E" height="223px">
+  <v-footer color="#122B3E" :height="$vuetify.breakpoint.xs ? '' : '223px'">
     <v-row justify="start" v-if="!$vuetify.breakpoint.xs">
       <v-col style="text-align: left">
         <img
@@ -20,7 +20,11 @@
         >
           <v-icon small color="white" class="mr-2">mdi-phone</v-icon>
           <span>{{ item.number }}</span>
-          <img v-if="item.type == 'UA'" src="@/assets/img/UA.svg" class="ml-2" />
+          <img
+            v-if="item.type == 'UA'"
+            src="@/assets/img/UA.svg"
+            class="ml-2"
+          />
           <img v-else src="@/assets/img/PL.svg" class="ml-2" />
         </v-row>
       </v-col>
@@ -51,10 +55,58 @@
             :href="item.link"
             class="mr-2"
             ><v-icon v-if="item.icon" color="white">{{ item.icon }}</v-icon>
-            <img width="24px" height="24.84px" v-if="item.img == 'viber'" src="@/assets/img/viberIcon.svg" alt="viber"/>
-             <img width="24px" height="24.84px" v-if="item.img == 'telegram'" src="@/assets/img/telegramIcon.svg" alt="telegram"/>
+            <img
+              width="24px"
+              height="24.84px"
+              v-if="item.img == 'viber'"
+              src="@/assets/img/viberIcon.svg"
+              alt="viber"
+            />
+            <img
+              width="24px"
+              height="24.84px"
+              v-if="item.img == 'telegram'"
+              src="@/assets/img/telegramIcon.svg"
+              alt="telegram"
+            />
           </a>
         </v-row>
+      </v-col>
+    </v-row>
+    <v-row justify="center" class="pt-2 pb-15">
+      <v-col>
+        <img
+          width="80px"
+          height="60px"
+          src="@/assets/img/logoMBus.svg"
+          alt="logo"
+        />
+        <v-col style="text-align: center" class="white--text">
+          <span>СОЦІАЛЬНІ МЕРЕЖІ</span>
+          <v-row no-gutters class="mt-2" align="start" justify="center">
+            <a
+              v-for="item in socialNetworks"
+              :key="item.id"
+              :href="item.link"
+              class="mr-2"
+              ><v-icon v-if="item.icon" color="white">{{ item.icon }}</v-icon>
+              <img
+                width="24px"
+                height="24.84px"
+                v-if="item.img == 'viber'"
+                src="@/assets/img/viberIcon.svg"
+                alt="viber"
+              />
+              <img
+                width="24px"
+                height="24.84px"
+                v-if="item.img == 'telegram'"
+                src="@/assets/img/telegramIcon.svg"
+                alt="telegram"
+              />
+            </a>
+          </v-row>
+        </v-col>
       </v-col>
     </v-row>
   </v-footer>

@@ -7,7 +7,7 @@
       class="mainText"
       :style="
         $vuetify.breakpoint.xs
-          ? 'padding-top: 20px; font-size: 16px;'
+          ? 'padding-top: 20px; font-size: 18px;'
           : ' font-size: 40px;'
       "
     >
@@ -46,8 +46,9 @@
           </a>
         </v-row>
       </v-col>
-      <v-col cols="10" style="margin-top: 30px">
+      <v-col cols="10" :style="$vuetify.breakpoint.xs ? 'margin-top: 50px;' : 'margin-top: 30px'">
         <h4
+          v-if="!$vuetify.breakpoint.xs"
           class="searchRoutes"
           :style="
             $vuetify.breakpoint.xs ? 'font-size: 16px;' : ' font-size: 20px;'

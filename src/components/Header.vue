@@ -1,7 +1,12 @@
 <template>
   <div>
-    <v-app-bar height="98px" color="white">
-      <v-row align="center" no-gutters justify="center" v-if="!$vuetify.breakpoint.xs">
+    <v-app-bar :height="$vuetify.breakpoint.xs ? '40px' : '98px'" color="white">
+      <v-row
+        align="center"
+        no-gutters
+        justify="center"
+        v-if="!$vuetify.breakpoint.xs"
+      >
         <v-col cols="2">
           <v-row no-gutters justify="start">
             <img src="@/assets/img/logoMBus.svg" />
@@ -102,15 +107,8 @@
           </v-menu>
         </v-col>
       </v-row>
-      <v-row v-else align="center">
-        <v-col cols="2">
-          <v-row no-gutters justify="start">
-            <img src="@/assets/img/logoMBus.svg" />
-          </v-row>
-        </v-col>
-        <v-row justify="end" no-gutters>
-          <v-app-bar-nav-icon large/>
-        </v-row>
+      <v-row v-else align="center" justify="center" no-gutters>
+        <img src="@/assets/img/logoMBus.svg" width="50px" height="30px"/>
       </v-row>
       <sign-in-modal
         v-if="signInVisibleModal"

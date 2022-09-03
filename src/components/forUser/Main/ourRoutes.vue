@@ -1,11 +1,11 @@
 <template>
   <v-container class="mt-8">
-    <v-row
-      no-gutters
-      class="mb-2"
-      justify="center"
-    >
-      <v-col cols="9" class="pa-0"><span :class="$vuetify.breakpoint.xs ? 'mainTitleMobile' : 'mainTitle'">Наші маршрути</span></v-col>
+    <v-row no-gutters class="mb-2" justify="center">
+      <v-col cols="9" class="pa-0"
+        ><span :class="$vuetify.breakpoint.xs ? 'mainTitleMobile' : 'mainTitle'"
+          >Наші маршрути</span
+        ></v-col
+      >
     </v-row>
     <v-row
       v-if="!$vuetify.breakpoint.xs"
@@ -20,6 +20,7 @@
       >
     </v-row>
     <swiper
+      v-if="!$vuetify.breakpoint.sm && !$vuetify.breakpoint.xs"
       class="d-none d-lg-block pt-5 pb-5"
       :style="{
         '--swiper-navigation-color': '#000000',
@@ -33,6 +34,7 @@
       <div class="swiper-button-next" slot="button-next"></div>
     </swiper>
     <swiper
+      v-if="$vuetify.breakpoint.sm"
       class="d-none d-lg-block pt-5 pb-5"
       :style="{
         '--swiper-navigation-color': '#000000',
@@ -40,7 +42,7 @@
       :options="swiperMediumOption"
     >
       <swiper-slide v-for="i in 9" :key="i">
-        <routes-card/>
+        <routes-card />
       </swiper-slide>
       <div class="swiper-button-prev" slot="button-prev"></div>
       <div class="swiper-button-next" slot="button-next"></div>

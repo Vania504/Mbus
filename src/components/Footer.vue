@@ -73,7 +73,7 @@
         </v-row>
       </v-col>
     </v-row>
-    <v-row justify="center" class="pt-2 pb-15">
+    <v-row justify="center" class="pt-2 pb-15" v-else>
       <v-col>
         <img
           width="80px"

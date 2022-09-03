@@ -187,34 +187,46 @@
         <!-- Detail route -->
         <v-row align="start" justify="start" no-gutters>
           <v-col cols="12" class="px-0">
-            <p class="itemTitle">Детальний маршрут:</p>
+            <p class="itemTitle" style="text-align: center">
+              Детальний маршрут:
+            </p>
             <v-col class="px-0">
               <!-- Add Ukraine city -->
               <v-row no-gutters align="start">
-                <v-col class="px-0" cols="2">
+                <v-col class="px-0" cols="2" align-self="start">
                   <p class="country">Україна:</p>
                 </v-col>
-                <v-col cols="10" class="px-0">
-                  <v-row align="center" no-gutters class="mr-5">
-                    <v-col
-                      cols="3"
-                      v-for="city in route.ukraine_city"
+                <v-col cols="10" class="px-0 py-0">
+                  <v-row align="start" no-gutters class="mr-5">
+                    <span
+                      v-for="(city, index) in route.ukraine_city"
                       :key="city.id"
-                      class="px-1"
+                      style="margin-right: 5px"
                     >
+                      <v-icon
+                        color="#960909"
+                        v-if="index !== 0"
+                        style="margin-right: 5px"
+                        >mdi-minus</v-icon
+                      >{{ city.name }}</span
+                    >
+                    <v-col cols="3" class="px-1" align-self="center">
                       <v-text-field
                         class="rounded-lg"
                         outlined
                         dense
                         placeholder="Введіть місто.."
-                        v-model="city.name"
+                        v-model="ukraineCity"
                         color="#085895"
+                        :error-messages="ukraineCityError"
+                        @input="ukraineCityError = ''"
                       />
                     </v-col>
                     <v-icon
-                      class="mb-7 pointer"
+                      class="mt-2 pointer"
                       color="#960909"
                       @click="addNewUkraineCity"
+                      v-if="ukraineCity"
                       >mdi-plus-circle-outline</v-icon
                     >
                   </v-row>
@@ -227,26 +239,36 @@
                   <p class="country">Інша країна:</p>
                 </v-col>
                 <v-col cols="10" class="px-0">
-                  <v-row align="center" no-gutters class="mr-5">
-                    <v-col
-                      cols="3"
-                      v-for="city in route.other_country_city"
+                  <v-row align="start" no-gutters class="mr-5">
+                    <span
+                      v-for="(city, index) in route.other_country_city"
                       :key="city.id"
-                      class="px-1"
+                      style="margin-right: 5px"
                     >
+                      <v-icon
+                        color="#960909"
+                        v-if="index !== 0"
+                        style="margin-right: 5px"
+                        >mdi-minus</v-icon
+                      >{{ city.name }}</span
+                    >
+                    <v-col cols="3" class="px-1" align-self="center">
                       <v-text-field
                         class="rounded-lg"
                         outlined
                         dense
                         placeholder="Введіть місто.."
-                        v-model="city.name"
+                        v-model="otherCountryCity"
+                        :error-messages="otherCountryCityError"
+                        @input="otherCountryCityError = ''"
                         color="#085895"
                       />
                     </v-col>
                     <v-icon
-                      class="mb-7 pointer"
+                      class="mt-2 pointer"
                       color="#960909"
                       @click="addNewOtherCountryCity"
+                      v-if="otherCountryCity"
                       >mdi-plus-circle-outline</v-icon
                     >
                   </v-row>
@@ -281,6 +303,7 @@ import modalHeader from "@/components/UI/modalHeader.vue";
 import routeShedule from "./routeShedule.vue";
 import { validationMixin } from "vuelidate";
 import { required } from "vuelidate/lib/validators";
+import googleMapsService from "@/requests/googleMaps/googleMapsService";
 export default {
   mixins: [validationMixin],
   components: {
@@ -297,18 +320,8 @@ export default {
           phone_number: "",
         },
       ],
-      ukraine_city: [
-        {
-          id: 1,
-          name: "",
-        },
-      ],
-      other_country_city: [
-        {
-          id: 1,
-          name: "",
-        },
-      ],
+      ukraine_city: [],
+      other_country_city: [],
     },
     daysOfDeparture: [
       {
@@ -340,6 +353,10 @@ export default {
         day: "Нд",
       },
     ],
+    ukraineCity: "",
+    otherCountryCity: "",
+    ukraineCityError: "",
+    otherCountryCityError: "",
   }),
   validations: {
     route: {
@@ -383,17 +400,33 @@ export default {
         phone_number: "",
       });
     },
-    addNewUkraineCity() {
-      this.route.ukraine_city.push({
-        id: Date.now(),
-        name: "",
-      });
+    async addNewUkraineCity() {
+      let coordinates = await this.getCoordinates(this.ukraineCity);
+      if (coordinates.length > 0) {
+        this.route.ukraine_city.push({
+          id: Date.now(),
+          name: this.ukraineCity,
+          lat: coordinates[0].geometry.location.lat,
+          lng: coordinates[0].geometry.location.lng,
+        });
+        this.ukraineCity = "";
+      } else {
+        this.ukraineCityError = "Такого міста не існує";
+      }
     },
-    addNewOtherCountryCity() {
+    async addNewOtherCountryCity() {
+      let coordinates = await this.getCoordinates(this.otherCountryCity);
+      if (coordinates.length > 0) {
       this.route.other_country_city.push({
         id: Date.now(),
-        name: "",
+        name: this.otherCountryCity,
+        lat: coordinates[0].geometry.location.lat,
+        lng: coordinates[0].geometry.location.lng,
       });
+      this.otherCountryCity = "";
+    } else {
+        this.otherCountryCityError = "Такого міста не існує";
+      }
     },
     isNumber(evt) {
       evt = evt ? evt : window.event;
@@ -406,8 +439,14 @@ export default {
       }
     },
     closeModal() {
-      let close = confirm("Ви дійсно хочете закрити модальне вікно, внесені зміни не буде збережено?");
+      let close = confirm(
+        "Ви дійсно хочете закрити модальне вікно, внесені зміни не буде збережено?"
+      );
       close ? this.$emit("close") : "";
+    },
+    async getCoordinates(cityname) {
+      let response = await googleMapsService.getCoordinates(cityname);
+      return response.results;
     },
   },
   computed: {
@@ -447,8 +486,7 @@ export default {
       if (!this.$v.route.quantity_seats.$dirty) {
         return errors;
       }
-      !this.$v.route.quantity_seats.required &&
-        errors.push("");
+      !this.$v.route.quantity_seats.required && errors.push("");
       return errors;
     },
     departureTimeError() {
@@ -456,15 +494,14 @@ export default {
       if (!this.$v.route.departure_time.$dirty) {
         return errors;
       }
-      !this.$v.route.departure_time.required &&
-        errors.push("");
+      !this.$v.route.departure_time.required && errors.push("");
       return errors;
     },
   },
 };
 </script>
 
-<style>
+<style scoped>
 .centered-input input {
   text-align: center;
 }
@@ -473,5 +510,12 @@ export default {
   font-size: 16px;
   text-align: left;
   color: #960909;
+}
+.itemTitle {
+  font-weight: 400;
+  font-size: 16px;
+  text-align: left;
+  color: #243949;
+  margin-top: 7px;
 }
 </style>

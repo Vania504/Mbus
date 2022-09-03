@@ -25,6 +25,7 @@
                 @mousemove="isHover = true"
                 @mouseleave="isHover = false"
                 :class="!isHover ? '' : 'white--text'"
+                @click="$router.push('/irregular_transportation')"
                 color="#085895"
                 width="144px"
                 height="34px"

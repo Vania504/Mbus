@@ -44,9 +44,9 @@ export default {
     menuItems: [
       {
         id: 1,
-        title: "Локація",
+        title: "Контакти",
         icon: "locationIcon.svg",
-        path: "/location",
+        path: "/contact",
       },
       {
         id: 2,

@@ -68,6 +68,7 @@
                   width="85px"
                   height="20px"
                   style="text-transform: none; font-size: 10px"
+                  @click="$router.push('/irregular_transportation')"
                   >Детальніше</v-btn
                 >
               </v-row>
@@ -91,7 +92,7 @@ export default {
 };
 </script>
   
-  <style>
+  <style scoped>
 .descriptionText {
   text-align: left;
   color: #243949;

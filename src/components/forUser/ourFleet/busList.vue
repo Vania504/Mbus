@@ -29,7 +29,8 @@
         @addNew="$emit('addNew')"
       />
     </v-row>
-    <bus-detail-dialog :visible="visible" @close="visible = false" />
+    <bus-detail-dialog-mobile v-if="$vuetify.breakpoint.xs"  :visible="visible" @close="visible = false"/>
+    <bus-detail-dialog v-else />
   </v-col>
 </template>
 
@@ -37,13 +38,15 @@
 import busCard from "./busCard.vue";
 import busDetailDialog from "@/components/forUser/ourFleet/busDetailDialog";
 import cardAddNew from "@/components/UI/cardAddNew";
-import busCardMobile from "./busCardMobile.vue";
+import busCardMobile from "./ourFleetMobile/busCardMobile.vue";
+import busDetailDialogMobile from '@/components/forUser/ourFleet/ourFleetMobile/busDetailDialogMobile';
 export default {
   components: {
     busCard,
     busDetailDialog,
     cardAddNew,
     busCardMobile,
+    busDetailDialogMobile,
   },
   data: () => ({
     visible: false,

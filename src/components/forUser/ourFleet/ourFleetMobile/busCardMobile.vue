@@ -27,7 +27,7 @@
               width="20px"
               height="20px"
             />
-            <v-col cols="10" class="py-0">
+            <v-col cols="9" class="py-0">
               <span style="font-size: 16px; text-align: left"
                 >Setra S 417 GT-HD</span
               >
@@ -39,7 +39,7 @@
               width="20px"
               height="20px"
             />
-            <v-col cols="10" class="py-0">
+            <v-col cols="9" class="py-0">
               <span class="ml-1" style="font-size: 16px"
                 >60<span class="drivingSeats">+2</span> місць</span
               >

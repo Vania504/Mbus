@@ -1,42 +1,65 @@
 <template>
   <div
-      style="width: 100%; height: 330px; text-align: center;"
-      :style="{
-        backgroundImage: `linear-gradient(
+    :class="$vuetify.breakpoint.xs ? 'mobileTitle' : 'otherTitle'"
+    style="width: 100%; text-align: center"
+    :style="
+      $vuetify.breakpoint.xs
+        ? {
+            backgroundImage: `linear-gradient(
         0deg,
         rgba(18, 43, 62, 0.64),
         rgba(18, 43, 62, 0.64)
       ), url(
       ${require('@/assets/img/routesBackgroundImg.svg')})`,
-        backgroundSize: 'cover',
-        backgroundRepeat: 'norepeat',
-      }"
-    >
-      <span
-        style="
-          position: absolute;
-          font-size: 40px;
-          color: white;
-          left: 0%;
-          right: 0%;
-          margin-top: 10%;
-          text-align: center;
-        "
-        >{{title}}</span
-      >
-    </div>
+            backgroundSize: 'cover',
+            backgroundRepeat: 'norepeat',
+            height: '120px',
+          }
+        : {
+            backgroundImage: `linear-gradient(
+        0deg,
+        rgba(18, 43, 62, 0.64),
+        rgba(18, 43, 62, 0.64)
+      ), url(
+      ${require('@/assets/img/routesBackgroundImg.svg')})`,
+            backgroundSize: 'cover',
+            backgroundRepeat: 'norepeat',
+            height: '330px',
+          }
+    "
+  >
+    {{ title }}
+  </div>
 </template>
 
 <script>
 export default {
-    props: {
-        title: {
-            require: true,
-        }
-    }
-}
+  props: {
+    title: {
+      require: true,
+    },
+  },
+};
 </script>
 
-<style>
-
+<style scoped>
+.otherTitle {
+  color: white;
+  left: 0%;
+  right: 0%;
+  text-align: center;
+  padding-top: 10%;
+  font-size: 40px;
+}
+.mobileTitle {
+  font-family: "SeoulHangang";
+  font-style: normal;
+  font-weight: 400;
+  font-size: 18px;
+  line-height: 18px;
+  letter-spacing: 0.1em;
+  color: #ffffff;
+  padding-top: 51px;
+  text-align: center;
+}
 </style>

@@ -1,5 +1,5 @@
 <template>
-  <v-row justify="center">
+  <v-row justify="center" no-gutters>
     <routes-header title="Маршрути"/>
     <routes-list :routes="[{id: 1}]"/>
     </v-row

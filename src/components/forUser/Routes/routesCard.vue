@@ -2,7 +2,7 @@
   <v-card
     :class="
       forAdmin && !$vuetify.breakpoint.xs
-        ? 'mx-5'
+        ? 'mx-4'
         : !forAdmin && !$vuetify.breakpoint.xs
         ? 'mx-10'
         : 'mx-5'
@@ -12,6 +12,7 @@
     :style="$vuetify.breakpoint.xs ? 'text-align: left;' : ''"
   >
     <div
+      @click="$router.push('/routes/' + 1)"
       v-if="$vuetify.breakpoint.xs"
       style="
         position: absolute;

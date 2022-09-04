@@ -1,13 +1,13 @@
 <template>
   <v-col>
-    <v-row :justify="forAdmin ? 'start' : 'center'" class="mb-10">
+    <v-row no-gutters :justify="forAdmin ? 'start' : 'center'" class="mb-10">
       <div v-if="!routes" style="margin-top: 10%; margin-bottom: 10%">
         <span style="font-size: 32px"
           >За вказаним маршрутом нічого не знайдено!</span
         >
       </div>
-      <routes-card
-        v-else
+      <routes-card-mobile
+        v-else-if="$vuetify.breakpoint.xs"
         v-for="i in 9"
         :key="i"
         class="mt-5 mb-5"
@@ -15,12 +15,22 @@
         @edit="$emit('edit', i)"
         @delete="$emit('delete', i)"
       />
+      <routes-card
+        v-else
+        v-for="index in 9"
+        :key="index"
+        class="mt-5 mb-5"
+        :forAdmin="forAdmin"
+        @edit="$emit('edit', i)"
+        @delete="$emit('delete', i)"
+      />    
       <card-add-new
         title="Новий маршрут"
         width="330px"
         height="385px"
         class="mt-5 mx-5"
         @addNew="$emit('addNew')"
+        v-if="forAdmin"
       />
     </v-row>
   </v-col>
@@ -28,10 +38,12 @@
 
 <script>
 import routesCard from "./routesCard.vue";
+import routesCardMobile from '@/components/forUser/Routes/routesMobile/routesCardMobile';
 import cardAddNew from "@/components/UI/cardAddNew.vue";
 export default {
   components: {
     routesCard,
+    routesCardMobile,
     cardAddNew,
   },
   props: {

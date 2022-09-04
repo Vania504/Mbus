@@ -1,6 +1,10 @@
 <template>
-  <v-col style="font-size: 16px">
-    <span style="text-align: center; font-size: 32px; color: #243949"
+  <v-col
+    :style="$vuetify.breakpoint.xs ? 'font-size: 14px;' : 'font-size: 16px;'"
+  >
+    <span
+      style="text-align: center; color: #243949"
+      :style="$vuetify.breakpoint.xs ? 'font-size: 18px;' : 'font-size: 32px;'"
       >Детальний маршрут</span
     >
     <p class="mt-2">
@@ -14,10 +18,26 @@
         Варшава — Плоцк — Торунь — Бидгощ — Гданськ — Гдиня</span
       >
     </p>
-    <v-row justify="center" align="center">
-      <div class="tableHeader">
-        <v-row align="center" no-gutters class="mt-5">
-          <v-col cols="4">
+    <v-row
+      justify="center"
+      align="center"
+      :class="$vuetify.breakpoint.xs ? 'mt-5' : ''"
+    >
+      <div
+        class="tableHeader"
+        :style="
+          $vuetify.breakpoint.xs
+            ? 'width: 100%; height: 70px;'
+            : 'width: 790px; height: 80px;'
+        "
+      >
+        <v-row
+          align="center"
+          justify="center"
+          no-gutters
+          :class="$vuetify.breakpoint.xs ? 'mt-2' : 'mt-5'"
+        >
+          <v-col cols="6" xl="4" lg="4" md="4" sm="4">
             <span class="textStyle"
               >Час відправлення і прибуття з<v-row
                 align="center"
@@ -35,28 +55,47 @@
               >
             </span>
           </v-col>
-          <v-col cols="8">
+          <v-col cols="6" xl="8" lg="8" md="8" sm="9">
             <span class="textStyle">Місце зупинки/відправлення</span>
           </v-col>
         </v-row>
       </div>
-      <br /><v-col cols="8" class="py-0">
+      <br /><v-col
+        cols="12"
+        xl="8"
+        lg="8"
+        md="8"
+        sm="8"
+        class="py-0"
+        :class="$vuetify.breakpoint.xs ? 'px-0' : ''"
+      >
         <center>
           <div
             v-for="i in 9"
             :key="i"
-            style="
-              border: 1px solid #acbdcb;
-              border-top: 0px;
-              width: 790px;
-              margin-left: 2px;
+            style="border: 1px solid #acbdcb; border-top: 0px"
+            :style="
+              $vuetify.breakpoint.xs
+                ? 'width: 100%;'
+                : 'width: 790px; margin-left: 2px;'
             "
           >
             <v-row no-gutters justify="start" class="pt-2" align="center">
-              <v-col cols="4" class="py-0">
+              <v-col
+                cols="5"
+                xl="4"
+                lg="4"
+                md="4"
+                sm="4"
+                class="py-0"
+                :class="$vuetify.breakpoint.xs ? 'ml-3' : ''"
+              >
                 <span class="hoursTextStyle">10:30</span>
               </v-col>
-              <v-col cols="6" class="ml-15">
+              <v-col
+                cols="6"
+                :class="$vuetify.breakpoint.xs ? 'ml-3' : 'ml-15'"
+              >
                 <span class="stopTextStyle"
                   >Гдиня, Dworzec Autobusowy, pl. Grodnicki 1(platf.1) (якщо
                   більше тексту)</span
@@ -87,14 +126,20 @@ export default {
   color: #960909;
 }
 .tableHeader {
-  width: 790px;
-  height: 80px;
   background-color: #243949;
   text-align: center;
 }
-.textStyle {
-  font-size: 16px;
-  color: white;
+@media only screen and (max-width: 760px) {
+  .textStyle {
+    font-size: 14px;
+    color: white;
+  }
+}
+@media only screen and (min-width: 760px) {
+  .textStyle {
+    font-size: 16px;
+    color: white;
+  }
 }
 .hoursTextStyle {
   color: #085895;

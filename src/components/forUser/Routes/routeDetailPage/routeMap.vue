@@ -1,11 +1,15 @@
 <template>
   <GmapMap
-    class="ml-5"
-    :center="{ lat:48.920551, lng: 24.706484 }"
+    :class="$vuetify.breakpoint.xs ? '' : 'ml-5'"
+    :center="{ lat: 48.920551, lng: 24.706484 }"
     :zoom="10"
     map-type-id="roadmap"
-    style="width: 800px; height: 550px"
-    ></GmapMap>
+    :style="
+      $vuetify.breakpoint.xs
+        ? 'width: 100%; height: 175px;'
+        : 'width: 800px; height: 550px'
+    "
+  ></GmapMap>
 </template>
 
 <script>

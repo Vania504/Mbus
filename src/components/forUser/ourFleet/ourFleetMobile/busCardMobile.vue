@@ -1,6 +1,6 @@
 <template>
   <v-card
-    class="mx-5 mb-10"
+    class="mx-2 mb-10"
     :max-width="forAdmin ? '350px' : '401px'"
     style="background-color: #f8f8f8"
   >

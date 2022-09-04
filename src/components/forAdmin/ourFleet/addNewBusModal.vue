@@ -97,12 +97,12 @@
               class="mr-2"
               width="50px"
               height="50px"
-              style="object-fit: cover;"
+              style="object-fit: cover"
             />
             <img
               src="@/assets/img/addImageIcon.svg"
               class="pointer"
-              @click="$refs.upload_img.click()"
+              @click="showRecentlyImage = true"
             />
             <input
               type="file"
@@ -126,17 +126,26 @@
         </v-row>
       </v-card-actions>
     </v-card>
+    <RecentlyAddImageModal
+      v-if="showRecentlyImage"
+      :visible="showRecentlyImage"
+      @close="showRecentlyImage = false"
+    />
   </v-dialog>
 </template>
 
 <script>
 import modalHeader from "@/components/UI/modalHeader";
+import recentlyAddImageModal from "@/components/UI/recentlyAddImageModal";
 import { validationMixin } from "vuelidate";
 import { required, maxLength, minLength } from "vuelidate/lib/validators";
+import RecentlyAddImageModal from "@/components/UI/recentlyAddImageModal.vue";
 export default {
   mixins: [validationMixin],
   components: {
     modalHeader,
+    recentlyAddImageModal,
+    RecentlyAddImageModal,
   },
   data: () => ({
     bus: {},
@@ -191,6 +200,7 @@ export default {
       },
     ],
     busImages: [],
+    showRecentlyImage: false,
   }),
   validations: {
     bus: {
@@ -220,7 +230,7 @@ export default {
       this.$v.$touch();
       if (!this.$v.$invalid) {
         alert("Function addNewBus work success");
-        this.$emit('close')
+        this.$emit("close");
       }
     },
     uploadImg(e) {
@@ -301,6 +311,6 @@ export default {
   margin-top: 7px;
 }
 .centered-input >>> input {
-      text-align: center
-    }
+  text-align: center;
+}
 </style>

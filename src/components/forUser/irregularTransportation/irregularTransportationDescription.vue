@@ -38,7 +38,7 @@
 export default {};
 </script>
 
-<style>
+<style scoped>
 .descriptionText {
   width: 556px;
   height: 404px;

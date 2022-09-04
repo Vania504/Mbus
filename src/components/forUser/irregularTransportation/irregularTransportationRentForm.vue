@@ -1,15 +1,23 @@
 <template>
   <div>
-    <v-row justify="center">
-      <p style="font-size: 16px; color: #243949; text-align: justify">
+    <v-row justify="center" no-gutters>
+      <p class="textStyle">
         Щоб орендувати автобус, запоніть заявку нижче, ми зателефонуємо Вам ,
         щоб уточнити деталі і розрахувати вартість Вашого замовлення
       </p>
-      <v-card width="1160px" class="mb-10">
-        <v-row justify="center">
-          <v-col style="text-align: left" class="mt-10" cols="11">
+      <v-card :width="$vuetify.breakpoint.xs ? '100%' : '1160px'" class="mb-10" :elevation="$vuetify.breakpoint.xs ? '0' : ''">
+        <v-row justify="center" no-gutters>
+          <v-col
+            style="text-align: left"
+            class="mt-10"
+            cols="12"
+            xl="11"
+            lg="11"
+            md="11"
+            sm="11"
+          >
             <v-row justify="center">
-              <v-col cols="4">
+              <v-col cols="10" xl="4" lg="4" md="4" sm="4">
                 <span>Контактна особа<span class="requireColor">*</span></span>
                 <v-text-field
                   dense
@@ -19,7 +27,7 @@
                   @blur="$v.userData.name.$touch()"
                   color="rgba(8, 88, 149, 0.73)"
               /></v-col>
-              <v-col cols="4"
+              <v-col cols="10" xl="4" lg="4" md="4" sm="4"
                 ><span>Номер телефону<span class="requireColor">*</span></span
                 ><v-text-field
                   dense
@@ -30,7 +38,7 @@
                   v-mask="'+38 (###) ####-###'"
                   color="rgba(8, 88, 149, 0.73)"
               /></v-col>
-              <v-col cols="4"
+              <v-col cols="10" xl="4" lg="4" md="4" sm="4"
                 ><span>Кількість персон<span class="requireColor">*</span></span
                 ><v-text-field
                   dense
@@ -45,7 +53,7 @@
               /></v-col>
             </v-row>
             <v-row justify="center">
-              <v-col cols="4"
+              <v-col cols="10" xl="4" lg="4" md="4" sm="4"
                 ><span
                   >Пункт відправлення<span class="requireColor">*</span></span
                 ><v-text-field
@@ -56,7 +64,7 @@
                   @blur="$v.userData.departure_point.$touch()"
                   color="rgba(8, 88, 149, 0.73)"
               /></v-col>
-              <v-col cols="4"
+              <v-col cols="10" xl="4" lg="4" md="4" sm="4"
                 ><span>Вибір автобуса<span class="requireColor">*</span></span
                 ><v-autocomplete
                   dense
@@ -66,7 +74,7 @@
                   @blur="$v.userData.bus.$touch()"
                   color="rgba(8, 88, 149, 0.73)"
               /></v-col>
-              <v-col cols="4"
+              <v-col cols="10" xl="4" lg="4" md="4" sm="4"
                 ><span>Маршрут</span
                 ><v-text-field
                   dense
@@ -201,5 +209,23 @@ export default {
 };
 </script>
 
-<style>
+<style scoped>
+@media only screen and (max-width: 768px) {
+  .textStyle {
+    font-weight: 400;
+    font-size: 14px;
+    line-height: 16px;
+    text-align: center;
+    letter-spacing: 0.1em;
+    color: #000000;
+    padding: 0px 5px 0px 5px;
+  }
+}
+@media only screen and (min-width: 768px) {
+  .textStyle {
+    font-size: 16px;
+    color: #243949;
+    text-align: justify;
+  }
+}
 </style>

@@ -20,12 +20,20 @@
                   position: absolute;
                   height: 40px;
                   opacity: 0.4;
-                  width: 125px
+                "
+                :style="
+                  index == 4
+                    ? 'width: 90px;'
+                    : index == 2
+                    ? 'width: 120px;'
+                    : index == 3
+                    ? 'width: 130px;'
+                    : 'width: 125px;'
                 "
               ></div>
               <img
                 :src="require(`@/assets/img/mobileMenu/${item.icon}`)"
-                style="margin-left: 10px;"
+                style="margin-left: 10px"
               />
               <v-col class="py-0 ml-1" cols="1">
                 <span>{{ item.title }}</span></v-col
@@ -68,9 +76,9 @@ export default {
       },
       {
         id: 5,
-        title: "Локація",
+        title: "Інше",
         icon: "moreIcon.svg",
-        path: "/other",
+        path: "/irregular_transportation",
       },
     ],
   }),

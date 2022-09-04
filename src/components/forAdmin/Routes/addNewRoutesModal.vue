@@ -220,6 +220,7 @@
                         color="#085895"
                         :error-messages="ukraineCityError"
                         @input="ukraineCityError = ''"
+                        v-on:keyup.enter="addNewUkraineCity"
                       />
                     </v-col>
                     <v-icon
@@ -262,6 +263,7 @@
                         :error-messages="otherCountryCityError"
                         @input="otherCountryCityError = ''"
                         color="#085895"
+                        v-on:keyup.enter="addNewOtherCountryCity"
                       />
                     </v-col>
                     <v-icon
@@ -417,14 +419,14 @@ export default {
     async addNewOtherCountryCity() {
       let coordinates = await this.getCoordinates(this.otherCountryCity);
       if (coordinates.length > 0) {
-      this.route.other_country_city.push({
-        id: Date.now(),
-        name: this.otherCountryCity,
-        lat: coordinates[0].geometry.location.lat,
-        lng: coordinates[0].geometry.location.lng,
-      });
-      this.otherCountryCity = "";
-    } else {
+        this.route.other_country_city.push({
+          id: Date.now(),
+          name: this.otherCountryCity,
+          lat: coordinates[0].geometry.location.lat,
+          lng: coordinates[0].geometry.location.lng,
+        });
+        this.otherCountryCity = "";
+      } else {
         this.otherCountryCityError = "Такого міста не існує";
       }
     },

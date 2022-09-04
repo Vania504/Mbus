@@ -46,7 +46,12 @@
           </a>
         </v-row>
       </v-col>
-      <v-col cols="10" :style="$vuetify.breakpoint.xs ? 'margin-top: 50px;' : 'margin-top: 30px'">
+      <v-col
+        cols="10"
+        :style="
+          $vuetify.breakpoint.xs ? 'margin-top: 50px;' : 'margin-top: 30px'
+        "
+      >
         <h4
           v-if="!$vuetify.breakpoint.xs"
           class="searchRoutes"
@@ -66,6 +71,8 @@
               outlined
               dense
               class="rounded-l-lg"
+              :items="['Коломия', 'Івано-Франківськ']"
+              v-model="start_route"
             />
           </v-col>
           <div
@@ -76,6 +83,7 @@
               margin-top: 13px;
               cursor: pointer;
             "
+            @click="reverseItem"
           >
             <img src="@/assets/img/reverseIcon.svg" class="mt-2" />
           </div>
@@ -87,6 +95,8 @@
               outlined
               dense
               class="rounded-r-lg"
+              :items="['Коломия', 'Івано-Франківськ']"
+              v-model="end_route"
             />
           </v-col>
           <v-btn
@@ -109,6 +119,8 @@ export default {
     searchRoutesFieldMobile,
   },
   data: () => ({
+    start_route: "",
+    end_route: "",
     socialNetworks: [
       {
         id: 1,
@@ -137,6 +149,13 @@ export default {
       },
     ],
   }),
+  methods: {
+    reverseItem() {
+      let start_route = this.start_route;
+      this.start_route = this.end_route;
+      this.end_route = start_route;
+    },
+  },
 };
 </script>
 

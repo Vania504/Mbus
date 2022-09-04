@@ -9,6 +9,8 @@
         dense
         class="rounded-t-lg"
         hide-details
+        :items="['Коломия', 'Івано-Франківськ']"
+        v-model="start_route"
       />
       <v-autocomplete
         background-color="white"
@@ -17,6 +19,8 @@
         outlined
         dense
         class="rounded-b-lg"
+        :items="['Коломия', 'Івано-Франківськ']"
+        v-model="end_route"
       />
       <v-btn
         style="margin-top: 13px"
@@ -45,6 +49,7 @@
         margin-top: 35px;
         cursor: pointer;
       "
+      @click="reverseItem"
     >
       <img
         src="@/assets/img/reverseIcon.svg"
@@ -56,7 +61,19 @@
 </template>
 
 <script>
-export default {};
+export default {
+  data: () => ({
+    start_route: "",
+    end_route: "",
+  }),
+  methods: {
+    reverseItem() {
+      let start_route = this.start_route;
+      this.start_route = this.end_route;
+      this.end_route = start_route;
+    },
+  },
+};
 </script>
 
 <style>

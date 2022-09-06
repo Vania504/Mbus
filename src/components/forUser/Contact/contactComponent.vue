@@ -12,6 +12,19 @@
       <v-col>
         <contact-info />
       </v-col>
+      <v-row no-gutters justify="center">
+        <span
+          style="
+            font-weight: 400;
+            font-size: 18px;
+            line-height: 21px;
+            letter-spacing: 0.1em;
+            color: #085895;
+            margin-top: 20px;
+          "
+          >Напишіть нам!</span
+        >
+      </v-row>
       <v-col>
         <contact-user-form />
       </v-col>

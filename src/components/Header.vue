@@ -13,7 +13,7 @@
           </v-row>
         </v-col>
         <v-col :cols="isAdmin ? '6' : '8'" style="align-self: center">
-          <v-row :justify="isAdmin ? 'end' : 'center'" align="center">
+          <v-row :justify="isAdmin && !loggedUser ? 'end' : 'center'" align="center">
             <router-link to="/">
               <span class="headerItems">Головна</span></router-link
             >

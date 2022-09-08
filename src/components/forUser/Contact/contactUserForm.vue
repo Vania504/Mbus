@@ -1,5 +1,13 @@
 <template>
   <v-col style="text-align: left" class="px-0">
+    <v-snackbar top v-model="successSnackbar" color="success">
+      <v-row align="center">
+        <v-icon class="mx-3">mdi-check</v-icon>
+        <v-col>
+          <span>Ваше повідомлення успішно надіслано</span>
+        </v-col>
+      </v-row>
+    </v-snackbar>
     <v-col cols="10" lg="12" md="11" sm="12" xl="12" class="py-0 px-0">
       <span class="blackSpan"
         >Ім'я та прізвище<span class="requireColor">*</span></span
@@ -75,10 +83,12 @@
 <script>
 import { validationMixin } from "vuelidate";
 import { required, email, minLength } from "vuelidate/lib/validators";
+import contactService from "@/requests/admin/contactService";
 export default {
   mixins: [validationMixin],
   data: () => ({
     userMessage: {},
+    successSnackbar: false,
   }),
   validations: {
     userMessage: {
@@ -99,10 +109,22 @@ export default {
     },
   },
   methods: {
-    sendMessage() {
+    async sendMessage() {
       this.$v.$touch();
       if (!this.$v.$invalid) {
-        console.log("Success send message");
+        let message = new FormData();
+        message.append("name", this.userMessage.name);
+        message.append("email", this.userMessage.email);
+        message.append(
+          "phone_number",
+          this.userMessage.phone_number.replace(/\D+/g, "")
+        );
+        message.append("message", this.userMessage.message);
+        let response = await contactService.sendMessage(message);
+        if (response.status == "success") {
+          this.successSnackbar = true;
+          this.userMessage = {};
+        }
       }
     },
   },

@@ -61,7 +61,7 @@
             >
           </v-row>
         </v-col>
-        <v-col v-if="isAdmin">
+        <v-col v-if="isAdmin && !loggedUser">
           <v-row justify="end">
             <v-icon>mdi-account</v-icon>
             <span class="pointer" @click="signInVisibleModal = true"
@@ -129,6 +129,7 @@
 <script>
 import signInModal from "./forAdmin/signInModal.vue";
 import signUpModal from "./forAdmin/signUpModal.vue";
+import { mapGetters } from 'vuex';
 export default {
   name: "appHeader",
   components: {
@@ -175,6 +176,9 @@ export default {
     signInVisibleModal: false,
     signUpVisibleModal: false,
   }),
+  computed: {
+    ...mapGetters(['loggedUser'])
+  }
 };
 </script>
 

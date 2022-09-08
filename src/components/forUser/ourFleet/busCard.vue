@@ -15,7 +15,7 @@
           outlined
           style="margin-top: 130px"
           color="white"
-          @click="$emit('detailInfo')"
+          @click="$emit('detailInfo', bus.id)"
           >Детальніше</v-btn
         >
         <v-col v-else style="margin-top: 81px">
@@ -23,7 +23,7 @@
             outlined
             color="white"
             width="156px"
-            @click="$emit('edit')"
+            @click="$emit('edit', bus.id)"
             >Редагувати</v-btn
           >
           <br />
@@ -61,13 +61,13 @@
     <v-col class="px-5 py-5">
       <v-row align="center"
         ><img src="@/assets/img/busServiceIcon/busIcon.svg" /><span class="ml-3"
-          >Setra S 417 GT-HD</span
+          >{{bus.model}}</span
         ></v-row
       >
       <v-row align="center" class="mt-5"
         ><img src="@/assets/img/busServiceIcon/chairIcon.svg" /><span
           class="ml-3"
-          >60<span class="drivingSeats">+2</span> місць</span
+          >{{bus.seats}}<span class="drivingSeats">+2</span> місць</span
         ></v-row
       >
     </v-col>
@@ -81,6 +81,9 @@ export default {
   }),
   props: {
     forAdmin: {
+      require: true,
+    },
+    bus: {
       require: true,
     },
   },

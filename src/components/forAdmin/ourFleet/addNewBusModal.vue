@@ -116,6 +116,16 @@
       <v-card-actions>
         <v-row justify="center" no-gutters class="mb-5">
           <v-btn
+            v-if="isEdit"
+            width="124px"
+            height="39px"
+            color="#085895"
+            class="white--text"
+            @click="editBus"
+            >Редагувати</v-btn
+          >
+          <v-btn
+            v-else
             width="124px"
             height="39px"
             color="#085895"
@@ -154,48 +164,56 @@ export default {
         id: 1,
         img: "/toiletIcon.svg",
         title: "Туалет",
+        key: "toilet",
         enters: false,
       },
       {
         id: 2,
         img: "/coffeIcon.svg",
         title: "Харчування",
+        key: "supply",
         enters: false,
       },
       {
         id: 3,
         img: "/electricOutletIcon.svg",
         title: "Розетки",
+        key: "socket",
         enters: false,
       },
       {
         id: 4,
         img: "/coldIcon.svg",
         title: "Клімат контроль",
+        key: "climate",
         enters: true,
       },
       {
         id: 5,
         img: "/wifiIcon.svg",
         title: "Wi-Fi",
+        key: "wifi",
         enters: false,
       },
       {
         id: 6,
         img: "/seriesIcon.svg",
         title: "Перегляд TV",
+        key: "tv",
         enters: false,
       },
       {
         id: 7,
         img: "/vipIcon.svg",
         title: "VIP",
+        key: "vip",
         enters: false,
       },
       {
         id: 8,
         img: "/euro5Icon.svg",
         title: "Екологічність",
+        key: "ecology",
         enters: false,
       },
     ],
@@ -224,14 +242,51 @@ export default {
     isEdit: {
       require: true,
     },
+    detailInfoBus: {
+      require: false,
+    },
+  },
+  mounted() {
+    this.setBus();
   },
   methods: {
     addNewBus() {
       this.$v.$touch();
       if (!this.$v.$invalid) {
-        alert("Function addNewBus work success");
-        this.$emit("close");
+        let bus = new FormData();
+        bus.append("status", "Active");
+        bus.append("model", this.bus.model_name);
+        bus.append("description", this.bus.description);
+        bus.append("seats", this.bus.quantity_seats);
+        this.service.forEach((service) => {
+          service.enters == false
+            ? bus.append(service.key, 0)
+            : bus.append(service.key, 1);
+        });
+        this.$emit("createBus", bus);
       }
+    },
+    editBus() {
+      this.$v.$touch();
+      if (!this.$v.$invalid) {
+        let bus = new FormData();
+        bus.append("status", "Active");
+        bus.append("model", this.bus.model_name);
+        bus.append("description", this.bus.description);
+        bus.append("seats", this.bus.quantity_seats);
+        this.service.forEach((service) => {
+          service.enters == false
+            ? bus.append(service.key, 0)
+            : bus.append(service.key, 1);
+        });
+        this.$emit("updateBus",this.bus.id, bus);
+      }
+    },
+    setBus() {
+      this.$set(this.bus, "id", this.detailInfoBus.id);
+      this.$set(this.bus, "model_name", this.detailInfoBus.model);
+      this.$set(this.bus, "description", this.detailInfoBus.description);
+      this.$set(this.bus, "quantity_seats", this.detailInfoBus.seats);
     },
     uploadImg(e) {
       let file = e.srcElement.files[0];

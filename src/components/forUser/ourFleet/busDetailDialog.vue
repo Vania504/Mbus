@@ -1,7 +1,7 @@
 <template>
   <v-dialog v-model="visibility" height="630px">
-    <v-card> 
-      <modal-header title="Setra S 417 GT-HD" @close="$emit('close')"/>
+    <v-card>
+      <modal-header :title="bus.model" @close="$emit('close')" />
       <v-row no-gutters class="mt-5">
         <v-col cols="7" class="py-0">
           <swiper
@@ -31,7 +31,8 @@
           <span style="font-size: 20px" class="py-2">Сервіс</span>
           <v-divider style="color: #6b7c8a" class="mb-2" />
           <v-row no-gutters class="mb-5">
-            <v-tooltip bottom v-for="item in service" :key="item.id">
+            <div v-for="item in service" :key="item.id">
+            <v-tooltip bottom v-if="item.key == bus">
               <template v-slot:activator="{ on, attrs }">
                 <img
                   :src="require(`@/assets/img/busServiceIcon${item.img}`)"
@@ -42,23 +43,18 @@
               </template>
               <span>{{ item.title }}</span>
             </v-tooltip>
+          </div>
             <v-row align="center" class="mt-5 mr-5" no-gutters
               ><img src="@/assets/img/busServiceIcon/chairIcon.svg" /><span
                 class="ml-3"
-                >60<span class="drivingSeats">+2</span> місць</span
+                >{{ bus.seats }}<span class="drivingSeats">+2</span> місць</span
               ></v-row
             >
           </v-row>
           <v-divider style="color: #6b7c8a" class="mt-2 mb-2" />
           <p style="font-size: 16px">
-            <span style="color: #085895">Setra S 417 GT-HD.</span> Усі
-            міжнародні маршрути компанії обслуговуються флагманськими автобусами
-            марки Setra та Neoplan, які мають ергономічні регульовані крісла,
-            систему кондиціонування, обладнані телевізорами і сучасною
-            аудіосистемою.<br /><br />
-            Все це дозволить провести поїздку максимально комфортно у приємній
-            атмосфері. Також у розпорядженні пасажирів є містке багажне
-            відділення.
+            <span style="color: #085895">{{ bus.model }}</span>
+            {{ bus.description }}
           </p>
         </v-col>
       </v-row>
@@ -69,7 +65,7 @@
 <script>
 import { Swiper, SwiperSlide } from "vue-awesome-swiper";
 import "swiper/css/swiper.css";
-import modalHeader from '@/components/UI/modalHeader';
+import modalHeader from "@/components/UI/modalHeader";
 export default {
   name: "swiper-example-loop-group",
   title: "Loop mode with multiple slides per group",
@@ -129,54 +125,65 @@ export default {
         id: 1,
         img: "/toiletIcon.svg",
         title: "Туалет",
+        key: "toilet",
         enters: false,
       },
       {
         id: 2,
         img: "/coffeIcon.svg",
         title: "Харчування",
+        key: "supply",
         enters: false,
       },
       {
         id: 3,
         img: "/electricOutletIcon.svg",
         title: "Розетки",
+        key: "socket",
         enters: false,
       },
       {
         id: 4,
         img: "/coldIcon.svg",
         title: "Клімат контроль",
+        key: "climate",
         enters: true,
       },
       {
         id: 5,
         img: "/wifiIcon.svg",
         title: "Wi-Fi",
+        key: "wifi",
         enters: false,
       },
       {
         id: 6,
         img: "/seriesIcon.svg",
         title: "Перегляд TV",
+        key: "tv",
         enters: false,
       },
       {
         id: 7,
         img: "/vipIcon.svg",
         title: "VIP",
+        key: "vip",
         enters: false,
       },
       {
         id: 8,
         img: "/euro5Icon.svg",
         title: "Екологічність",
+        key: "ecology",
         enters: false,
       },
     ],
   }),
   props: {
     visible: {
+      require: true,
+    },
+    bus: {
       require: true,
     },
   },

@@ -1,23 +1,34 @@
 import requestService from "../requestService";
+import store from '@/store';
 
 export default {
 	async createBus(form) {
-		const response = await requestService.post(`/`, form)
+		const response = await requestService.post(`/bus`, form, {
+			headers: { Authorization: `Bearer ${store.getters.loggedUser.token}` }
+		})
 		return response?.data
 	},
-    async updateBus(form) {
-		const response = await requestService.post(`/`, form)
+	async updateBus(uuid, form) {
+		const response = await requestService.post(`/bus/${uuid}`, form, {
+			headers: { Authorization: `Bearer ${store.getters.loggedUser.token}` }
+		})
 		return response?.data
 	},
-    async getBuses() {
-		const response = await requestService.get(`/`)
+	async getBuses() {
+		const response = await requestService.get(`/buses`)
 		return response?.data
 	},
-    async getBus(uuid) {
-		const response = await requestService.get(`/${uuid}`,)
+	async getBusesForAdmin() {
+		const response = await requestService.get(`/bus`,  {
+			headers: { Authorization: `Bearer ${store.getters.loggedUser.token}` }
+		})
 		return response?.data
 	},
-    async deleteRoute(uuid) {
+	async getBus(id) {
+		const response = await requestService.get(`/bus/${id}`,)
+		return response?.data
+	},
+	async deleteBus(uuid) {
 		const response = await requestService.post(`/${uuid}`)
 		return response?.data
 	},

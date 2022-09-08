@@ -1,6 +1,6 @@
 import axios from 'axios';
 
-const SERVER_API = '';
+const SERVER_API = 'http://api.mbus.if.ua/api';
 //process.env.VUE_APP_API;
 
 export default {

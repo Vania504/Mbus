@@ -32,12 +32,13 @@
     <span :class="$vuetify.breakpoint.xs ? 'mobileTitle' : 'otherTitle'"
         >Наш автопарк</span
       >
-    <bus-list />
+    <bus-list :busList="busList"/>
   </v-row>
 </template>
 
 <script>
 import busList from "@/components/forUser/ourFleet/busList";
+import ourFleetService from "@/requests/admin/ourFleetService";
 export default {
   components: {
     busList,
@@ -46,7 +47,17 @@ export default {
     bgImg: {
       backgroundImage: `url(${require("@/assets/img/innregularTransporImg.svg")})`,
     },
+    busList: [],
   }),
+  mounted(){
+    this.getBuses();
+  },
+  methods: {
+    async getBuses(){
+      let response = await ourFleetService.getBuses();
+      this.busList = response.data;
+    }
+  }
 };
 </script>
 

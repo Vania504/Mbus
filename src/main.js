@@ -6,6 +6,7 @@ import * as VueGoogleMaps from 'vue2-google-maps'
 import VueMask from 'v-mask'
 import Vuelidate from 'vuelidate'
 import './assets/layouts/index.scss'
+import store from './store';
 
 Vue.config.productionTip = false
 
@@ -23,5 +24,6 @@ Vue.use(Vuelidate)
 new Vue({
   vuetify,
   router,
+  store,
   render: h => h(App),
 }).$mount('#app')

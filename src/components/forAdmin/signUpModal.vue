@@ -82,6 +82,8 @@
 import modalHeader from "../UI/modalHeader.vue";
 import { validationMixin } from "vuelidate";
 import { required, email, minLength, sameAs } from "vuelidate/lib/validators";
+import authService from "@/requests/admin/authService";
+import { mapActions } from 'vuex';
 export default {
   mixins: [validationMixin],
   components: {
@@ -144,10 +146,18 @@ export default {
     },
   },
   methods: {
+    ...mapActions(["updateInfo"]),
     async signUp() {
       this.$v.$touch();
       if (!this.$v.$invalid) {
-        alert("Function signIn success work");
+        let user = new FormData();
+        user.append('name', this.user.username);
+        user.append('email', this.user.email);
+        user.append('password', this.user.password);
+        let response = await authService.signUp(user);
+        this.updateInfo({
+              token: response.authorisation.token,
+            });
       }
     },
   },

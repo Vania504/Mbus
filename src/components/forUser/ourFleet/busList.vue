@@ -4,19 +4,21 @@
       <div v-if="$vuetify.breakpoint.xs && $vuetify.breakpoint.sm"></div>
       <bus-card-mobile
         v-else-if="$vuetify.breakpoint.xs"
-        v-for="i in 9"
-        :key="i"
-        @detailInfo="visible = true"
-        @edit="$emit('edit', i)"
+        v-for="bus in busList"
+        :key="bus.uuid"
+        :bus="bus"
+        @detailInfo="getBus"
+        @edit="editBus"
         @delete="$emit('delete', i)"
         :forAdmin="forAdmin"
       />
       <bus-card
         v-else
-        v-for="index in 9"
-        :key="index"
-        @detailInfo="visible = true"
-        @edit="$emit('edit', i)"
+        v-for="bus in busList"
+        :key="bus.id"
+        :bus="bus"
+        @detailInfo="getBus"
+        @edit="editBus"
         @delete="$emit('delete', i)"
         :forAdmin="forAdmin"
       />
@@ -33,7 +35,12 @@
       :visible="visible"
       @close="visible = false"
     />
-    <bus-detail-dialog v-else :visible="visible" @close="visible = false" />
+    <bus-detail-dialog
+      v-else
+      :visible="visible"
+      @close="visible = false"
+      :bus="busDetailInfo"
+    />
   </v-col>
 </template>
 
@@ -43,6 +50,7 @@ import busDetailDialog from "@/components/forUser/ourFleet/busDetailDialog";
 import cardAddNew from "@/components/UI/cardAddNew";
 import busCardMobile from "./ourFleetMobile/busCardMobile.vue";
 import busDetailDialogMobile from "@/components/forUser/ourFleet/ourFleetMobile/busDetailDialogMobile";
+import ourFleetService from "@/requests/admin/ourFleetService";
 export default {
   components: {
     busCard,
@@ -53,11 +61,27 @@ export default {
   },
   data: () => ({
     visible: false,
+    busDetailInfo: {},
   }),
   props: {
     forAdmin: {
       require: false,
     },
+    busList: {
+      require: true,
+    },
+  },
+  methods: {
+    async getBus(id) {
+      let response = await ourFleetService.getBus(id);
+      if (response.status == "success") {
+        this.busDetailInfo = response.data;
+        this.visible = true;
+      }
+    },
+    editBus(id){
+      this.$emit('edit', id)
+    }
   },
 };
 </script>

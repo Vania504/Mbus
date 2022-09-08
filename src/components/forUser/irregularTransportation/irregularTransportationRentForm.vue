@@ -1,11 +1,23 @@
 <template>
   <div>
+    <v-snackbar top v-model="successSnackbar" color="success">
+      <v-row align="center">
+        <v-icon class="mx-3">mdi-check</v-icon>
+        <v-col>
+          <span>Ваше замовлення успішно надіслано</span>
+        </v-col>
+      </v-row>
+    </v-snackbar>
     <v-row justify="center" no-gutters>
       <p class="textStyle">
         Щоб орендувати автобус, запоніть заявку нижче, ми зателефонуємо Вам ,
         щоб уточнити деталі і розрахувати вартість Вашого замовлення
       </p>
-      <v-card :width="$vuetify.breakpoint.xs ? '100%' : '1160px'" class="mb-10" :elevation="$vuetify.breakpoint.xs ? '0' : ''">
+      <v-card
+        :width="$vuetify.breakpoint.xs ? '100%' : '1160px'"
+        class="mb-10"
+        :elevation="$vuetify.breakpoint.xs ? '0' : ''"
+      >
         <v-row justify="center" no-gutters>
           <v-col
             style="text-align: left"
@@ -69,6 +81,9 @@
                 ><v-autocomplete
                   dense
                   outlined
+                  :items="Object.values(busList)"
+                  :item-value="'id'"
+                  :item-text="'model'"
                   v-model="userData.bus"
                   :error-messages="busError"
                   @blur="$v.userData.bus.$touch()"
@@ -80,7 +95,7 @@
                   dense
                   outlined
                   color="rgba(8, 88, 149, 0.73)"
-                  v-model="userData.route"
+                  v-model="userData.destination"
               /></v-col>
             </v-row>
             <v-card-actions class="mb-15 mt-3">
@@ -109,10 +124,14 @@
 <script>
 import { validationMixin } from "vuelidate";
 import { required, minLength } from "vuelidate/lib/validators";
+import irregularTransportationService from "@/requests/admin/irregularTransportationService";
+import ourFleetService from "@/requests/admin/ourFleetService";
 export default {
   mixins: [validationMixin],
   data: () => ({
     userData: {},
+    busList: [],
+    successSnackbar: false,
   }),
   validations: {
     userData: {
@@ -134,12 +153,31 @@ export default {
       },
     },
   },
+  mounted() {
+    this.getBuses();
+  },
   methods: {
-    sendOrder() {
+    async sendOrder() {
       this.$v.$touch();
       if (!this.$v.$invalid) {
-        console.log("Success send message");
+        let order = new FormData();
+        order.append("name", this.userData.name);
+        order.append("count", this.userData.quantity_people);
+        order.append("phone_number", this.userData.phone_number.replace(/\D+/g, ""));
+        order.append("departure", this.userData.departure_point);
+        order.append("bus_id", parseInt(this.userData.bus));
+        order.append("destination", this.userData.destination || '');
+        order.append("status", 1);
+        let response = await irregularTransportationService.sendOrder(order);
+        if (response.status == "success") {
+          this.userData = {};
+          this.successSnackbar = true;
+        }
       }
+    },
+    async getBuses() {
+      let response = await ourFleetService.getBuses();
+      this.busList = response.data;
     },
     isNumber(evt) {
       evt = evt ? evt : window.event;

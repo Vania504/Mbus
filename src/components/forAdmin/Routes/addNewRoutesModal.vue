@@ -64,8 +64,6 @@
                     v-model="item.name"
                     color="#085895"
                   />
-                  <!-- :error-messages="modelNameError"
-              @blur="$v.bus.model_name.$touch()" -->
                 </v-col>
                 <v-col cols="7" class="ml-5 py-0">
                   <v-text-field
@@ -74,11 +72,9 @@
                     dense
                     placeholder="Номер телефону"
                     v-mask="'+38 (###) ####-###'"
-                    v-model="route.phone_number"
+                    v-model="item.phone"
                     color="#085895"
                   />
-                  <!-- :error-messages="modelNameError"
-              @blur="$v.bus.model_name.$touch()" -->
                 </v-col>
               </v-row>
             </v-col>
@@ -104,7 +100,7 @@
             column
             multiple
             class="ml-2"
-            v-model="route.daysOfDepartute"
+            v-model="route.daysOfDeparture"
           >
             <v-chip
               v-for="day in daysOfDeparture"
@@ -132,6 +128,9 @@
               placeholder="Setra S 417 GT-HD"
               v-model="route.bus"
               color="#085895"
+              :items="Object.values(busList)"
+              :item-value="'id'"
+              :item-text="'model'"
               :error-messages="busError"
               @blur="$v.route.bus.$touch()"
             />
@@ -282,7 +281,7 @@
         </v-row>
         <!-- /Detail route -->
       </v-col>
-      <route-shedule />
+      <route-shedule @shedule="setShedule"/>
       <v-card-actions>
         <v-row no-gutters justify="center" class="mt-8 mb-5">
           <v-btn
@@ -306,6 +305,7 @@ import routeShedule from "./routeShedule.vue";
 import { validationMixin } from "vuelidate";
 import { required } from "vuelidate/lib/validators";
 import googleMapsService from "@/requests/googleMaps/googleMapsService";
+import requestFormData from "@/requests/requestFormData";
 export default {
   mixins: [validationMixin],
   components: {
@@ -317,9 +317,8 @@ export default {
       daysOfDeparture: [],
       driver_phone_number: [
         {
-          id: 1,
           name: "",
-          phone_number: "",
+          phone: "",
         },
       ],
       ukraine_city: [],
@@ -327,32 +326,39 @@ export default {
     },
     daysOfDeparture: [
       {
-        id: 1,
+        id: 0,
         day: "Пн",
+        key: 'mon'
+      },
+      {
+        id: 1,
+        day: "Вт",
+        key: 'tue'
       },
       {
         id: 2,
-        day: "Вт",
+        day: "Ср",
+        key: 'wed'
       },
       {
         id: 3,
-        day: "Ср",
+        day: "Чт",
+        key: 'thu'
       },
       {
         id: 4,
-        day: "Чт",
+        day: "Пт",
+        key: 'fri'
       },
       {
         id: 5,
-        day: "Пт",
+        day: "Сб",
+        key: 'sat'
       },
       {
         id: 6,
-        day: "Сб",
-      },
-      {
-        id: 7,
         day: "Нд",
+        key: 'sun'
       },
     ],
     ukraineCity: "",
@@ -386,20 +392,43 @@ export default {
     isEdit: {
       require: true,
     },
+    busList: {
+      require: true,
+    }
   },
   methods: {
     createRoute() {
       this.$v.$touch();
       if (!this.$v.$invalid) {
-        alert("Function creatRoute work success");
-        this.$emit("close");
+        let daysOfDepartureFiltered = []
+        this.daysOfDeparture.forEach((day) => 
+        {
+          if(this.route.daysOfDeparture.includes(day.id)){
+            daysOfDepartureFiltered[`${day.key}`] = '1';
+          }else {
+            daysOfDepartureFiltered[`${day.key}`] = '0';
+          }
+        })
+        let data = {
+          departure: this.route.route_name_start,
+          destination: this.route.route_name_end,
+          bus_id: this.route.bus,
+          departure_time: this.route.departure_time,
+          status: "Active",
+          driver_phones: this.route.driver_phone_number,
+          ukraine_city: this.route.ukraine_city,
+          foreign_city: this.route.other_country_city,
+          route_path_image_id: 1,
+          departure_days: daysOfDepartureFiltered,
+        };
+        let route = requestFormData.jsonToFormData(data);
+        this.$emit("createRoute", route);
       }
     },
     addNewDriverPhoneNumber() {
       this.route.driver_phone_number.push({
-        id: Date.now(),
         name: "",
-        phone_number: "",
+        number: "",
       });
     },
     async addNewUkraineCity() {

@@ -30,14 +30,24 @@
       v-for="item in shedule"
       :key="item.id"
     >
-      <v-row justify="center" class="mt-3">
+    <v-row justify="center" class="mt-3">
+        <v-col cols="3" class="ml-7">
+          <span>{{item.time}}</span>
+        </v-col>
+        <v-col cols="8">
+          <span>{{item.city}}</span>
+        </v-col>
+      </v-row>
+    </div>
+    <v-row justify="center" class="mt-3">
         <v-col cols="3" class="ml-7">
           <v-text-field
             class="rounded-lg"
             dense
             outlined
             placeholder="Введіть годину"
-            v-model="item.departure_time"
+            v-mask="'##-##'"
+            v-model="sheduleItem.time"
           />
         </v-col>
         <v-col cols="8">
@@ -46,11 +56,10 @@
             dense
             outlined
             placeholder="Введіть місце.."
-            v-model="item.departure_stop"
+            v-model="sheduleItem.city"
           />
         </v-col>
       </v-row>
-    </div>
     <v-btn icon class="mt-2"
       ><v-icon large color="#243949" @click="addNewItemInShedule"
         >mdi-plus-circle</v-icon
@@ -63,21 +72,16 @@
 export default {
   data: () => ({
     isUkraine: true,
-    shedule: [
-      {
-        id: 1,
-        departure_time: "",
-        departure_stop: "",
-      },
-    ],
+    shedule: [],
+    sheduleItem: {},
   }),
   methods: {
     addNewItemInShedule() {
       this.shedule.push({
-        id: Date.now(),
-        departure_time: "",
-        departure_stop: "",
+        time: this.sheduleItem.time,
+        city: this.sheduleItem.city,
       });
+      this.$emit('shedule', this.shedule);
     },
   },
 };

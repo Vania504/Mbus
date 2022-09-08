@@ -8,22 +8,22 @@ export default {
 		})
 		return response?.data
 	},
-	async updateRoute(uuid, form) {
-		const response = await requestService.post(`/route/${uuid}`, form, {
+	async updateRoute(id, form) {
+		const response = await requestService.post(`/route/${id}`, form, {
 			headers: { Authorization: `Bearer ${store.getters.loggedUser.token}` }
 		})
 		return response?.data
 	},
-	async getRoute(uuid) {
-		const response = await requestService.get(`/route/${uuid}`)
+	async getRoute(id) {
+		const response = await requestService.get(`/route/${id}`)
+		return response?.data
+	},
+	async getRouteForAdmin() {
+		const response = await requestService.get(`/route`)
 		return response?.data
 	},
 	async getRoutes() {
 		const response = await requestService.get(`/route`)
-		return response?.data
-	},
-	async deleteRoute(uuid) {
-		const response = await requestService.post(`/${uuid}`)
 		return response?.data
 	},
 }

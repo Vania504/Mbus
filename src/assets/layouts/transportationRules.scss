@@ -99,3 +99,32 @@
         }
     }
 }
+@media (max-width:800px) {
+    .main_title_transportation{
+        font-size: 25px; 
+    }
+    .main_conditions{
+        &__title{
+            font-size: 15px; 
+        }
+        
+        &__desc{
+            li{
+                font-size: 13px;  
+                margin-top: 10px;
+            }
+        }
+    }
+    .prohibited{
+        &__title{
+            font-size: 25px;
+        }
+        &__desc{
+            li{
+                font-size: 13px;
+                margin-left: -25px;
+                margin-top: 10px;
+            }
+        }
+    }
+}

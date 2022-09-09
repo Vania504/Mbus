@@ -540,7 +540,15 @@ export default {
           this.route.other_country_city.push(city);
         }
       });
+      this.routeDetailInfo.departure_days.mon == '1' ? this.route.daysOfDeparture.push(0) : '';
+      this.routeDetailInfo.departure_days.tue == '1' ? this.route.daysOfDeparture.push(1) : '';
+      this.routeDetailInfo.departure_days.wed == '1' ? this.route.daysOfDeparture.push(2) : '';
+      this.routeDetailInfo.departure_days.thu == '1' ? this.route.daysOfDeparture.push(3) : '';
+      this.routeDetailInfo.departure_days.fri == '1' ? this.route.daysOfDeparture.push(4) : '';
+      this.routeDetailInfo.departure_days.sun == '1' ? this.route.daysOfDeparture.push(5) : '';
+      this.routeDetailInfo.departure_days.sat == '1' ? this.route.daysOfDeparture.push(6) : '';
       this.routesSheduleKey++;
+      console.log(this.route)
     },
     isNumber(evt) {
       evt = evt ? evt : window.event;

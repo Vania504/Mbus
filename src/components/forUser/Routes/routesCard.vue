@@ -7,12 +7,12 @@
         ? 'mx-10'
         : 'mx-5'
     "
-    :width="$vuetify.breakpoint.xs ? '180px' : '330px'"
+    :width="$vuetify.breakpoint.xs ? '180px' : '320px'"
     :height="$vuetify.breakpoint.xs ? '120px' : ''"
     :style="$vuetify.breakpoint.xs ? 'text-align: left;' : ''"
   >
     <div
-      @click="$router.push('/routes/' + 1)"
+      @click="$router.push('/routes/' + route.id)"
       v-if="$vuetify.breakpoint.xs"
       style="
         position: absolute;
@@ -36,7 +36,7 @@
       </v-col>
     </div>
     <img
-      :width="$vuetify.breakpoint.xs ? '180px' : '330px'"
+      :width="$vuetify.breakpoint.xs ? '180px' : '320px'"
       :height="$vuetify.breakpoint.xs ? '120px' : ''"
       src="@/assets/img/test.svg"
     />

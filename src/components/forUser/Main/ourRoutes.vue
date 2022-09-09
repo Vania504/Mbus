@@ -21,14 +21,16 @@
     </v-row>
     <swiper
       v-if="!$vuetify.breakpoint.sm && !$vuetify.breakpoint.xs"
-      class="d-none d-lg-block pt-5 pb-5"
+      class="pt-5 pb-5"
       :style="{
         '--swiper-navigation-color': '#000000',
       }"
       :options="swiperOption"
     >
-      <swiper-slide v-for="i in 9" :key="i">
-        <routes-card />
+      <swiper-slide v-for="route in routes" :key="route.id">
+        <v-row no-gutters justify="center">
+          <routes-card :route="route"/>
+        </v-row>
       </swiper-slide>
       <div class="swiper-button-prev" slot="button-prev"></div>
       <div class="swiper-button-next" slot="button-next"></div>
@@ -41,8 +43,8 @@
       }"
       :options="swiperMediumOption"
     >
-      <swiper-slide v-for="i in 9" :key="i">
-        <routes-card />
+      <swiper-slide v-for="route in routes" :key="route.id">
+        <routes-card :route="route"/>
       </swiper-slide>
       <div class="swiper-button-prev" slot="button-prev"></div>
       <div class="swiper-button-next" slot="button-next"></div>
@@ -54,8 +56,8 @@
       }"
       :options="swiperMobileOption"
     >
-      <swiper-slide v-for="i in 9" :key="i">
-        <routes-card />
+      <swiper-slide v-for="route in routes" :key="route.id">
+        <routes-card :route="route" />
       </swiper-slide>
     </swiper>
   </v-container>
@@ -65,6 +67,7 @@
 import { Swiper, SwiperSlide } from "vue-awesome-swiper";
 import "swiper/css/swiper.css";
 import routesCard from "../Routes/routesCard.vue";
+import routesService from "@/requests/admin/routesService";
 export default {
   name: "swiper-example-loop-group",
   title: "Loop mode with multiple slides per group",
@@ -76,6 +79,7 @@ export default {
   data() {
     return {
       indexItem: 0,
+      routes: [],
       swiperOption: {
         slidesPerView: 3,
         spaceBetween: 0,
@@ -123,6 +127,15 @@ export default {
         },
       },
     };
+  },
+  mounted() {
+    this.getRoutes();
+  },
+  methods: {
+    async getRoutes() {
+      let response = await routesService.getRoutes();
+      this.routes = response.data;
+    },
   },
 };
 </script>

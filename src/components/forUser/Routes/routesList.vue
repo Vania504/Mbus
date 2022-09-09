@@ -8,26 +8,27 @@
       </div>
       <routes-card-mobile
         v-else-if="$vuetify.breakpoint.xs"
-        v-for="i in 9"
-        :key="i"
-        class="mt-5 mb-5"
-        :forAdmin="forAdmin"
-        @edit="$emit('edit', i)"
-        @delete="$emit('delete', i)"
-      />
-      <routes-card
-        v-else
-        v-for="index in 9"
+        v-for="(route,index) in routes"
         :key="index"
         class="mt-5 mb-5"
         :forAdmin="forAdmin"
-        @edit="$emit('edit', i)"
-        @delete="$emit('delete', i)"
+        @edit="$emit('edit', route.id)"
+        @delete="$emit('delete', route.id)"
+      />
+      <routes-card
+        v-else
+        v-for="route in routes"
+        :key="route.id"
+        class="mt-5 mb-5"
+        :forAdmin="forAdmin"
+        :route="route"
+        @edit="$emit('edit', route.id)"
+        @delete="$emit('delete', route.id)"
       />    
       <card-add-new
         title="Новий маршрут"
         width="330px"
-        height="385px"
+        height="355px"
         class="mt-5 mx-5"
         @addNew="$emit('addNew')"
         v-if="forAdmin"

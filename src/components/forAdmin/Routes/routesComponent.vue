@@ -1,7 +1,7 @@
 <template>
   <div>
     <routes-list
-      :routes="[{ id: 1 }]"
+      :routes="routes"
       :forAdmin="true"
       @addNew="showModal = true"
       @edit="getRoute"
@@ -11,9 +11,10 @@
       v-if="showModal"
       :visible="showModal"
       :isEdit="isEdit"
-      :route="route"
+      :routeDetailInfo="routeDetailInfo"
       :busList="busList"
       @createRoute="createRoute"
+      @editRoute="editRoute"
       @close="(showModal = false), (isEdit = false)"
     />
   </div>
@@ -34,25 +35,34 @@ export default {
     isEdit: false,
     busList: [],
     routes: [],
-    route: {},
+    routeDetailInfo: {},
   }),
   mounted(){
     this.getBuses();
+    this.getRoutes();
   },
   methods: {
     async createRoute(route){
       let response = await routesService.createRoute(route);
       if(response.status == 'success'){
         this.showModal = false;
+        this.getRoutes();
+      }
+    },
+    async editRoute(id, route){
+      let response = await routesService.updateRoute(id, route);
+      if(response.status == 'success'){
+        this.showModal = false;
+        this.getRoutes();
       }
     },
     async getRoutes() {
-      let response = await routesService.getRoutes();
+      let response = await routesService.getRouteForAdmin();
       this.routes = response.data;
     },
     async getRoute(id) {
       let response = await routesService.getRoute(id);
-      this.route = response.data;
+      this.routeDetailInfo = response.data;
       this.showModal = true;
       this.isEdit = true;
     },

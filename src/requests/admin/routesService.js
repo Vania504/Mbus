@@ -15,11 +15,15 @@ export default {
 		return response?.data
 	},
 	async getRoute(id) {
-		const response = await requestService.get(`/route/${id}`)
+		const response = await requestService.get(`/route/${id}`, {
+			headers: { Authorization: `Bearer ${store.getters.loggedUser.token}` }
+		})
 		return response?.data
 	},
 	async getRouteForAdmin() {
-		const response = await requestService.get(`/route`)
+		const response = await requestService.get(`/route`, {
+			headers: { Authorization: `Bearer ${store.getters.loggedUser.token}` }
+		})
 		return response?.data
 	},
 	async getRoutes() {

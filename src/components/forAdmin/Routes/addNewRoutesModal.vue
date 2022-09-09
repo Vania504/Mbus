@@ -134,8 +134,6 @@
               :error-messages="busError"
               @blur="$v.route.bus.$touch()"
             />
-            <!-- :error-messages="modelNameError"
-              @blur="$v.bus.model_name.$touch()" -->
           </v-col>
         </v-row>
         <!-- /Bus  -->
@@ -157,6 +155,7 @@
               v-mask="'##'"
               :error-messages="quantitySeatsError"
               @blur="$v.route.quantity_seats.$touch()"
+              disabled
             />
           </v-col>
         </v-row>
@@ -281,10 +280,26 @@
         </v-row>
         <!-- /Detail route -->
       </v-col>
-      <route-shedule @shedule="setShedule"/>
+      <route-shedule
+        @shedule="setShedule"
+        :isEdit="isEdit"
+        :sheduleDetail="shedule"
+        :key="routesSheduleKey"
+      />
       <v-card-actions>
         <v-row no-gutters justify="center" class="mt-8 mb-5">
           <v-btn
+            style="text-transform: none; font-size: 16px; font-weight: 400"
+            width="208px"
+            height="39px"
+            color="#085895"
+            class="white--text"
+            @click="editRoute"
+            v-if="isEdit"
+            >Зберегти зміни</v-btn
+          >
+          <v-btn
+            v-else
             style="text-transform: none; font-size: 16px; font-weight: 400"
             width="208px"
             height="39px"
@@ -328,43 +343,45 @@ export default {
       {
         id: 0,
         day: "Пн",
-        key: 'mon'
+        key: "mon",
       },
       {
         id: 1,
         day: "Вт",
-        key: 'tue'
+        key: "tue",
       },
       {
         id: 2,
         day: "Ср",
-        key: 'wed'
+        key: "wed",
       },
       {
         id: 3,
         day: "Чт",
-        key: 'thu'
+        key: "thu",
       },
       {
         id: 4,
         day: "Пт",
-        key: 'fri'
+        key: "fri",
       },
       {
         id: 5,
         day: "Сб",
-        key: 'sat'
+        key: "sat",
       },
       {
         id: 6,
         day: "Нд",
-        key: 'sun'
+        key: "sun",
       },
     ],
     ukraineCity: "",
     otherCountryCity: "",
     ukraineCityError: "",
     otherCountryCityError: "",
+    shedule: [],
+    routesSheduleKey: 0,
   }),
   validations: {
     route: {
@@ -394,21 +411,28 @@ export default {
     },
     busList: {
       require: true,
+    },
+    routeDetailInfo: {
+      require: false,
+    },
+  },
+  mounted() {
+    if (this.isEdit) {
+      this.setRoute();
     }
   },
   methods: {
     createRoute() {
       this.$v.$touch();
       if (!this.$v.$invalid) {
-        let daysOfDepartureFiltered = []
-        this.daysOfDeparture.forEach((day) => 
-        {
-          if(this.route.daysOfDeparture.includes(day.id)){
-            daysOfDepartureFiltered[`${day.key}`] = '1';
-          }else {
-            daysOfDepartureFiltered[`${day.key}`] = '0';
+        let daysOfDepartureFiltered = [];
+        this.daysOfDeparture.forEach((day) => {
+          if (this.route.daysOfDeparture.includes(day.id)) {
+            daysOfDepartureFiltered[`${day.key}`] = "1";
+          } else {
+            daysOfDepartureFiltered[`${day.key}`] = "0";
           }
-        })
+        });
         let data = {
           departure: this.route.route_name_start,
           destination: this.route.route_name_end,
@@ -420,9 +444,39 @@ export default {
           foreign_city: this.route.other_country_city,
           route_path_image_id: 1,
           departure_days: daysOfDepartureFiltered,
+          route_time: this.shedule,
         };
         let route = requestFormData.jsonToFormData(data);
         this.$emit("createRoute", route);
+      }
+    },
+    editRoute(){
+      this.$v.$touch();
+      if (!this.$v.$invalid) {
+        let daysOfDepartureFiltered = [];
+        this.daysOfDeparture.forEach((day) => {
+          if (this.route.daysOfDeparture.includes(day.id)) {
+            daysOfDepartureFiltered[`${day.key}`] = "1";
+          } else {
+            daysOfDepartureFiltered[`${day.key}`] = "0";
+          }
+        });
+        let data = {
+          departure: this.route.route_name_start,
+          destination: this.route.route_name_end,
+          bus_id: this.route.bus,
+          departure_time: this.route.departure_time,
+          status: "Active",
+          driver_phones: this.route.driver_phone_number,
+          ukraine_city: this.route.ukraine_city,
+          foreign_city: this.route.other_country_city,
+          route_path_image_id: 1,
+          departure_days: daysOfDepartureFiltered,
+          route_time: this.shedule,
+        };
+        let route = requestFormData.jsonToFormData(data);
+
+        this.$emit("editRoute",this.route.id, route);
       }
     },
     addNewDriverPhoneNumber() {
@@ -458,6 +512,35 @@ export default {
       } else {
         this.otherCountryCityError = "Такого міста не існує";
       }
+    },
+    setShedule(shedule) {
+      this.shedule = shedule;
+    },
+    setRoute() {
+      this.$set(this.route, "id", this.routeDetailInfo.id)
+      this.$set(this.route, "route_name_start", this.routeDetailInfo.departure);
+      this.$set(this.route, "route_name_end", this.routeDetailInfo.destination);
+      this.$set(this.route, "bus", this.routeDetailInfo.bus_id);
+      this.$set(this.route, "quantity_seats", this.routeDetailInfo.bus.seats);
+      this.$set(
+        this.route,
+        "departure_time",
+        this.routeDetailInfo.departure_time
+      );
+      this.$set(
+        this.route,
+        "driver_phone_number",
+        this.routeDetailInfo.driver_phones
+      );
+      this.shedule = this.routeDetailInfo.route_time;
+      this.routeDetailInfo.cities.forEach((city) => {
+        if (city.type == "Ukraine") {
+          this.route.ukraine_city.push(city);
+        } else {
+          this.route.other_country_city.push(city);
+        }
+      });
+      this.routesSheduleKey++;
     },
     isNumber(evt) {
       evt = evt ? evt : window.event;

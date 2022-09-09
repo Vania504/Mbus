@@ -30,36 +30,58 @@
       v-for="item in shedule"
       :key="item.id"
     >
-    <v-row justify="center" class="mt-3">
+      <v-row
+        no-gutters
+        justify="center"
+        class="pt-3 pb-3"
+        v-if="isUkraine && item.is_reverse == '0'"
+      >
         <v-col cols="3" class="ml-7">
-          <span>{{item.time}}</span>
+          <span>{{ item.time }}</span>
         </v-col>
         <v-col cols="8">
-          <span>{{item.city}}</span>
+          <span>{{ item.city }}</span>
+        </v-col>
+      </v-row>
+      <v-row
+        no-gutters
+        justify="center"
+        class="pt-3 pb-3"
+        v-else-if="!isUkraine && item.is_reverse == '1'"
+      >
+        <v-col cols="3" class="ml-7">
+          <span>{{ item.time }}</span>
+        </v-col>
+        <v-col cols="8">
+          <span>{{ item.city }}</span>
         </v-col>
       </v-row>
     </div>
-    <v-row justify="center" class="mt-3">
-        <v-col cols="3" class="ml-7">
-          <v-text-field
-            class="rounded-lg"
-            dense
-            outlined
-            placeholder="Введіть годину"
-            v-mask="'##-##'"
-            v-model="sheduleItem.time"
-          />
-        </v-col>
-        <v-col cols="8">
-          <v-text-field
-            class="ml-15 rounded-lg"
-            dense
-            outlined
-            placeholder="Введіть місце.."
-            v-model="sheduleItem.city"
-          />
-        </v-col>
-      </v-row>
+    <v-row justify="center" class="mt-3" v-on:keyup.enter="addNewItemInShedule">
+      <v-col cols="3" class="ml-7">
+        <v-text-field
+          class="rounded-lg"
+          dense
+          outlined
+          placeholder="Введіть годину"
+          v-mask="'##:##'"
+          v-model="sheduleItem.time"
+          :error-messages="timeError"
+          @blur="$v.sheduleItem.time.$touch()"
+        />
+      </v-col>
+      <v-col cols="8">
+        <v-text-field
+          class="ml-15 rounded-lg"
+          dense
+          outlined
+          placeholder="Введіть місце.."
+          v-model="sheduleItem.city"
+          :error-messages="cityError"
+          @blur="$v.sheduleItem.city.$touch()"
+        />
+      </v-col>
+    </v-row>
     <v-btn icon class="mt-2"
       ><v-icon large color="#243949" @click="addNewItemInShedule"
         >mdi-plus-circle</v-icon
@@ -69,19 +91,70 @@
 </template>
 
 <script>
+import { validationMixin } from "vuelidate";
+import { required } from "vuelidate/lib/validators";
 export default {
+  mixins: [validationMixin],
   data: () => ({
     isUkraine: true,
     shedule: [],
     sheduleItem: {},
   }),
+  props: {
+    sheduleDetail: {
+      require: false,
+    },
+    isEdit: {
+      require: true,
+    },
+  },
+  validations: {
+    sheduleItem: {
+      time: {
+        required,
+      },
+      city: {
+        required,
+      },
+    },
+  },
+  mounted() {
+    if (this.isEdit) {
+      this.shedule = this.sheduleDetail;
+    }
+  },
   methods: {
     addNewItemInShedule() {
-      this.shedule.push({
-        time: this.sheduleItem.time,
-        city: this.sheduleItem.city,
-      });
-      this.$emit('shedule', this.shedule);
+      this.$v.$touch();
+      if (!this.$v.$invalid) {
+        this.shedule.push({
+          time: this.sheduleItem.time,
+          city: this.sheduleItem.city,
+          is_reverse: this.isUkraine ? "0" : "1",
+        });
+        this.sheduleItem = {};
+        this.$v.$reset();
+        this.$emit("shedule", this.shedule);
+      }
+    },
+  },
+  computed: {
+    timeError() {
+      const errors = [];
+      if (!this.$v.sheduleItem.time.$dirty) {
+        return errors;
+      }
+      !this.$v.sheduleItem.time.required && errors.push("Поле час обов'язкове");
+      return errors;
+    },
+    cityError() {
+      const errors = [];
+      if (!this.$v.sheduleItem.city.$dirty) {
+        return errors;
+      }
+      !this.$v.sheduleItem.city.required &&
+        errors.push("Поле місто обов'язкове");
+      return errors;
     },
   },
 };

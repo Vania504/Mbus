@@ -63,7 +63,7 @@
     </v-row>
     <v-col class="px-0" v-if="!$vuetify.breakpoint.xs">
       <h3 style="font-weight: 500; font-size: 20px">
-        Свіноуйсьце–Камінець-Подільський
+        {{route.departure}} - {{route.destination}}
       </h3>
     </v-col>
     <v-card-actions v-if="!$vuetify.breakpoint.xs">
@@ -93,6 +93,9 @@ export default {
     forAdmin: {
       require: true,
     },
+    route: {
+      require: true,
+    }
   },
 };
 </script>

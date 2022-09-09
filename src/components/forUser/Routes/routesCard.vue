@@ -31,7 +31,7 @@
             margin-right: 20px;
           "
         >
-          Долина—Варшава
+        {{route.departure}} - {{route.destination}}
         </h3>
       </v-col>
     </div>
@@ -76,7 +76,7 @@
           color="#085895"
           width="144px"
           height="34px"
-          @click="$router.push('/routes/' + 1)"
+          @click="$router.push('/routes/' + route.id)"
           >Детальніше</v-btn
         >
       </v-row>

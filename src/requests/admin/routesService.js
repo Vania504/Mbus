@@ -15,9 +15,7 @@ export default {
 		return response?.data
 	},
 	async getRoute(id) {
-		const response = await requestService.get(`/route/${id}`, {
-			headers: { Authorization: `Bearer ${store.getters.loggedUser.token}` }
-		})
+		const response = await requestService.get(`/route/${id}`)
 		return response?.data
 	},
 	async getRouteForAdmin() {
@@ -27,7 +25,7 @@ export default {
 		return response?.data
 	},
 	async getRoutes() {
-		const response = await requestService.get(`/route`)
+		const response = await requestService.get(`/routes`)
 		return response?.data
 	},
 }

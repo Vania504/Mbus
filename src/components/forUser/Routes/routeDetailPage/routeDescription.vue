@@ -11,22 +11,18 @@
       style="color: #085895; font-size: 24px"
       v-if="!$vuetify.breakpoint.xs"
     >
-      Гдиня–Чернівці
+      {{ route.departure }}–{{ route.destination }}
     </span>
     <div style="text-align: left">
       <div style="font-size: 16px; color: #085895" class="mt-1">
         <p :class="$vuetify.breakpoint.xs ? 'titleMobile' : 'title'">
           Телефони водіїв:
         </p>
-        <span :style="$vuetify.breakpoint.xs ? 'font-size: 14px' : ''"
-          >+38(098)000-00-00<span class="driverNameColor">–Андрій</span></span
-        ><br />
-        <span :style="$vuetify.breakpoint.xs ? 'font-size: 14px' : ''"
-          >+38(098)000-00-00<span class="driverNameColor">–Андрій</span></span
-        ><br />
-        <span :style="$vuetify.breakpoint.xs ? 'font-size: 14px' : ''"
-          >+38(098)000-00-00<span class="driverNameColor">–Андрій</span></span
-        >
+        <div v-for="driver in route.driver_phones" :key="driver.id">
+          <span :style="$vuetify.breakpoint.xs ? 'font-size: 14px' : ''"
+            >{{driver.phone}}<span class="driverNameColor">–{{driver.name}}</span></span
+          ><br />
+        </div>
       </div>
       <div class="mt-2">
         <span :class="$vuetify.breakpoint.xs ? 'titleMobile' : 'title'"
@@ -37,13 +33,13 @@
           class="py-0"
           :class="$vuetify.breakpoint.xs ? 'textMobile' : 'text'"
         >
-          <span>Пн</span>
-          <span class="ml-2 mr-2">Вт</span>
-          <span>Ср</span>
-          <span class="ml-2 mr-2">Чт</span>
-          <span>Пт</span>
-          <span class="ml-2 mr-2">Сб</span>
-          <span>Нд</span>
+          <span :style="route.departure_days.mon == '1' ? 'text-decoration: underline;' : ''">Пн</span>
+          <span :style="route.departure_days.tue == '1' ? 'text-decoration: underline;' : ''" class="ml-2 mr-2">Вт</span>
+          <span :style="route.departure_days.wed == '1' ? 'text-decoration: underline;' : ''">Ср</span>
+          <span :style="route.departure_days.thu == '1' ? 'text-decoration: underline;' : ''" class="ml-2 mr-2">Чт</span>
+          <span :style="route.departure_days.fri == '1' ? 'text-decoration: underline;' : ''">Пт</span>
+          <span :style="route.departure_days.sat == '1' ? 'text-decoration: underline;' : ''" class="ml-2 mr-2">Сб</span>
+          <span :style="route.departure_days.sun == '1' ? 'text-decoration: underline;' : ''">Нд</span>
         </v-row>
       </div>
       <div class="mt-2">
@@ -60,7 +56,7 @@
             >mdi-clock-outline</v-icon
           >
           <v-icon color="#085895" large v-else>mdi-clock-outline</v-icon
-          ><span class="ml-1">12:30</span></v-row
+          ><span class="ml-1">{{ route.departure_time }}</span></v-row
         >
       </div>
       <div class="mt-2">
@@ -75,7 +71,7 @@
             :width="$vuetify.breakpoint.xs ? '20px' : '30px'"
             :height="$vuetify.breakpoint.xs ? '20px' : '30px'"
             src="@/assets/img/busServiceIcon/busIcon.svg"
-          /><span class="ml-2">Setra S 417 GT-HD</span></v-row
+          /><span class="ml-2">{{ route.bus.model }}</span></v-row
         >
       </div>
       <div class="mt-2">
@@ -92,7 +88,8 @@
             src="@/assets/img/busServiceIcon/chairIcon.svg"
           />
           <span class="ml-2"
-            >60<span class="drivingSeats">+2</span> місць</span
+            >{{ route.bus.seats
+            }}<span class="drivingSeats">+2</span> місць</span
           ></v-row
         >
       </div>
@@ -101,7 +98,13 @@
 </template>
 
 <script>
-export default {};
+export default {
+  props: {
+    route: {
+      require: true,
+    },
+  },
+};
 </script>
 
 <style>

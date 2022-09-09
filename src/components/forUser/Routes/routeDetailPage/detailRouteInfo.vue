@@ -9,14 +9,28 @@
     >
     <p class="mt-2">
       <span
-        ><span class="countryName">Україна:</span> Кам’янець - Подільський —
-        Хотин — Чернівці — Снятин — Коломия — Івано - Франківськ — Калуш —
-        Долина — Стрий — Львів — КПП Рава Руська </span
-      ><br />
+        ><span class="countryName">Україна:&nbsp;</span
+        ><span v-for="(city, index) in ukraine_city" :key="city.id">
+          <span v-if="index == 0">{{
+            city.name
+          }}</span>
+          <span v-if="index !== 0"
+            >&nbsp;— {{ city.name }}</span
+          >
+        </span>
+      </span>
+      <br />
       <span
-        ><span class="countryName">Польща:</span> КПП Гребенне — Люблін —
-        Варшава — Плоцк — Торунь — Бидгощ — Гданськ — Гдиня</span
-      >
+        ><span class="countryName">Інша країна:&nbsp;</span>
+        <span v-for="(city, index) in foreign_city" :key="city.id">
+          <span v-if="index == 0">{{
+            city.name
+          }}</span>
+          <span v-if="index !== 0"
+            >&nbsp;— {{ city.name }}</span
+          >
+        </span>
+      </span>
     </p>
     <v-row
       justify="center"
@@ -71,8 +85,8 @@
       >
         <center>
           <div
-            v-for="i in 9"
-            :key="i"
+            v-for="time in route.route_time"
+            :key="time.id"
             style="border: 1px solid #acbdcb; border-top: 0px"
             :style="
               $vuetify.breakpoint.xs
@@ -80,7 +94,13 @@
                 : 'width: 790px; margin-left: 2px;'
             "
           >
-            <v-row no-gutters justify="start" class="pt-2" align="center">
+            <v-row
+              no-gutters
+              justify="start"
+              class="pt-2"
+              align="center"
+              v-if="isUkraine && time.is_reverse == '0'"
+            >
               <v-col
                 cols="5"
                 xl="4"
@@ -90,16 +110,38 @@
                 class="py-0"
                 :class="$vuetify.breakpoint.xs ? 'ml-3' : ''"
               >
-                <span class="hoursTextStyle">10:30</span>
+                <span class="hoursTextStyle">{{ time.time }}</span>
               </v-col>
               <v-col
                 cols="6"
                 :class="$vuetify.breakpoint.xs ? 'ml-3' : 'ml-15'"
               >
-                <span class="stopTextStyle"
-                  >Гдиня, Dworzec Autobusowy, pl. Grodnicki 1(platf.1) (якщо
-                  більше тексту)</span
-                >
+                <span class="stopTextStyle">{{ time.city }}</span>
+              </v-col>
+            </v-row>
+            <v-row
+              no-gutters
+              justify="start"
+              class="pt-2"
+              align="center"
+              v-else-if="!isUkraine && time.is_reverse == '1'"
+            >
+              <v-col
+                cols="5"
+                xl="4"
+                lg="4"
+                md="4"
+                sm="4"
+                class="py-0"
+                :class="$vuetify.breakpoint.xs ? 'ml-3' : ''"
+              >
+                <span class="hoursTextStyle">{{ time.time }}</span>
+              </v-col>
+              <v-col
+                cols="6"
+                :class="$vuetify.breakpoint.xs ? 'ml-3' : 'ml-15'"
+              >
+                <span class="stopTextStyle">{{ time.city }}</span>
               </v-col>
             </v-row>
           </div>
@@ -117,7 +159,26 @@
 export default {
   data: () => ({
     isUkraine: true,
+    ukraine_city: [],
+    foreign_city: [],
   }),
+  props: {
+    route: {
+      require: true,
+    },
+  },
+  mounted() {
+    this.filterCity();
+  },
+  methods: {
+    filterCity() {
+      this.route.cities.forEach((city) => {
+        city.type == "Ukraine"
+          ? this.ukraine_city.push(city)
+          : this.foreign_city.push(city);
+      });
+    },
+  },
 };
 </script>
 

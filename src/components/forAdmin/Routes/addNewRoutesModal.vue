@@ -482,7 +482,7 @@ export default {
     addNewDriverPhoneNumber() {
       this.route.driver_phone_number.push({
         name: "",
-        number: "",
+        phone: "",
       });
     },
     async addNewUkraineCity() {

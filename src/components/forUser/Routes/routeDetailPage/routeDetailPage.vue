@@ -16,13 +16,13 @@
       </v-col>
     </div>
     <div v-else>
-      <routes-header title="Гдиня–Чернівці" />
+      <routes-header :title="route.departure + '-' + route.destination" />
       <v-row justify="center" align="start" no-gutters class="mt-15">
         <route-map />
-        <route-description />
+        <route-description :route="route"/>
       </v-row>
       <v-col>
-        <detail-route-info />
+        <detail-route-info :route="route"/>
       </v-col>
     </div>
   </div>
@@ -33,6 +33,7 @@ import routesHeader from "@/components/UI/routesHeader.vue";
 import routeMap from "./routeMap.vue";
 import routeDescription from "./routeDescription.vue";
 import detailRouteInfo from "./detailRouteInfo.vue";
+import routesService from "@/requests/admin/routesService";
 export default {
   components: {
     routesHeader,
@@ -40,6 +41,18 @@ export default {
     routeDescription,
     detailRouteInfo,
   },
+  data: () => ({
+    route: {},
+  }),
+  mounted(){
+    this.getRoute()
+  },
+  methods: {
+    async getRoute(){
+      let response = await routesService.getRoute(this.$route.params.id);
+      this.route = response.data;
+    }
+  }
 };
 </script>
 

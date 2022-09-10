@@ -276,33 +276,44 @@ export default {
     editBus() {
       this.$v.$touch();
       if (!this.$v.$invalid) {
-        let bus = new FormData();
-        bus.append("status", "Active");
-        bus.append("model", this.bus.model_name);
-        bus.append("description", this.bus.description);
-        bus.append("seats", this.bus.quantity_seats);
+        let images = [];
+        let options = [];
+        this.busImages.forEach((image) => {
+          images.push(image.id);
+        });
         this.service.forEach((service) => {
           service.enters == false
-            ? bus.append(service.key, 0)
-            : bus.append(service.key, 1);
+            ? (options[`${service.key}`] = 0)
+            : (options[`${service.key}`] = 1);
         });
-        this.$emit("updateBus", this.bus.id, bus);
+        let data = {
+          status: "Active",
+          model: this.bus.model_name,
+          description: this.bus.description,
+          seats: this.bus.quantity_seats,
+          images: images,
+          options: options,
+        };
+        let form = requestFormData.jsonToFormData(data);
+        this.$emit("updateBus", this.bus.id, form);
       }
     },
     setBus() {
-      console.log(this.detailInfoBus);
+      if (this.detailInfoBus.options) {
       this.service.forEach((service) => {
         this.detailInfoBus.options[service.key] == 0
-          ? service.enters = false
-          : service.enters = true;
-      });
+          ? (service.enters = false)
+          : (service.enters = true);
+      });}
       this.$set(this.bus, "id", this.detailInfoBus.id);
       this.$set(this.bus, "model_name", this.detailInfoBus.model);
       this.$set(this.bus, "description", this.detailInfoBus.description);
       this.$set(this.bus, "quantity_seats", this.detailInfoBus.seats);
-      this.detailInfoBus.images.forEach((image) => {
-        this.busImages.push(image.images);
-      });
+      if (this.detailInfoBus.images) {
+        this.detailInfoBus.images.forEach((image) => {
+          this.busImages.push(image.images);
+        });
+      }
     },
     setImages(image) {
       this.showRecentlyImage = false;

@@ -46,7 +46,6 @@ export default {
       }
     },
     async updateBus(id, bus) {
-      alert(id);
       let response = await ourFleetService.updateBus(id, bus);
       if (response.status == "success") {
         this.showModal = false;

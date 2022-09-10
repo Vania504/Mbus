@@ -4,7 +4,7 @@
       <div v-if="$vuetify.breakpoint.xs && $vuetify.breakpoint.sm"></div>
       <bus-card-mobile
         v-else-if="$vuetify.breakpoint.xs"
-        v-for="bus in busList"
+        v-for="bus in busList.data"
         :key="bus.uuid"
         :bus="bus"
         @detailInfo="getBus"
@@ -25,7 +25,7 @@
       <card-add-new
         title="Додати автобус"
         width="350px"
-        height="350px"
+        height="390px"
         v-if="forAdmin"
         @addNew="$emit('addNew')"
       />

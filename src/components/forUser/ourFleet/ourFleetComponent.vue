@@ -55,7 +55,7 @@ export default {
   methods: {
     async getBuses(){
       let response = await ourFleetService.getBuses();
-      this.busList = response.data;
+      this.busList = response.data.data;
     }
   }
 };

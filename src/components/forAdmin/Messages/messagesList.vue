@@ -1,15 +1,19 @@
 <template>
   <div>
     <v-col class="px-0 py-0">
-        <messages-message v-for="(message, index) in messages" :key="index" :message="message"  @updateStatus="updateStatus"/>
+      <messages-message
+        v-for="(message, index) in messages"
+        :key="index"
+        :message="message"
+        @updateStatus="updateStatus"
+        @detailMessage="detailMessage"
+      />
     </v-col>
   </div>
 </template>
 
 <script>
 import messagesMessage from "./messagesMessage.vue";
-import contactService from "@/requests/admin/contactService";
-import irregularTransportationService from '@/requests/admin/irregularTransportationService';
 export default {
   components: {
     messagesMessage,
@@ -20,29 +24,16 @@ export default {
     },
     statusList: {
       require: false,
-    }
+    },
   },
   methods: {
-    async updateStatus(id,messageType, statusName){
-      let temporaryStatusList = this.statusList;
-      let status = temporaryStatusList.filter((status) => status.name == statusName);
-      let form = new FormData();
-      form.append('status', parseInt(status[0].id));
-      messageType == 'contact' ? this.updateContactMessage(id,form) : this.updateIrregularMessage(id,form);
+    updateStatus(id, messageType, statusName){
+      this.$emit('updateStatus', id, messageType, statusName)
     },
-    async updateContactMessage(id,form){
-      let response = await contactService.updateMessage(id,form);
-      if(response.status == 'success'){
-        this.$emit('getMessage')
-      }
-    },
-    async updateIrregularMessage(id,form){
-      let response = await irregularTransportationService.updateOrder(id,form);
-      if(response.status == 'success'){
-        this.$emit('getMessage')
-      }
-    },
-  }
+    detailMessage(type, id){
+      this.$emit('detailMessage', type, id)
+    }
+  },
 };
 </script>
 

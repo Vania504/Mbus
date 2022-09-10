@@ -163,10 +163,15 @@ export default {
         let order = new FormData();
         order.append("name", this.userData.name);
         order.append("count", this.userData.quantity_people);
-        order.append("phone_number", this.userData.phone_number.replace(/\D+/g, ""));
+        order.append(
+          "phone_number",
+          this.userData.phone_number.replace(/\D+/g, "")
+        );
         order.append("departure", this.userData.departure_point);
         order.append("bus_id", parseInt(this.userData.bus));
-        order.append("destination", this.userData.destination || '');
+        if (this.userData.destination) {
+          order.append("destination", this.userData.destination);
+        }
         order.append("status", 1);
         let response = await irregularTransportationService.sendOrder(order);
         if (response.status == "success") {

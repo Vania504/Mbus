@@ -7,6 +7,7 @@
         menu ? '' : (isHover = false);
       }
     "
+    @click="detailMessage"
   >
     <v-row align="center" class="mb-5 ml-5">
       <v-checkbox />
@@ -16,7 +17,7 @@
       <v-col cols="8" style="text-align: left">
         <v-row no-gutters align="center">
           <span class="messageTitle">{{ message.type_text }}:&nbsp;</span>
-          <span class="messageText">
+          <span class="messageText pt-1">
             Ім'я та Прізвище: {{ message.name }}&nbsp;<span v-if="message.email"
               >Email: {{ message.email }}</span
             >
@@ -130,6 +131,9 @@ export default {
       this.$emit("updateStatus", id, messageType, statusName);
       this.isHover = false;
     },
+    detailMessage(){
+      this.$emit('detailMessage', this.message.type, this.message.id)
+    }
   },
 };
 </script>

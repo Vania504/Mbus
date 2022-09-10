@@ -1,5 +1,6 @@
 import Vue from 'vue';
 import VueRouter from 'vue-router';
+import store from '../store';
 
 Vue.use(VueRouter);
 
@@ -43,6 +44,12 @@ const routes = [
         path: '/admin',
         name: 'admin',
         component: () => import('@/views/forAdmin/Main.vue'),
+        meta: { requiresLogin: true }
+    },
+    {
+        path: '/login',
+        name: 'admin_login',
+        component: () => import('@/components/forAdmin/signIn.vue'),
     }
 
 ];
@@ -50,5 +57,14 @@ const router = new VueRouter({
     mode: 'hash',
     routes,
 });
+
+router.beforeEach((to, from, next) => {
+    if (to.matched.some(record => record.meta.requiresLogin) && store.getters.loggedUser == null) {
+        next({ name: 'admin_login' })
+    }
+    else {
+        next();
+    }
+})
 
 export default router;

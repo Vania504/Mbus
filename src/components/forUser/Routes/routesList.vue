@@ -8,7 +8,7 @@
       </div>
       <routes-card-mobile
         v-else-if="$vuetify.breakpoint.xs"
-        v-for="(route,index) in routes"
+        v-for="(route,index) in routes.data"
         :key="index"
         class="mt-5 mb-5"
         :forAdmin="forAdmin"
@@ -17,7 +17,7 @@
       />
       <routes-card
         v-else
-        v-for="route in routes"
+        v-for="route in routes.data"
         :key="route.id"
         class="mt-5 mb-5"
         :forAdmin="forAdmin"

@@ -4,6 +4,7 @@
       <modal-header
         :title="isEdit ? 'Редагувати автобус' : 'Новий автобус'"
         @close="$emit('close')"
+        :showCloseIcon="true"
       />
       <v-col style="margin: 20px">
         <v-row align="start" justify="start" no-gutters>

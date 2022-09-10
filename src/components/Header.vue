@@ -13,7 +13,7 @@
           </v-row>
         </v-col>
         <v-col :cols="isAdmin ? '6' : '8'" style="align-self: center">
-          <v-row :justify="isAdmin && !loggedUser ? 'end' : 'center'" align="center">
+          <v-row justify="center" align="center">
             <router-link to="/">
               <span class="headerItems">Головна</span></router-link
             >
@@ -56,18 +56,8 @@
             <router-link to="/contact"
               ><span class="headerItems">Контакти</span></router-link
             >
-            <router-link to="/admin" v-if="isAdmin"
+            <router-link to="/admin" v-if="loggedUser"
               ><span class="headerItems">Адмін</span></router-link
-            >
-          </v-row>
-        </v-col>
-        <v-col v-if="isAdmin && !loggedUser">
-          <v-row justify="end">
-            <v-icon>mdi-account</v-icon>
-            <span class="pointer" @click="signInVisibleModal = true"
-              >Увійти</span
-            >/<span class="pointer" @click="signUpVisibleModal = true"
-              >Реєстрація</span
             >
           </v-row>
         </v-col>
@@ -110,32 +100,14 @@
       <v-row v-else align="center" justify="center" no-gutters>
         <img src="@/assets/img/logoMBus.svg" width="50px" height="30px"/>
       </v-row>
-      <sign-in-modal
-        v-if="signInVisibleModal"
-        :visible="signInVisibleModal"
-        @close="signInVisibleModal = false"
-        @goToSignUp="(signUpVisibleModal = true), (signInVisibleModal = false)"
-      />
-      <sign-up-modal
-        v-if="signUpVisibleModal"
-        :visible="signUpVisibleModal"
-        @close="signUpVisibleModal = false"
-        @goToSignIn="(signUpVisibleModal = false), (signInVisibleModal = true)"
-      />
     </v-app-bar>
   </div>
 </template>
 
 <script>
-import signInModal from "./forAdmin/signInModal.vue";
-import signUpModal from "./forAdmin/signUpModal.vue";
 import { mapGetters } from 'vuex';
 export default {
   name: "appHeader",
-  components: {
-    signInModal,
-    signUpModal,
-  },
   data: () => ({
     phoneNumbers: [
       {

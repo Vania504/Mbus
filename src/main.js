@@ -7,6 +7,7 @@ import VueMask from 'v-mask'
 import Vuelidate from 'vuelidate'
 import './assets/layouts/index.scss'
 import store from './store';
+import Vidle from 'v-idle'
 
 Vue.config.productionTip = false
 
@@ -18,6 +19,7 @@ Vue.use(VueGoogleMaps, {
     language: 'UA',
   }
 })
+Vue.use(Vidle)
 Vue.use(VueMask);
 Vue.use(Vuelidate)
 

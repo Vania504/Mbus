@@ -6,7 +6,7 @@
         :style="$vuetify.breakpoint.xs ? 'font-size: 18px;' : 'font-size: 32px'"
         >{{ title }}</span
       >
-      <v-row justify="end"
+      <v-row justify="end" v-if="showCloseIcon"
         >
         <v-icon v-if="$vuetify.breakpoint.xs" color="white" class="pointer" @click="$emit('close')"
           >mdi-close</v-icon
@@ -24,6 +24,9 @@ export default {
     title: {
       require: true,
     },
+    showCloseIcon: {
+      require: false,
+    }
   },
 };
 </script>

@@ -3,6 +3,7 @@
     <modal-header
       :title="isEdit ? 'Редагувати маршрут' : 'Новий маршрут'"
       @close="closeModal"
+      :showCloseIcon="true"
     />
     <v-card style="overflow: hidden">
       <v-col class="mx-5 mt-5">

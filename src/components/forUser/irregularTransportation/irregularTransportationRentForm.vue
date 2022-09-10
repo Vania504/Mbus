@@ -177,7 +177,7 @@ export default {
     },
     async getBuses() {
       let response = await ourFleetService.getBuses();
-      this.busList = response.data;
+      this.busList = response.data.data;
     },
     isNumber(evt) {
       evt = evt ? evt : window.event;

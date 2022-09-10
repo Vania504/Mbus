@@ -124,6 +124,7 @@ export default {
         if (response.status == "success") {
           this.successSnackbar = true;
           this.userMessage = {};
+          this.$v.$reset();
         }
       }
     },

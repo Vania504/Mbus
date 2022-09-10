@@ -28,4 +28,8 @@ export default {
 		const response = await requestService.get(`/routes`)
 		return response?.data
 	},
+	async getRoutesForMain(){
+		const response = await requestService.get(`/carousel/6`)
+		return response?.data
+	}
 }

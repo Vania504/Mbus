@@ -133,7 +133,7 @@ export default {
   },
   methods: {
     async getRoutes() {
-      let response = await routesService.getRoutes();
+      let response = await routesService.getRoutesForMain();
       this.routes = response.data;
     },
   },

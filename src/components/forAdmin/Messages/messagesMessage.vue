@@ -11,12 +11,18 @@
     <v-row align="center" class="mb-5 ml-5">
       <v-checkbox />
       <v-col cols="2" style="text-align: left">
-        <span>{{ message.name }}</span>
+        <span class="messageTitle">{{ message.name }}</span>
       </v-col>
       <v-col cols="8" style="text-align: left">
-        <span
-          >{{ message.type_text }}: &nbsp; Ім'я та Прізвище: {{ message.name }}</span
-        >
+        <v-row no-gutters align="center">
+          <span class="messageTitle">{{ message.type_text }}:&nbsp;</span>
+          <span class="messageText">
+            Ім'я та Прізвище: {{ message.name }}&nbsp;<span v-if="message.email"
+              >Email: {{ message.email }}</span
+            >
+            Номер телефону: {{ message.phone_number }}
+          </span>
+        </v-row>
       </v-col>
       <v-col cols="1" style="text-align: right" class="px-0">
         <v-row justify="end" no-gutters align="center">
@@ -29,16 +35,44 @@
               .substr(0, 5)
           }}</span>
           <v-row align="start" justify="end" v-else>
-            <div class="icon">
-              <img src="@/assets/img/messageIcon/deleteIcon.svg" />
-            </div>
-            <div class="icon">
-              <img src="@/assets/img/messageIcon/archiveIcon.svg" />
-            </div>
+            <v-tooltip bottom color="rgba(0, 0, 0, 0.5)">
+              <template v-slot:activator="{ on, attrs }">
+                <div class="icon">
+                  <img
+                    v-bind="attrs"
+                    v-on="on"
+                    src="@/assets/img/messageIcon/deleteIcon.svg"
+                  />
+                </div>
+              </template>
+              <span>Видалити</span>
+            </v-tooltip>
+            <v-tooltip bottom color="rgba(0, 0, 0, 0.5)">
+              <template v-slot:activator="{ on, attrs }">
+                <div class="icon">
+                  <img
+                    v-bind="attrs"
+                    v-on="on"
+                    @click="
+                      updateStatus(message.id, message.type, 'Архівовані')
+                    "
+                    src="@/assets/img/messageIcon/archiveIcon.svg"
+                  />
+                </div>
+              </template>
+              <span>Архівувати</span>
+            </v-tooltip>
             <v-menu offset-y close-on-content-click v-model="menu">
               <template v-slot:activator="{ on, attrs }">
-                <div class="icon" v-bind="attrs" v-on="on">
-                  <img src="@/assets/img/messageIcon/leaveIcon.svg" />
+                <div v-bind="attrs" v-on="on">
+                  <v-tooltip bottom color="rgba(0, 0, 0, 0.5)">
+                    <template v-slot:activator="{ on, attrs }">
+                      <div class="icon" v-bind="attrs" v-on="on">
+                        <img src="@/assets/img/messageIcon/leaveIcon.svg" />
+                      </div>
+                    </template>
+                    <span>Перемістити у..</span>
+                  </v-tooltip>
                 </div>
               </template>
               <v-card width="200px">
@@ -51,7 +85,9 @@
                         dense
                         class="py-0"
                         active-class="contentActive"
-                        @click="updateStatus(message.id,message.type, 'Відповіли')"
+                        @click="
+                          updateStatus(message.id, message.type, 'Відповіли')
+                        "
                       >
                         <span class="content">Відповіли</span>
                       </v-list-item>
@@ -59,7 +95,9 @@
                         dense
                         class="py-0"
                         active-class="contentActive"
-                        @click="updateStatus(message.id,message.type, 'Архівовані')"
+                        @click="
+                          updateStatus(message.id, message.type, 'Архівовані')
+                        "
                       >
                         <span class="content">Архівовані</span>
                       </v-list-item>
@@ -88,11 +126,11 @@ export default {
     },
   },
   methods: {
-    updateStatus(id, messageType, statusName){
-      this.$emit('updateStatus',id, messageType, statusName);
+    updateStatus(id, messageType, statusName) {
+      this.$emit("updateStatus", id, messageType, statusName);
       this.isHover = false;
-    }
-  }
+    },
+  },
 };
 </script>
 
@@ -138,5 +176,23 @@ export default {
 .contentActive {
   background: #f2f6fc;
   color: #243949;
+}
+.messageText {
+  font-weight: 400;
+  font-size: 14px;
+  line-height: 16px;
+  letter-spacing: 0.1em;
+  color: #243949;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+  width: 55%;
+  overflow: hidden;
+}
+.messageTitle {
+  font-weight: 400;
+  font-size: 16px;
+  line-height: 19px;
+  letter-spacing: 0.1em;
+  color: #122b3e;
 }
 </style>

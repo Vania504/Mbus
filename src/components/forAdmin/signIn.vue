@@ -1,6 +1,6 @@
 <template>
   <v-row no-gutters justify="center" class="mt-10 mb-10">
-    <v-card :width="$vuetify.breakpoint.xs ? '90%' : '900px'">
+    <v-card :width="$vuetify.breakpoint.xs ? '90%' : '900px'" height="420px">
       <modal-header
         title="Вхід користувача"
         @close="$emit('close')"

@@ -1,9 +1,9 @@
 <template>
-  <v-dialog v-model="visibility" width="725px">
+  <v-dialog v-model="visibility" width="725px" persistent>
     <v-card style="overflow-x: hidden">
       <modal-header
         :title="isEdit ? 'Редагувати автобус' : 'Новий автобус'"
-        @close="$emit('close')"
+        @close="closeModal"
         :showCloseIcon="true"
       />
       <v-col style="margin: 20px">
@@ -94,7 +94,7 @@
             <img
               v-for="img in busImages"
               :key="img.id"
-              :src="`${img.img}`"
+              :src="`${img.path}`"
               class="mr-2"
               width="50px"
               height="50px"
@@ -105,12 +105,7 @@
               class="pointer"
               @click="showRecentlyImage = true"
             />
-            <input
-              type="file"
-              ref="upload_img"
-              style="display: none"
-              @change="uploadImg"
-            />
+            <input type="file" ref="upload_img" style="display: none" />
           </v-row>
         </v-col>
       </v-col>
@@ -141,6 +136,7 @@
       v-if="showRecentlyImage"
       :visible="showRecentlyImage"
       @close="showRecentlyImage = false"
+      @choseImage="setImages"
     />
   </v-dialog>
 </template>
@@ -151,6 +147,7 @@ import recentlyAddImageModal from "@/components/UI/recentlyAddImageModal";
 import { validationMixin } from "vuelidate";
 import { required, maxLength, minLength } from "vuelidate/lib/validators";
 import RecentlyAddImageModal from "@/components/UI/recentlyAddImageModal.vue";
+import requestFormData from "@/requests/requestFormData";
 export default {
   mixins: [validationMixin],
   components: {
@@ -254,17 +251,26 @@ export default {
     addNewBus() {
       this.$v.$touch();
       if (!this.$v.$invalid) {
-        let bus = new FormData();
-        bus.append("status", "Active");
-        bus.append("model", this.bus.model_name);
-        bus.append("description", this.bus.description);
-        bus.append("seats", this.bus.quantity_seats);
+        let images = [];
+        let options = [];
+        this.busImages.forEach((image) => {
+          images.push(image.id);
+        });
         this.service.forEach((service) => {
           service.enters == false
-            ? bus.append(service.key, 0)
-            : bus.append(service.key, 1);
+            ? (options[`${service.key}`] = 0)
+            : (options[`${service.key}`] = 1);
         });
-        this.$emit("createBus", bus);
+        let data = {
+          status: "Active",
+          model: this.bus.model_name,
+          description: this.bus.description,
+          seats: this.bus.quantity_seats,
+          images: images,
+          options: options,
+        };
+        let form = requestFormData.jsonToFormData(data);
+        this.$emit("createBus", form);
       }
     },
     editBus() {
@@ -280,26 +286,27 @@ export default {
             ? bus.append(service.key, 0)
             : bus.append(service.key, 1);
         });
-        this.$emit("updateBus",this.bus.id, bus);
+        this.$emit("updateBus", this.bus.id, bus);
       }
     },
     setBus() {
+      console.log(this.detailInfoBus);
+      this.service.forEach((service) => {
+        this.detailInfoBus.options[service.key] == 0
+          ? service.enters = false
+          : service.enters = true;
+      });
       this.$set(this.bus, "id", this.detailInfoBus.id);
       this.$set(this.bus, "model_name", this.detailInfoBus.model);
       this.$set(this.bus, "description", this.detailInfoBus.description);
       this.$set(this.bus, "quantity_seats", this.detailInfoBus.seats);
+      this.detailInfoBus.images.forEach((image) => {
+        this.busImages.push(image.images);
+      });
     },
-    uploadImg(e) {
-      let file = e.srcElement.files[0];
-      var reader = new FileReader();
-      let that = this;
-      reader.readAsDataURL(file);
-      reader.onload = function () {
-        that.busImages.push({ id: Date.now(), img: reader.result });
-      };
-      reader.onerror = function (error) {
-        console.log("Error: ", error);
-      };
+    setImages(image) {
+      this.showRecentlyImage = false;
+      this.busImages.push(image);
     },
     isNumber(evt) {
       evt = evt ? evt : window.event;
@@ -310,6 +317,12 @@ export default {
       } else {
         evt.preventDefault();
       }
+    },
+    closeModal() {
+      let close = confirm(
+        "Ви дійсно хочете закрити модальне вікно, внесені зміни не буде збережено?"
+      );
+      close ? this.$emit("close") : "";
     },
   },
   computed: {

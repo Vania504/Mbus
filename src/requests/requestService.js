@@ -1,4 +1,24 @@
 import axios from 'axios';
+import store from '@/store';
+import authService from '@/requests/admin/authService';
+
+axios.interceptors.response.use(
+  response => {
+    return Promise.resolve(response);
+  },
+  error => {
+    const { status } = error.response;
+    if (status === 401) {
+      console.log(store.getters.loggedUser)
+      let res = authService.refreshToken()
+      if (res) {
+        error.config.headers['Authorization'] = 'Bearer ' + store.getters.loggedUser.token;
+        return axios.request(error.config);
+      }
+    }
+    return Promise.reject(error);
+  }
+);
 
 const SERVER_API = 'http://api.mbus.if.ua/api';
 //process.env.VUE_APP_API;

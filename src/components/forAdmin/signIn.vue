@@ -31,7 +31,7 @@
             />
             <v-row no-gutters align="center" class="py-0">
               <v-row no-gutters align="center" justify="start" class="py-0">
-                <v-checkbox color="#085895" v-model="rememberMe"/>
+                <v-checkbox color="#085895" v-model="rememberMe" />
                 <span>Запам'ятати мене</span>
               </v-row>
               <v-row no-gutters align="center" justify="end" class="py-0">
@@ -141,11 +141,13 @@ export default {
         if (this.rememberMe) {
           timeout = 12 * 3600;
         }
-        this.updateInfoLogged({
-          token: response.authorisation.token,
-          timeout: timeout,
-        });
         if (response.status == "success") {
+          this.updateInfoLogged({
+            email: this.user.email,
+            password: this.user.password,
+            token: response.authorisation.token,
+            timeout: timeout,
+          });
           this.$router.push({ name: "admin" });
         }
       }

@@ -38,20 +38,42 @@
         </v-col>
       </v-row>
     </div>
-    <div
-      style="overflow: hidden; transition: all 0.3s ease-out; width: 100%"
-      :style="'max-width: ' + forAdmin ? '350px' : '405px'"
-      @mousemove="isHover = true"
-    >
-      <img
-        :width="forAdmin ? '350px' : '405px'"
-        height="300px"
-        :class="isHover ? 'busImg' : ''"
-        style="width: 100%; height: 100%; max-height: 300px; transition: 1s"
-        src="@/assets/img/busImg.svg"
-      />
+    <div style="height: 300px; align-self: center">
+      <div
+        style="overflow: hidden; transition: all 0.3s ease-out; width: 100%"
+        :style="'max-width: ' + forAdmin ? '350px' : '405px'"
+        @mousemove="isHover = true"
+      >
+        <img
+          v-if="bus.images"
+          :width="forAdmin ? '350px' : '405px'"
+          height="300px"
+          :class="isHover ? 'busImg' : ''"
+          style="
+            width: 100%;
+            height: 100%;
+            max-height: 300px;
+            transition: 1s;
+            object-fit: cover;
+          "
+          :src="bus.images[0].images.path"
+        />
+        <img
+          v-else
+          :width="forAdmin ? '350px' : '405px'"
+          height="300px"
+          :class="isHover ? 'busImg' : ''"
+          style="
+            width: 100%;
+            height: 100%;
+            max-height: 300px;
+            transition: 1s;
+            object-fit: cover;
+          "
+          :src="''"
+        />
+      </div>
     </div>
-
     <v-divider
       style="margin-left: 80px"
       color="#4C5D6C"
@@ -60,14 +82,15 @@
     />
     <v-col class="px-5 py-5">
       <v-row align="center"
-        ><img src="@/assets/img/busServiceIcon/busIcon.svg" /><span class="ml-3"
-          >{{bus.model}}</span
+        ><img src="@/assets/img/busServiceIcon/busIcon.svg" /><span
+          class="ml-3"
+          >{{ bus.model }}</span
         ></v-row
       >
       <v-row align="center" class="mt-5"
         ><img src="@/assets/img/busServiceIcon/chairIcon.svg" /><span
           class="ml-3"
-          >{{bus.seats}}<span class="drivingSeats">+2</span> місць</span
+          >{{ bus.seats }}<span class="drivingSeats">+2</span> місць</span
         ></v-row
       >
     </v-col>
@@ -105,7 +128,7 @@ export default {
   transform: scale(1.1);
   transition: 1s;
 }
- .v-btn--outlined {
-    border: thin solid white;
-  }
+.v-btn--outlined {
+  border: thin solid white;
+}
 </style>

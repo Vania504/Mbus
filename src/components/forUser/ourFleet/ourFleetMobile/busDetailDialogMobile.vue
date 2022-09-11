@@ -1,7 +1,7 @@
 <template>
   <v-dialog v-model="visibility" height="630px" width="90%">
     <v-card>
-      <modal-header title="Setra S 417 GT-HD" @close="$emit('close')" />
+      <modal-header :title="bus.model" @close="$emit('close')" />
       <v-col class="px-0">
         <v-col class="py-0 px-0">
           <swiper
@@ -10,18 +10,12 @@
             }"
             :options="swiperMobileOption"
           >
-            <swiper-slide v-for="i in 9" :key="i">
+            <swiper-slide v-for="image in bus.images" :key="image.id">
               <img
                 width="300px"
-                height="210px"
-                v-if="i !== 2"
-                src="@/assets/img/busImg.svg"
-              />
-              <img
-                width="300px"
-                height="210px"
-                v-else
-                src="@/assets/img/logoMBus.svg"
+                height="210px;"
+                :src="image.images.path"
+                style="object-fit: cover"
               />
             </swiper-slide>
             <div
@@ -39,27 +33,29 @@
         <v-col style="text-align: left">
           <span style="font-size: 20px" class="py-2">Сервіс</span>
           <v-divider style="color: #6b7c8a" class="mb-2" />
-          <v-row no-gutters class="mb-5" justify="center">
-            <v-tooltip bottom v-for="item in service" :key="item.id">
-              <template v-slot:activator="{ on, attrs }">
-                <img
-                  :src="require(`@/assets/img/busServiceIcon${item.img}`)"
-                  class="mt-5 mr-3"
-                  v-bind="attrs"
-                  v-on="on"
-                  width="25px"
-                  height="30px"
-                />
-              </template>
-              <span>{{ item.title }}</span>
-            </v-tooltip>
-            <v-row align="center" class="mt-5 mr-5" no-gutters
+          <v-row no-gutters class="mb-5" justify="start">
+            <div v-for="item in service" :key="item.id">
+              <v-tooltip bottom v-if="bus.options[item.key] == 1">
+                <template v-slot:activator="{ on, attrs }">
+                  <img
+                    :src="require(`@/assets/img/busServiceIcon${item.img}`)"
+                    class="mt-5 mr-3"
+                    v-bind="attrs"
+                    v-on="on"
+                    width="25px"
+                    height="30px"
+                  />
+                </template>
+                <span>{{ item.title }}</span>
+              </v-tooltip>
+            </div>
+            <v-row align="center" class="mt-5" justify="start" no-gutters
               ><img
                 width="25px"
                 height="30px"
                 src="@/assets/img/busServiceIcon/chairIcon.svg"
               /><span class="ml-3"
-                >60<span class="drivingSeats">+2</span> місць</span
+                >{{bus.seats}}<span class="drivingSeats">+2</span> місць</span
               ></v-row
             >
           </v-row>
@@ -73,14 +69,8 @@
               color: black;
             "
           >
-            <span style="color: #085895">Setra S 417 GT-HD.</span> Усі
-            міжнародні маршрути компанії обслуговуються флагманськими автобусами
-            марки Setra та Neoplan, які мають ергономічні регульовані крісла,
-            систему кондиціонування, обладнані телевізорами і сучасною
-            аудіосистемою.<br /><br />
-            Все це дозволить провести поїздку максимально комфортно у приємній
-            атмосфері. Також у розпорядженні пасажирів є містке багажне
-            відділення.
+          <span style="color: #085895">{{ bus.model }}</span>
+            {{ bus.description }}
           </p>
         </v-col>
       </v-col>
@@ -106,48 +96,56 @@ export default {
         id: 1,
         img: "/toiletIcon.svg",
         title: "Туалет",
+        key: "toilet",
         enters: false,
       },
       {
         id: 2,
         img: "/coffeIcon.svg",
         title: "Харчування",
+        key: "supply",
         enters: false,
       },
       {
         id: 3,
         img: "/electricOutletIcon.svg",
         title: "Розетки",
+        key: "socket",
         enters: false,
       },
       {
         id: 4,
         img: "/coldIcon.svg",
         title: "Клімат контроль",
+        key: "climate",
         enters: true,
       },
       {
         id: 5,
         img: "/wifiIcon.svg",
         title: "Wi-Fi",
+        key: "wifi",
         enters: false,
       },
       {
         id: 6,
         img: "/seriesIcon.svg",
         title: "Перегляд TV",
+        key: "tv",
         enters: false,
       },
       {
         id: 7,
         img: "/vipIcon.svg",
         title: "VIP",
+        key: "vip",
         enters: false,
       },
       {
         id: 8,
         img: "/euro5Icon.svg",
         title: "Екологічність",
+        key: "ecology",
         enters: false,
       },
     ],
@@ -171,6 +169,9 @@ export default {
     visible: {
       require: true,
     },
+    bus: {
+      require: true,
+    }
   },
   computed: {
     visibility: {

@@ -1,8 +1,6 @@
 <template>
   <div class="menu">
     <v-row no-gutters align="center" class="pt-3" justify="center">
-      {{$route.path == '/transportation_rules'}}
-      
       <div v-for="(item, index) in menuItems" :key="item.id">
         <router-link :to="item.path" v-if="$route.path !== item.path && index !== 4">
           <img

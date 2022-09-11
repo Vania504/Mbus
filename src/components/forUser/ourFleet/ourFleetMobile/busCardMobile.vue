@@ -4,13 +4,14 @@
     :max-width="forAdmin ? '350px' : '401px'"
     style="background-color: #f8f8f8"
   >
-    <v-row no-gutters align="start">
+    <v-row no-gutters align="center" class="py-0">
       <v-col cols="6" class="py-0">
         <img
           :width="forAdmin ? '180px' : '180px'"
           height="160px"
           :class="isHover ? 'busImg' : ''"
-          src="@/assets/img/busImg.svg"
+          :src="bus.images[0].images.path"
+          style="object-fit: cover;"
         />
       </v-col>
       <v-col cols="5" class="ml-1">
@@ -29,7 +30,7 @@
             />
             <v-col cols="9" class="py-0">
               <span style="font-size: 16px; text-align: left"
-                >Setra S 417 GT-HD</span
+                >{{bus.model}}</span
               >
             </v-col>
           </v-row>
@@ -41,7 +42,7 @@
             />
             <v-col cols="9" class="py-0">
               <span class="ml-1" style="font-size: 16px"
-                >60<span class="drivingSeats">+2</span> місць</span
+                >{{bus.seats}}<span class="drivingSeats">+2</span> місць</span
               >
             </v-col>
           </v-row>
@@ -52,7 +53,7 @@
             outlined
             dense
             color="black"
-            @click="$emit('detailInfo')"
+            @click="$emit('detailInfo', bus.id)"
             >Детальніше</v-btn
           >
         </v-col>
@@ -70,6 +71,9 @@ export default {
     forAdmin: {
       require: true,
     },
+    bus: {
+      require: true,
+    }
   },
 };
 </script>

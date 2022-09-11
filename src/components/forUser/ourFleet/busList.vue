@@ -4,8 +4,8 @@
       <div v-if="$vuetify.breakpoint.xs && $vuetify.breakpoint.sm"></div>
       <bus-card-mobile
         v-else-if="$vuetify.breakpoint.xs"
-        v-for="bus in busList.data"
-        :key="bus.uuid"
+        v-for="(bus,index) in busList"
+        :key="index"
         :bus="bus"
         @detailInfo="getBus"
         @edit="editBus"
@@ -31,12 +31,13 @@
       />
     </v-row>
     <bus-detail-dialog-mobile
-      v-if="$vuetify.breakpoint.xs"
+      v-if="$vuetify.breakpoint.xs && visible"
       :visible="visible"
       @close="visible = false"
+      :bus="busDetailInfo"
     />
     <bus-detail-dialog
-      v-else
+      v-else-if="visible"
       :visible="visible"
       @close="visible = false"
       :bus="busDetailInfo"

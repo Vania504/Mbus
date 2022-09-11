@@ -8,7 +8,7 @@
       backgroundRepeat: 'norepeat',
     }"
   >
-    <v-col style="margin-top: 70px" class="px-0">
+    <v-col style="margin-top: 60px" class="px-0">
       <span class="routeTitle">Долина—Варшава</span>
       <v-btn outlined dense color="white" @click="$router.push('/routes/' + 1)"
         >Детальніше</v-btn

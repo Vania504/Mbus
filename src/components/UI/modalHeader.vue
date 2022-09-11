@@ -1,6 +1,6 @@
 <template>
   <div style="background-color: #243949; align-self: center" :style="$vuetify.breakpoint.xs ? 'height: 40px;' : 'height: 58px;'">
-    <v-row :justify="$vuetify.breakpoint.xs ? 'çenter' : 'start'" align="center" no-gutters class="pt-1 px-5"
+    <v-row :justify="$vuetify.breakpoint.xs ? 'center' : 'start'" align="center" no-gutters class="pt-1 px-5"
       ><span
         style="color: white"
         :style="$vuetify.breakpoint.xs ? 'font-size: 18px;' : 'font-size: 32px'"

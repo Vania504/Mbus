@@ -1,7 +1,7 @@
 <template>
   <v-dialog v-model="visibility" height="630px">
     <v-card>
-      <modal-header :title="bus.model" @close="$emit('close')" />
+      <modal-header :title="bus.model" @close="$emit('close')" :showCloseIcon="true"/>
       <v-row no-gutters class="mt-5">
         <v-col cols="7" class="py-0">
           <swiper
@@ -11,9 +11,8 @@
             }"
             :options="swiperOption"
           >
-            <swiper-slide v-for="i in 9" :key="i">
-              <img width="580px" v-if="i !== 2" src="@/assets/img/busImg.svg" />
-              <img width="580px" v-else src="@/assets/img/logoMBus.svg" />
+            <swiper-slide v-for="image in bus.images" :key="image.id">
+              <img width="580px" height="400px;" :src="image.images.path" style="object-fit: cover;"/>
             </swiper-slide>
             <div
               class="swiper-button-prev ml-5"
@@ -32,18 +31,18 @@
           <v-divider style="color: #6b7c8a" class="mb-2" />
           <v-row no-gutters class="mb-5">
             <div v-for="item in service" :key="item.id">
-            <v-tooltip bottom v-if="item.key == bus">
-              <template v-slot:activator="{ on, attrs }">
-                <img
-                  :src="require(`@/assets/img/busServiceIcon${item.img}`)"
-                  class="mt-5 mr-5"
-                  v-bind="attrs"
-                  v-on="on"
-                />
-              </template>
-              <span>{{ item.title }}</span>
-            </v-tooltip>
-          </div>
+              <v-tooltip bottom v-if="bus.options[item.key] == 1">
+                <template v-slot:activator="{ on, attrs }">
+                  <img
+                    :src="require(`@/assets/img/busServiceIcon${item.img}`)"
+                    class="mt-5 mr-5"
+                    v-bind="attrs"
+                    v-on="on"
+                  />
+                </template>
+                <span>{{ item.title }}</span>
+              </v-tooltip>
+            </div>
             <v-row align="center" class="mt-5 mr-5" no-gutters
               ><img src="@/assets/img/busServiceIcon/chairIcon.svg" /><span
                 class="ml-3"

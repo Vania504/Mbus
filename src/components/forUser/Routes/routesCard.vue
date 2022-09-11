@@ -19,6 +19,7 @@
         text-align: center;
         background: linear-gradient(360deg,rgba(1, 29, 51, 0.602) 35.16%,rgba(91, 98, 104, 0.469) 45.62%);
         width: 180px;
+        height: 120px;
       "
     >
       <v-col cols="12">
@@ -27,7 +28,7 @@
             font-weight: 400;
             font-size: 12px;
             color: white;
-            margin-top: 80px;
+            margin-top: 70px;
             margin-right: 20px;
           "
         >

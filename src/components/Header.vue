@@ -7,7 +7,7 @@
         justify="center"
         v-if="!$vuetify.breakpoint.xs"
       >
-        <v-col cols="2">
+        <v-col :cols="isAdmin ? '3' : '2'" style="text-align: left">
           <v-row no-gutters justify="start">
             <img src="@/assets/img/logoMBus.svg" />
           </v-row>
@@ -61,13 +61,16 @@
             >
           </v-row>
         </v-col>
-        <v-col cols="2" style="align-self: center; align-items: center">
-          <v-menu open-on-hover botoom offset-y>
+        <v-col :cols="isAdmin ? '3' : '2'" style="align-self: center; align-items: center">
+          <v-menu open-on-hover botoom offset-y max-width="200px">
             <template v-slot:activator="{ on, attrs }">
               <div v-bind="attrs" v-on="on">
                 <v-row no-gutters align="center" justify="end">
-                  <img src="@/assets/img/UA.svg" />
-                  <span style="margin-left: 5px">+38(098)000-00-00</span>
+                  <img v-if="phoneNumbers[0].type == 'UA'" src="@/assets/img/UA.svg" />
+                  <img v-if="phoneNumbers[0].type == 'PL'" src="@/assets/img/PL.svg" />
+                  <span style="margin-left: 5px">{{
+                    phoneNumbers[0].number
+                  }}</span>
                   <v-icon>mdi-chevron-down</v-icon>
                 </v-row>
               </div>
@@ -87,7 +90,11 @@
                         src="@/assets/img/UA.svg"
                         class="mr-2"
                       />
-                      <img v-else src="@/assets/img/PL.svg" class="mr-2" />
+                      <img
+                        v-if="number.type == 'PL'"
+                        src="@/assets/img/PL.svg"
+                        class="mr-2"
+                      />
                       <span>{{ number.number }}</span>
                     </v-row>
                   </v-col>
@@ -98,34 +105,17 @@
         </v-col>
       </v-row>
       <v-row v-else align="center" justify="center" no-gutters>
-        <img src="@/assets/img/logoMBus.svg" width="50px" height="30px"/>
+        <img src="@/assets/img/logoMBus.svg" width="50px" height="30px" />
       </v-row>
     </v-app-bar>
   </div>
 </template>
 
 <script>
-import { mapGetters } from 'vuex';
+import { mapGetters } from "vuex";
 export default {
   name: "appHeader",
   data: () => ({
-    phoneNumbers: [
-      {
-        id: 1,
-        number: "+38(098)000-00-00",
-        type: "UA",
-      },
-      {
-        id: 2,
-        number: "+48(098)000-00-00",
-        type: "PL",
-      },
-      {
-        id: 3,
-        number: "+38(098)000-00-00",
-        type: "UA",
-      },
-    ],
     forPassengerItems: [
       {
         id: 1,
@@ -149,8 +139,9 @@ export default {
     signUpVisibleModal: false,
   }),
   computed: {
-    ...mapGetters(['loggedUser'])
-  }
+    ...mapGetters(["loggedUser"]),
+    ...mapGetters(["phoneNumbers"]),
+  },
 };
 </script>
 

@@ -25,7 +25,7 @@
             src="@/assets/img/UA.svg"
             class="ml-2"
           />
-          <img v-else src="@/assets/img/PL.svg" class="ml-2" />
+          <img v-if="item.type == 'PL'" src="@/assets/img/PL.svg" class="ml-2" />
         </v-row>
       </v-col>
       <v-col class="white--text" style="text-align: left">
@@ -128,41 +128,35 @@
 
 <script>
 import settingsService from "@/requests/admin/settingsService";
+import parsePhoneNumber from 'libphonenumber-js';
+import { mapActions } from "vuex";
 export default {
   name: "appFooter",
   data: () => ({
-    phoneNumbers: [
-      {
-        id: 1,
-        number: "38(098)000-00-00",
-        type: "UA",
-      },
-      {
-        id: 2,
-        number: "38(098)000-00-00",
-        type: "UA",
-      },
-      {
-        id: 3,
-        number: "48(098)000-00-00",
-        type: "PL",
-      },
-      {
-        id: 4,
-        number: "48(098)000-00-00",
-        type: "PL",
-      },
-    ],
+    phoneNumbers: [],
     socialNetworks: [],
   }),
   mounted() {
     this.getSocialNetwork();
+    this.getPhoneNumbers();
   },
   methods: {
+    ...mapActions(['updatePhoneNumbers']),
     async getSocialNetwork() {
       let response = await settingsService.getSettingList("socials");
       this.socialNetworks = response.data;
     },
+    async getPhoneNumbers(){
+      let response = await settingsService.getSettingList("contact");
+      response.data.forEach((number) => {
+        this.phoneNumbers.push({
+          id: number.id,
+          number: number.value,
+          type: parsePhoneNumber(number.value, 'US').country
+        })
+      }) 
+      this.updatePhoneNumbers(this.phoneNumbers);
+    }
   },
 };
 </script>

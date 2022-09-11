@@ -1,7 +1,8 @@
 export default {
   state: {
     user: {},
-    loggedUser: null
+    loggedUser: null,
+    phoneNumbers: [],
   },
   mutations: {
     setUser(state, user) {
@@ -9,6 +10,9 @@ export default {
     },
     setLoggedUser(state, loggedUser) {
       state.loggedUser = loggedUser
+    },
+    setPhoneNumbers(state, phoneNumbers){
+      state.phoneNumbers = phoneNumbers
     },
     clearUser(state) {
       state.user = {}
@@ -39,9 +43,21 @@ export default {
         throw e
       }
     },
+    async updatePhoneNumbers({ commit, getters }, toUpdate) {
+      try {
+        const updateData = { ...getters.phoneNumbers, ...toUpdate }
+        commit('setPhoneNumbers', updateData)
+      }
+
+      catch (e) {
+        commit('setError', e)
+        throw e
+      }
+    },
   },
   getters: {
     user: s => s.user,
     loggedUser: s => s.loggedUser,
+    phoneNumbers: s => s.phoneNumbers,
   }
 }

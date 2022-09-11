@@ -12,6 +12,7 @@
         :key="index"
         class="mt-5 mb-5"
         :forAdmin="forAdmin"
+        :route="route"
         @edit="$emit('edit', route.id)"
         @delete="$emit('delete', route.id)"
       />

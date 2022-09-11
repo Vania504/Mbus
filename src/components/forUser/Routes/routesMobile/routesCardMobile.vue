@@ -8,17 +8,33 @@
       backgroundRepeat: 'norepeat',
     }"
   >
-    <v-col style="margin-top: 60px" class="px-0">
-      <span class="routeTitle">Долина—Варшава</span>
-      <v-btn outlined dense color="white" @click="$router.push('/routes/' + 1)"
-        >Детальніше</v-btn
-      >
-    </v-col>
+    <v-container fill-height>
+      <v-row justify="center" align="center">
+        <v-col cols="12" sm="4" class="px-0">
+          <p class="routeTitle">
+            {{ route.departure }}–{{ route.destination }}
+          </p>
+          <v-btn
+            outlined
+            dense
+            color="white"
+            @click="$router.push('/routes/' + route.id)"
+            >Детальніше</v-btn
+          >
+        </v-col>
+      </v-row>
+    </v-container>
   </div>
 </template>
 
 <script>
-export default {};
+export default {
+  props: {
+    route: {
+      require: true,
+    },
+  },
+};
 </script>
 
 <style scoped>

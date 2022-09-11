@@ -17,7 +17,7 @@
           <v-list-item>
             <v-row no-gutters justify="start" align="center">
               <v-icon color="#243949">mdi-minus</v-icon>
-              <span class="textStyle">Нерегулярні перевезення</span>
+              <span class="textStyleDrawer">Нерегулярні перевезення</span>
             </v-row>
           </v-list-item>
         </router-link>
@@ -25,7 +25,7 @@
           <v-list-item>
             <v-row no-gutters justify="start" align="center">
               <v-icon color="#243949">mdi-minus</v-icon>
-              <span class="textStyle">Правила перевезення</span>
+              <span class="textStyleDrawer">Правила перевезення</span>
             </v-row>
           </v-list-item>
           </router-link>
@@ -63,7 +63,7 @@ export default {
 </script>
 
 <style>
-.textStyle {
+.textStyleDrawer {
   font-weight: 400;
   font-size: 14px;
   line-height: 16px;

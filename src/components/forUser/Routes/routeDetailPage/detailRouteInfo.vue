@@ -11,24 +11,16 @@
       <span
         ><span class="countryName">Україна:&nbsp;</span
         ><span v-for="(city, index) in ukraine_city" :key="city.id">
-          <span v-if="index == 0">{{
-            city.name
-          }}</span>
-          <span v-if="index !== 0"
-            >&nbsp;— {{ city.name }}</span
-          >
+          <span v-if="index == 0">{{ city.name }}</span>
+          <span v-if="index !== 0">&nbsp;— {{ city.name }}</span>
         </span>
       </span>
       <br />
       <span
         ><span class="countryName">Інша країна:&nbsp;</span>
         <span v-for="(city, index) in foreign_city" :key="city.id">
-          <span v-if="index == 0">{{
-            city.name
-          }}</span>
-          <span v-if="index !== 0"
-            >&nbsp;— {{ city.name }}</span
-          >
+          <span v-if="index == 0">{{ city.name }}</span>
+          <span v-if="index !== 0">&nbsp;— {{ city.name }}</span>
         </span>
       </span>
     </p>
@@ -172,11 +164,13 @@ export default {
   },
   methods: {
     filterCity() {
-      this.route.cities.forEach((city) => {
-        city.type == "Ukraine"
-          ? this.ukraine_city.push(city)
-          : this.foreign_city.push(city);
-      });
+      if (this.route.cities) {
+        this.route.cities.forEach((city) => {
+          city.type == "Ukraine"
+            ? this.ukraine_city.push(city)
+            : this.foreign_city.push(city);
+        });
+      }
     },
   },
 };

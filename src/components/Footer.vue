@@ -52,22 +52,36 @@
           <a
             v-for="item in socialNetworks"
             :key="item.id"
-            :href="item.link"
+            :href="item.value"
+            target="_blank"
             class="mr-2"
-            ><v-icon v-if="item.icon" color="white">{{ item.icon }}</v-icon>
+            ><v-icon v-if="item.social_network == 'Instagram'" color="white"
+              >mdi-instagram</v-icon
+            >
+            <v-icon v-if="item.social_network == 'Facebook'" color="white"
+              >mdi-facebook</v-icon
+            >
+            <v-icon v-if="item.social_network == 'Whatsapp'" color="white"
+              >mdi-whatsapp</v-icon
+            >
+            <v-icon v-if="item.social_network == 'Twitter'" color="white"
+              >mdi-twitter</v-icon
+            >
             <img
               width="24px"
-              height="24.84px"
-              v-if="item.img == 'viber'"
+              height="20px"
+              v-if="item.social_network == 'Viber'"
               src="@/assets/img/viberIcon.svg"
               alt="viber"
+              class="mb-1 mt-1"
             />
             <img
-              width="24px"
-              height="24.84px"
-              v-if="item.img == 'telegram'"
+              width="20px"
+              height="18px"
+              v-if="item.social_network == 'Telegram'"
               src="@/assets/img/telegramIcon.svg"
               alt="telegram"
+              class="mb-1"
             />
           </a>
         </v-row>
@@ -113,6 +127,7 @@
 </template>
 
 <script>
+import settingsService from "@/requests/admin/settingsService";
 export default {
   name: "appFooter",
   data: () => ({
@@ -138,34 +153,17 @@ export default {
         type: "PL",
       },
     ],
-    socialNetworks: [
-      {
-        id: 1,
-        icon: "mdi-facebook",
-        link: "https://www.facebook.com/",
-      },
-      {
-        id: 2,
-        icon: "mdi-instagram",
-        link: "https://www.instagram.com/",
-      },
-      {
-        id: 3,
-        img: "viber",
-        link: "https://www.viber.com/ua/",
-      },
-      {
-        id: 4,
-        img: "telegram",
-        link: "https://web.telegram.org/k/",
-      },
-      {
-        id: 5,
-        icon: "mdi-whatsapp",
-        link: "https://www.whatsapp.com/?lang=uk",
-      },
-    ],
+    socialNetworks: [],
   }),
+  mounted() {
+    this.getSocialNetwork();
+  },
+  methods: {
+    async getSocialNetwork() {
+      let response = await settingsService.getSettingList("socials");
+      this.socialNetworks = response.data;
+    },
+  },
 };
 </script>
 

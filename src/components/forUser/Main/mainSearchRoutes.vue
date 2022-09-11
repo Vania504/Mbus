@@ -25,12 +25,25 @@
           v-for="item in socialNetworks"
           :key="item.id"
         >
-          <a :href="item.link" :class="item.icon ? 'mb-2' : ''"
-            ><v-icon v-if="item.icon" color="black">{{ item.icon }}</v-icon>
+          <a
+            :href="item.value"
+            target="_blank"
+            :class="item.icon ? 'mb-2' : ''"
+          >
+            <v-icon v-if="item.social_network == 'Instagram'" color="black"
+              >mdi-instagram</v-icon
+            >
+            <v-icon v-if="item.social_network == 'Facebook'" color="black"
+              >mdi-facebook</v-icon
+            >
+            <v-icon v-if="item.social_network == 'Whatsapp'" color="black"
+              >mdi-whatsapp</v-icon
+            >
+            <v-icon v-if="item.social_network == 'Twitter'" color="black">mdi-twitter</v-icon>
             <img
               width="24px"
               height="20px"
-              v-if="item.img == 'viber'"
+              v-if="item.social_network == 'Viber'"
               src="@/assets/img/viberIconBlack.svg"
               alt="viber"
               class="mb-1 mt-1"
@@ -38,7 +51,7 @@
             <img
               width="20px"
               height="18px"
-              v-if="item.img == 'telegram'"
+              v-if="item.social_network == 'Telegram'"
               src="@/assets/img/telegramIconBlack.svg"
               alt="telegram"
               class="mb-1"
@@ -114,6 +127,7 @@
 
 <script>
 import searchRoutesFieldMobile from "./mainMobile/searchRoutesFieldMobile.vue";
+import settingsService from "@/requests/admin/settingsService";
 export default {
   components: {
     searchRoutesFieldMobile,
@@ -121,39 +135,20 @@ export default {
   data: () => ({
     start_route: "",
     end_route: "",
-    socialNetworks: [
-      {
-        id: 1,
-        icon: "mdi-instagram",
-        link: "https://www.instagram.com/",
-      },
-      {
-        id: 2,
-        icon: "mdi-facebook",
-        link: "https://www.facebook.com/",
-      },
-      {
-        id: 3,
-        img: "viber",
-        link: "https://www.viber.com/ua/",
-      },
-      {
-        id: 4,
-        img: "telegram",
-        link: "https://web.telegram.org/k/",
-      },
-      {
-        id: 5,
-        icon: "mdi-whatsapp",
-        link: "https://www.whatsapp.com/?lang=uk",
-      },
-    ],
+    socialNetworks: [],
   }),
+  mounted() {
+    this.getSocialNetwork();
+  },
   methods: {
     reverseItem() {
       let start_route = this.start_route;
       this.start_route = this.end_route;
       this.end_route = start_route;
+    },
+    async getSocialNetwork() {
+      let response = await settingsService.getSettingList("socials");
+      this.socialNetworks = response.data;
     },
   },
 };

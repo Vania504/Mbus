@@ -1,5 +1,5 @@
 <template>
-  <main-component />
+  <main-component @success="$emit('success')"/>
 </template>
 
 <script>

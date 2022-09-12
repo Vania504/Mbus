@@ -2,7 +2,7 @@
   <v-row no-gutters>
     <navigation-drawer @selectedItem="setSelectedItem" />
     <v-col cols="10" :class="selectedItem ? 'px-0' : ''">
-      <admin-main v-if="selectedItem == '0' || selectedItem == ''"/>
+      <admin-main v-if="selectedItem == '0' || selectedItem == ''" @success="$emit('success')"/>
       <our-fleet-component v-if="selectedItem == '1'"/>
       <routes-component v-if="selectedItem == '2'"/>
       <messages-component  v-if="selectedItem == '3'"/>

@@ -62,6 +62,7 @@ export default {
       let response = await settingsService.createSetting(form);
       if (response.status == "success") {
         type == "contact" ? this.getContactSetting() : this.getSocialSetting();
+        this.$emit("success");
       }
     },
     async updateSetting(type, id, form) {
@@ -77,6 +78,7 @@ export default {
           this.showSuccessSnackbar = true;
           this.getSocialSetting();
         }
+        this.$emit("success");
       }
     },
     async deleteSetting(type, id) {
@@ -85,6 +87,7 @@ export default {
           type == "contact"
             ? this.getContactSetting()
             : this.getSocialSetting();
+          this.$emit("success");
         }
       });
     },

@@ -7,9 +7,9 @@
       :events="['keydown', 'mousedown', 'touchstart']"
       :duration="$store.getters.loggedUser.timeout"
     />
-    <Header />
-    <router-view />
-    <Footer />
+    <Header :key="key"/>
+    <router-view @success="key++"/>
+    <Footer :key="key"/>
     <mobile-menu v-if="$vuetify.breakpoint.xs" @other="setShowNavigationDrawer"/>
     <navigation-drawer-mobile
       v-if="$vuetify.breakpoint.xs && showNavigationDrawer"
@@ -35,6 +35,7 @@ export default {
   },
   data: () => ({
     showNavigationDrawer: false,
+    key: 0,
   }),
   methods: {
     ...mapActions(["updateInfoLogged"]),

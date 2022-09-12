@@ -2,7 +2,14 @@
   <v-card class="rounded-lg">
     <v-col style="text-align: left">
       <p class="formTitle mb-10">Посилання на соціальні мережі:</p>
-      <v-row align="center" v-for="(item, index) in socialLink" :key="index">
+      <v-row
+        align="center"
+        v-for="(item, index) in socialLink"
+        :key="index"
+        @mouseover="showDeleteIcon = true"
+        @mouseleave="showDeleteIcon = false"
+        @change="showEditIcon = true"
+      >
         <v-col cols="3" class="py-0">
           <v-text-field
             color="#085895"
@@ -41,20 +48,30 @@
             </template>
           </v-autocomplete>
         </v-col>
+        <v-icon
+          v-if="showEditIcon"
+          color="green"
+          class="mb-7 mr-2 pointer"
+          @click="updateSocialLink(item.id, index)"
+          >mdi-check</v-icon
+        >
+        <img
+          v-if="showDeleteIcon"
+          class="mb-7 pointer"
+          width="20px"
+          heigth="20px"
+          src="@/assets/img/messageIcon/deleteIcon.svg"
+        />
       </v-row>
       <v-row no-gutters justify="start" align="center" class="mt-2">
-        <v-icon color="#085895">mdi-plus</v-icon>
-        <span class="formAddNewSpan" @click="addNewLink">Додати посилання</span>
         <v-btn
-          :disabled="disabledSaveBtn"
-          class="ml-5 formAddNewSpan"
+          class="formAddNewSpan"
           text
           style="text-transform: none"
-          @click="saveChange"
-          ><v-icon color="green">mdi-check</v-icon>
-          <span :style="disabledSaveBtn ? 'color: silver' : 'color: green'"
-            >Зберегти зміни</span
-          ></v-btn
+          @click="addNewLink"
+        >
+          <v-icon color="#085895">mdi-plus</v-icon>
+          <span class="formAddNewSpan">Додати посилання</span></v-btn
         >
       </v-row>
     </v-col>
@@ -64,7 +81,8 @@
 <script>
 export default {
   data: () => ({
-    disabledSaveBtn: true,
+    showEditIcon: false,
+    showDeleteIcon: false,
     socialLink: [
       {
         name: "",
@@ -127,8 +145,14 @@ export default {
         social_network: "",
       });
     },
-    saveChange() {
-      console.log("work");
+    updateSocialLink(id, index) {
+      let form = new FormData();
+      form.append("type", "socials");
+      form.append("key", this.socialLink[index].name);
+      form.append("value", this.socialLink[index].url);
+      form.append("social_network", this.socialLink[index].social_network);
+      this.$emit("update", "socials", id, form);
+      this.showEditIcon = false;
     },
     setSocialLink() {
       this.socialLink = [];
@@ -143,12 +167,6 @@ export default {
     },
   },
   watch: {
-    socialLink: {
-      deep: true,
-      handler() {
-        this.disabledSaveBtn = false;
-      },
-    },
     list: {
       deep: true,
       handler() {

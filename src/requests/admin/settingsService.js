@@ -30,4 +30,10 @@ export default {
 		})
 		return response?.data
 	},
+	async deleteSetting(id) {
+		const response = await requestService.delete(`/settings/${id}`, {
+			headers: { Authorization: `Bearer ${store.getters.loggedUser.token}` }
+		})
+		return response?.data
+	}
 }

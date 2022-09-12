@@ -181,6 +181,7 @@ export default {
       this.nextCities = response.data;
     },
     async searchRoutes(){
+      this.$v.$touch();
       if(!this.$v.$invalid){
        this.$router.push(`/routes?start_route=${this.start_route}&end_route=${this.end_route}`)
       }

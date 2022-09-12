@@ -2,43 +2,22 @@
   <v-card class="rounded-lg">
     <v-col style="text-align: left">
       <p class="formTitle mb-10">Номер телефону водіїв:</p>
-      <v-row align="center" v-for="(item, index) in phoneNumbers" :key="index">
-        <v-col cols="3" class="py-0">
-          <v-text-field
-            color="#085895"
-            class="rounded-lg"
-            dense
-            outlined
-            label="Ім'я (обов'язково)"
-            v-model="item.name"
-          />
-        </v-col>
-        <v-col cols="4" class="py-0">
-          <v-text-field
-            color="#085895"
-            class="rounded-lg"
-            dense
-            outlined
-            label="Номер телефону (обов'язково)"
-            v-model="item.phone_number"
-          />
-        </v-col>
-      </v-row>
+      <phone-numbers-field
+        v-for="(item, index) in phoneNumbers"
+        :key="index"
+        :phone_number="item"
+        @update="updatePhoneNumber"
+        @create="addNewPhoneNumber"
+        @delete="deleteSetting"
+      />
       <v-row no-gutters justify="start" align="center" class="mt-2">
-        <v-icon color="#085895">mdi-plus</v-icon>
-        <span class="formAddNewSpan" @click="addNewPhoneNumber"
-          >Додати номер</span
-        >
         <v-btn
-          :disabled="disabledSaveBtn"
-          class="ml-5 formAddNewSpan"
+          class="formAddNewSpan"
           text
           style="text-transform: none"
-          @click="saveChange"
-          ><v-icon color="green">mdi-check</v-icon>
-          <span :style="disabledSaveBtn ? 'color: silver' : 'color: green'"
-            >Зберегти</span
-          ></v-btn
+          @click="addNewField"
+          ><v-icon color="#085895">mdi-plus</v-icon>
+          <span class="formAddNewSpan">Додати номер</span></v-btn
         >
       </v-row>
     </v-col>
@@ -46,56 +25,71 @@
 </template>
   
   <script>
+import phoneNumbersField from "./phoneNumbersField.vue";
 export default {
+  components: {
+    phoneNumbersField,
+  },
   data: () => ({
-    disabledSaveBtn: true,
+    showEditIcon: false,
+    showDeleteIcon: false,
     phoneNumbers: [
       {
         name: "",
         phone_number: "",
+        status: "new",
       },
     ],
   }),
   props: {
     list: {
       require: false,
-    }
+    },
   },
   methods: {
-    addNewPhoneNumber() {
-      let form = new FormData();
-      form.append("type", "contact");
-      form.append("key", this.phoneNumbers[this.phoneNumbers.length - 1].name);
-      form.append("value", this.phoneNumbers[this.phoneNumbers.length - 1].phone_number);
-      this.$emit("create", "contact", form);
+    addNewField() {
       this.phoneNumbers.push({
         name: "",
         phone_number: "",
+        status: "new",
       });
     },
-    saveChange() {
-      console.log("work");
+    addNewPhoneNumber(phone_number) {
+      let form = new FormData();
+      form.append("type", "contact");
+      form.append("key", phone_number.name);
+      form.append("value", phone_number.phone_number);
+      this.$emit("create", "contact", form);
     },
-    setPhoneNumbers(){
+    async updatePhoneNumber(id, phone_number) {
+      let form = new FormData();
+      console.log("phone number", phone_number);
+      form.append("type", "contact");
+      form.append("key", phone_number.name);
+      form.append("value", phone_number.phone_number);
+      this.$emit("update", "contact", id, form);
+    },
+    setPhoneNumbers() {
       this.phoneNumbers = [];
       this.list.forEach((item) => {
-        this.phoneNumbers.push({id: item.id, name: item.key, phone_number: item.value})
-      })
+        this.phoneNumbers.push({
+          id: item.id,
+          name: item.key,
+          phone_number: item.value,
+        });
+      });
+    },
+    deleteSetting(type, id){
+      this.$emit('delete', type, id)
     }
   },
   watch: {
-    phoneNumbers: {
-      deep: true,
-      handler() {
-        this.disabledSaveBtn = false;
-      },
-    },
     list: {
       deep: true,
-      handler(){
+      handler() {
         this.setPhoneNumbers();
-      }
-    }
+      },
+    },
   },
 };
 </script>

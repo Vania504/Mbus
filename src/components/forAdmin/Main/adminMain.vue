@@ -2,7 +2,7 @@
   <v-col class="px-0 py-0">
     <success-snackbar v-if="showSuccessSnackbar" :snackbarText="snackbarText" />
     <admin-main-header @activeCategory="setActiveCategory" />
-    <v-col v-if="activeCategory == 'contact'">
+    <v-col v-if="activeCategory == 'contact'" class="mb-10">
       <create-social-link-form
         @create="createSetting"
         @update="updateSetting"

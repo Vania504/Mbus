@@ -43,13 +43,16 @@ export default {
     visible: {
       require: true,
     },
+    type: {
+      require: true,
+    }
   },
   mounted() {
     this.getImages();
   },
   methods: {
     async getImages() {
-      let response = await imageService.getImages("Bus", this.page);
+      let response = await imageService.getImages(this.type, this.page);
       this.images = response.data;
       this.paginationLength = parseInt(response.data.total / response.data.per_page) + 1;
     },
@@ -57,7 +60,7 @@ export default {
       let file = e.srcElement.files[0];
       let image = new FormData();
       image.append("name", file.name);
-      image.append("type", "Bus");
+      image.append("type", this.type);
       image.append("image", e.srcElement.files[0]);
       await imageService.uploadImage(image);
       this.getImages();

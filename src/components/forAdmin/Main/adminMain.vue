@@ -19,6 +19,13 @@
         @hideLoader="hideLoader"
       />
     </v-col>
+    <v-col v-if="activeCategory == 'irregular_transportation'">
+      <create-irregular-transportation-form
+        @create="createContent"
+        @update="updateContent"
+        :content="irregularTransportationContent"
+      />
+    </v-col>
   </v-col>
 </template>
   
@@ -29,6 +36,8 @@ import createPhoneNumberForm from "@/components/forAdmin/Main/createPhoneNumberF
 import settingsService from "@/requests/admin/settingsService";
 import successSnackbar from "@/components/UI/successSnackbar";
 import { mapActions } from "vuex";
+import createIrregularTransportationForm from "@/components/forAdmin/Main/createIrregularTransportationForm";
+import contentService from "@/requests/admin/contentService";
 export default {
   data: () => ({
     activeCategory: "contact",
@@ -36,20 +45,26 @@ export default {
     socialList: [],
     showSuccessSnackbar: false,
     snackbarText: "",
+    irregularTransportationContent: [],
   }),
   components: {
     createSocialLinkForm,
     createPhoneNumberForm,
     adminMainHeader,
     successSnackbar,
+    createIrregularTransportationForm,
   },
   mounted() {
-    this.getContactSetting();
-    this.getSocialSetting();
+    if (this.activeCategory == "contact") {
+      this.getContactSetting();
+      this.getSocialSetting();
+    } else {
+      this.getContent();
+    }
   },
   methods: {
-    ...mapActions(['updateLoader']),
-    hideLoader(){
+    ...mapActions(["updateLoader"]),
+    hideLoader() {
       this.updateLoader(false);
     },
     setActiveCategory(category) {
@@ -65,11 +80,26 @@ export default {
       let response = await settingsService.getSettingListForAdmin(type);
       return response.data;
     },
+    async getContent() {
+      this.irregularTransportationContent = [];
+      let response = await contentService.getContentForAdmin();
+      response.data.forEach((content) => {
+        if (content.section == "irregular_transportation") {
+          this.irregularTransportationContent.push(content);
+        }
+      });
+    },
     async createSetting(type, form) {
       let response = await settingsService.createSetting(form);
       if (response.status == "success") {
         type == "contact" ? this.getContactSetting() : this.getSocialSetting();
         this.$emit("success");
+      }
+    },
+    async createContent(form) {
+      let response = await contentService.createContent(form);
+      if (response.status == "success") {
+        this.getContent();
       }
     },
     async updateSetting(type, id, form) {
@@ -88,6 +118,19 @@ export default {
         this.$emit("success");
       }
     },
+    async updateContent(type, id, form) {
+      let response = await contentService.updateContent(id, form);
+      if (response.status == "success") {
+        if (type == "irregular_transportation") {
+          this.snackbarText = "Нерегулярне перевезення оновлено успішно";
+          this.showSuccessSnackbar = true;
+        } else {
+          this.snackbarText = "Про нас оновлено успішно";
+          this.showSuccessSnackbar = true;
+        }
+        this.getContent();
+      }
+    },
     async deleteSetting(type, id) {
       await settingsService.deleteSetting(id).then((res) => {
         if (res.status == "success") {
@@ -97,6 +140,19 @@ export default {
           this.$emit("success");
         }
       });
+    },
+  },
+  watch: {
+    activeCategory: {
+      deep: true,
+      handler() {
+        if (this.activeCategory == "contact") {
+          this.getContactSetting();
+          this.getSocialSetting();
+        } else {
+          this.getContent();
+        }
+      },
     },
   },
 };

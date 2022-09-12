@@ -7,10 +7,13 @@
       :events="['keydown', 'mousedown', 'touchstart']"
       :duration="$store.getters.loggedUser.timeout"
     />
-    <Header :key="key"/>
-    <router-view @success="key++"/>
-    <Footer :key="key"/>
-    <mobile-menu v-if="$vuetify.breakpoint.xs" @other="setShowNavigationDrawer"/>
+    <Header :key="keyHeader" />
+    <router-view @success="keyHeader++, keyFooter++" />
+    <Footer :key="keyFooter" />
+    <mobile-menu
+      v-if="$vuetify.breakpoint.xs"
+      @other="setShowNavigationDrawer"
+    />
     <navigation-drawer-mobile
       v-if="$vuetify.breakpoint.xs && showNavigationDrawer"
       :showNavigationDrawer="showNavigationDrawer"
@@ -35,17 +38,18 @@ export default {
   },
   data: () => ({
     showNavigationDrawer: false,
-    key: 0,
+    keyHeader: 1,
+    keyFooter: 2,
   }),
   methods: {
     ...mapActions(["updateInfoLogged"]),
     async onidle() {
       this.$store.commit("clearUserLogged");
-      this.$router.push('/d');
+      this.$router.push("/d");
     },
-    setShowNavigationDrawer(){
+    setShowNavigationDrawer() {
       this.showNavigationDrawer = true;
-    }
+    },
   },
   computed: {
     ...mapGetters(["loggedUser"]),
@@ -61,7 +65,7 @@ export default {
       console.log(diff * 0.001, this.loggedUser.timeout);
       if (diff * 0.001 > this.loggedUser.timeout) {
         this.$store.commit("clearUserLogged");
-        this.$router.push('/d');
+        this.$router.push("/d");
       }
       console.log(localStorage.time);
       localStorage.removeItem("time");

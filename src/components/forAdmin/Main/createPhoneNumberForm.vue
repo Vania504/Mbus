@@ -1,5 +1,5 @@
 <template>
-  <v-card class="rounded-lg">
+  <v-card class="rounded-lg" v-if="!loader">
     <v-col style="text-align: left">
       <p class="formTitle mb-10">Номер телефону водіїв:</p>
       <phone-numbers-field
@@ -26,6 +26,7 @@
   
   <script>
 import phoneNumbersField from "./phoneNumbersField.vue";
+import { mapGetters } from "vuex";
 export default {
   components: {
     phoneNumbersField,
@@ -82,6 +83,9 @@ export default {
     deleteSetting(type, id){
       this.$emit('delete', type, id)
     }
+  },
+  computed: {
+    ...mapGetters(['loader'])
   },
   watch: {
     list: {

@@ -8,6 +8,7 @@
         @update="updateSetting"
         @delete="deleteSetting"
         :list="socialList"
+        @hideLoader="hideLoader"
       />
       <create-phone-number-form
         @create="createSetting"
@@ -15,6 +16,7 @@
         @delete="deleteSetting"
         class="mt-5"
         :list="contactList"
+        @hideLoader="hideLoader"
       />
     </v-col>
   </v-col>
@@ -26,6 +28,7 @@ import adminMainHeader from "./adminMainHeader.vue";
 import createPhoneNumberForm from "@/components/forAdmin/Main/createPhoneNumberForm";
 import settingsService from "@/requests/admin/settingsService";
 import successSnackbar from "@/components/UI/successSnackbar";
+import { mapActions } from "vuex";
 export default {
   data: () => ({
     activeCategory: "contact",
@@ -45,6 +48,10 @@ export default {
     this.getSocialSetting();
   },
   methods: {
+    ...mapActions(['updateLoader']),
+    hideLoader(){
+      this.updateLoader(false);
+    },
     setActiveCategory(category) {
       this.activeCategory = category;
     },

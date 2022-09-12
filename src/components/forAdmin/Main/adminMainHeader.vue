@@ -1,5 +1,5 @@
 <template>
-  <v-card height="60px" class="rounded-0">
+  <v-card height="60px" class="rounded-0" v-if="!loader">
     <v-row no-gutters align="center" class="pt-4 ml-5">
       <div>
         <span
@@ -39,6 +39,7 @@
 </template>
 
 <script>
+  import { mapGetters } from 'vuex';
 export default {
   data: () => ({
     activeCategory: "contact",
@@ -48,6 +49,9 @@ export default {
         this.activeCategory = category;
         this.$emit('activeCategory', this.activeCategory);
     }
+  },
+  computed: {
+    ...mapGetters(['loader'])
   }
 };
 </script>

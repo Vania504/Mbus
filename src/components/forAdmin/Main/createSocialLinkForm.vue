@@ -1,5 +1,5 @@
 <template>
-  <v-card class="rounded-lg">
+  <v-card class="rounded-lg" v-if="!loader">
     <v-col style="text-align: left">
       <p class="formTitle mb-10">Посилання на соціальні мережі:</p>
       <social-link-field
@@ -27,6 +27,7 @@
 
 <script>
 import socialLinkField from "@/components/forAdmin/Main/socialLinkField";
+import { mapGetters } from "vuex";
 export default {
   components: {
     socialLinkField,
@@ -82,10 +83,14 @@ export default {
           social_network: item.social_network,
         });
       });
+      this.$emit('hideLoader');
     },
     deleteSocialLink(type, id) {
       this.$emit("delete", type, id);
     },
+  },
+  computed: {
+    ...mapGetters(['loader'])
   },
   watch: {
     list: {

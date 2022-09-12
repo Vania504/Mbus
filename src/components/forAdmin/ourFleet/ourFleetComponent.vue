@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <div v-if="!loader">
     <bus-list
       :forAdmin="true"
       @addNew="showModal = true"
@@ -23,6 +23,7 @@
 import busList from "@/components/forUser/ourFleet/busList.vue";
 import addNewBusModal from "@/components/forAdmin/ourFleet/addNewBusModal";
 import ourFleetService from "@/requests/admin/ourFleetService";
+import { mapGetters, mapActions } from "vuex";
 export default {
   components: {
     busList,
@@ -38,6 +39,7 @@ export default {
     this.getBuses();
   },
   methods: {
+    ...mapActions(['updateLoader']),
     async createBus(bus) {
       let response = await ourFleetService.createBus(bus);
       if (response.status == "success") {
@@ -65,6 +67,7 @@ export default {
       let response = await ourFleetService.getBusesForAdmin();
       if (response.status == "success") {
         this.busList = response.data;
+        this.updateLoader(false);
       }
     },
     async deleteBus(uuid) {
@@ -72,6 +75,9 @@ export default {
       alert("Function deleteBus work success");
     },
   },
+  computed: {
+    ...mapGetters(['loader'])
+  }
 };
 </script>
 

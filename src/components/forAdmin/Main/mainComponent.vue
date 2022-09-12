@@ -2,10 +2,24 @@
   <v-row no-gutters>
     <navigation-drawer @selectedItem="setSelectedItem" />
     <v-col cols="10" :class="selectedItem ? 'px-0' : ''">
-      <admin-main v-if="selectedItem == '0' || selectedItem == ''" @success="$emit('success')"/>
-      <our-fleet-component v-if="selectedItem == '1'"/>
-      <routes-component v-if="selectedItem == '2'"/>
-      <messages-component  v-if="selectedItem == '3'"/>
+      <loader v-if="loader" />
+      <admin-main
+        v-if="selectedItem == '0' || selectedItem == ''"
+        @success="$emit('success')"
+        @hideLoader="showLoader = false"
+      />
+      <our-fleet-component
+        v-if="selectedItem == '1'"
+        @hideLoader="showLoader = false"
+      />
+      <routes-component
+        v-if="selectedItem == '2'"
+        @hideLoader="showLoader = false"
+      />
+      <messages-component
+        v-if="selectedItem == '3'"
+        @hideLoader="showLoader = false"
+      />
     </v-col>
   </v-row>
 </template>
@@ -16,6 +30,8 @@ import ourFleetComponent from "../ourFleet/ourFleetComponent.vue";
 import routesComponent from "../Routes/routesComponent.vue";
 import messagesComponent from "../Messages/messagesComponent.vue";
 import adminMain from "./adminMain.vue";
+import Loader from "@/components/UI/Loader.vue";
+import { mapGetters, mapActions } from "vuex";
 export default {
   components: {
     ourFleetComponent,
@@ -23,14 +39,21 @@ export default {
     routesComponent,
     messagesComponent,
     adminMain,
+    Loader,
   },
   data: () => ({
     selectedItem: "",
+    showLoader: true,
   }),
   methods: {
+    ...mapActions(["updateLoader"]),
     setSelectedItem(selectedItem) {
       this.selectedItem = selectedItem;
+      this.updateLoader(true);
     },
+  },
+  computed: {
+    ...mapGetters(["loader"]),
   },
 };
 </script>

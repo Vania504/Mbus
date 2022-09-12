@@ -1,5 +1,5 @@
 <template>
-  <v-col class="px-0 py-0">
+  <v-col class="px-0 py-0" v-if="!loader">
     <messages-detail-message
       v-if="isDetail"
       :message="message"
@@ -30,6 +30,7 @@ import contactService from "@/requests/admin/contactService";
 import irregularTransportationService from "@/requests/admin/irregularTransportationService";
 import statusService from "@/requests/admin/statusService";
 import messagesDetailMessage from "@/components/forAdmin/Messages/messagesDetailMessage";
+import { mapGetters, mapActions } from "vuex";
 export default {
   components: {
     messagesHeader,
@@ -48,6 +49,7 @@ export default {
     this.getStatusList();
   },
   methods: {
+    ...mapActions(['updateLoader']),
     async updateStatus(id, messageType, statusName) {
       let temporaryStatusList = this.statusList;
       let status = temporaryStatusList.filter(
@@ -91,6 +93,7 @@ export default {
         });
       });
       this.getMessage = false;
+      this.updateLoader(false);
     },
     async getStatusList() {
       let response = await statusService.getStatusList("/message");
@@ -129,6 +132,9 @@ export default {
         : this.getirregularTransportationMessages(id);
     },
   },
+  computed: {
+    ...mapGetters(['loader'])
+  }
 };
 </script>
 

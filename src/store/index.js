@@ -2,6 +2,7 @@ import Vue from 'vue'
 import Vuex from 'vuex'
 import createPersistedState from "vuex-persistedstate";
 import user from './modules/user';
+import loader from '@/store/modules/loader'
 Vue.use(Vuex);
 
 export default new Vuex.Store({
@@ -18,6 +19,7 @@ export default new Vuex.Store({
 		error: s => s.error
 	},
 	modules: {
-		user
+		user,
+		loader
 	},
 });

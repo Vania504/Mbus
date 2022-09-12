@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <div v-if="!loader">
     <routes-list
       :routes="routes"
       :forAdmin="true"
@@ -25,6 +25,7 @@ import routesList from "@/components/forUser/Routes/routesList.vue";
 import addNewRoutesModal from "@/components/forAdmin/Routes/addNewRoutesModal";
 import routesService from "@/requests/admin/routesService";
 import ourFleetService from "@/requests/admin/ourFleetService";
+import { mapGetters, mapActions } from "vuex";
 export default {
   components: {
     routesList,
@@ -42,6 +43,7 @@ export default {
     this.getRoutes();
   },
   methods: {
+    ...mapActions(['updateLoader']),
     async createRoute(route){
       let response = await routesService.createRoute(route);
       if(response.status == 'success'){
@@ -59,6 +61,7 @@ export default {
     async getRoutes() {
       let response = await routesService.getRouteForAdmin();
       this.routes = response.data;
+      this.updateLoader(false)
     },
     async getRoute(id) {
       let response = await routesService.getRoute(id);
@@ -76,6 +79,9 @@ export default {
       alert("Function deleteRoute work success");
     },
   },
+  computed: {
+    ...mapGetters(['loader'])
+  }
 };
 </script>
 

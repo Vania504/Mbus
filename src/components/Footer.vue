@@ -76,12 +76,12 @@
               class="mb-1 mt-1"
             />
             <img
-              width="20px"
+              width="24px"
               height="18px"
               v-if="item.social_network == 'Telegram'"
               src="@/assets/img/telegramIcon.svg"
               alt="telegram"
-              class="mb-1"
+              class="mt-1"
             />
           </a>
         </v-row>

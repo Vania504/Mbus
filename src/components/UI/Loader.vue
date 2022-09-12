@@ -3,13 +3,15 @@
     <v-progress-circular
       class="mx-auto"
       indeterminate
-      color="#122B3E"
+      color="#085895"
     ></v-progress-circular>
   </div>
 </template>
 
 <script>
-export default {};
+export default {
+  name: 'UILoader'
+};
 </script>
 
 <style>

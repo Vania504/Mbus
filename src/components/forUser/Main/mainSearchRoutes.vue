@@ -84,8 +84,11 @@
               outlined
               dense
               class="rounded-l-lg"
-              :items="['Коломия', 'Івано-Франківськ']"
+              :items="Object.values(startCities)"
+              :item-text="'name'"
+              :item-value="'name'"
               v-model="start_route"
+              :error-messages="startRouteError"
             />
           </v-col>
           <div
@@ -108,8 +111,11 @@
               outlined
               dense
               class="rounded-r-lg"
-              :items="['Коломия', 'Івано-Франківськ']"
+              :items="Object.values(nextCities)"
+              :item-text="'name'"
+              :item-value="'name'"
               v-model="end_route"
+              :error-messages="endRouteError"
             />
           </v-col>
           <v-btn
@@ -117,6 +123,7 @@
             width="80px"
             height="38px"
             color="#085895"
+            @click="searchRoutes"
             ><v-icon color="white">mdi-magnify</v-icon></v-btn
           >
         </v-row>
@@ -128,7 +135,11 @@
 <script>
 import searchRoutesFieldMobile from "./mainMobile/searchRoutesFieldMobile.vue";
 import settingsService from "@/requests/admin/settingsService";
+import searchRoutesService from "@/requests/main/searchRoutesService";
+import { validationMixin } from "vuelidate";
+import { required } from "vuelidate/lib/validators";
 export default {
+  mixins: [validationMixin],
   components: {
     searchRoutesFieldMobile,
   },
@@ -136,9 +147,20 @@ export default {
     start_route: "",
     end_route: "",
     socialNetworks: [],
+    startCities: [],
+    nextCities: [],
   }),
+  validations: {
+    start_route: {
+      required
+    },
+    end_route: {
+      required
+    }
+  },
   mounted() {
     this.getSocialNetwork();
+    this.getStartCities();
   },
   methods: {
     reverseItem() {
@@ -150,7 +172,50 @@ export default {
       let response = await settingsService.getSettingList("socials");
       this.socialNetworks = response.data;
     },
+    async getStartCities(){
+      let response = await searchRoutesService.getStartCities();
+      this.startCities = response.data;
+    },
+    async getNextCities(){
+      let response = await searchRoutesService.getNextCities(this.start_route);
+      this.nextCities = response.data;
+    },
+    async searchRoutes(){
+      if(!this.$v.$invalid){
+       this.$router.push(`/routes?start_route=${this.start_route}&end_route=${this.end_route}`)
+      }
+    }
   },
+  computed: {
+    startRouteError(){
+      const errors = [];
+      if (!this.$v.start_route.$dirty) {
+        return errors;
+      }
+      !this.$v.start_route.required &&
+        errors.push("Оберіть місце відправлення");
+      return errors;
+    },
+    endRouteError(){
+      const errors = [];
+      if (!this.$v.end_route.$dirty) {
+        return errors;
+      }
+      !this.$v.end_route.required &&
+        errors.push("Оберіть місце прибуття");
+      return errors;
+    }
+  },
+  watch: {
+    start_route: {
+      deep: true,
+      handler(){
+        if(this.start_route.length > 0){
+          this.getNextCities();
+        }
+      }
+    }
+  }
 };
 </script>
 

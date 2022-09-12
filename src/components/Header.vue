@@ -61,47 +61,58 @@
             >
           </v-row>
         </v-col>
-        <v-col :cols="isAdmin ? '3' : '2'" style="align-self: center; align-items: center">
-          <v-menu open-on-hover botoom offset-y max-width="200px">
-            <template v-slot:activator="{ on, attrs }">
-              <div v-bind="attrs" v-on="on">
-                <v-row no-gutters align="center" justify="end">
-                  <img v-if="phoneNumbers[0].type == 'UA'" src="@/assets/img/UA.svg" />
-                  <img v-if="phoneNumbers[0].type == 'PL'" src="@/assets/img/PL.svg" />
-                  <span style="margin-left: 5px">{{
-                    phoneNumbers[0].number
-                  }}</span>
-                  <v-icon>mdi-chevron-down</v-icon>
+        <v-col
+          :cols="isAdmin ? '3' : '2'"
+          style="align-self: center; align-items: center"
+        >
+          <v-row no-gutters align="center" justify="end">
+            <v-menu open-on-hover botoom offset-y max-width="200px">
+              <template v-slot:activator="{ on, attrs }">
+                <div v-bind="attrs" v-on="on">
+                  <v-row no-gutters align="center" justify="end">
+                    <img
+                      v-if="phoneNumbers[0].type == 'UA'"
+                      src="@/assets/img/UA.svg"
+                    />
+                    <img
+                      v-if="phoneNumbers[0].type == 'PL'"
+                      src="@/assets/img/PL.svg"
+                    />
+                    <span style="margin-left: 5px">{{
+                      phoneNumbers[0].number
+                    }}</span>
+                    <v-icon>mdi-chevron-down</v-icon>
+                  </v-row>
+                </div>
+              </template>
+              <v-card>
+                <v-row no-gutters justify="center">
+                  <v-list>
+                    <v-col>
+                      <v-row
+                        no-gutters
+                        v-for="number in phoneNumbers"
+                        :key="number.id"
+                        class="mb-1"
+                      >
+                        <img
+                          v-if="number.type == 'UA'"
+                          src="@/assets/img/UA.svg"
+                          class="mr-2"
+                        />
+                        <img
+                          v-if="number.type == 'PL'"
+                          src="@/assets/img/PL.svg"
+                          class="mr-2"
+                        />
+                        <span>{{ number.number }}</span>
+                      </v-row>
+                    </v-col>
+                  </v-list>
                 </v-row>
-              </div>
-            </template>
-            <v-card>
-              <v-row no-gutters justify="center">
-                <v-list>
-                  <v-col>
-                    <v-row
-                      no-gutters
-                      v-for="number in phoneNumbers"
-                      :key="number.id"
-                      class="mb-1"
-                    >
-                      <img
-                        v-if="number.type == 'UA'"
-                        src="@/assets/img/UA.svg"
-                        class="mr-2"
-                      />
-                      <img
-                        v-if="number.type == 'PL'"
-                        src="@/assets/img/PL.svg"
-                        class="mr-2"
-                      />
-                      <span>{{ number.number }}</span>
-                    </v-row>
-                  </v-col>
-                </v-list>
-              </v-row>
-            </v-card>
-          </v-menu>
+              </v-card>
+            </v-menu></v-row
+          >
         </v-col>
       </v-row>
       <v-row v-else align="center" justify="center" no-gutters>

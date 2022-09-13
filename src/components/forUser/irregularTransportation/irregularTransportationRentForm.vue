@@ -176,6 +176,7 @@ export default {
         let response = await irregularTransportationService.sendOrder(order);
         if (response.status == "success") {
           this.userData = {};
+          this.$v.$reset();
           this.successSnackbar = true;
         }
       }

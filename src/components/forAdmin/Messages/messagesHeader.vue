@@ -63,7 +63,6 @@ export default {
     showNewStatusField: false,
     activeStatus: "1",
     page: 1,
-    quantity_page: 10,
   }),
   props: {
     statusList: {
@@ -71,6 +70,9 @@ export default {
     },
     getMessage: {
       require: false,
+    },
+    quantity_page: {
+      require: true,
     }
   },
   methods: {
@@ -95,6 +97,12 @@ export default {
           this.changeStatus(this.activeStatus)
         }
       }
+    },
+    page: {
+      deep: true,
+      handler(){
+        this.$emit('page' , this.page)
+      },
     }
   }
 };

@@ -12,12 +12,15 @@
         :statusList="statusList"
         :getMessage="getMessage"
         @getMessageForStatus="getMessages"
+        :quantity_page="quantity_page"
+        @page="changePage"
       />
       <messages-list
         :messages="messages"
         :statusList="statusList"
         @detailMessage="detailMessage"
         @updateStatus="updateStatus"
+        :page="page"
       />
     </v-col>
   </v-col>
@@ -43,13 +46,15 @@ export default {
     message: [],
     getMessage: false,
     isDetail: false,
+    quantity_page: 0,
+    page: 1,
   }),
   mounted() {
     this.getMessages("1");
     this.getStatusList();
   },
   methods: {
-    ...mapActions(['updateLoader']),
+    ...mapActions(["updateLoader"]),
     async updateStatus(id, messageType, statusName) {
       let temporaryStatusList = this.statusList;
       let status = temporaryStatusList.filter(
@@ -92,6 +97,10 @@ export default {
           ...message,
         });
       });
+      this.messages = this.messages.sort(function (a, b) {
+        return new Date(b.created_at) - new Date(a.created_at);
+      });
+      this.quantity_page = parseInt(this.messages.length / 20 + 1);
       this.getMessage = false;
       this.updateLoader(false);
     },
@@ -131,10 +140,13 @@ export default {
         ? this.getContactMessage(id)
         : this.getirregularTransportationMessages(id);
     },
+    changePage(page) {
+      this.page = page;
+    },
   },
   computed: {
-    ...mapGetters(['loader'])
-  }
+    ...mapGetters(["loader"]),
+  },
 };
 </script>
 

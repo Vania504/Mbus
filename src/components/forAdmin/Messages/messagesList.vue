@@ -2,7 +2,7 @@
   <div>
     <v-col class="px-0 py-0">
       <messages-message
-        v-for="(message, index) in messages"
+        v-for="(message, index) in messages.slice((20 * page - 20), (20 * page))"
         :key="index"
         :message="message"
         @updateStatus="updateStatus"
@@ -25,6 +25,9 @@ export default {
     statusList: {
       require: false,
     },
+    page: {
+      require: true,
+    }
   },
   methods: {
     updateStatus(id, messageType, statusName){

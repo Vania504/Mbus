@@ -4,7 +4,7 @@
       <v-col style="text-align: justify; padding-top: 50px">
         <p class="mainTitleMobile mb-2">Нерегулярні перевезення</p>
         <v-container>
-          <v-row justify="center" align="center">
+          <v-row justify="center" align="start" class="mb-15">
             <div
               class="irregularTransportationBorderTopLeftMobile"
               style="margin-right: 90%; margin-bottom: 120px"
@@ -13,18 +13,22 @@
               <center>
                 <div
                   style="
-                    background: linear-gradient(
-                      360deg,
-                      rgba(1, 29, 51, 0.602) 35.16%,
-                      rgba(91, 98, 104, 0.469) 45.62%
-                    );
                     z-index: 10;
                     position: absolute;
                     width: 190px;
-                    height: 127px;
-                    margin-top: 7px;
-                    text-align: center;
+                    height: 127px;              
+                    border-radius: 3px;
                   "
+                  :style="{
+                    backgroundImage: `linear-gradient(
+                      360deg,
+                      rgba(1, 29, 51, 0.602) 35.16%,
+                      rgba(91, 98, 104, 0.469) 45.62%
+                    ), url(
+      ${content[0].images[0].images.path})`,
+                    backgroundSize: 'cover',
+                    backgroundRepeat: 'norepeat',
+                  }"
                 >
                   <p
                     style="
@@ -34,26 +38,21 @@
                       margin-top: 90px;
                     "
                   >
-                    Шопінг-тур в Польщу
+                    {{ content[0].title }}
                   </p>
                 </div>
-                <img
+                <!-- <img
                   style="border-radius: 3px"
-                  src="@/assets/img/innregularTransporImg.svg"
+                  :src="content[0].images[0].images.path"
                   :width="$vuetify.breakpoint.xs ? '190px' : ''"
-                  :height="$vuetify.breakpoint.xs ? '140px' : ''"
-                />
+                  :height="$vuetify.breakpoint.xs ? '130px' : ''"
+                /> -->
               </center>
             </v-col>
 
-            <v-col cols="5" xl="5" lg="5" md="5" sm="5" class="mb-2 py-0">
+            <v-col cols="5" xl="5" lg="5" md="5" sm="5" class="py-0">
               <p class="descriptionText">
-                Шопінг у Польщі, є одним з найпопулярніших нерегулярних
-                маршрутів в нашій компанії. Закупи в Польщі вже давно стали дуже
-                популярними серед багатьох українців. При цьому зацікавленість
-                ними постійно зростає, не лише серед мешканців прикордонних
-                областей – в шопінг-тури до польських торгових центрів вирушають
-                мешканці жителі всіх областей України.
+                {{ content[0].content }}
               </p>
               <v-row
                 :justify="$vuetify.breakpoint.xs ? 'center' : 'start'"
@@ -89,6 +88,11 @@ export default {
   data: () => ({
     isHover: false,
   }),
+  props: {
+    content: {
+      require: true,
+    },
+  },
 };
 </script>
   
@@ -107,5 +111,6 @@ export default {
   overflow: hidden !important;
   text-overflow: ellipsis;
   -webkit-line-clamp: 6;
+  padding-top: 12px;
 }
 </style>

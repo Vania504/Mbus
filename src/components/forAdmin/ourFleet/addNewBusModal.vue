@@ -58,6 +58,23 @@
             />
           </v-col>
         </v-row>
+        <v-row align="start" justify="start" no-gutters>
+          <v-col cols="2">
+            <p class="itemTitle">Статус:</p>
+          </v-col>
+          <v-col cols="3" class="px-2">
+              <v-autocomplete
+                class="rounded-lg"
+                outlined
+                dense
+                :items="Object.values(busStatus)"
+                :item-text="'text'"
+                :item-value="'value'"
+                v-model="bus.status"
+                color="#085895"
+              />
+            </v-col>
+        </v-row>
         <v-col class="px-0">
           <p class="itemTitle">Сервіс:</p>
           <v-col cols="12">
@@ -137,6 +154,7 @@
       :visible="showRecentlyImage"
       @close="showRecentlyImage = false"
       @choseImage="setImages"
+      type="Bus"
     />
   </v-dialog>
 </template>
@@ -156,7 +174,9 @@ export default {
     RecentlyAddImageModal,
   },
   data: () => ({
-    bus: {},
+    bus: {
+      status: 'Active',
+    },
     service: [
       {
         id: 1,
@@ -217,6 +237,16 @@ export default {
     ],
     busImages: [],
     showRecentlyImage: false,
+    busStatus: [
+      {
+       text : 'Активний',
+       value: 'Active'
+      },
+      {
+       text : 'Архівований',
+       value: 'Archive'
+      }
+    ]
   }),
   validations: {
     bus: {
@@ -262,7 +292,7 @@ export default {
             : (options[`${service.key}`] = 1);
         });
         let data = {
-          status: "Active",
+          status: this.bus.status,
           model: this.bus.model_name,
           description: this.bus.description,
           seats: this.bus.quantity_seats,
@@ -287,7 +317,7 @@ export default {
             : (options[`${service.key}`] = 1);
         });
         let data = {
-          status: "Active",
+          status: this.bus.status,
           model: this.bus.model_name,
           description: this.bus.description,
           seats: this.bus.quantity_seats,
@@ -309,6 +339,7 @@ export default {
       this.$set(this.bus, "model_name", this.detailInfoBus.model);
       this.$set(this.bus, "description", this.detailInfoBus.description);
       this.$set(this.bus, "quantity_seats", this.detailInfoBus.seats);
+      this.$set(this.bus, "status", this.detailInfoBus.status);
       if (this.detailInfoBus.images) {
         this.detailInfoBus.images.forEach((image) => {
           this.busImages.push(image.images);

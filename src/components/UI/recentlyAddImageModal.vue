@@ -3,7 +3,8 @@
     <v-card width="100%" style="overflow-x: hidden">
       <v-col class="px-0">
         <v-card-title>Нещодавно додані зображення</v-card-title>
-        <v-row no-gutters justify="start" class="ml-8">
+        <Loader v-if="showLoader"/>
+        <v-row v-else no-gutters justify="start" class="ml-8" >
           <div v-for="image in images.data" :key="image.id" class="mx-2">
             <img
               style="width: 240px; height: 140px; object-fit: cover"
@@ -26,18 +27,23 @@
             @change="uploadImg"
           />
         </v-row>
-        <v-pagination v-model="page" :length="paginationLength"></v-pagination> </v-col
+        <v-pagination v-if="!showLoader" v-model="page" :length="paginationLength"></v-pagination> </v-col
     ></v-card>
   </v-dialog>
 </template>
 
 <script>
 import imageService from "@/requests/admin/imageService";
+import Loader from "./Loader.vue";
 export default {
+  components: {
+    Loader,
+  },
   data: () => ({
     images: [],
     page: 1,
     paginationLength: 0,
+    showLoader: true
   }),
   props: {
     visible: {
@@ -55,6 +61,7 @@ export default {
       let response = await imageService.getImages(this.type, this.page);
       this.images = response.data;
       this.paginationLength = parseInt(response.data.total / response.data.per_page) + 1;
+      this.showLoader = false;
     },
     async uploadImg(e) {
       let file = e.srcElement.files[0];

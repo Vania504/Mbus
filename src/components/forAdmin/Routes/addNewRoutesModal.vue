@@ -129,7 +129,7 @@
               placeholder="Setra S 417 GT-HD"
               v-model="route.bus"
               color="#085895"
-              :items="Object.values(busList)"
+              :items="Object.values(busList.data)"
               :item-value="'id'"
               :item-text="'model'"
               :error-messages="busError"
@@ -183,6 +183,25 @@
           </v-col>
         </v-row>
         <!-- /Departure time -->
+        <v-row align="start" justify="start" no-gutters>
+          <v-col cols="3">
+            <p class="itemTitle">Статус:</p>
+          </v-col>
+          <v-col cols="5" class="px-2">
+            <v-col cols="8" class="py-0 px-0">
+              <v-autocomplete
+                class="rounded-lg"
+                outlined
+                dense
+                :items="Object.values(routeStatus)"
+                :item-text="'text'"
+                :item-value="'value'"
+                v-model="route.status"
+                color="#085895"
+              />
+            </v-col>
+          </v-col>
+        </v-row>
         <!-- Detail route -->
         <v-row align="start" justify="start" no-gutters>
           <v-col cols="12" class="px-0">
@@ -281,6 +300,22 @@
         </v-row>
         <!-- /Detail route -->
       </v-col>
+      <v-row no-gutters class="ml-8 mb-5">
+        <img
+          v-for="img in routeImages"
+          :key="img.id"
+          :src="`${img.path}`"
+          class="mr-2"
+          width="50px"
+          height="50px"
+          style="object-fit: cover"
+        />
+        <img
+          src="@/assets/img/addImageIcon.svg"
+          class="pointer"
+          @click="showRecentlyImage = true"
+        />
+      </v-row>
       <route-shedule
         @shedule="setShedule"
         :isEdit="isEdit"
@@ -312,6 +347,13 @@
         </v-row>
       </v-card-actions>
     </v-card>
+    <recently-add-image-modal
+      v-if="showRecentlyImage"
+      :visible="showRecentlyImage"
+      @close="showRecentlyImage = false"
+      @choseImage="setImages"
+      type="Route"
+    />
   </v-dialog>
 </template>
 
@@ -322,14 +364,17 @@ import { validationMixin } from "vuelidate";
 import { required } from "vuelidate/lib/validators";
 import googleMapsService from "@/requests/googleMaps/googleMapsService";
 import requestFormData from "@/requests/requestFormData";
+import recentlyAddImageModal from "@/components/UI/recentlyAddImageModal";
 export default {
   mixins: [validationMixin],
   components: {
     modalHeader,
     routeShedule,
+    recentlyAddImageModal,
   },
   data: () => ({
     route: {
+      status: 'Active',
       daysOfDeparture: [],
       driver_phone_number: [
         {
@@ -383,6 +428,18 @@ export default {
     otherCountryCityError: "",
     shedule: [],
     routesSheduleKey: 0,
+    showRecentlyImage: false,
+    routeImages: [],
+    routeStatus: [
+      {
+       text : 'Активний',
+       value: 'Active'
+      },
+      {
+       text : 'Архівований',
+       value: 'Archive'
+      }
+    ]
   }),
   validations: {
     route: {
@@ -426,6 +483,10 @@ export default {
     createRoute() {
       this.$v.$touch();
       if (!this.$v.$invalid) {
+        let images = [];
+        this.routeImages.forEach((image) => {
+          images.push(image.id);
+        });
         let daysOfDepartureFiltered = [];
         this.daysOfDeparture.forEach((day) => {
           if (this.route.daysOfDeparture.includes(day.id)) {
@@ -439,22 +500,27 @@ export default {
           destination: this.route.route_name_end,
           bus_id: this.route.bus,
           departure_time: this.route.departure_time,
-          status: "Active",
+          status: this.route.status,
           driver_phones: this.route.driver_phone_number,
           ukraine_city: this.route.ukraine_city,
           foreign_city: this.route.other_country_city,
           route_path_image_id: 1,
           departure_days: daysOfDepartureFiltered,
           route_time: this.shedule,
+          images: images,
         };
         let route = requestFormData.jsonToFormData(data);
         this.$emit("createRoute", route);
       }
     },
-    editRoute(){
+    editRoute() {
       this.$v.$touch();
       if (!this.$v.$invalid) {
         let daysOfDepartureFiltered = [];
+        let images = [];
+        this.routeImages.forEach((image) => {
+          images.push(image.id);
+        });
         this.daysOfDeparture.forEach((day) => {
           if (this.route.daysOfDeparture.includes(day.id)) {
             daysOfDepartureFiltered[`${day.key}`] = "1";
@@ -467,17 +533,17 @@ export default {
           destination: this.route.route_name_end,
           bus_id: this.route.bus,
           departure_time: this.route.departure_time,
-          status: "Active",
+          status: this.route.status,
           driver_phones: this.route.driver_phone_number,
           ukraine_city: this.route.ukraine_city,
           foreign_city: this.route.other_country_city,
           route_path_image_id: 1,
           departure_days: daysOfDepartureFiltered,
           route_time: this.shedule,
+          images: images,
         };
         let route = requestFormData.jsonToFormData(data);
-
-        this.$emit("editRoute",this.route.id, route);
+        this.$emit("editRoute", this.route.id, route);
       }
     },
     addNewDriverPhoneNumber() {
@@ -517,12 +583,17 @@ export default {
     setShedule(shedule) {
       this.shedule = shedule;
     },
+    setImages(image) {
+      this.showRecentlyImage = false;
+      this.routeImages.push(image);
+    },
     setRoute() {
-      this.$set(this.route, "id", this.routeDetailInfo.id)
+      this.$set(this.route, "id", this.routeDetailInfo.id);
       this.$set(this.route, "route_name_start", this.routeDetailInfo.departure);
       this.$set(this.route, "route_name_end", this.routeDetailInfo.destination);
       this.$set(this.route, "bus", this.routeDetailInfo.bus_id);
       this.$set(this.route, "quantity_seats", this.routeDetailInfo.bus.seats);
+      this.$set(this.route, "status", this.routeDetailInfo.bus.status);
       this.$set(
         this.route,
         "departure_time",
@@ -541,15 +612,29 @@ export default {
           this.route.other_country_city.push(city);
         }
       });
-      this.routeDetailInfo.departure_days.mon == '1' ? this.route.daysOfDeparture.push(0) : '';
-      this.routeDetailInfo.departure_days.tue == '1' ? this.route.daysOfDeparture.push(1) : '';
-      this.routeDetailInfo.departure_days.wed == '1' ? this.route.daysOfDeparture.push(2) : '';
-      this.routeDetailInfo.departure_days.thu == '1' ? this.route.daysOfDeparture.push(3) : '';
-      this.routeDetailInfo.departure_days.fri == '1' ? this.route.daysOfDeparture.push(4) : '';
-      this.routeDetailInfo.departure_days.sun == '1' ? this.route.daysOfDeparture.push(5) : '';
-      this.routeDetailInfo.departure_days.sat == '1' ? this.route.daysOfDeparture.push(6) : '';
+      this.routeDetailInfo.departure_days.mon == "1"
+        ? this.route.daysOfDeparture.push(0)
+        : "";
+      this.routeDetailInfo.departure_days.tue == "1"
+        ? this.route.daysOfDeparture.push(1)
+        : "";
+      this.routeDetailInfo.departure_days.wed == "1"
+        ? this.route.daysOfDeparture.push(2)
+        : "";
+      this.routeDetailInfo.departure_days.thu == "1"
+        ? this.route.daysOfDeparture.push(3)
+        : "";
+      this.routeDetailInfo.departure_days.fri == "1"
+        ? this.route.daysOfDeparture.push(4)
+        : "";
+      this.routeDetailInfo.departure_days.sun == "1"
+        ? this.route.daysOfDeparture.push(5)
+        : "";
+      this.routeDetailInfo.departure_days.sat == "1"
+        ? this.route.daysOfDeparture.push(6)
+        : "";
       this.routesSheduleKey++;
-      console.log(this.route)
+      console.log(this.route);
     },
     isNumber(evt) {
       evt = evt ? evt : window.event;
@@ -621,6 +706,15 @@ export default {
       return errors;
     },
   },
+  watch: {
+    'route.bus' : {
+      deep: true,
+      handler(){
+        let bus = this.busList.data.filter((bus) => bus.id === this.route.bus);
+        this.route.quantity_seats = bus[0].seats;
+      }
+    }
+  }
 };
 </script>
 

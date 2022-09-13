@@ -4,11 +4,12 @@
       <div
         style="
           height: 172px;
-          background-size: 'cover';
-          background-repeat: 'norepeat';
+          width: 100%;
+          background-size: cover;
+          background-repeat: no-repeat;
           padding-top: 61px;
         "
-        :style="`background-image: linear-gradient(0deg, rgba(18, 43, 62, 0.64), rgba(18, 43, 62, 0.64)), url(${require('@/assets/img/irregularBackgroundBusImgMobile.svg')});`"
+        :style="`background-image: linear-gradient(0deg, rgba(18, 43, 62, 0.64), rgba(18, 43, 62, 0.64)), url(${require('@/assets/img/irregularBackgroundBus.png')});`"
       >
         <span class="mobileTitle">Нерегулярні перевезення</span>
       </div>

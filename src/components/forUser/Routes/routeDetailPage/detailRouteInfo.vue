@@ -164,6 +164,7 @@ export default {
   },
   methods: {
     filterCity() {
+      console.log("filteredCity", this.route);
       if (this.route.cities) {
         this.route.cities.forEach((city) => {
           city.type == "Ukraine"
@@ -173,6 +174,14 @@ export default {
       }
     },
   },
+  watch: {
+    route: {
+      deep: true,
+      handler(){
+        this.filterCity();
+      }
+    }
+  }
 };
 </script>
 

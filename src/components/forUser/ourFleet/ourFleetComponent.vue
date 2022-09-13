@@ -1,38 +1,13 @@
 <template>
   <v-row no-gutters justify="start">
     <div
-      style="width: 100%;"
-      :style="
-        $vuetify.breakpoint.xs
-          ? {
-              backgroundImage: `linear-gradient(
-        0deg,
-        rgba(18, 43, 62, 0.64),
-        rgba(18, 43, 62, 0.64)
-      ), url(
-      ${require('@/assets/img/test.svg')})`,
-              backgroundSize: 'cover',
-              backgroundRepeat: 'norepeat',
-              height: '170px',
-            }
-          : {
-              backgroundImage: `linear-gradient(
-        0deg,
-        rgba(18, 43, 62, 0.64),
-        rgba(18, 43, 62, 0.64)
-      ), url(
-      ${require('@/assets/img/ourFleetMainBackground.svg')})`,
-              backgroundSize: 'cover',
-              backgroundRepeat: 'norepeat',
-              height: '400px',
-            }
-      "
-    >
-    </div>
+      class="backgroundImage"
+      :style="$vuetify.breakpoint.xs ? 'height: 170px' : 'height: 400px'"
+    ></div>
     <span :class="$vuetify.breakpoint.xs ? 'mobileTitle' : 'otherTitle'"
-        >Наш автопарк</span
-      >
-    <bus-list :busList="busList"/>
+      >Наш автопарк</span
+    >
+    <bus-list :busList="busList" />
   </v-row>
 </template>
 
@@ -49,15 +24,15 @@ export default {
     },
     busList: [],
   }),
-  mounted(){
+  mounted() {
     this.getBuses();
   },
   methods: {
-    async getBuses(){
+    async getBuses() {
       let response = await ourFleetService.getBuses();
       this.busList = response.data.data;
-    }
-  }
+    },
+  },
 };
 </script>
 
@@ -83,5 +58,19 @@ export default {
   margin-top: 60px;
   text-align: center;
   width: 100%;
+}
+.backgroundImage {
+  height: 400px;
+  background-image: linear-gradient(
+      0deg,
+      rgba(18, 43, 62, 0.64),
+      rgba(18, 43, 62, 0.64)
+    ),
+    url("@/assets/img/ourFleetBackground.JPG");
+  text-align: center;
+  object-fit: cover;
+  width: 100%;
+  background-repeat: no-repeat;
+  background-size: cover;
 }
 </style>

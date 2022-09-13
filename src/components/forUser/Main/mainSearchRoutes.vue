@@ -18,7 +18,7 @@
       align="center"
     >
       <v-col cols="1" class="px-0" v-if="!$vuetify.breakpoint.xs">
-        <v-row
+        <!-- <v-row
           justify="start"
           no-gutters
           class="ml-5"
@@ -39,7 +39,9 @@
             <v-icon v-if="item.social_network == 'Whatsapp'" color="black"
               >mdi-whatsapp</v-icon
             >
-            <v-icon v-if="item.social_network == 'Twitter'" color="black">mdi-twitter</v-icon>
+            <v-icon v-if="item.social_network == 'Twitter'" color="black"
+              >mdi-twitter</v-icon
+            >
             <img
               width="24px"
               height="20px"
@@ -57,7 +59,7 @@
               class="mb-1"
             />
           </a>
-        </v-row>
+        </v-row> -->
       </v-col>
       <v-col
         cols="10"
@@ -75,57 +77,66 @@
           Пошук автобусних рейсів:
         </h4>
         <search-routes-field-mobile v-if="$vuetify.breakpoint.xs" />
-        <v-row justify="center" v-else>
-          <v-col cols="2" class="px-0">
-            <v-autocomplete
-              background-color="white"
-              prepend-inner-icon="mdi-map-marker-outline"
-              placeholder="Звідки"
-              outlined
-              dense
-              class="rounded-l-lg"
-              :items="Object.values(startCities)"
-              :item-text="'name'"
-              :item-value="'name'"
-              v-model="start_route"
-              :error-messages="startRouteError"
-            />
-          </v-col>
-          <div
-            style="
-              background-color: white;
-              width: 34px;
-              height: 38px;
-              margin-top: 13px;
-              cursor: pointer;
-            "
-            @click="reverseItem"
-          >
-            <img src="@/assets/img/reverseIcon.svg" class="mt-2" />
+        <v-row v-else justify="center" no-gutters>
+          <div class="backgroundSearchField">
+            <v-row justify="center" class="pt-2">
+              <v-col cols="4" class="px-0">
+                <v-autocomplete
+                  background-color="white"
+                  prepend-inner-icon="mdi-map-marker-outline"
+                  placeholder="Звідки"
+                  outlined
+                  dense
+                  class="rounded-l-lg"
+                  :items="Object.values(startCities)"
+                  :item-text="'name'"
+                  :item-value="'name'"
+                  v-model="start_route"
+                  :error-messages="startRouteError"
+                />
+              </v-col>
+              <div
+                style="
+                  background-color: white;
+                  width: 34px;
+                  height: 38px;
+                  margin-top: 13px;
+                  cursor: pointer;
+                "
+                @click="reverseItem"
+              >
+                <img src="@/assets/img/reverseIcon.svg" class="mt-2" />
+              </div>
+              <v-col cols="4" class="px-0">
+                <v-autocomplete
+                  background-color="white"
+                  prepend-inner-icon="mdi-map-marker-outline"
+                  placeholder="Куди"
+                  outlined
+                  dense
+                  class="rounded-r-lg"
+                  :items="Object.values(nextCities)"
+                  :item-text="'name'"
+                  :item-value="'name'"
+                  v-model="end_route"
+                  :error-messages="endRouteError"
+                />
+              </v-col>
+              <v-btn
+                style="
+                  margin-left: 20px;
+                  margin-top: 13px;
+                  box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.15);
+                  border-radius: 10px;
+                "
+                width="80px"
+                height="38px"
+                color="#085895"
+                @click="searchRoutes"
+                ><v-icon color="white">mdi-magnify</v-icon></v-btn
+              >
+            </v-row>
           </div>
-          <v-col cols="2" class="px-0">
-            <v-autocomplete
-              background-color="white"
-              prepend-inner-icon="mdi-map-marker-outline"
-              placeholder="Куди"
-              outlined
-              dense
-              class="rounded-r-lg"
-              :items="Object.values(nextCities)"
-              :item-text="'name'"
-              :item-value="'name'"
-              v-model="end_route"
-              :error-messages="endRouteError"
-            />
-          </v-col>
-          <v-btn
-            style="margin-left: 20px; margin-top: 13px"
-            width="80px"
-            height="38px"
-            color="#085895"
-            @click="searchRoutes"
-            ><v-icon color="white">mdi-magnify</v-icon></v-btn
-          >
         </v-row>
       </v-col>
     </v-row>
@@ -138,6 +149,7 @@ import settingsService from "@/requests/admin/settingsService";
 import searchRoutesService from "@/requests/main/searchRoutesService";
 import { validationMixin } from "vuelidate";
 import { required } from "vuelidate/lib/validators";
+import { mapActions } from "vuex";
 export default {
   mixins: [validationMixin],
   components: {
@@ -152,17 +164,18 @@ export default {
   }),
   validations: {
     start_route: {
-      required
+      required,
     },
     end_route: {
-      required
-    }
+      required,
+    },
   },
   mounted() {
     this.getSocialNetwork();
     this.getStartCities();
   },
   methods: {
+    ...mapActions(["updateLoader"]),
     reverseItem() {
       let start_route = this.start_route;
       this.start_route = this.end_route;
@@ -172,23 +185,26 @@ export default {
       let response = await settingsService.getSettingList("socials");
       this.socialNetworks = response.data;
     },
-    async getStartCities(){
+    async getStartCities() {
       let response = await searchRoutesService.getStartCities();
       this.startCities = response.data;
     },
-    async getNextCities(){
+    async getNextCities() {
       let response = await searchRoutesService.getNextCities(this.start_route);
       this.nextCities = response.data;
     },
-    async searchRoutes(){
+    async searchRoutes() {
       this.$v.$touch();
-      if(!this.$v.$invalid){
-       this.$router.push(`/routes?start_route=${this.start_route}&end_route=${this.end_route}`)
+      if (!this.$v.$invalid) {
+        this.$router.push(
+          `/routes?start_route=${this.start_route}&end_route=${this.end_route}`
+        );
+        this.updateLoader(true);
       }
-    }
+    },
   },
   computed: {
-    startRouteError(){
+    startRouteError() {
       const errors = [];
       if (!this.$v.start_route.$dirty) {
         return errors;
@@ -197,47 +213,64 @@ export default {
         errors.push("Оберіть місце відправлення");
       return errors;
     },
-    endRouteError(){
+    endRouteError() {
       const errors = [];
       if (!this.$v.end_route.$dirty) {
         return errors;
       }
-      !this.$v.end_route.required &&
-        errors.push("Оберіть місце прибуття");
+      !this.$v.end_route.required && errors.push("Оберіть місце прибуття");
       return errors;
-    }
+    },
   },
   watch: {
     start_route: {
       deep: true,
-      handler(){
-        if(this.start_route.length > 0){
+      handler() {
+        if (this.start_route.length > 0) {
           this.getNextCities();
         }
-      }
-    }
-  }
+      },
+    },
+  },
 };
 </script>
 
 <style>
 .mainBackground {
   height: 700px;
-  background-image: url("@/assets/img/temporaryBackground.svg");
+  background: linear-gradient(
+      0deg,
+      rgba(36, 57, 73, 0.5),
+      rgba(36, 57, 73, 0.5)
+    ),
+    url("@/assets/img/mainBackground.JPG");
   text-align: center;
+  object-fit: cover;
   width: 100%;
+  background-repeat: no-repeat;
+  background-size: cover;
 }
 .mainText {
   font-weight: 400;
   letter-spacing: 0.1em;
-  color: #243949;
+  color: #ffffff;
   padding-top: 180px;
 }
 .searchRoutes {
   font-style: normal;
   font-weight: 400;
   letter-spacing: 0.1em;
-  color: #243949;
+  color: #ffffff;
   margin-bottom: 20px;
+}
+.backgroundSearchField {
+  width: 600px;
+  height: 60px;
+  background: rgba(255, 255, 255, 0.9);
+  border: 0.5px solid #085895;
+  box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.15);
+  border-radius: 30px;
+  text-align: center;
+  align-self: center;
 }
 </style>

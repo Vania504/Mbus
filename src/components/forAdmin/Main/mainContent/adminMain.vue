@@ -61,6 +61,7 @@ export default {
     createAboutUsForm,
   },
   mounted() {
+    this.updateLoader(true);
     if (this.activeCategory == "contact") {
       this.getContactSetting();
       this.getSocialSetting();

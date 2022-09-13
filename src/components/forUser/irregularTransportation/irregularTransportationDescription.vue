@@ -29,7 +29,7 @@
             ></div>
           </div>
         </v-row>
-        <img src="@/assets/img/irregularBackgroundBusImg.svg" />
+        <img class="busImg" src="@/assets/img/irregularBackgroundBus.png" />
       </v-row></div
   ></v-row>
 </template>
@@ -47,5 +47,9 @@ export default {};
   text-align: center;
   font-size: 20px;
   margin-left: 20px;
+}
+.busImg {
+  height: 600px;
+  width: 900px;
 }
 </style>

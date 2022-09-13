@@ -25,7 +25,7 @@
 </template>
   
   <script>
-import phoneNumbersField from "./phoneNumbersField.vue";
+import phoneNumbersField from "../phoneNumbersForm/phoneNumbersField.vue";
 import { mapGetters } from "vuex";
 export default {
   components: {

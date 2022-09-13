@@ -26,7 +26,7 @@
 </template>
 
 <script>
-import socialLinkField from "@/components/forAdmin/Main/socialLinkField";
+import socialLinkField from "./socialLinkField";
 import { mapGetters } from "vuex";
 export default {
   components: {

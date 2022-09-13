@@ -29,7 +29,7 @@ import navigationDrawer from "@/components/forAdmin/Main/navigationDrawer";
 import ourFleetComponent from "../ourFleet/ourFleetComponent.vue";
 import routesComponent from "../Routes/routesComponent.vue";
 import messagesComponent from "../Messages/messagesComponent.vue";
-import adminMain from "./adminMain.vue";
+import adminMain from "./mainContent/adminMain.vue";
 import Loader from "@/components/UI/Loader.vue";
 import { mapGetters, mapActions } from "vuex";
 export default {

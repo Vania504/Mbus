@@ -30,14 +30,15 @@
 </template>
   
   <script>
-import createSocialLinkForm from "./createSocialLinkForm.vue";
+import createSocialLinkForm from '@/components/forAdmin/Main/mainContent/socialLinkForm/createSocialLinkForm';
 import adminMainHeader from "./adminMainHeader.vue";
-import createPhoneNumberForm from "@/components/forAdmin/Main/createPhoneNumberForm";
+import createPhoneNumberForm from '@/components/forAdmin/Main/mainContent/phoneNumbersForm/createPhoneNumberForm';
 import settingsService from "@/requests/admin/settingsService";
 import successSnackbar from "@/components/UI/successSnackbar";
 import { mapActions } from "vuex";
-import createIrregularTransportationForm from "@/components/forAdmin/Main/createIrregularTransportationForm";
+import createIrregularTransportationForm from '@/components/forAdmin/Main/mainContent/irregularTransportationForm/createIrregularTransportationForm';
 import contentService from "@/requests/admin/contentService";
+import createAboutUsForm from '@/components/forAdmin/Main/mainContent/aboutUsForm/createAboutUsForm';
 export default {
   data: () => ({
     activeCategory: "contact",
@@ -46,6 +47,7 @@ export default {
     showSuccessSnackbar: false,
     snackbarText: "",
     irregularTransportationContent: [],
+    createAboutUsForm,
   }),
   components: {
     createSocialLinkForm,

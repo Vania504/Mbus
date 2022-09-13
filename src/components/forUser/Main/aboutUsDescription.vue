@@ -20,7 +20,7 @@
                     : 'mobileTextDescriptionOverflow'
                 "
                 >
-                <div v-html="content[0].content"></div>
+                <div v-if="content.length" v-html="content[0].content"></div>
               </span>
               <v-row no-gutters align="start" justify="end" v-if="$vuetify.breakpoint.xs" class="mt-2">
                 <v-btn
@@ -35,7 +35,8 @@
                 </v-btn>
               </v-row>
             </v-col>
-            <img
+            <img 
+            v-if="content.length"
               height="346px"
               :width="$vuetify.breakpoint.xs ? '280px' : '454px'"
               class="ml-10"

@@ -7,18 +7,21 @@
       :events="['keydown', 'mousedown', 'touchstart']"
       :duration="$store.getters.loggedUser.timeout"
     />
-    <Header :key="keyHeader" />
-    <router-view @success="keyHeader++, keyFooter++" />
-    <Footer :key="keyFooter" />
-    <mobile-menu
-      v-if="$vuetify.breakpoint.xs"
-      @other="setShowNavigationDrawer"
-    />
-    <navigation-drawer-mobile
-      v-if="$vuetify.breakpoint.xs && showNavigationDrawer"
-      :showNavigationDrawer="showNavigationDrawer"
-      @close="showNavigationDrawer = false"
-    />
+    <Loader v-if="showLoader" style="margin-top: 10%;"/>
+    <div v-show="!showLoader">
+      <Header :key="keyHeader" />
+      <router-view @success="keyHeader++, keyFooter++" />
+      <Footer :key="keyFooter" />
+      <mobile-menu
+        v-if="$vuetify.breakpoint.xs"
+        @other="setShowNavigationDrawer"
+      />
+      <navigation-drawer-mobile
+        v-if="$vuetify.breakpoint.xs && showNavigationDrawer"
+        :showNavigationDrawer="showNavigationDrawer"
+        @close="showNavigationDrawer = false"
+      />
+    </div>
   </v-app>
 </template>
 
@@ -26,6 +29,7 @@
 import Header from "./components/Header.vue";
 import Footer from "./components/Footer.vue";
 import mobileMenu from "@/components/mobileMenu";
+import Loader from "./components/UI/Loader.vue";
 import navigationDrawerMobile from "./components/UI/navigationDrawerMobile.vue";
 import { mapGetters, mapActions } from "vuex";
 export default {
@@ -35,21 +39,29 @@ export default {
     Footer,
     mobileMenu,
     navigationDrawerMobile,
+    Loader,
   },
   data: () => ({
     showNavigationDrawer: false,
+    showLoader: true,
     keyHeader: 1,
     keyFooter: 2,
   }),
+  mounted(){
+    setTimeout(this.setShowLoader, 1000)
+  },
   methods: {
     ...mapActions(["updateInfoLogged"]),
     async onidle() {
       this.$store.commit("clearUserLogged");
-      this.$router.push("/d");
+      this.$router.push("/");
     },
     setShowNavigationDrawer() {
       this.showNavigationDrawer = true;
     },
+    setShowLoader(){
+      this.showLoader = false;
+    }
   },
   computed: {
     ...mapGetters(["loggedUser"]),
@@ -65,7 +77,7 @@ export default {
       console.log(diff * 0.001, this.loggedUser.timeout);
       if (diff * 0.001 > this.loggedUser.timeout) {
         this.$store.commit("clearUserLogged");
-        this.$router.push("/d");
+        this.$router.push("/");
       }
       console.log(localStorage.time);
       localStorage.removeItem("time");

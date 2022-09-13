@@ -14,10 +14,10 @@
               "
             ></div>
             <v-col cols="10" xl="5" lg="5" md="5" sm="5">
-              <p style="color: #243949; font-size: 24px">
+              <p style="color: #243949; font-size: 24px" v-if="content.length">
                 {{ content[0].title }}
               </p>
-              <p style="color: #243949; font-size: 20px">
+              <p style="color: #243949; font-size: 20px" v-if="content.length">
                 {{ content[0].content }}
               </p>
               <v-row
@@ -38,6 +38,7 @@
               </v-row>
             </v-col>
             <img
+              v-if="content.length"
               :src="content[0].images[0].images.path"
               :width="$vuetify.breakpoint.xs ? '280px' : '600px'"
               :height="$vuetify.breakpoint.xs ? '140px' : '400px'"

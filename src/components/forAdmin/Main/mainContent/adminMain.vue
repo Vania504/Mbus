@@ -26,19 +26,22 @@
         :content="irregularTransportationContent"
       />
     </v-col>
+    <v-col v-if="activeCategory == 'about_us'">
+      <create-about-us-form @create="createContent" @update="updateContent" :content="aboutUsContent"/>
+    </v-col>
   </v-col>
 </template>
   
   <script>
-import createSocialLinkForm from '@/components/forAdmin/Main/mainContent/socialLinkForm/createSocialLinkForm';
+import createSocialLinkForm from "@/components/forAdmin/Main/mainContent/socialLinkForm/createSocialLinkForm";
 import adminMainHeader from "./adminMainHeader.vue";
-import createPhoneNumberForm from '@/components/forAdmin/Main/mainContent/phoneNumbersForm/createPhoneNumberForm';
+import createPhoneNumberForm from "@/components/forAdmin/Main/mainContent/phoneNumbersForm/createPhoneNumberForm";
 import settingsService from "@/requests/admin/settingsService";
 import successSnackbar from "@/components/UI/successSnackbar";
 import { mapActions } from "vuex";
-import createIrregularTransportationForm from '@/components/forAdmin/Main/mainContent/irregularTransportationForm/createIrregularTransportationForm';
+import createIrregularTransportationForm from "@/components/forAdmin/Main/mainContent/irregularTransportationForm/createIrregularTransportationForm";
 import contentService from "@/requests/admin/contentService";
-import createAboutUsForm from '@/components/forAdmin/Main/mainContent/aboutUsForm/createAboutUsForm';
+import createAboutUsForm from "@/components/forAdmin/Main/mainContent/aboutUsForm/createAboutUsForm";
 export default {
   data: () => ({
     activeCategory: "contact",
@@ -47,7 +50,7 @@ export default {
     showSuccessSnackbar: false,
     snackbarText: "",
     irregularTransportationContent: [],
-    createAboutUsForm,
+    aboutUsContent: [],
   }),
   components: {
     createSocialLinkForm,
@@ -55,6 +58,7 @@ export default {
     adminMainHeader,
     successSnackbar,
     createIrregularTransportationForm,
+    createAboutUsForm,
   },
   mounted() {
     if (this.activeCategory == "contact") {
@@ -84,10 +88,13 @@ export default {
     },
     async getContent() {
       this.irregularTransportationContent = [];
+      this.aboutUsContent = [];
       let response = await contentService.getContentForAdmin();
       response.data.forEach((content) => {
         if (content.section == "irregular_transportation") {
           this.irregularTransportationContent.push(content);
+        } else if (content.section == "about_us") {
+          this.aboutUsContent.push(content);
         }
       });
     },
@@ -101,6 +108,7 @@ export default {
     async createContent(form) {
       let response = await contentService.createContent(form);
       if (response.status == "success") {
+        this.updateLoader(true);
         this.getContent();
       }
     },
@@ -108,6 +116,7 @@ export default {
       this.showSuccessSnackbar = false;
       let response = await settingsService.updateSetting(id, form);
       if (response.status == "success") {
+        this.updateLoader(true);
         if (type == "contact") {
           this.snackbarText = "Номер телефону оновлено успішно";
           this.showSuccessSnackbar = true;
@@ -123,6 +132,7 @@ export default {
     async updateContent(type, id, form) {
       let response = await contentService.updateContent(id, form);
       if (response.status == "success") {
+        this.updateLoader(true);
         if (type == "irregular_transportation") {
           this.snackbarText = "Нерегулярне перевезення оновлено успішно";
           this.showSuccessSnackbar = true;
@@ -136,6 +146,7 @@ export default {
     async deleteSetting(type, id) {
       await settingsService.deleteSetting(id).then((res) => {
         if (res.status == "success") {
+          this.updateLoader(true);
           type == "contact"
             ? this.getContactSetting()
             : this.getSocialSetting();
@@ -148,6 +159,7 @@ export default {
     activeCategory: {
       deep: true,
       handler() {
+        this.updateLoader(true)
         if (this.activeCategory == "contact") {
           this.getContactSetting();
           this.getSocialSetting();

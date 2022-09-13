@@ -1,5 +1,5 @@
 <template>
-  <v-card class="rounded-lg">
+  <v-card class="rounded-lg" v-if="!loader">
     <v-row no-gutters align="start" justify="start" class="pt-5 ml-5 pb-5">
       <v-col cols="5" style="text-align: left">
         <span class="formTitle">Назва перевезенняння</span>
@@ -74,6 +74,7 @@ import recentlyAddImageModal from "@/components/UI/recentlyAddImageModal.vue";
 import { validationMixin } from "vuelidate";
 import { required } from "vuelidate/lib/validators";
 import requestFormData from "@/requests/requestFormData";
+import { mapActions, mapGetters } from "vuex";
 export default {
   mixins: [validationMixin],
   components: {
@@ -103,6 +104,7 @@ export default {
     },
   },
   methods: {
+    ...mapActions(['updateLoader']),
     choseImage(image) {
       this.irregular.image.push(image);
       this.showImageModal = false;
@@ -135,9 +137,11 @@ export default {
       this.$set(this.irregular, "name", this.content[0].title);
       this.$set(this.irregular, "description", this.content[0].content);
       this.irregular.image.push(this.content[0].images[0].images);
+      this.updateLoader(false)
     },
   },
   computed: {
+    ...mapGetters(['loader']),
     nameError() {
       const errors = [];
       if (!this.$v.irregular.name.$dirty) {

@@ -26,11 +26,11 @@
       <div>
         <span
           :class="
-            activeCategory == 'about_as'
+            activeCategory == 'about_us'
               ? 'statusStyleActive'
               : 'statusStyle'
           "
-          @click="setActiveCategory('about_as')"
+          @click="setActiveCategory('about_us')"
           >Про нас</span
         >
       </div>

@@ -1,24 +1,27 @@
 <template>
-  <div
-    class="mainBackground"
-    :style="$vuetify.breakpoint.xs ? 'height: 300px' : ''"
-  >
-    <h1
-      class="mainText"
-      :style="
-        $vuetify.breakpoint.xs
-          ? 'padding-top: 20px; font-size: 18px;'
-          : ' font-size: 40px;'
-      "
+  <div>
+    <Loader v-if="loader"/>
+    <div
+    v-else
+      class="mainBackground"
+      :style="$vuetify.breakpoint.xs ? 'height: 300px' : ''"
     >
-      Подорожуйте разом з нами!
-    </h1>
-    <v-row
-      :justify="$vuetify.breakpoint.xs ? 'center' : 'start'"
-      align="center"
-    >
-      <v-col cols="1" class="px-0" v-if="!$vuetify.breakpoint.xs">
-        <!-- <v-row
+      <h1
+        class="mainText"
+        :style="
+          $vuetify.breakpoint.xs
+            ? 'padding-top: 20px; font-size: 18px;'
+            : ' font-size: 40px;'
+        "
+      >
+        Подорожуйте разом з нами!
+      </h1>
+      <v-row
+        :justify="$vuetify.breakpoint.xs ? 'center' : 'start'"
+        align="center"
+      >
+        <v-col cols="1" class="px-0" v-if="!$vuetify.breakpoint.xs">
+          <!-- <v-row
           justify="start"
           no-gutters
           class="ml-5"
@@ -60,86 +63,94 @@
             />
           </a>
         </v-row> -->
-      </v-col>
-      <v-col
-        cols="10"
-        :style="
-          $vuetify.breakpoint.xs ? 'margin-top: 50px;' : 'margin-top: 30px'
-        "
-      >
-        <h4
-          v-if="!$vuetify.breakpoint.xs"
-          class="searchRoutes"
+        </v-col>
+        <v-col
+          cols="10"
           :style="
-            $vuetify.breakpoint.xs ? 'font-size: 16px;' : ' font-size: 20px;'
+            $vuetify.breakpoint.xs ? 'margin-top: 50px;' : 'margin-top: 30px'
           "
         >
-          Пошук автобусних рейсів:
-        </h4>
-        <search-routes-field-mobile v-if="$vuetify.breakpoint.xs" />
-        <v-row v-else justify="center" no-gutters>
-          <div class="backgroundSearchField" :style="startRouteError.length || endRouteError.length ? 'height: 70px;' : 'height: 60px;'">
-            <v-row justify="center" class="pt-2">
-              <v-col cols="4" class="px-0">
-                <v-autocomplete
-                  background-color="white"
-                  prepend-inner-icon="mdi-map-marker-outline"
-                  placeholder="Звідки"
-                  outlined
-                  dense
-                  class="rounded-l-lg"
-                  :items="Object.values(startCities)"
-                  :item-text="'name'"
-                  :item-value="'name'"
-                  v-model="start_route"
-                  :error-messages="startRouteError"
-                />
-              </v-col>
-              <div
-                style="
-                  background-color: white;
-                  width: 34px;
-                  height: 38px;
-                  margin-top: 13px;
-                  cursor: pointer;
-                "
-                @click="reverseItem"
-              >
-                <img src="@/assets/img/reverseIcon.svg" class="mt-2" />
-              </div>
-              <v-col cols="4" class="px-0">
-                <v-autocomplete
-                  background-color="white"
-                  prepend-inner-icon="mdi-map-marker-outline"
-                  placeholder="Куди"
-                  outlined
-                  dense
-                  class="rounded-r-lg"
-                  :items="Object.values(nextCities)"
-                  :item-text="'name'"
-                  :item-value="'name'"
-                  v-model="end_route"
-                  :error-messages="endRouteError"
-                />
-              </v-col>
-              <v-btn
-                style="
-                  margin-left: 20px;
-                  margin-top: 13px;
-                  box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.15);
-                  border-radius: 10px;
-                "
-                width="80px"
-                height="38px"
-                color="#085895"
-                @click="searchRoutes"
-                ><v-icon color="white">mdi-magnify</v-icon></v-btn
-              >
-            </v-row>
-          </div>
-        </v-row>
-      </v-col>
-    </v-row>
+          <h4
+            v-if="!$vuetify.breakpoint.xs"
+            class="searchRoutes"
+            :style="
+              $vuetify.breakpoint.xs ? 'font-size: 16px;' : ' font-size: 20px;'
+            "
+          >
+            Пошук автобусних рейсів:
+          </h4>
+          <search-routes-field-mobile v-if="$vuetify.breakpoint.xs" />
+          <v-row v-else justify="center" no-gutters>
+            <div
+              class="backgroundSearchField"
+              :style="
+                startRouteError.length || endRouteError.length
+                  ? 'height: 70px;'
+                  : 'height: 60px;'
+              "
+            >
+              <v-row justify="center" class="pt-2">
+                <v-col cols="4" class="px-0">
+                  <v-autocomplete
+                    background-color="white"
+                    prepend-inner-icon="mdi-map-marker-outline"
+                    placeholder="Звідки"
+                    outlined
+                    dense
+                    class="rounded-l-lg"
+                    :items="Object.values(startCities)"
+                    :item-text="'name'"
+                    :item-value="'name'"
+                    v-model="start_route"
+                    :error-messages="startRouteError"
+                  />
+                </v-col>
+                <div
+                  style="
+                    background-color: white;
+                    width: 34px;
+                    height: 38px;
+                    margin-top: 13px;
+                    cursor: pointer;
+                  "
+                  @click="reverseItem"
+                >
+                  <img src="@/assets/img/reverseIcon.svg" class="mt-2" />
+                </div>
+                <v-col cols="4" class="px-0">
+                  <v-autocomplete
+                    background-color="white"
+                    prepend-inner-icon="mdi-map-marker-outline"
+                    placeholder="Куди"
+                    outlined
+                    dense
+                    class="rounded-r-lg"
+                    :items="Object.values(nextCities)"
+                    :item-text="'name'"
+                    :item-value="'name'"
+                    v-model="end_route"
+                    :error-messages="endRouteError"
+                  />
+                </v-col>
+                <v-btn
+                  style="
+                    margin-left: 20px;
+                    margin-top: 13px;
+                    box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.15);
+                    border-radius: 10px;
+                  "
+                  width="80px"
+                  height="38px"
+                  color="#085895"
+                  @click="searchRoutes"
+                  ><v-icon color="white">mdi-magnify</v-icon></v-btn
+                >
+              </v-row>
+            </div>
+          </v-row>
+        </v-col>
+      </v-row>
+    </div>
   </div>
 </template>
 
@@ -149,11 +160,13 @@ import settingsService from "@/requests/admin/settingsService";
 import searchRoutesService from "@/requests/main/searchRoutesService";
 import { validationMixin } from "vuelidate";
 import { required } from "vuelidate/lib/validators";
-import { mapActions } from "vuex";
+import { mapActions, mapGetters } from "vuex";
+import Loader from "@/components/UI/Loader.vue";
 export default {
   mixins: [validationMixin],
   components: {
     searchRoutesFieldMobile,
+    Loader,
   },
   data: () => ({
     start_route: "",
@@ -177,6 +190,7 @@ export default {
   methods: {
     ...mapActions(["updateLoader"]),
     reverseItem() {
+      this.updateLoader(true);
       let start_route = this.start_route;
       this.start_route = this.end_route;
       this.end_route = start_route;
@@ -188,10 +202,12 @@ export default {
     async getStartCities() {
       let response = await searchRoutesService.getStartCities();
       this.startCities = response.data;
+      this.updateLoader(false);
     },
     async getNextCities() {
       let response = await searchRoutesService.getNextCities(this.start_route);
       this.nextCities = response.data;
+      this.updateLoader(false);
     },
     async searchRoutes() {
       this.$v.$touch();
@@ -199,11 +215,12 @@ export default {
         this.$router.push(
           `/routes?start_route=${this.start_route}&end_route=${this.end_route}`
         );
-        this.updateLoader(true);
+        this.updateLoader(false);
       }
     },
   },
   computed: {
+    ...mapGetters(["loader"]),
     startRouteError() {
       const errors = [];
       if (!this.$v.start_route.$dirty) {

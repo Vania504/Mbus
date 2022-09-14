@@ -4,9 +4,9 @@
       <v-row justify="end" no-gutters class="mr-5" align="center">
         <v-row no-gutters justify="start" align="center">
           <div class="descriptionText">
-            <div class="irregularTransportationBorderTopLeft ml-12" style="top: 10px;"></div>
-            <v-row justify="center" align-content="center">
-              <v-col cols="9" style="text-align: justify" class="mt-5">
+            <div class="irregularTransportationBorderTopLeft ml-3" style="top: 5px;"></div>
+            <v-row no-gutters justify="center" align-content="center">
+              <v-col cols="10" style="text-align: justify; font-size: 20px;" class="mt-5 px-0">
                 <p>
                   <span class="blueSpan">Компанія “MBUS”</span> має широкі
                   можливості для організації поїздок по Україні і Європі
@@ -25,7 +25,7 @@
             </v-row>
             <div
               class="irregularTransportationBorderBottomRight"
-              style="margin-left: 80%; top: 80%"
+              style="margin-left: 88%; top: 79%"
             ></div>
           </div>
         </v-row>
@@ -41,7 +41,7 @@ export default {};
 <style scoped>
 .descriptionText {
   width: 556px;
-  height: 404px;
+  height: 370px;
   background-color: white;
   position: absolute;
   text-align: center;

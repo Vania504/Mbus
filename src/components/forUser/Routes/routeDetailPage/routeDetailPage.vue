@@ -46,6 +46,7 @@ export default {
   }),
   mounted(){
     this.getRoute()
+    window.scrollTo(0,0);
   },
   methods: {
     async getRoute(){

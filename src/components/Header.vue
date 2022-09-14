@@ -9,7 +9,9 @@
       >
         <v-col :cols="isAdmin ? '3' : '2'" style="text-align: left">
           <v-row no-gutters justify="start">
-            <img src="@/assets/img/logoMBus.svg" />
+            <router-link to="/">
+               <img src="@/assets/img/logoMBus.svg" />
+            </router-link>
           </v-row>
         </v-col>
         <v-col :cols="isAdmin ? '6' : '8'" style="align-self: center">

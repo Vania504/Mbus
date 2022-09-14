@@ -38,11 +38,10 @@
         </v-col>
       </v-row>
     </div>
-    <div style="height: 300px; align-self: center">
+    <div style="height: 300px; align-self: center" @mousemove="isHover = true">
       <div
         style="overflow: hidden; transition: all 0.3s ease-out; width: 100%"
         :style="'max-width: ' + forAdmin ? '350px' : '405px'"
-        @mousemove="isHover = true"
       >
         <img
           v-if="bus.images"

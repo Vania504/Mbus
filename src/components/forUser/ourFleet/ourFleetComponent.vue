@@ -26,6 +26,7 @@ export default {
   }),
   mounted() {
     this.getBuses();
+    window.scrollTo(0,0);
   },
   methods: {
     async getBuses() {

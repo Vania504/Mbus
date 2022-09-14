@@ -78,7 +78,7 @@
         </h4>
         <search-routes-field-mobile v-if="$vuetify.breakpoint.xs" />
         <v-row v-else justify="center" no-gutters>
-          <div class="backgroundSearchField">
+          <div class="backgroundSearchField" :style="startRouteError.length || endRouteError.length ? 'height: 70px;' : 'height: 60px;'">
             <v-row justify="center" class="pt-2">
               <v-col cols="4" class="px-0">
                 <v-autocomplete
@@ -265,7 +265,6 @@ export default {
 }
 .backgroundSearchField {
   width: 600px;
-  height: 60px;
   background: rgba(255, 255, 255, 0.9);
   border: 0.5px solid #085895;
   box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.15);

@@ -7,14 +7,13 @@
         menu ? '' : (isHover = false);
       }
     "
-    @click="detailMessage"
   >
     <v-row align="center" class="mb-5 ml-5">
       <v-checkbox />
-      <v-col cols="2" style="text-align: left">
+      <v-col cols="2" style="text-align: left" @click="detailMessage">
         <span class="messageTitle">{{ message.name }}</span>
       </v-col>
-      <v-col cols="8" style="text-align: left">
+      <v-col cols="8" style="text-align: left" @click="detailMessage">
         <v-row no-gutters align="center">
           <span class="messageTitle">{{ message.type_text }}:&nbsp;</span>
           <span class="messageText pt-1">

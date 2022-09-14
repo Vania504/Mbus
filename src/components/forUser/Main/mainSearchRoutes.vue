@@ -1,8 +1,8 @@
 <template>
   <div>
-    <Loader v-if="loader"/>
+    <Loader v-if="loader" />
     <div
-    v-else
+      v-else
       class="mainBackground"
       :style="$vuetify.breakpoint.xs ? 'height: 300px' : ''"
     >
@@ -190,10 +190,12 @@ export default {
   methods: {
     ...mapActions(["updateLoader"]),
     reverseItem() {
-      this.updateLoader(true);
-      let start_route = this.start_route;
-      this.start_route = this.end_route;
-      this.end_route = start_route;
+      if (this.start_route && this.end_route) {
+        this.updateLoader(true);
+        let start_route = this.start_route;
+        this.start_route = this.end_route;
+        this.end_route = start_route;
+      }
     },
     async getSocialNetwork() {
       let response = await settingsService.getSettingList("socials");

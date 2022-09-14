@@ -300,22 +300,21 @@
         </v-row>
         <!-- /Detail route -->
       </v-col>
-      <v-row no-gutters class="ml-8 mb-5">
-        <img
-          v-for="img in routeImages"
-          :key="img.id"
-          :src="`${img.path}`"
-          class="mr-2"
-          width="50px"
-          height="50px"
-          style="object-fit: cover"
-        />
+      <v-col class="ml-5">
+        <v-row no-gutters>
+        <small-item-image
+              v-for="img in routeImages"
+              :key="img.id"
+              :img="img"
+              @delete="deleteImg"
+            />
         <img
           src="@/assets/img/addImageIcon.svg"
           class="pointer"
           @click="showRecentlyImage = true"
         />
       </v-row>
+      </v-col>
       <route-shedule
         @shedule="setShedule"
         :isEdit="isEdit"
@@ -365,12 +364,14 @@ import { required } from "vuelidate/lib/validators";
 import googleMapsService from "@/requests/googleMaps/googleMapsService";
 import requestFormData from "@/requests/requestFormData";
 import recentlyAddImageModal from "@/components/UI/recentlyAddImageModal";
+import smallItemImage from '@/components/UI/smallItemImage'
 export default {
   mixins: [validationMixin],
   components: {
     modalHeader,
     routeShedule,
     recentlyAddImageModal,
+    smallItemImage,
   },
   data: () => ({
     route: {
@@ -656,6 +657,9 @@ export default {
       let response = await googleMapsService.getCoordinates(cityname);
       return response.results;
     },
+    deleteImg(id){
+      this.routeImages = this.routeImages.filter((image) => image.id !== id);
+    }
   },
   computed: {
     visibility: {

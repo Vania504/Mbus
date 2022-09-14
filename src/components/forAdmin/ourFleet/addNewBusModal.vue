@@ -63,17 +63,17 @@
             <p class="itemTitle">Статус:</p>
           </v-col>
           <v-col cols="3" class="px-2">
-              <v-autocomplete
-                class="rounded-lg"
-                outlined
-                dense
-                :items="Object.values(busStatus)"
-                :item-text="'text'"
-                :item-value="'value'"
-                v-model="bus.status"
-                color="#085895"
-              />
-            </v-col>
+            <v-autocomplete
+              class="rounded-lg"
+              outlined
+              dense
+              :items="Object.values(busStatus)"
+              :item-text="'text'"
+              :item-value="'value'"
+              v-model="bus.status"
+              color="#085895"
+            />
+          </v-col>
         </v-row>
         <v-col class="px-0">
           <p class="itemTitle">Сервіс:</p>
@@ -108,14 +108,11 @@
         <v-col class="px-0">
           <p class="itemTitle">Фотографії автобуса:</p>
           <v-row no-gutters>
-            <img
+            <small-item-image
               v-for="img in busImages"
               :key="img.id"
-              :src="`${img.path}`"
-              class="mr-2"
-              width="50px"
-              height="50px"
-              style="object-fit: cover"
+              :img="img"
+              @delete="deleteImg"
             />
             <img
               src="@/assets/img/addImageIcon.svg"
@@ -166,16 +163,18 @@ import { validationMixin } from "vuelidate";
 import { required, maxLength, minLength } from "vuelidate/lib/validators";
 import RecentlyAddImageModal from "@/components/UI/recentlyAddImageModal.vue";
 import requestFormData from "@/requests/requestFormData";
+import smallItemImage from "@/components/UI/smallItemImage";
 export default {
   mixins: [validationMixin],
   components: {
     modalHeader,
     recentlyAddImageModal,
     RecentlyAddImageModal,
+    smallItemImage,
   },
   data: () => ({
     bus: {
-      status: 'Active',
+      status: "Active",
     },
     service: [
       {
@@ -239,14 +238,14 @@ export default {
     showRecentlyImage: false,
     busStatus: [
       {
-       text : 'Активний',
-       value: 'Active'
+        text: "Активний",
+        value: "Active",
       },
       {
-       text : 'Архівований',
-       value: 'Archive'
-      }
-    ]
+        text: "Архівований",
+        value: "Archive",
+      },
+    ],
   }),
   validations: {
     bus: {
@@ -330,11 +329,12 @@ export default {
     },
     setBus() {
       if (this.detailInfoBus.options) {
-      this.service.forEach((service) => {
-        this.detailInfoBus.options[service.key] == 0
-          ? (service.enters = false)
-          : (service.enters = true);
-      });}
+        this.service.forEach((service) => {
+          this.detailInfoBus.options[service.key] == 0
+            ? (service.enters = false)
+            : (service.enters = true);
+        });
+      }
       this.$set(this.bus, "id", this.detailInfoBus.id);
       this.$set(this.bus, "model_name", this.detailInfoBus.model);
       this.$set(this.bus, "description", this.detailInfoBus.description);
@@ -366,6 +366,9 @@ export default {
       );
       close ? this.$emit("close") : "";
     },
+    deleteImg(id){
+      this.busImages = this.busImages.filter((image) => image.id !== id);
+    }
   },
   computed: {
     visibility: {

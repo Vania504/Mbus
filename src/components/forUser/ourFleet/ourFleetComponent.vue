@@ -1,5 +1,5 @@
 <template>
-  <v-row no-gutters justify="start">
+  <v-row no-gutters justify="center">
     <div
       class="backgroundImage"
       :style="$vuetify.breakpoint.xs ? 'height: 170px' : 'height: 400px'"
@@ -7,22 +7,31 @@
     <span :class="$vuetify.breakpoint.xs ? 'mobileTitle' : 'otherTitle'"
       >Наш автопарк</span
     >
-    <bus-list :busList="busList" />
+    <Loader v-if="showLoader"/>
+    <v-col v-else class="px-0 py-0 mb-10">
+      <bus-list :busList="busList" />
+      <v-pagination v-model="page" :length="quantityPage" />
+    </v-col>
   </v-row>
 </template>
 
 <script>
 import busList from "@/components/forUser/ourFleet/busList";
 import ourFleetService from "@/requests/admin/ourFleetService";
+import Loader from "@/components/UI/Loader.vue";
 export default {
   components: {
     busList,
+    Loader
   },
   data: () => ({
     bgImg: {
       backgroundImage: `url(${require("@/assets/img/innregularTransporImg.svg")})`,
     },
     busList: [],
+    page: 1,
+    quantityPage: 1,
+    showLoader: true,
   }),
   mounted() {
     this.getBuses();
@@ -30,8 +39,10 @@ export default {
   },
   methods: {
     async getBuses() {
-      let response = await ourFleetService.getBuses();
+      let response = await ourFleetService.getBuses(this.page);
+      this.quantityPage = parseInt(response.data.total / 12 + 1);
       this.busList = response.data.data;
+      this.showLoader = false;
     },
   },
 };

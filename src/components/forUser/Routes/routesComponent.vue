@@ -1,8 +1,11 @@
 <template>
   <v-row justify="center" no-gutters>
     <routes-header title="Маршрути" />
-    <loader v-if="showLoader"/>
-    <routes-list v-else :routes="routes" />
+    <loader v-if="showLoader" />
+    <v-col v-else class="px-0 py-0 mb-10">
+      <routes-list :routes="routes" />
+      <v-pagination v-model="page" :length="quantityPage" />
+    </v-col>
   </v-row>
 </template>
 
@@ -21,14 +24,17 @@ export default {
   data: () => ({
     routes: [],
     showLoader: true,
+    page: 1,
+    quantityPage: 1,
   }),
   mounted() {
     this.$route.query.start_route ? this.searchRoutes() : this.getRoutes();
   },
   methods: {
     async getRoutes() {
-      let response = await routesService.getRoutes();
+      let response = await routesService.getRoutes(this.page);
       this.routes = response.data;
+      this.quantityPage = parseInt(response.data.total / 12 + 1)
       this.showLoader = false;
     },
     async searchRoutes() {
@@ -40,6 +46,15 @@ export default {
       this.showLoader = false;
     },
   },
+  watch: {
+    page: {
+      deep: true,
+      handler(){
+        this.showLoader = true;
+        this.getRoutes();
+      }
+    }
+  }
 };
 </script>
 

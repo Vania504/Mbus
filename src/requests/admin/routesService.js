@@ -24,8 +24,8 @@ export default {
 		})
 		return response?.data
 	},
-	async getRoutes() {
-		const response = await requestService.get(`/routes`)
+	async getRoutes(page) {
+		const response = await requestService.get(`/routes?page=${page}`)
 		return response?.data
 	},
 	async getRoutesForMain(){

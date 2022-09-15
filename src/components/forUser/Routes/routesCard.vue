@@ -17,7 +17,11 @@
       style="
         position: absolute;
         text-align: center;
-        background: linear-gradient(360deg,rgba(1, 29, 51, 0.602) 35.16%,rgba(91, 98, 104, 0.469) 45.62%);
+        background: linear-gradient(
+          360deg,
+          rgba(1, 29, 51, 0.602) 35.16%,
+          rgba(91, 98, 104, 0.469) 45.62%
+        );
         width: 180px;
         height: 120px;
       "
@@ -32,15 +36,23 @@
             margin-right: 20px;
           "
         >
-        {{route.departure}} - {{route.destination}}
+          {{ route.departure }} - {{ route.destination }}
         </h3>
       </v-col>
     </div>
-    <img
-      :width="$vuetify.breakpoint.xs ? '180px' : '320px'"
-      :height="$vuetify.breakpoint.xs ? '120px' : ''"
-      src="@/assets/img/test.svg"
-    />
+    <div
+      :style="
+        $vuetify.breakpoint.xs
+          ? 'width: 180px; height: 120px;'
+          : 'width: 320px; height: 200px;'
+      "
+    >
+      <img
+        :width="$vuetify.breakpoint.xs ? '180px' : '320px'"
+        :height="$vuetify.breakpoint.xs ? '120px' : ''"
+        src="@/assets/img/test.svg"
+      />
+    </div>
     <v-row no-gutters justify="end" v-if="forAdmin">
       <v-menu offset-y max-width="150px" left close-to-click>
         <template v-slot:activator="{ on, attrs }">
@@ -64,7 +76,7 @@
     </v-row>
     <v-col class="px-0" v-if="!$vuetify.breakpoint.xs">
       <h3 style="font-weight: 500; font-size: 20px">
-        {{route.departure}} - {{route.destination}}
+        {{ route.departure }} - {{ route.destination }}
       </h3>
     </v-col>
     <v-card-actions v-if="!$vuetify.breakpoint.xs">
@@ -96,7 +108,7 @@ export default {
     },
     route: {
       require: true,
-    }
+    },
   },
 };
 </script>

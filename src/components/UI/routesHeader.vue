@@ -20,8 +20,7 @@
         0deg,
         rgba(18, 43, 62, 0.64),
         rgba(18, 43, 62, 0.64)
-      ), url(
-      ${require('@/assets/img/routesBackgroundImg.svg')})`,
+      ), url(${image ? image : require('@/assets/img/routesBackgroundImg.svg')})`,
             backgroundSize: 'cover',
             backgroundRepeat: 'norepeat',
             height: '330px',
@@ -38,6 +37,9 @@ export default {
     title: {
       require: true,
     },
+    image: {
+      require: true,
+    }
   },
 };
 </script>

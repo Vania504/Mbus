@@ -48,9 +48,16 @@
       "
     >
       <img
+        v-if="route.images.length"
         :width="$vuetify.breakpoint.xs ? '180px' : '320px'"
-        :height="$vuetify.breakpoint.xs ? '120px' : ''"
-        src="@/assets/img/test.svg"
+        :height="$vuetify.breakpoint.xs ? '120px' : '200px'"
+        :src="route.images[0].images.path"
+      />
+      <img
+        v-else
+        :width="$vuetify.breakpoint.xs ? '180px' : '320px'"
+        :height="$vuetify.breakpoint.xs ? '120px' : '200px'"
+        src="@/assets/img/routeImg.svg"
       />
     </div>
     <v-row no-gutters justify="end" v-if="forAdmin">

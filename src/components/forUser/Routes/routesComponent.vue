@@ -34,7 +34,7 @@ export default {
     async getRoutes() {
       let response = await routesService.getRoutes(this.page);
       this.routes = response.data;
-      this.quantityPage = parseInt(response.data.total / 12 + 1)
+      this.quantityPage = response.data.total == 12 ? 1 : parseInt(response.data.total / 12 + 1)
       this.showLoader = false;
     },
     async searchRoutes() {

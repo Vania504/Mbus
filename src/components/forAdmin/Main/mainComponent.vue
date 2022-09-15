@@ -48,8 +48,12 @@ export default {
   methods: {
     ...mapActions(["updateLoader"]),
     setSelectedItem(selectedItem) {
-      this.selectedItem = selectedItem;
-      this.updateLoader(true);
+      if (selectedItem !== undefined) {
+        this.selectedItem = selectedItem;
+        this.updateLoader(true);
+      } else {
+        this.selectedItem = "";
+      }
     },
   },
   computed: {

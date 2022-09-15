@@ -40,7 +40,7 @@ export default {
   methods: {
     async getBuses() {
       let response = await ourFleetService.getBuses(this.page);
-      this.quantityPage = parseInt(response.data.total / 12 + 1);
+      this.quantityPage = response.data.total == 12 ? 1 : parseInt(response.data.total / 12 + 1);
       this.busList = response.data.data;
       this.showLoader = false;
     },

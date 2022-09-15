@@ -6,25 +6,11 @@
         <Loader v-if="showLoader" />
         <v-row v-else no-gutters justify="start" class="ml-8">
           <div v-for="image in images.data" :key="image.id" class="mx-2">
-            <v-col cols="1" class="px-0 py-0" @mouseleave="isHover = false">
-              <v-icon
-                v-if="isHover"
-                class="pointer closeIcon"
-                style="position: absolute"
-                color="white"
-                @click="deleteImage(image.id)"
-                >mdi-close</v-icon
-              >
-              <v-col>
-                <img
-                  style="width: 240px; height: 140px; object-fit: cover"
-                  :src="image.path"
-                  class="pointer"
-                  @click="$emit('choseImage', image)"
-                  @mouseover="isHover = true"
-                />
-              </v-col>
-            </v-col>
+            <recently-image
+              :image="image"
+              @choseImage="choseImage"
+              @deleteImage="deleteImage"
+            />
           </div>
           <v-col cols="1" class="pt-3">
             <img
@@ -54,9 +40,11 @@
 <script>
 import imageService from "@/requests/admin/imageService";
 import Loader from "./Loader.vue";
+import recentlyImage from "@/components/UI/recentlyImage";
 export default {
   components: {
     Loader,
+    recentlyImage,
   },
   data: () => ({
     images: [],
@@ -93,9 +81,16 @@ export default {
       await imageService.uploadImage(image);
       this.getImages();
     },
-    async deleteImage(id){
-      console.log(id)
-    }
+    async deleteImage(id) {
+      let response = await imageService.deleteImage(id);
+      if (response.status == "success") {
+        this.showLoader = true;
+        this.getImages();
+      }
+    },
+    choseImage(image) {
+      this.$emit("choseImage", image);
+    },
   },
   computed: {
     visibility: {
@@ -119,14 +114,4 @@ export default {
 </script>
 
 <style>
-.closeIcon {
-  z-index: 15;
-  background: linear-gradient(
-    0deg,
-    rgba(18, 43, 62, 0.8),
-    rgba(18, 43, 62, 0.8)
-  );
-  border-radius: 50%;
-  margin-left: 230px;
-}
 </style>

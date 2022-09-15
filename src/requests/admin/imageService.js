@@ -14,5 +14,11 @@ export default {
         })
         return response?.data
     },
+    async deleteImage(id) {
+        const response = await requestService.delete(`/image/${id}`,{
+            headers: { Authorization: `Bearer ${store.getters.loggedUser.token}` }
+        })
+        return response?.data
+    },
 
 }

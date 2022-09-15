@@ -67,7 +67,6 @@
           v-mask="'##:##'"
           v-model="sheduleItem.time"
           :error-messages="timeError"
-          @blur="$v.sheduleItem.time.$touch()"
         />
       </v-col>
       <v-col cols="8">
@@ -78,7 +77,6 @@
           placeholder="Введіть місце.."
           v-model="sheduleItem.city"
           :error-messages="cityError"
-          @blur="$v.sheduleItem.city.$touch()"
         />
       </v-col>
     </v-row>

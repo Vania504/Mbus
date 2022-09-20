@@ -1,12 +1,17 @@
 <template>
   <v-row no-gutters justify="center" class="mt-10 mb-10">
-    <v-card :width="$vuetify.breakpoint.xs ? '90%' : '900px'" height="420px">
+    <error-snackbar v-if="showErrorSnackbar" :snackbarText="snackbarText" />
+    <v-card
+      :width="$vuetify.breakpoint.xs ? '90%' : '900px'"
+      height="320px"
+      class="mb-15"
+    >
       <modal-header
         title="Вхід користувача"
         @close="$emit('close')"
         :showCloseIcon="false"
       />
-      <v-card style="overflow: hidden">
+      <v-card style="overflow: hidden" height="320px">
         <v-row justify="center" class="pt-10">
           <v-col cols="10" lg="7" md="7" sm="7" xl="7">
             <v-text-field
@@ -47,7 +52,7 @@
               @click="signIn"
               >Увійти</v-btn
             >
-            <v-row no-gutters align="center">
+            <!-- <v-row no-gutters align="center">
               <v-col>
                 <v-divider class="mt-10 mb-5 mr-5 px-15 divider" />
               </v-col>
@@ -59,7 +64,7 @@
               <span class="signInTextStyle pointer" @click="$emit('goToSignUp')"
                 >Зареєструватись</span
               >
-            </div>
+            </div> -->
           </v-col>
         </v-row>
       </v-card>
@@ -73,14 +78,18 @@ import { validationMixin } from "vuelidate";
 import { required, email, minLength } from "vuelidate/lib/validators";
 import authService from "@/requests/admin/authService";
 import { mapActions } from "vuex";
+import errorSnackbar from "@/components/UI/errorSnackbar";
 export default {
   mixins: [validationMixin],
   components: {
     modalHeader,
+    errorSnackbar,
   },
   data: () => ({
     user: {},
     rememberMe: false,
+    snackbarText: "",
+    showErrorSnackbar: false,
   }),
   validations: {
     user: {
@@ -131,12 +140,16 @@ export default {
   methods: {
     ...mapActions(["updateInfoLogged"]),
     async signIn() {
+      this.showErrorSnackbar = false;
       this.$v.$touch();
       if (!this.$v.$invalid) {
         let user = new FormData();
         user.append("email", this.user.email);
         user.append("password", this.user.password);
-        let response = await authService.signIn(user);
+        let response = await authService.signIn(user).catch(() => {
+          this.snackbarText = "Email або пароль введнено не правильно";
+          this.showErrorSnackbar = true;
+        });
         let timeout = 2 * 3600;
         if (this.rememberMe) {
           timeout = 12 * 3600;

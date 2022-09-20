@@ -1,29 +1,33 @@
 <template>
-  <v-col class="px-0 py-0" v-if="!loader">
-    <messages-detail-message
-      v-if="isDetail"
-      :message="message"
-      @back="isDetail = false"
-      @updateStatus="updateStatus"
-    />
-    <v-col class="px-0 py-0" v-else>
-      <messages-header
-        @createStatus="createStatus"
-        :statusList="statusList"
-        :getMessage="getMessage"
-        @getMessageForStatus="getMessages"
-        :quantity_page="quantity_page"
-        @page="changePage"
-      />
-      <messages-list
-        :messages="messages"
-        :statusList="statusList"
-        @detailMessage="detailMessage"
+  <div>
+    <v-col class="px-0 py-0">
+      <messages-detail-message
+        v-if="isDetail"
+        :message="message"
+        @back="isDetail = false"
         @updateStatus="updateStatus"
-        :page="page"
       />
+      <v-col class="px-0 py-0" v-else>
+        <messages-header
+          @createStatus="createStatus"
+          :statusList="statusList"
+          :getMessage="getMessage"
+          @getMessageForStatus="getMessages"
+          :quantity_page="quantity_page"
+          @page="changePage"
+          @showLoader="showLoader = true"
+        />
+        <Loader v-if="showLoader"/>
+        <messages-list v-else
+          :messages="messages"
+          :statusList="statusList"
+          @detailMessage="detailMessage"
+          @updateStatus="updateStatus"
+          :page="page"
+        />
+      </v-col>
     </v-col>
-  </v-col>
+  </div>
 </template>
 
 <script>
@@ -34,12 +38,14 @@ import irregularTransportationService from "@/requests/admin/irregularTransporta
 import statusService from "@/requests/admin/statusService";
 import messagesDetailMessage from "@/components/forAdmin/Messages/messagesDetailMessage";
 import { mapGetters, mapActions } from "vuex";
+import Loader from "@/components/UI/Loader.vue";
 export default {
   components: {
     messagesHeader,
     messagesList,
     messagesDetailMessage,
-  },
+    Loader,
+},
   data: () => ({
     messages: [],
     statusList: [],
@@ -48,6 +54,7 @@ export default {
     isDetail: false,
     quantity_page: 0,
     page: 1,
+    showLoader: false,
   }),
   mounted() {
     this.getMessages("1");
@@ -103,6 +110,7 @@ export default {
       this.quantity_page = parseInt(this.messages.length / 20 + 1);
       this.getMessage = false;
       this.updateLoader(false);
+      this.showLoader= false;
     },
     async getStatusList() {
       let response = await statusService.getStatusList("/message");

@@ -5,19 +5,23 @@
       <loader v-if="loader" />
       <admin-main
         v-if="selectedItem == '0' || selectedItem == ''"
+        v-show="!loader"
         @success="$emit('success')"
         @hideLoader="showLoader = false"
       />
       <our-fleet-component
         v-if="selectedItem == '1'"
+        v-show="!loader"
         @hideLoader="showLoader = false"
       />
       <routes-component
         v-if="selectedItem == '2'"
+        v-show="!loader"
         @hideLoader="showLoader = false"
       />
       <messages-component
         v-if="selectedItem == '3'"
+        v-show="!loader"
         @hideLoader="showLoader = false"
       />
     </v-col>

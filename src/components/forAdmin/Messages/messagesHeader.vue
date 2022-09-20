@@ -86,6 +86,7 @@ export default {
     },
     changeStatus(id){
       this.activeStatus = id;
+      this.$emit('showLoader')
       this.$emit('getMessageForStatus', id);
     }
   },
@@ -103,7 +104,7 @@ export default {
       handler(){
         this.$emit('page' , this.page)
       },
-    }
+    },
   }
 };
 </script>

@@ -370,6 +370,17 @@ export default {
       this.busImages = this.busImages.filter((image) => image.id !== id);
     }
   },
+  watch: {
+    'bus.quantity_seats': {
+      deep: true,
+      handler(){
+        console.log("quantity seats",this.bus.quantity_seats)
+        if(this.bus.quantity_seats < 1 && this.bus.quantity_seats !== ''){
+          this.bus.quantity_seats = 1;
+        }
+      }
+    }
+  },
   computed: {
     visibility: {
       get() {

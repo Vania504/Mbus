@@ -147,7 +147,7 @@ export default {
         user.append("email", this.user.email);
         user.append("password", this.user.password);
         let response = await authService.signIn(user).catch(() => {
-          this.snackbarText = "Email або пароль введнено не правильно";
+          this.snackbarText = "Email або пароль введено не правильно";
           this.showErrorSnackbar = true;
         });
         let timeout = 2 * 3600;
@@ -190,15 +190,6 @@ export default {
     passwordError() {
       const errors = [];
       if (!this.$v.user.password.$dirty) {
-        return errors;
-      }
-      if (
-        (!this.$v.user.password.valid && this.$v.user.password.required) ||
-        (!this.$v.user.password.minLength && this.$v.user.password.required)
-      ) {
-        errors.push(
-          "Пароль повинен містити мінімум 8 символів, 1 малу літеру , 1 велику літеру,  символ та цифру"
-        );
         return errors;
       }
       !this.$v.user.password.required && errors.push("Поле пароль обов'язкове");

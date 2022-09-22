@@ -4,7 +4,7 @@
       :forAdmin="true"
       @addNew="showModal = true"
       @edit="getBus"
-      @delete="deleteBus"
+      @archived="archivedBus"
       :busList="busList"
     />
     <add-new-bus-modal
@@ -24,6 +24,7 @@ import busList from "@/components/forUser/ourFleet/busList.vue";
 import addNewBusModal from "@/components/forAdmin/ourFleet/addNewBusModal";
 import ourFleetService from "@/requests/admin/ourFleetService";
 import { mapGetters, mapActions } from "vuex";
+import requestFormData from "@/requests/requestFormData";
 export default {
   components: {
     busList,
@@ -39,7 +40,7 @@ export default {
     this.getBuses();
   },
   methods: {
-    ...mapActions(['updateLoader']),
+    ...mapActions(["updateLoader"]),
     async createBus(bus) {
       let response = await ourFleetService.createBus(bus);
       if (response.status == "success") {
@@ -70,14 +71,23 @@ export default {
         this.updateLoader(false);
       }
     },
-    async deleteBus(uuid) {
-      await ourFleetService.deleteBus(uuid);
-      alert("Function deleteBus work success");
+    async archivedBus(bus) {
+      let data = {
+        status: "Archive",
+        model: bus.model,
+        description: bus.description,
+        seats: bus.seats,
+        images: bus.images,
+        options: bus.options,
+      };
+      let form = requestFormData.jsonToFormData(data);
+      await ourFleetService.updateBus(bus.id, form);
+      this.getBuses();
     },
   },
   computed: {
-    ...mapGetters(['loader'])
-  }
+    ...mapGetters(["loader"]),
+  },
 };
 </script>
 

@@ -27,7 +27,11 @@
       />
     </v-col>
     <v-col v-if="activeCategory == 'about_us'">
-      <create-about-us-form @create="createContent" @update="updateContent" :content="aboutUsContent"/>
+      <create-about-us-form
+        @create="createContent"
+        @update="updateContent"
+        :content="aboutUsContent"
+      />
     </v-col>
   </v-col>
 </template>
@@ -78,10 +82,14 @@ export default {
       this.activeCategory = category;
     },
     getContactSetting() {
-      this.getSettings("contact").then((res) => (this.contactList = res));
+      this.getSettings("contact").then(
+        (res) => ((this.contactList = res), this.hideLoader())
+      );
     },
     getSocialSetting() {
-      this.getSettings("socials").then((res) => (this.socialList = res));
+      this.getSettings("socials").then(
+        (res) => ((this.socialList = res), this.hideLoader())
+      );
     },
     async getSettings(type) {
       let response = await settingsService.getSettingListForAdmin(type);
@@ -160,7 +168,7 @@ export default {
     activeCategory: {
       deep: true,
       handler() {
-        this.updateLoader(true)
+        this.updateLoader(true);
         if (this.activeCategory == "contact") {
           this.getContactSetting();
           this.getSocialSetting();

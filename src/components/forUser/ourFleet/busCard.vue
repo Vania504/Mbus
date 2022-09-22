@@ -32,8 +32,8 @@
             class="mt-5 yellow--text"
             color="white"
             width="156px"
-            @click="$emit('delete')"
-            >Видалити</v-btn
+            @click="archivedBus"
+            >Архівувати</v-btn
           >
         </v-col>
       </v-row>
@@ -109,6 +109,11 @@ export default {
       require: true,
     },
   },
+  methods: {
+    archivedBus(){
+      this.$emit('archived')
+    }
+  }
 };
 </script>
 

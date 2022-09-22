@@ -197,6 +197,9 @@ export default {
         this.end_route = start_route;
       }
     },
+    hideLoader() {
+      this.updateLoader(false);
+    },
     async getSocialNetwork() {
       let response = await settingsService.getSettingList("socials");
       this.socialNetworks = response.data;
@@ -204,12 +207,12 @@ export default {
     async getStartCities() {
       let response = await searchRoutesService.getStartCities();
       this.startCities = response.data;
-      this.updateLoader(false);
+      this.hideLoader();
     },
     async getNextCities() {
       let response = await searchRoutesService.getNextCities(this.start_route);
       this.nextCities = response.data;
-      this.updateLoader(false);
+      setTimeout(this.hideLoader, 1500)
     },
     async searchRoutes() {
       this.$v.$touch();
@@ -217,7 +220,7 @@ export default {
         this.$router.push(
           `/routes?start_route=${this.start_route}&end_route=${this.end_route}`
         );
-        this.updateLoader(false);
+        this.hideLoader();
       }
     },
   },

@@ -118,7 +118,7 @@ export default {
         user.append("password", this.user.password);
         console.log("work");
         let response = await authService.signIn(user).catch(() => {
-          this.snackbarText = "Email або пароль введено не правильно";
+          this.snackbarText = "Email або пароль введено неправильно";
           this.showErrorSnackbar = true;
         });
         let timeout = 2 * 3600;

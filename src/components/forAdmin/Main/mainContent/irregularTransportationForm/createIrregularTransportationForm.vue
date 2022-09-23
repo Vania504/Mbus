@@ -30,7 +30,7 @@
           @mouseleave="isHover = false"
         >
           <img
-            v-if="irregular.image.length"
+            v-if="irregular.image.length > 0"
             style="width: 428px; height: 288px"
             :src="irregular.image[0].path"
           />
@@ -64,6 +64,7 @@
       :visible="showImageModal"
       @close="showImageModal = false"
       @choseImage="choseImage"
+      @newList="newImageList"
       :type="'Content'"
     />
   </v-card>
@@ -104,8 +105,9 @@ export default {
     },
   },
   methods: {
-    ...mapActions(['updateLoader']),
+    ...mapActions(["updateLoader"]),
     choseImage(image) {
+      this.irregular.image = [];
       this.irregular.image.push(image);
       this.showImageModal = false;
     },
@@ -132,16 +134,21 @@ export default {
       }
     },
     setIrregularContent() {
-      this.irregular = {image: []};
+      this.irregular = { image: [] };
+      console.log(this.content);
       this.$set(this.irregular, "id", this.content[0].id);
       this.$set(this.irregular, "name", this.content[0].title);
       this.$set(this.irregular, "description", this.content[0].content);
-      this.irregular.image.push(this.content[0].images[0].images);
-      this.updateLoader(false)
+      if (this.content[0].images.length > 0) {
+        if (this.content[0].images[0].images) {
+          this.irregular.image.push(this.content[0].images[0].images);
+        }
+      }
+      this.updateLoader(false);
     },
   },
   computed: {
-    ...mapGetters(['loader']),
+    ...mapGetters(["loader"]),
     nameError() {
       const errors = [];
       if (!this.$v.irregular.name.$dirty) {

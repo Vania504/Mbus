@@ -9,11 +9,9 @@
           heigth="500px"
           v-model="about_us.content"
         ></vue-editor>
-        <span
-          v-if="contentError.length"
-          class="errorMessage"
-          >{{ contentError[0] }}</span
-        >
+        <span v-if="contentError.length" class="errorMessage">{{
+          contentError[0]
+        }}</span>
       </v-col>
       <v-col cols="4" style="margin-left: 40px; text-align: left">
         <span class="formTitle">Змінити зображення</span>
@@ -97,7 +95,7 @@ export default {
     },
   },
   methods: {
-    ...mapActions(['updateLoader']),
+    ...mapActions(["updateLoader"]),
     choseImage(image) {
       this.about_us.image.push(image);
       this.showImageModal = false;
@@ -123,12 +121,16 @@ export default {
       this.about_us = { image: [] };
       this.$set(this.about_us, "id", this.content[0].id);
       this.$set(this.about_us, "content", this.content[0].content);
-      this.about_us.image.push(this.content[0].images[0].images);
+      if (this.content[0].images.length > 0) {
+        if (this.content[0].images[0].images) {
+          this.about_us.image.push(this.content[0].images[0].images);
+        }
+      }
       this.updateLoader(false);
     },
   },
   computed: {
-    ...mapGetters(['loader']),
+    ...mapGetters(["loader"]),
     contentError() {
       const errors = [];
       if (!this.$v.about_us.content.$dirty) {

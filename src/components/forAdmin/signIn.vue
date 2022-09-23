@@ -75,7 +75,7 @@
 <script>
 import modalHeader from "../UI/modalHeader.vue";
 import { validationMixin } from "vuelidate";
-import { required, email, minLength } from "vuelidate/lib/validators";
+import { required, email } from "vuelidate/lib/validators";
 import authService from "@/requests/admin/authService";
 import { mapActions } from "vuex";
 import errorSnackbar from "@/components/UI/errorSnackbar";
@@ -99,36 +99,6 @@ export default {
       },
       password: {
         required,
-        minLength: minLength(8),
-        validUppercase: function (value) {
-          const containsUppercase = /[A-Z]/.test(value);
-          return containsUppercase;
-        },
-        validLowercase: function (value) {
-          const containsLowercase = /[a-z]/.test(value);
-          return containsLowercase;
-        },
-        validNumber: function (value) {
-          const containsNumber = /[0-9]/.test(value);
-          return containsNumber;
-        },
-        validSpecial: function (value) {
-          const containsSpecial = /[#?!@$%^&*-]/.test(value);
-          return containsSpecial;
-        },
-        valid: function (value) {
-          const containsUppercase = /[A-Z]/.test(value);
-          const containsLowercase = /[a-z]/.test(value);
-          const containsNumber = /[0-9]/.test(value);
-          const containsSpecial = /[#?!@$%^&*-]/.test(value);
-          return (
-            containsUppercase &&
-            containsLowercase &&
-            containsNumber &&
-            containsSpecial &&
-            minLength
-          );
-        },
       },
     },
   },
@@ -146,6 +116,7 @@ export default {
         let user = new FormData();
         user.append("email", this.user.email);
         user.append("password", this.user.password);
+        console.log("work");
         let response = await authService.signIn(user).catch(() => {
           this.snackbarText = "Email або пароль введено не правильно";
           this.showErrorSnackbar = true;

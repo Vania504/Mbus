@@ -52,9 +52,10 @@
             <v-col cols="8">
               <v-row
                 align="center"
-                v-for="item in route.driver_phone_number"
-                :key="item.id"
                 class="mt-1"
+                v-for="(item, index) in $v.route.driver_phone_number.$each
+                  .$iter"
+                :key="item.id"
               >
                 <v-col cols="4" class="ml-2 py-0">
                   <v-text-field
@@ -62,22 +63,25 @@
                     outlined
                     dense
                     placeholder="Ім'я"
-                    v-model="item.name"
+                    v-model="item.name.$model"
                     color="#085895"
+                    :error-messages="nameError(index)"
+                    @blur="item.name.$touch()"
                   />
                 </v-col>
                 <v-col cols="7" class="ml-5 py-0">
                   <v-text-field
+                    v-mask="'+38 (###) ###-##-##'"
                     class="rounded-lg"
                     outlined
                     dense
                     placeholder="Номер телефону"
-                    v-mask="'+38 (###) ####-###'"
-                    v-model="item.phone"
+                    v-model="item.phone.$model"
                     color="#085895"
-                  />
-                </v-col>
-              </v-row>
+                    :error-messages="phoneError(index)"
+                    @blur="item.phone.$touch()"
+                  /> </v-col
+              ></v-row>
             </v-col>
             <v-col cols="1" class="mt-1 mb-4">
               <v-icon
@@ -302,18 +306,18 @@
       </v-col>
       <v-col class="ml-5">
         <v-row no-gutters>
-        <small-item-image
-              v-for="img in routeImages"
-              :key="img.id"
-              :img="img"
-              @delete="deleteImg"
-            />
-        <img
-          src="@/assets/img/addImageIcon.svg"
-          class="pointer"
-          @click="showRecentlyImage = true"
-        />
-      </v-row>
+          <small-item-image
+            v-for="img in routeImages"
+            :key="img.id"
+            :img="img"
+            @delete="deleteImg"
+          />
+          <img
+            src="@/assets/img/addImageIcon.svg"
+            class="pointer"
+            @click="showRecentlyImage = true"
+          />
+        </v-row>
       </v-col>
       <route-shedule
         @shedule="setShedule"
@@ -364,7 +368,7 @@ import { required } from "vuelidate/lib/validators";
 import googleMapsService from "@/requests/googleMaps/googleMapsService";
 import requestFormData from "@/requests/requestFormData";
 import recentlyAddImageModal from "@/components/UI/recentlyAddImageModal";
-import smallItemImage from '@/components/UI/smallItemImage'
+import smallItemImage from "@/components/UI/smallItemImage";
 export default {
   mixins: [validationMixin],
   components: {
@@ -375,7 +379,7 @@ export default {
   },
   data: () => ({
     route: {
-      status: 'Active',
+      status: "Active",
       daysOfDeparture: [],
       driver_phone_number: [
         {
@@ -433,14 +437,14 @@ export default {
     routeImages: [],
     routeStatus: [
       {
-       text : 'Активний',
-       value: 'Active'
+        text: "Активний",
+        value: "Active",
       },
       {
-       text : 'Архівований',
-       value: 'Archive'
-      }
-    ]
+        text: "Архівований",
+        value: "Archive",
+      },
+    ],
   }),
   validations: {
     route: {
@@ -458,6 +462,12 @@ export default {
       },
       departure_time: {
         required,
+      },
+      driver_phone_number: {
+        $each: {
+          name: { required },
+          phone: { required },
+        },
       },
     },
   },
@@ -548,10 +558,13 @@ export default {
       }
     },
     addNewDriverPhoneNumber() {
-      this.route.driver_phone_number.push({
-        name: "",
-        phone: "",
-      });
+      this.$v.route.driver_phone_number.$touch();
+      if (!this.$v.route.driver_phone_number.$each.$invalid) {
+        this.route.driver_phone_number.push({
+          name: "",
+          phone: "",
+        });
+      }
     },
     async addNewUkraineCity() {
       let coordinates = await this.getCoordinates(this.ukraineCity);
@@ -657,9 +670,27 @@ export default {
       let response = await googleMapsService.getCoordinates(cityname);
       return response.results;
     },
-    deleteImg(id){
+    deleteImg(id) {
       this.routeImages = this.routeImages.filter((image) => image.id !== id);
-    }
+    },
+    nameError(i) {
+      const errors = [];
+      if (!this.$v.route.driver_phone_number.$each.$iter[i].name.$dirty) {
+        return errors;
+      }
+      !this.$v.route.driver_phone_number.$each.$iter[i].name.required &&
+        errors.push("");
+      return errors;
+    },
+    phoneError(i) {
+      const errors = [];
+      if (!this.$v.route.driver_phone_number.$each.$iter[i].phone.$dirty) {
+        return errors;
+      }
+      !this.$v.route.driver_phone_number.$each.$iter[i].phone.required &&
+        errors.push("");
+      return errors;
+    },
   },
   computed: {
     visibility: {
@@ -711,14 +742,14 @@ export default {
     },
   },
   watch: {
-    'route.bus' : {
+    "route.bus": {
       deep: true,
-      handler(){
+      handler() {
         let bus = this.busList.data.filter((bus) => bus.id === this.route.bus);
         this.route.quantity_seats = bus[0].seats;
-      }
-    }
-  }
+      },
+    },
+  },
 };
 </script>
 

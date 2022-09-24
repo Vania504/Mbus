@@ -216,7 +216,7 @@
               <!-- Add Ukraine city -->
               <v-row no-gutters align="start">
                 <v-col class="px-0" cols="2" align-self="start">
-                  <p class="country">Україна:</p>
+                  <p class="country mt-2">Україна:</p>
                 </v-col>
                 <v-col cols="10" class="px-0 py-0">
                   <v-row align="start" no-gutters class="mr-5">
@@ -225,12 +225,14 @@
                       :key="city.id"
                       style="margin-right: 5px"
                     >
-                      <v-icon
-                        color="#960909"
-                        v-if="index !== 0"
-                        style="margin-right: 5px"
-                        >mdi-minus</v-icon
-                      >{{ city.name }}</span
+                      <div class="mt-2">
+                        <v-icon
+                          color="#960909"
+                          v-if="index !== 0"
+                          style="margin-right: 5px"
+                          >mdi-minus</v-icon
+                        >{{ city.name }}
+                      </div></span
                     >
                     <v-col cols="3" class="px-1" align-self="center">
                       <v-text-field
@@ -259,7 +261,7 @@
               <!-- Add other country city -->
               <v-row no-gutters align="start">
                 <v-col class="px-0" cols="2">
-                  <p class="country">Інша країна:</p>
+                  <p class="country mt-2">Інша країна:</p>
                 </v-col>
                 <v-col cols="10" class="px-0">
                   <v-row align="start" no-gutters class="mr-5">
@@ -268,13 +270,15 @@
                       :key="city.id"
                       style="margin-right: 5px"
                     >
-                      <v-icon
-                        color="#960909"
-                        v-if="index !== 0"
-                        style="margin-right: 5px"
-                        >mdi-minus</v-icon
-                      >{{ city.name }}</span
-                    >
+                      <div class="mt-2">
+                        <v-icon
+                          color="#960909"
+                          v-if="index !== 0"
+                          style="margin-right: 5px"
+                          >mdi-minus</v-icon
+                        >{{ city.name }}
+                      </div>
+                    </span>
                     <v-col cols="3" class="px-1" align-self="center">
                       <v-text-field
                         class="rounded-lg"

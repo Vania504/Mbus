@@ -1,8 +1,6 @@
 <template>
   <div>
-    <Loader v-if="loader" />
     <div
-      v-else
       class="mainBackground"
       :style="$vuetify.breakpoint.xs ? 'height: 300px' : ''"
     >
@@ -89,7 +87,14 @@
                   : 'height: 60px;'
               "
             >
-              <v-row justify="center" class="pt-2">
+              <div v-if="loader" class="d-flex align-center mt-3">
+                <v-progress-circular
+                  class="mx-auto"
+                  indeterminate
+                  color="#085895"
+                ></v-progress-circular>
+              </div>
+              <v-row justify="center" class="pt-2" v-else>
                 <v-col cols="4" class="px-0">
                   <v-autocomplete
                     background-color="white"
@@ -161,12 +166,10 @@ import searchRoutesService from "@/requests/main/searchRoutesService";
 import { validationMixin } from "vuelidate";
 import { required } from "vuelidate/lib/validators";
 import { mapActions, mapGetters } from "vuex";
-import Loader from "@/components/UI/Loader.vue";
 export default {
   mixins: [validationMixin],
   components: {
     searchRoutesFieldMobile,
-    Loader,
   },
   data: () => ({
     start_route: "",
@@ -212,7 +215,7 @@ export default {
     async getNextCities() {
       let response = await searchRoutesService.getNextCities(this.start_route);
       this.nextCities = response.data;
-      setTimeout(this.hideLoader, 1500)
+      setTimeout(this.hideLoader, 1500);
     },
     async searchRoutes() {
       this.$v.$touch();

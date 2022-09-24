@@ -37,12 +37,16 @@
                 >
               </v-row>
             </v-col>
-            <img
-              v-if="content.length"
-              :src="content[0].images[0].images.path"
-              :width="$vuetify.breakpoint.xs ? '280px' : '600px'"
-              :height="$vuetify.breakpoint.xs ? '140px' : '400px'"
-            />
+            <div v-if="content.length">
+              <img
+                v-if="content[0].images[0].images"
+                :src="
+                  content[0].images[0].images.path
+                "
+                :width="$vuetify.breakpoint.xs ? '280px' : '600px'"
+                :height="$vuetify.breakpoint.xs ? '140px' : '400px'"
+              />
+            </div>
             <div
               class="irregularTransportationBorderBottomRight"
               :style="

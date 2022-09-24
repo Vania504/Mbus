@@ -10,7 +10,7 @@
             Про нас
           </h3>
           <v-row align="end" class="mt-2">
-            <v-col cols="12" xl="6" lg="6" md="6" sm="" style="z-index: 10;">
+            <v-col cols="12" xl="6" lg="6" md="6" sm="" style="z-index: 10">
               <span
                 :class="
                   !$vuetify.breakpoint.xs
@@ -19,31 +19,40 @@
                     ? 'mobileTextDescription'
                     : 'mobileTextDescriptionOverflow'
                 "
-                >
+              >
                 <div v-if="content.length" v-html="content[0].content"></div>
               </span>
-              <v-row no-gutters align="start" justify="end" v-if="$vuetify.breakpoint.xs" class="mt-2">
+              <v-row
+                no-gutters
+                align="start"
+                justify="end"
+                v-if="$vuetify.breakpoint.xs"
+                class="mt-2"
+              >
                 <v-btn
                   outlined
                   @click="isMore = !isMore"
                   color="#085895"
                   width="85px"
                   height="20px"
-                  style="text-transform: none; font-size: 10px">
+                  style="text-transform: none; font-size: 10px"
+                >
                   <span v-if="!isMore">Більше</span>
                   <span v-else>Менше</span>
                 </v-btn>
               </v-row>
             </v-col>
-            <img 
-            v-if="content.length"
-              height="346px"
-              :width="$vuetify.breakpoint.xs ? '280px' : '454px'"
-              class="ml-10"
-              :src="content[0].images[0].images.path"
-              style="opacity: 0.4;"
-              :class="$vuetify.breakpoint.xs ? 'mobileLogo' : ''"
-            />
+            <div v-if="content.length">
+              <img
+                v-if="content[0].images.length"
+                height="346px"
+                :width="$vuetify.breakpoint.xs ? '280px' : '454px'"
+                class="ml-10"
+                :src="content[0].images[0].images ? content[0].images[0].images.path : ''"
+                style="opacity: 0.4"
+                :class="$vuetify.breakpoint.xs ? 'mobileLogo' : ''"
+              />
+            </div>
           </v-row>
         </v-col>
       </v-row> </v-container
@@ -58,8 +67,8 @@ export default {
   props: {
     content: {
       require: true,
-    }
-  }
+    },
+  },
 };
 </script>
 
@@ -93,7 +102,7 @@ export default {
 .mobileLogo {
   position: absolute;
   width: 305px;
-  height: 233px; 
+  height: 233px;
   padding-left: 10%;
   z-index: 0;
   padding-top: 20px;

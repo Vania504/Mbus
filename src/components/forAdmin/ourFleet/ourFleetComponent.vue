@@ -72,12 +72,19 @@ export default {
       }
     },
     async archivedBus(bus) {
+      console.log(bus);
+      let images = [];
+      bus.images.forEach((image) => {
+        console.log(image.id)
+        images.push(image.id);
+      });
+      console.log("images", images)
       let data = {
         status: "Archive",
         model: bus.model,
         description: bus.description,
         seats: bus.seats,
-        images: bus.images,
+        images: images,
         options: bus.options,
       };
       let form = requestFormData.jsonToFormData(data);

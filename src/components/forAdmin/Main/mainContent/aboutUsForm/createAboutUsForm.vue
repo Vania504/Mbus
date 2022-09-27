@@ -97,7 +97,7 @@ export default {
   methods: {
     ...mapActions(["updateLoader"]),
     choseImage(image) {
-      this.about_us.image.push(image);
+      this.about_us.image.unshift(image);
       this.showImageModal = false;
     },
     saveAboutUs() {

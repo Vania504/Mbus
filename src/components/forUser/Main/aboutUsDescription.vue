@@ -49,7 +49,7 @@
                 :width="$vuetify.breakpoint.xs ? '280px' : '454px'"
                 class="ml-10"
                 :src="content[0].images[0].images ? content[0].images[0].images.path : ''"
-                style="opacity: 0.4"
+                style="opacity: 1"
                 :class="$vuetify.breakpoint.xs ? 'mobileLogo' : ''"
               />
             </div>

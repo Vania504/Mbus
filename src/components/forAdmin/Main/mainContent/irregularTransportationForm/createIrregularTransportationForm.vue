@@ -2,7 +2,7 @@
   <v-card class="rounded-lg" v-if="!loader">
     <v-row no-gutters align="start" justify="start" class="pt-5 ml-5 pb-5">
       <v-col cols="5" style="text-align: left">
-        <span class="formTitle">Назва перевезенняння</span>
+        <span class="formTitle">Назва перевезення</span>
         <v-text-field
           dense
           outlined
@@ -11,7 +11,7 @@
           style="margin-top: 10px"
           :error-messages="nameError"
         />
-        <span class="formTitle">Опис перевезенняння</span>
+        <span class="formTitle">Опис перевезення</span>
         <v-textarea
           style="margin-top: 10px"
           dense

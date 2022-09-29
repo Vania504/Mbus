@@ -50,8 +50,17 @@ const routes = [
         path: '/login',
         name: 'admin_login',
         component: () => import('@/components/forAdmin/signIn.vue'),
+    },
+    {
+        path: '/reset_password',
+        name: 'reset_password',
+        component: () => import('@/views/forAdmin/resetPassword.vue'),
+    },
+    {
+        path: '/reset_password/:code',
+        name: 'reset_password_code',
+        component: () => import('@/views/forAdmin/inputNewPassword.vue'),
     }
-
 ];
 const router = new VueRouter({
     mode: 'hash',

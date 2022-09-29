@@ -24,4 +24,12 @@ export default {
 		})
 		return res
 	},
+	async resetPassword(form){
+		const response = await requestService.post(`/`, form)
+		return response?.data
+	}
+	async changePassword(form){
+		const response = await requestService.post(`/`, form)
+		return response?.data
+	}
 }

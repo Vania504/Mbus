@@ -32,6 +32,7 @@
 import { validationMixin } from "vuelidate";
 import { required, email } from "vuelidate/lib/validators";
 import modalHeader from "@/components/UI/modalHeader";
+import authService from "@/requests/admin/authService";
 export default {
   mixins: [validationMixin],
   components: {
@@ -47,10 +48,16 @@ export default {
     },
   },
   methods: {
-    sendEmail() {
+    async sendEmail() {
       this.$v.$touch();
       if (!this.$v.$invalid) {
-        console.log("sendEmail");
+        let email = new FormData();
+        email.append('email', this.email)
+        let response = await authService.resetPassword(email);
+        if(response.status == 'success'){
+          localStorage.setItem('userEmail', this.email);
+          this.$emit('successSendEmail')
+        }
       }
     },
   },

@@ -40,7 +40,11 @@
                 <span>Запам'ятати мене</span>
               </v-row>
               <v-row no-gutters align="center" justify="end" class="py-0">
-                <span class="signInTextStyle pointer">Забули пароль</span>
+                <router-link to="/reset_password"
+                  ><span class="signInTextStyle pointer"
+                    >Забули пароль</span
+                  ></router-link
+                >
               </v-row>
             </v-row>
             <v-btn

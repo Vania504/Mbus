@@ -51,6 +51,7 @@ import { validationMixin } from "vuelidate";
 import { required, minLength, sameAs } from "vuelidate/lib/validators";
 import successSnackbar from "@/components/UI/successSnackbar.vue";
 import modalHeader from "@/components/UI/modalHeader";
+import authService from "@/requests/admin/authService";
 export default {
   components: {
     successSnackbar,
@@ -90,9 +91,17 @@ export default {
     sendPassword() {
       this.$v.$touch();
       if (!this.$v.password.$invalid) {
-        console.log(this.$route.params.code);
-        this.successChangePassword = true;
-        this.$router.push("/login");
+        let form = new FormData();
+        form.append("token", this.$route.params.code);
+        form.append("email", localStorage.getItem("userEmail"));
+        form.append("password", this.password);
+        form.append("password_confirmation", this.confirm_password);
+        let response = authService.changePassword(form);
+        if (response.result == "success") {
+          this.successChangePassword = true;
+          this.$router.push("/login");
+          localStorage.clear();
+        }
       }
     },
   },

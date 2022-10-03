@@ -12,12 +12,10 @@ export default {
 	},
 	async refreshToken() {
 		var form = new FormData();
-		form.append("email", store.getters.loggedUser.email);
-		form.append("password", store.getters.loggedUser.password);
+		form.append("token", store.getters.loggedUser.token);
 		let res = requestService.post(`/refresh`, form).then((response) => {
 			let result = response?.data.result;
 			store.dispatch('updateInfoLogged', {
-				accessToken: result.access_token,
 				token: result.token
 			})
 			return response

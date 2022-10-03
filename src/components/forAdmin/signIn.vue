@@ -134,6 +134,7 @@ export default {
             email: this.user.email,
             password: this.user.password,
             token: response.authorisation.token,
+            //accessToken: response.
             timeout: timeout,
           });
           this.$router.push({ name: "admin" });

@@ -11,7 +11,7 @@
           @close="$emit('close')"
           :showCloseIcon="false"
         />
-        <v-card width="600px">
+        <v-card width="600px" @keypress.enter="sendPassword">
           <v-col class="pt-5">
             <v-tooltip top>
               <template v-slot:activator="{ on, attrs }">
@@ -22,6 +22,7 @@
                   v-model="password.password"
                   label="Новий пароль"
                   v-bind="attrs"
+                  type="password"
                   v-on="on"
                   :error-messages="passwordError"
                 />
@@ -36,6 +37,7 @@
               outlined
               v-model="password.confirm_password"
               label="Підтвердіть пароль"
+              type="password"
               :error-messages="confirmPasswordError"
             />
             <v-btn color="#085895" dark @click="sendPassword">Змінити</v-btn>
@@ -94,16 +96,18 @@ export default {
         let form = new FormData();
         form.append("token", this.$route.params.code);
         form.append("email", localStorage.getItem("userEmail"));
-        form.append("password", this.password);
-        form.append("password_confirmation", this.confirm_password);
-        let response = authService.changePassword(form);
-        if (response.result == "success") {
+        form.append("password", this.password.password);
+        form.append("password_confirmation", this.password.confirm_password);
+        authService.changePassword(form).then(() => {
           this.successChangePassword = true;
-          this.$router.push("/login");
+          setTimeout(this.pushToLogin, 1000);
           localStorage.clear();
-        }
+        })
       }
     },
+    pushToLogin(){
+      this.$router.push("/login");
+    }
   },
   computed: {
     passwordError() {

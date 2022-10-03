@@ -9,7 +9,6 @@ axios.interceptors.response.use(
   error => {
     const { status } = error.response;
     if (status === 401) {
-      console.log(store.getters.loggedUser)
       let res = authService.refreshToken()
       if (res) {
         error.config.headers['Authorization'] = 'Bearer ' + store.getters.loggedUser.token;

@@ -8,12 +8,13 @@
             @close="$emit('close')"
             :showCloseIcon="false"
           />
-          <v-card width="600px">
+          <v-card width="600px" @keypress.enter="sendEmail">
             <v-col class="pt-5">
               <v-text-field
                 color="#085895"
                 class="mt-5"
                 label="Email"
+                type="email"
                 dense
                 outlined
                 v-model="email"

@@ -19,8 +19,8 @@ axios.interceptors.response.use(
   }
 );
 
-const SERVER_API = 'http://api-dev.mbus.if.ua/api'
-//const SERVER_API = 'http://api.mbus.if.ua/api';
+//const SERVER_API = 'http://api-dev.mbus.if.ua/api'
+const SERVER_API = 'http://api-prod.mbus.if.ua/api';
 
 export default {
   get(url, headers = {}) {

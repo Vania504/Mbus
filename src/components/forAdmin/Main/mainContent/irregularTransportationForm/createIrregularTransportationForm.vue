@@ -135,7 +135,8 @@ export default {
     },
     setIrregularContent() {
       this.irregular = { image: [] };
-      console.log(this.content);
+      console.log(this.content); 
+      if(this.content.length > 0){
       this.$set(this.irregular, "id", this.content[0].id);
       this.$set(this.irregular, "name", this.content[0].title);
       this.$set(this.irregular, "description", this.content[0].content);
@@ -143,6 +144,7 @@ export default {
         if (this.content[0].images[0].images) {
           this.irregular.image.push(this.content[0].images[0].images);
         }
+      }
       }
       this.updateLoader(false);
     },

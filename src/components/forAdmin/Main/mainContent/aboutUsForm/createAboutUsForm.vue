@@ -119,12 +119,14 @@ export default {
     },
     setAboutUsContent() {
       this.about_us = { image: [] };
+      if(this.content.length > 0){
       this.$set(this.about_us, "id", this.content[0].id);
       this.$set(this.about_us, "content", this.content[0].content);
       if (this.content[0].images.length > 0) {
         if (this.content[0].images[0].images) {
           this.about_us.image.push(this.content[0].images[0].images);
         }
+      }
       }
       this.updateLoader(false);
     },

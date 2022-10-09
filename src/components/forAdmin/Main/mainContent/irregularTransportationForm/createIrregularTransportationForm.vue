@@ -135,7 +135,7 @@ export default {
     },
     setIrregularContent() {
       this.irregular = { image: [] };
-      console.log(this.content); 
+      console.log("content", this.content);
       if(this.content.length > 0){
       this.$set(this.irregular, "id", this.content[0].id);
       this.$set(this.irregular, "name", this.content[0].title);

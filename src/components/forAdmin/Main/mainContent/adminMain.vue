@@ -99,13 +99,20 @@ export default {
       this.irregularTransportationContent = [];
       this.aboutUsContent = [];
       let response = await contentService.getContentForAdmin();
-      response.data.forEach((content) => {
+      console.log("response: " ,response);
+      if(response.data.length > 0){
+         response.data.forEach((content) => {
         if (content.section == "irregular_transportation") {
           this.irregularTransportationContent.push(content);
         } else if (content.section == "about_us") {
           this.aboutUsContent.push(content);
         }
       });
+      }else {
+        this.irregularTransportationContent = [];
+        this.aboutUsContent = [];
+      }
+     
     },
     async createSetting(type, form) {
       let response = await settingsService.createSetting(form);

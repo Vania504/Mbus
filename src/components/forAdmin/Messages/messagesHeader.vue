@@ -24,7 +24,7 @@
           >
         </div>
 
-        <v-col cols="2" v-if="showNewStatusField" class="py-0">
+        <v-col cols="3" v-if="showNewStatusField" class="py-0">
           <v-text-field
             dense
             outlined

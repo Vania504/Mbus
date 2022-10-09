@@ -1,5 +1,6 @@
 <template>
   <div>
+    <error-snackbar v-if="showErrorSnackbar" :snackbarText="snackbarText"/>
     <v-row justify="center" no-gutters class="mt-15 mb-15">
       <v-card width="600px">
         <v-col class="px-0 py-0">
@@ -34,13 +35,17 @@ import { validationMixin } from "vuelidate";
 import { required, email } from "vuelidate/lib/validators";
 import modalHeader from "@/components/UI/modalHeader";
 import authService from "@/requests/admin/authService";
+import errorSnackbar from '@/components/UI/errorSnackbar.vue'
 export default {
   mixins: [validationMixin],
   components: {
     modalHeader,
+    errorSnackbar
   },
   data: () => ({
     email: "",
+    showErrorSnackbar: false,
+    snackbarText: '',
   }),
   validations: {
     email: {
@@ -54,11 +59,14 @@ export default {
       if (!this.$v.$invalid) {
         let email = new FormData();
         email.append('email', this.email)
-        let response = await authService.resetPassword(email);
-        if(response.status == 'success'){
-          localStorage.setItem('userEmail', this.email);
+        await authService.resetPassword(email).then(() => {
+           localStorage.setItem('userEmail', this.email);
           this.$emit('successSendEmail')
-        }
+        })
+        .catch(() => {
+          this.snackbarText = "Користувача з таким email не існує"
+          this.showErrorSnackbar = true;
+        })
       }
     },
   },

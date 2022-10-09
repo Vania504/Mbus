@@ -119,6 +119,7 @@ export default {
     },
     setAboutUsContent() {
       this.about_us = { image: [] };
+      console.log(this.content)
       if(this.content.length > 0){
       this.$set(this.about_us, "id", this.content[0].id);
       this.$set(this.about_us, "content", this.content[0].content);

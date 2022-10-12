@@ -1,23 +1,14 @@
 <template>
   <div>
-    <div
-      class="mainBackground"
-      :style="$vuetify.breakpoint.xs ? 'height: 300px' : ''"
-    >
-      <h1
-        class="mainText"
-        :style="
-          $vuetify.breakpoint.xs
-            ? 'padding-top: 20px; font-size: 18px;'
-            : ' font-size: 40px;'
-        "
-      >
+    <div class="mainBackground" :style="$vuetify.breakpoint.xs ? 'height: 300px' : ''">
+      <h1 class="mainText" :style="
+        $vuetify.breakpoint.xs
+          ? 'padding-top: 20px; font-size: 18px;'
+          : ' font-size: 40px;'
+      ">
         Подорожуйте разом з нами!
       </h1>
-      <v-row
-        :justify="$vuetify.breakpoint.xs ? 'center' : 'start'"
-        align="center"
-      >
+      <v-row :justify="$vuetify.breakpoint.xs ? 'center' : 'start'" align="center">
         <v-col cols="1" class="px-0" v-if="!$vuetify.breakpoint.xs">
           <!-- <v-row
           justify="start"
@@ -62,95 +53,60 @@
           </a>
         </v-row> -->
         </v-col>
-        <v-col
-          cols="10"
-          :style="
-            $vuetify.breakpoint.xs ? 'margin-top: 50px;' : 'margin-top: 30px'
-          "
-        >
-          <h4
-            v-if="!$vuetify.breakpoint.xs"
-            class="searchRoutes"
-            :style="
-              $vuetify.breakpoint.xs ? 'font-size: 16px;' : ' font-size: 20px;'
-            "
-          >
+        <v-col cols="10" :style="
+          $vuetify.breakpoint.xs ? 'margin-top: 50px;' : 'margin-top: 30px'
+        ">
+          <h4 v-if="!$vuetify.breakpoint.xs" class="searchRoutes" :style="
+            $vuetify.breakpoint.xs ? 'font-size: 16px;' : ' font-size: 20px;'
+          ">
             Пошук автобусних рейсів:
           </h4>
-          <search-routes-field-mobile v-if="$vuetify.breakpoint.xs" />
+          <search-routes-field-mobile v-if="$vuetify.breakpoint.xs" :startCities="startCities"
+            :nextCities="nextCities" 
+            @nextCities="getNextCities"
+            @reverseItem="reverseItem"/>
           <v-row v-else justify="center" no-gutters>
-            <div
-              class="backgroundSearchField"
-              :style="
-                startRouteError.length || endRouteError.length
-                  ? 'height: 70px;'
-                  : 'height: 60px;'
-              "
-            >
+            <div class="backgroundSearchField" :style="
+              startRouteError.length || endRouteError.length
+                ? 'height: 70px;'
+                : 'height: 60px;'
+            ">
               <div v-if="loader" class="d-flex align-center mt-3">
-                <v-progress-circular
-                  class="mx-auto"
-                  indeterminate
-                  color="#085895"
-                ></v-progress-circular>
+                <v-progress-circular class="mx-auto" indeterminate color="#085895"></v-progress-circular>
               </div>
               <v-row justify="center" class="pt-2" v-else>
                 <v-col cols="4" class="px-0">
-                  <v-autocomplete
-                    background-color="white"
-                    prepend-inner-icon="mdi-map-marker-outline"
-                    placeholder="Звідки"
-                    outlined
-                    dense
-                    class="rounded-l-lg"
+                  <v-autocomplete background-color="white" prepend-inner-icon="mdi-map-marker-outline"
+                    placeholder="Звідки" outlined dense class="rounded-l-lg" 
                     :items="Object.values(startCities)"
-                    :item-text="'name'"
-                    :item-value="'name'"
-                    v-model="start_route"
-                    :error-messages="startRouteError"
-                  />
+                    :item-text="'name'" 
+                    :item-value="'name'" 
+                    v-model="start_route" 
+                    :error-messages="startRouteError" />
                 </v-col>
-                <div
-                  style="
+                <div style="
                     background-color: white;
                     width: 34px;
                     height: 38px;
                     margin-top: 13px;
                     cursor: pointer;
-                  "
-                  @click="reverseItem"
-                >
+                  " @click="reverseItem">
                   <img src="@/assets/img/reverseIcon.svg" class="mt-2" />
                 </div>
                 <v-col cols="4" class="px-0">
-                  <v-autocomplete
-                    background-color="white"
-                    prepend-inner-icon="mdi-map-marker-outline"
-                    placeholder="Куди"
-                    outlined
-                    dense
-                    class="rounded-r-lg"
-                    :items="Object.values(nextCities)"
-                    :item-text="'name'"
-                    :item-value="'name'"
-                    v-model="end_route"
-                    :disabled="!nextCities.length"
-                    :error-messages="endRouteError"
-                  />
+                  <v-autocomplete background-color="white" prepend-inner-icon="mdi-map-marker-outline"
+                    placeholder="Куди" outlined dense class="rounded-r-lg" :items="Object.values(nextCities)"
+                    :item-text="'name'" :item-value="'name'" v-model="end_route" :disabled="!nextCities.length"
+                    :error-messages="endRouteError" />
                 </v-col>
-                <v-btn
-                  style="
+                <v-btn style="
                     margin-left: 20px;
                     margin-top: 13px;
                     box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.15);
                     border-radius: 10px;
-                  "
-                  width="80px"
-                  height="38px"
-                  color="#085895"
-                  @click="searchRoutes"
-                  ><v-icon color="white">mdi-magnify</v-icon></v-btn
-                >
+                  " width="80px" height="38px" color="#085895" @click="searchRoutes">
+                  <v-icon color="white">mdi-magnify</v-icon>
+                </v-btn>
               </v-row>
             </div>
           </v-row>
@@ -193,12 +149,16 @@ export default {
   },
   methods: {
     ...mapActions(["updateLoader"]),
-    reverseItem() {
-      if (this.start_route && this.end_route) {
+    reverseItem(start_route, end_route) {
+      if(start_route && end_route){
         this.updateLoader(true);
-        let start_route = this.start_route;
-        this.start_route = this.end_route;
+        this.start_route = end_route;
         this.end_route = start_route;
+      }else if (this.start_route && this.end_route) {
+        this.updateLoader(true);
+        let old_start_route = this.start_route;
+        this.start_route = this.end_route;
+        this.end_route = old_start_route;
       }
     },
     hideLoader() {
@@ -213,8 +173,11 @@ export default {
       this.startCities = response.data;
       this.hideLoader();
     },
-    async getNextCities() {
-      let response = await searchRoutesService.getNextCities(this.start_route);
+    async getNextCities(start_route) {
+      let response = await searchRoutesService.getNextCities(
+        start_route 
+        ? start_route 
+        : this.start_route);
       this.nextCities = response.data;
       setTimeout(this.hideLoader, 1500);
     },
@@ -264,11 +227,9 @@ export default {
 <style>
 .mainBackground {
   height: 700px;
-  background: linear-gradient(
-      0deg,
+  background: linear-gradient(0deg,
       rgba(36, 57, 73, 0.5),
-      rgba(36, 57, 73, 0.5)
-    ),
+      rgba(36, 57, 73, 0.5)),
     url("@/assets/img/mainBackground.JPG");
   text-align: center;
   object-fit: cover;
@@ -276,12 +237,14 @@ export default {
   background-repeat: no-repeat;
   background-size: cover;
 }
+
 .mainText {
   font-weight: 400;
   letter-spacing: 0.1em;
   color: #ffffff;
   padding-top: 180px;
 }
+
 .searchRoutes {
   font-style: normal;
   font-weight: 400;
@@ -289,6 +252,7 @@ export default {
   color: #ffffff;
   margin-bottom: 20px;
 }
+
 .backgroundSearchField {
   width: 600px;
   background: rgba(255, 255, 255, 0.9);

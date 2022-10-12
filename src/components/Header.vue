@@ -118,7 +118,7 @@
         </v-col>
       </v-row>
       <v-row v-else align="center" justify="center" no-gutters>
-        <img src="@/assets/img/logoMBus.svg" width="50px" height="30px" />
+        <img src="@/assets/img/logoMBus.svg" width="60px" height="40px" />
       </v-row>
     </v-app-bar>
   </div>

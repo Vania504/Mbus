@@ -8,7 +8,7 @@
         </v-col>
       </v-row>
     </v-snackbar>
-    <v-col cols="10" lg="12" md="11" sm="12" xl="12" class="py-0 px-0">
+    <v-col cols="12" lg="12" md="11" sm="12" xl="12" class="py-0 px-0">
       <span class="blackSpan"
         >Ім'я та прізвище<span class="requireColor">*</span></span
       >
@@ -22,7 +22,7 @@
         @blur="$v.userMessage.name.$touch()"
     /></v-col>
     <v-row no-gutters align="start">
-      <v-col cols="10" lg="6" md="5" sm="12" xl="6"
+      <v-col cols="12" lg="6" md="5" sm="12" xl="6"
         ><span class="blackSpan">Email<span class="requireColor">*</span></span>
         <v-text-field
           dense
@@ -34,7 +34,7 @@
           @blur="$v.userMessage.email.$touch()"
       /></v-col>
       <v-col
-        cols="10"
+        cols="12"
         lg="5"
         md="5"
         sm="12"

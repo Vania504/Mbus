@@ -56,6 +56,7 @@ export default {
   methods: {
     async sendEmail() {
       this.$v.$touch();
+      this.showErrorSnackbar = false;
       if (!this.$v.$invalid) {
         let email = new FormData();
         email.append('email', this.email)

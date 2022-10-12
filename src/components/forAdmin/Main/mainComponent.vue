@@ -1,7 +1,7 @@
 <template>
   <v-row no-gutters>
     <navigation-drawer @selectedItem="setSelectedItem" />
-    <v-col cols="10" xl="10" lg="10" md="9" sm="12" :class="selectedItem ? 'px-0' : ''">
+    <v-col cols="10" xl="10" lg="10" md="9" sm="12" :class="selectedItem ? 'px-0' : ''" style="height: 100vh;">
       <loader v-if="loader" />
       <admin-main
         v-if="selectedItem == '0' || selectedItem == ''"

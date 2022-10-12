@@ -134,6 +134,7 @@
                     :item-text="'name'"
                     :item-value="'name'"
                     v-model="end_route"
+                    :disabled="!nextCities.length"
                     :error-messages="endRouteError"
                   />
                 </v-col>

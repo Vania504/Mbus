@@ -99,26 +99,40 @@
           <span>СОЦІАЛЬНІ МЕРЕЖІ</span>
           <v-row no-gutters class="mt-2" align="start" justify="center">
             <a
-              v-for="item in socialNetworks"
-              :key="item.id"
-              :href="item.link"
-              class="mr-2"
-              ><v-icon v-if="item.icon" color="white">{{ item.icon }}</v-icon>
-              <img
-                width="24px"
-                height="24.84px"
-                v-if="item.img == 'viber'"
-                src="@/assets/img/viberIcon.svg"
-                alt="viber"
-              />
-              <img
-                width="24px"
-                height="24.84px"
-                v-if="item.img == 'telegram'"
-                src="@/assets/img/telegramIcon.svg"
-                alt="telegram"
-              />
-            </a>
+            v-for="item in socialNetworks"
+            :key="item.id"
+            :href="item.value"
+            target="_blank"
+            class="mr-2"
+            ><v-icon v-if="item.social_network == 'Instagram'" color="white"
+              >mdi-instagram</v-icon
+            >
+            <v-icon v-if="item.social_network == 'Facebook'" color="white"
+              >mdi-facebook</v-icon
+            >
+            <v-icon v-if="item.social_network == 'Whatsapp'" color="white"
+              >mdi-whatsapp</v-icon
+            >
+            <v-icon v-if="item.social_network == 'Twitter'" color="white"
+              >mdi-twitter</v-icon
+            >
+            <img
+              width="24px"
+              height="20px"
+              v-if="item.social_network == 'Viber'"
+              src="@/assets/img/viberIcon.svg"
+              alt="viber"
+              class="mb-1 mt-1"
+            />
+            <img
+              width="24px"
+              height="18px"
+              v-if="item.social_network == 'Telegram'"
+              src="@/assets/img/telegramIcon.svg"
+              alt="telegram"
+              class="mt-1"
+            />
+          </a>
           </v-row>
         </v-col>
       </v-col>

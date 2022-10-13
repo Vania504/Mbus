@@ -4,33 +4,24 @@
     <div v-else>
       <div v-if="$vuetify.breakpoint.xs">
         <v-col class="px-0 py-0">
-          <div
-            style="background-color: #243949; align-self: center; height: 40px"
-          >
+          <div style="background-color: #243949; align-self: center; height: 40px">
             <v-row justify="start" align="center" no-gutters class="pt-2">
-              <v-icon
-                class="ml-2 mr-2"
-                color="white"
-                @click="$router.push('/routes')"
-                >mdi-arrow-left</v-icon
-              >
-              <span style="color: white; font-size: 18px"
-                >{{ route.departure }}–{{ route.destination }}</span
-              >
+              <v-icon class="ml-2 mr-2" color="white" @click="$router.push('/routes')">mdi-arrow-left</v-icon>
+              <span style="color: white; font-size: 18px">{{ route.departure }}–{{ route.destination }}</span>
             </v-row>
           </div>
-          <route-map />
+          <route-map :start_point="{lat: route.cities[0].lat, lng: route.cities[0].lng}"
+          :finish_point="{lat: route.cities[route.cities.length - 1].lat, lng: route.cities[route.cities.length - 1].lng}"/>
           <route-description :route="route" />
           <detail-route-info :route="route" />
         </v-col>
       </div>
       <div v-else>
-        <routes-header
-          :title="route.departure + '-' + route.destination"
-          :image="route.images.length > 0 ? route.images[0].images.path : ''"
-        />
+        <routes-header :title="route.departure + '-' + route.destination"
+          :image="route.images.length > 0 ? route.images[0].images.path : ''" />
         <v-row justify="center" align="start" no-gutters class="mt-15">
-          <route-map />
+          <route-map :start_point="{lat: route.cities[0].lat, lng: route.cities[0].lng}"
+            :finish_point="{lat: route.cities[route.cities.length - 1].lat, lng: route.cities[route.cities.length - 1].lng}" />
           <route-description :route="route" />
         </v-row>
         <v-col>
@@ -75,4 +66,5 @@ export default {
 </script>
 
 <style>
+
 </style>

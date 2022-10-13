@@ -35,7 +35,7 @@
               @click="showImageModal = true"
             >
               <span class="newImageSpan">Нове зображення</span>
-              <img src="@/assets/img/messageIcon/folderIcon.svg" />
+              <img src="@/assets/img/messageIcon/folderIcon.png" />
             </v-row>
           </div>
         </div>

@@ -47,7 +47,7 @@
             <v-tooltip bottom color="rgba(0, 0, 0, 0.5)">
               <template v-slot:activator="{ on, attrs }">
                 <div class="icon">
-                  <img v-bind="attrs" v-on="on" src="@/assets/img/messageIcon/deleteIcon.svg" />
+                  <img v-bind="attrs" v-on="on" src="@/assets/img/messageIcon/deleteIcon.png" />
                 </div>
               </template>
               <span>Видалити</span>
@@ -57,7 +57,7 @@
                 <div class="icon">
                   <img v-bind="attrs" v-on="on" @click="
                     updateStatus(message.id, message.type, 'Архівовані')
-                  " src="@/assets/img/messageIcon/archiveIcon.svg" />
+                  " src="@/assets/img/messageIcon/archiveIcon.png" />
                 </div>
               </template>
               <span>Архівувати</span>
@@ -68,7 +68,7 @@
                   <v-tooltip bottom color="rgba(0, 0, 0, 0.5)">
                     <template v-slot:activator="{ on, attrs }">
                       <div class="icon" v-bind="attrs" v-on="on">
-                        <img src="@/assets/img/messageIcon/leaveIcon.svg" />
+                        <img src="@/assets/img/messageIcon/leaveIcon.png" />
                       </div>
                     </template>
                     <span>Перемістити у..</span>

@@ -39,7 +39,7 @@
       class="mb-7 pointer"
       width="20px"
       heigth="20px"
-      src="@/assets/img/messageIcon/deleteIcon.svg"
+      src="@/assets/img/messageIcon/deleteIcon.png"
       @click="$emit('delete','contact', item.id)"
     />
   </v-row>

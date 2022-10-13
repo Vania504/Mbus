@@ -2,7 +2,7 @@
   <v-footer color="#122B3E" :height="$vuetify.breakpoint.xs ? '' : '223px'">
     <v-row justify="start" v-if="!$vuetify.breakpoint.xs">
       <v-col style="text-align: left">
-        <img width="136px" height="90px" src="@/assets/img/logoMBus.svg" alt="logo" />
+        <img width="136px" height="90px" src="@/assets/img/logoMbus.png" alt="logo" />
       </v-col>
       <v-col class="white--text" style="text-align: left">
         <span>ТЕЛЕФОНИ ДИСПЕТЧЕРІВ</span>
@@ -10,8 +10,8 @@
           <v-icon small color="white" class="mr-2">mdi-phone</v-icon>
           <span> <a :href="`tel: ${item.number}`" style="text-decoration: none; color: white">
               {{ item.number }}</a></span>
-          <img v-if="item.type == 'UA'" src="@/assets/img/UA.svg" class="ml-2" />
-          <img v-if="item.type == 'PL'" src="@/assets/img/PL.svg" class="ml-2" />
+          <img v-if="item.type == 'UA'" src="@/assets/img/UA.png" class="ml-2" />
+          <img v-if="item.type == 'PL'" src="@/assets/img/PL.png" class="ml-2" />
         </v-row>
       </v-col>
       <v-col class="white--text" style="text-align: left">
@@ -37,9 +37,9 @@
             <v-icon v-if="item.social_network == 'Facebook'" color="white">mdi-facebook</v-icon>
             <v-icon v-if="item.social_network == 'Whatsapp'" color="white">mdi-whatsapp</v-icon>
             <v-icon v-if="item.social_network == 'Twitter'" color="white">mdi-twitter</v-icon>
-            <img width="24px" height="20px" v-if="item.social_network == 'Viber'" src="@/assets/img/viberIcon.svg"
+            <img width="24px" height="20px" v-if="item.social_network == 'Viber'" src="@/assets/img/viberIcon.png"
               alt="viber" class="mb-1 mt-1" />
-            <img width="24px" height="18px" v-if="item.social_network == 'Telegram'" src="@/assets/img/telegramIcon.svg"
+            <img width="24px" height="18px" v-if="item.social_network == 'Telegram'" src="@/assets/img/telegramIcon.png"
               alt="telegram" class="mt-1" />
           </a>
         </v-row>
@@ -47,7 +47,7 @@
     </v-row>
     <v-row justify="center" class="pt-2 pb-15" v-else>
       <v-col>
-        <img width="80px" height="60px" src="@/assets/img/logoMBus.svg" alt="logo" />
+        <img width="80px" height="60px" src="@/assets/img/logoMbus.png" alt="logo" />
         <v-col style="text-align: center" class="white--text">
           <span>СОЦІАЛЬНІ МЕРЕЖІ</span>
           <v-row no-gutters class="mt-2" align="start" justify="center">
@@ -56,10 +56,10 @@
               <v-icon v-if="item.social_network == 'Facebook'" color="white">mdi-facebook</v-icon>
               <v-icon v-if="item.social_network == 'Whatsapp'" color="white">mdi-whatsapp</v-icon>
               <v-icon v-if="item.social_network == 'Twitter'" color="white">mdi-twitter</v-icon>
-              <img width="24px" height="20px" v-if="item.social_network == 'Viber'" src="@/assets/img/viberIcon.svg"
+              <img width="24px" height="20px" v-if="item.social_network == 'Viber'" src="@/assets/img/viberIcon.png"
                 alt="viber" class="mb-1 mt-1" />
               <img width="24px" height="18px" v-if="item.social_network == 'Telegram'"
-                src="@/assets/img/telegramIcon.svg" alt="telegram" class="mt-1" />
+                src="@/assets/img/telegramIcon.png" alt="telegram" class="mt-1" />
             </a>
           </v-row>
         </v-col>

@@ -3,7 +3,7 @@
     class="routeCard mx-1"
     :style="{
       backgroundImage: `linear-gradient(360deg, rgba(1, 29, 51, 0.602) 35.16%, rgba(91, 98, 104, 0.469) 45.62%),url(
-      ${require('@/assets/img/routesBackgroundImg.svg')})`,
+      ${require('@/assets/img/routesBackgroundImg.png')})`,
       backgroundSize: 'cover',
       backgroundRepeat: 'norepeat',
     }"

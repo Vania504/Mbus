@@ -10,7 +10,7 @@
         <v-col :cols="isAdmin ? '3' : '2'" style="text-align: left">
           <v-row no-gutters justify="start">
             <router-link to="/">
-               <img src="@/assets/img/logoMBus.svg" />
+               <img src="@/assets/img/logoMbus.png" />
             </router-link>
           </v-row>
         </v-col>
@@ -74,11 +74,11 @@
                   <v-row no-gutters align="center" justify="end">
                     <img
                       v-if="phoneNumbers[0].type == 'UA'"
-                      src="@/assets/img/UA.svg"
+                      src="@/assets/img/UA.png"
                     />
                     <img
                       v-if="phoneNumbers[0].type == 'PL'"
-                      src="@/assets/img/PL.svg"
+                      src="@/assets/img/PL.png"
                     />
                     <span style="margin-left: 5px">{{
                       phoneNumbers[0].number
@@ -99,12 +99,12 @@
                       >
                         <img
                           v-if="number.type == 'UA'"
-                          src="@/assets/img/UA.svg"
+                          src="@/assets/img/UA.png"
                           class="mr-2"
                         />
                         <img
                           v-if="number.type == 'PL'"
-                          src="@/assets/img/PL.svg"
+                          src="@/assets/img/PL.png"
                           class="mr-2"
                         />
                         <span class="pointer">
@@ -120,7 +120,7 @@
         </v-col>
       </v-row>
       <v-row v-else align="center" justify="center" no-gutters>
-        <img src="@/assets/img/logoMBus.svg" width="60px" height="40px" />
+        <img src="@/assets/img/logoMbus.png" width="60px" height="40px" />
       </v-row>
     </v-app-bar>
   </div>

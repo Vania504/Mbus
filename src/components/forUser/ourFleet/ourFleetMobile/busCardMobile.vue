@@ -24,7 +24,7 @@
         <v-col>
           <v-row align="center" no-gutters
             ><img
-              src="@/assets/img/busServiceIcon/busIcon.svg"
+              src="@/assets/img/busServiceIcon/busIcon.png"
               width="20px"
               height="20px"
             />
@@ -36,7 +36,7 @@
           </v-row>
           <v-row align="center" class="mt-1" no-gutters
             ><img
-              src="@/assets/img/busServiceIcon/chairIcon.svg"
+              src="@/assets/img/busServiceIcon/chairIcon.png"
               width="20px"
               height="20px"
             />

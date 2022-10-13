@@ -1,11 +1,11 @@
 <template>
   <v-row style="text-align: left" no-gutters align="start" justify="center" class="mt-15">
-    <img src="@/assets/img/dispatcherIcon.svg" class="mt-1"/>
+    <img src="@/assets/img/dispatcherIcon.png" class="mt-1"/>
     <v-col cols="2" class="ml-2 py-0">
       <h4>Служба підтримки 24/7</h4>
       <span>Ми готові проконсультувати Вас в будь-який час доби. </span>
     </v-col>
-    <img src="@/assets/img/saveIcon.svg" class="ml-15 mt-1"/>
+    <img src="@/assets/img/saveIcon.png" class="ml-15 mt-1"/>
     <v-col cols="2" class="ml-2 py-0">
       <h4>Якісний сервіс</h4>
       <span
@@ -13,7 +13,7 @@
         надійним перевізником</span
       >
     </v-col>
-    <img src="@/assets/img/busServiceIcon/comfortIcon.svg" class="ml-15 mt-1"/>
+    <img src="@/assets/img/busServiceIcon/comfortIcon.png" class="ml-15 mt-1"/>
     <v-col cols="2" class="ml-2 py-0">
       <h4>Комфотна подорож</h4>
       <span

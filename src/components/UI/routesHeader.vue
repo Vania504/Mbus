@@ -10,7 +10,7 @@
         rgba(18, 43, 62, 0.64),
         rgba(18, 43, 62, 0.64)
       ), url(
-      ${require('@/assets/img/routesBackgroundImg.svg')})`,
+      ${require('@/assets/img/routesBackgroundImg.png')})`,
             backgroundSize: 'cover',
             backgroundRepeat: 'norepeat',
             height: '120px',
@@ -20,7 +20,7 @@
         0deg,
         rgba(18, 43, 62, 0.64),
         rgba(18, 43, 62, 0.64)
-      ), url(${image ? image : require('@/assets/img/routesBackgroundImg.svg')})`,
+      ), url(${image ? image : require('@/assets/img/routesBackgroundImg.png')})`,
             backgroundSize: 'cover',
             backgroundRepeat: 'norepeat',
             height: '330px',

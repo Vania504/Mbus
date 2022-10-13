@@ -20,22 +20,22 @@ export default {
       {
         id: 1,
         title: "Комфотна подорож",
-        icon: "comfortIcon.svg",
+        icon: "comfortIcon.png",
       },
       {
         id: 2,
         title: "Сучасні автобуси",
-        icon: "irregularTransportationBusIcon.svg",
+        icon: "irregularTransportationBusIcon.png",
       },
       {
         id: 3,
         title: "Індивідуальний підхід",
-        icon: "individualIcon.svg",
+        icon: "individualIcon.png",
       },
       {
         id: 4,
         title: "Привітні та досвідчені водії",
-        icon: "driverIcon.svg",
+        icon: "driverIcon.png",
       },
     ],
   }),

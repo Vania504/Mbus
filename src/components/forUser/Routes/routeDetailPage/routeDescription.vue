@@ -70,7 +70,7 @@
           ><img
             :width="$vuetify.breakpoint.xs ? '20px' : '30px'"
             :height="$vuetify.breakpoint.xs ? '20px' : '30px'"
-            src="@/assets/img/busServiceIcon/busIcon.svg"
+            src="@/assets/img/busServiceIcon/busIcon.png"
           /><span class="ml-2">{{ route.bus.model }}</span></v-row
         >
       </div>
@@ -85,7 +85,7 @@
           ><img
             :width="$vuetify.breakpoint.xs ? '20px' : '30px'"
             :height="$vuetify.breakpoint.xs ? '20px' : '30px'"
-            src="@/assets/img/busServiceIcon/chairIcon.svg"
+            src="@/assets/img/busServiceIcon/chairIcon.png"
           />
           <span class="ml-2"
             >{{ route.bus.seats

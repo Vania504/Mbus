@@ -92,7 +92,7 @@
                     margin-top: 13px;
                     cursor: pointer;
                   " @click="reverseItem">
-                  <img src="@/assets/img/reverseIcon.svg" class="mt-2" />
+                  <img src="@/assets/img/reverseIcon.png" class="mt-2" />
                 </div>
                 <v-col cols="4" class="px-0">
                   <v-autocomplete background-color="white" prepend-inner-icon="mdi-map-marker-outline"

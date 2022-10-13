@@ -2,7 +2,7 @@
   <v-row justify="center" no-gutters>
     <v-col style="text-align: left" class="mt-15 ml-5">
       <v-row align="center" justify="center">
-        <img src="@/assets/img/dispatcherIcon.svg" class="mt-1" />
+        <img src="@/assets/img/dispatcherIcon.png" class="mt-1" />
         <v-col cols="10" class="ml-2 py-0">
           <p class="aboutUsMobileTitle">Служба підтримки 24/7</p>
           <span class="aboutUsMobileDescription"
@@ -11,7 +11,7 @@
         </v-col>
       </v-row>
       <v-row align="center" justify="center" class="pt-5 pb-5">
-        <img src="@/assets/img/saveIcon.svg" class="mt-1" />
+        <img src="@/assets/img/saveIcon.png" class="mt-1" />
         <v-col cols="10" class="ml-2 py-0">
           <p class="aboutUsMobileTitle">Якісний сервіс</p>
           <span class="aboutUsMobileDescription"
@@ -21,7 +21,7 @@
         </v-col>
       </v-row>
       <v-row align="center" justify="center">
-        <img src="@/assets/img/busServiceIcon/comfortIcon.svg" class="mt-1" />
+        <img src="@/assets/img/busServiceIcon/comfortIcon.png" class="mt-1" />
         <v-col cols="10" class="ml-2 py-0">
           <p class="aboutUsMobileTitle">Комфотна подорож</p>
           <span class="aboutUsMobileDescription"

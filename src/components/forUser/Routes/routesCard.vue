@@ -57,7 +57,7 @@
         v-else
         :width="$vuetify.breakpoint.xs ? '180px' : '320px'"
         :height="$vuetify.breakpoint.xs ? '120px' : '200px'"
-        src="@/assets/img/routeImg.svg"
+        src="@/assets/img/routeImg.png"
       />
     </div>
     <v-row no-gutters justify="end" v-if="forAdmin">

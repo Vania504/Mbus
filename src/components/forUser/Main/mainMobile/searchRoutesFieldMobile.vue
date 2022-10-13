@@ -27,7 +27,7 @@
         margin-top: 35px;
         cursor: pointer;
       " @click="reverseItem" v-if="!loader">
-      <img src="@/assets/img/reverseIcon.svg" style="transform: rotate(90deg)" class="mt-2" />
+      <img src="@/assets/img/reverseIcon.png" style="transform: rotate(90deg)" class="mt-2" />
     </div>
   </v-row>
 </template>

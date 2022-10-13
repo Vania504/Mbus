@@ -44,7 +44,7 @@
               </v-tooltip>
             </div>
             <v-row align="center" class="mt-5 mr-5" no-gutters
-              ><img src="@/assets/img/busServiceIcon/chairIcon.svg" /><span
+              ><img src="@/assets/img/busServiceIcon/chairIcon.png" /><span
                 class="ml-3"
                 >{{ bus.seats }}<span class="drivingSeats">+2</span> місць</span
               ></v-row
@@ -122,56 +122,56 @@ export default {
     service: [
       {
         id: 1,
-        img: "/toiletIcon.svg",
+        img: "/toiletIcon.png",
         title: "Туалет",
         key: "toilet",
         enters: false,
       },
       {
         id: 2,
-        img: "/coffeIcon.svg",
+        img: "/coffeIcon.png",
         title: "Харчування",
         key: "supply",
         enters: false,
       },
       {
         id: 3,
-        img: "/electricOutletIcon.svg",
+        img: "/electricOutletIcon.png",
         title: "Розетки",
         key: "socket",
         enters: false,
       },
       {
         id: 4,
-        img: "/coldIcon.svg",
+        img: "/coldIcon.png",
         title: "Клімат контроль",
         key: "climate",
         enters: true,
       },
       {
         id: 5,
-        img: "/wifiIcon.svg",
+        img: "/wifiIcon.png",
         title: "Wi-Fi",
         key: "wifi",
         enters: false,
       },
       {
         id: 6,
-        img: "/seriesIcon.svg",
+        img: "/seriesIcon.png",
         title: "Перегляд TV",
         key: "tv",
         enters: false,
       },
       {
         id: 7,
-        img: "/vipIcon.svg",
+        img: "/vipIcon.png",
         title: "VIP",
         key: "vip",
         enters: false,
       },
       {
         id: 8,
-        img: "/euro5Icon.svg",
+        img: "/euro5Icon.png",
         title: "Екологічність",
         key: "ecology",
         enters: false,

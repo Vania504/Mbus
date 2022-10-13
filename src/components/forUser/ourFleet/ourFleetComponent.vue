@@ -25,9 +25,6 @@ export default {
     Loader
   },
   data: () => ({
-    bgImg: {
-      backgroundImage: `url(${require("@/assets/img/innregularTransporImg.svg")})`,
-    },
     busList: [],
     page: 1,
     quantityPage: 1,

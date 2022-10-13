@@ -81,13 +81,13 @@
     />
     <v-col class="px-5 py-5">
       <v-row align="center"
-        ><img src="@/assets/img/busServiceIcon/busIcon.svg" /><span
+        ><img src="@/assets/img/busServiceIcon/busIcon.png" /><span
           class="ml-3"
           >{{ bus.model }}</span
         ></v-row
       >
       <v-row align="center" class="mt-5"
-        ><img src="@/assets/img/busServiceIcon/chairIcon.svg" /><span
+        ><img src="@/assets/img/busServiceIcon/chairIcon.png" /><span
           class="ml-3"
           >{{ bus.seats }}<span class="drivingSeats">+2</span> місць</span
         ></v-row

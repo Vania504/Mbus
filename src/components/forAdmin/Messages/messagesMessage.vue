@@ -21,21 +21,27 @@
       <v-col cols="1" style="text-align: right" class="px-0">
         <v-row justify="end" no-gutters align="center">
           <span v-if="!isHover">
-            {{new Date(message.created_at).getDate() == "6"}}
-            {{new Date(message.created_at).getDate() == (1 || 2 || 3 || 4 || 5 || 6 || 7 || 8 || 9)}}
             {{
-            new Date(message.created_at).getDate() == ("1" || "2" || "3" || 4 || 5 || 6 || 7 || 8 || 9) ?
+              new Date(message.created_at).getDate() == "1" 
+              || new Date(message.created_at).getDate() == "2" 
+              || new Date(message.created_at).getDate() == "3" 
+              || new Date(message.created_at).getDate() == "4" 
+              || new Date(message.created_at).getDate() == "5" 
+              || new Date(message.created_at).getDate() == "6" 
+              || new Date(message.created_at).getDate() == "7" 
+              || new Date(message.created_at).getDate() == "8" 
+              || new Date(message.created_at).getDate() == "9" ?
             new Date(message.created_at)
             .toLocaleDateString("uk-UA", {
             month: "long",
             day: "numeric",
             })
-            .substr(0, 6) : new Date(message.created_at)
+            .substr(0, 5) : new Date(message.created_at)
             .toLocaleDateString("uk-UA", {
             month: "long",
             day: "numeric",
             })
-            .substr(0, 5)
+            .substr(0, 6)
             }}</span>
           <v-row align="start" justify="end" v-else>
             <v-tooltip bottom color="rgba(0, 0, 0, 0.5)">

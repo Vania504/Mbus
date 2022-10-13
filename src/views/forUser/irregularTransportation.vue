@@ -7,6 +7,9 @@ import irregularTransportationComponent from '@/components/forUser/irregularTran
 export default {
     components: {
         irregularTransportationComponent
+    },
+    mounted(){
+      window.scrollTo(0,0)
     }
 }
 </script>

@@ -27,7 +27,10 @@
                 ? 'itemDescriptionMobile'
                 : 'itemDescription'
             "
-            >mbus@gmail.com</span
+            ><a :href="`mailto:mbus.kolomyia@gmail.com`"
+            style="text-decoration: none; color: black">
+            mbus.kolomyia@gmail.com
+          </a></span
           >
         </v-col>
       </v-row>
@@ -44,7 +47,8 @@
                 ? 'itemDescriptionMobile'
                 : 'itemDescription'
             "
-            >+38 (098) 000-99-99</span
+            > <a :href="`tel: +380660122000`" style="text-decoration: none;color:#000000;">
+              +38 (066) 012-20-00</a></span
           >
         </v-col>
       </v-row>
@@ -61,8 +65,7 @@
                 ? 'itemDescriptionMobile'
                 : 'itemDescription'
             "
-            >Україна, Івано-Франківська обл., м. Коломия, вул. Якогось Там,
-            11</span
+            >Україна, Івано-Франківська обл., м. Коломия</span
           >
         </v-col>
       </v-row>

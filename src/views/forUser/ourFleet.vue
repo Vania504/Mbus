@@ -7,6 +7,9 @@ import ourFleetComponent from '@/components/forUser/ourFleet/ourFleetComponent.v
 export default {
     components: {
         ourFleetComponent,
+    },
+    mounted(){
+      window.scrollTo(0,0)
     }
 }
 </script>

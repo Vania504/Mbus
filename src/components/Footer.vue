@@ -25,8 +25,7 @@
         <v-row no-gutters align="center">
           <v-icon color="white" small class="mr-2">mdi-map-marker-radius</v-icon>
           <v-col cols="10">
-            <span>Україна, Івано-Франківська обл., м. Коломия, вул. Якогось Там,
-              11</span>
+            <span>Україна, Івано-Франківська обл., м. Коломия</span>
           </v-col>
         </v-row>
       </v-col>

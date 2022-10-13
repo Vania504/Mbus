@@ -8,6 +8,9 @@ export default {
   components: {
     transportationRulesComponent,
   },
+  mounted(){
+      window.scrollTo(0,0)
+  }
 };
 </script>
 

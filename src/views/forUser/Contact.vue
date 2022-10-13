@@ -8,6 +8,9 @@ export default {
     name: 'contactView',
     components: {
         contactComponent,
+    },
+    mounted(){
+      window.scrollTo(0,0)
     }
 }
 </script>

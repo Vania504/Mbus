@@ -7,6 +7,9 @@ import routeDetailPage from '@/components/forUser/Routes/routeDetailPage/routeDe
 export default {
     components: {
         routeDetailPage
+    },
+    mounted(){
+      window.scrollTo(0,0)
     }
 }
 </script>

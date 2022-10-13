@@ -42,15 +42,14 @@
                 </v-btn>
               </v-row>
             </v-col>
-            <div v-if="content.length">
+            <div v-if="content.length" :class="$vuetify.breakpoint.xs ? 'mobileLogo' : ''">
               <img
                 v-if="content[0].images.length"
-                height="346px"
+                :height="$vuetify.breakpoint.xs ? '200px' : '346px'"
                 :width="$vuetify.breakpoint.xs ? '280px' : '454px'"
                 class="ml-10"
                 :src="content[0].images[0].images ? content[0].images[0].images.path : ''"
-                style="opacity: 1"
-                :class="$vuetify.breakpoint.xs ? 'mobileLogo' : ''"
+                style="opacity: 1"      
               />
             </div>
           </v-row>
@@ -102,9 +101,8 @@ export default {
 .mobileLogo {
   position: absolute;
   width: 305px;
-  height: 233px;
+  height: 200px;
   padding-left: 10%;
   z-index: 0;
-  padding-top: 20px;
 }
 </style>

@@ -8,6 +8,9 @@ export default {
     name: 'RoutesView',
     components: {
         routesComponent
+    },
+    mounted(){
+      window.scrollTo(0,0)
     }
 }
 </script>

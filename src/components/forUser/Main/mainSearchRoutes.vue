@@ -64,7 +64,8 @@
           <search-routes-field-mobile v-if="$vuetify.breakpoint.xs" :startCities="startCities"
             :nextCities="nextCities" 
             @nextCities="getNextCities"
-            @reverseItem="reverseItem"/>
+            @reverseItem="reverseItem"
+            @searchRoutes="searchRoutes"/>
           <v-row v-else justify="center" no-gutters>
             <div class="backgroundSearchField" :style="
               startRouteError.length || endRouteError.length
@@ -181,9 +182,14 @@ export default {
       this.nextCities = response.data;
       setTimeout(this.hideLoader, 1500);
     },
-    async searchRoutes() {
+    async searchRoutes(isMobile,start_route, end_route) {
       this.$v.$touch();
-      if (!this.$v.$invalid) {
+      if(isMobile){
+        this.$router.push(
+          `/routes?start_route=${start_route}&end_route=${end_route}`
+        );
+      }
+      else if (!this.$v.$invalid) {
         this.$router.push(
           `/routes?start_route=${this.start_route}&end_route=${this.end_route}`
         );

@@ -10,7 +10,7 @@
       <v-autocomplete background-color="white" prepend-inner-icon="mdi-map-marker-outline" placeholder="Куди" outlined
         dense class="rounded-b-lg" :items="Object.values(nextCities)" :item-text="'name'" :item-value="'name'"
         v-model="end_route" :disabled="!nextCities.length" />
-      <v-btn style="margin-top: 13px" width="150px" height="30px" color="#085895" class="rounded-lg">
+      <v-btn style="margin-top: 13px" width="150px" height="30px" color="#085895" class="rounded-lg"  @click="searchRoutes">
         <v-icon color="white mr-2">mdi-magnify</v-icon><span style="
             text-transform: none;
             color: white;
@@ -54,6 +54,9 @@ export default {
       this.start_route = this.end_route;
       this.end_route = old_start_route;
     },
+    searchRoutes(){
+      this.$emit('searchRoutes',true, this.start_route, this.end_route)
+    }
   },
   computed: {
     ...mapGetters(["loader"]),

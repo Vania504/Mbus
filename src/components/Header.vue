@@ -107,7 +107,9 @@
                           src="@/assets/img/PL.svg"
                           class="mr-2"
                         />
-                        <span>{{ number.number }}</span>
+                        <span class="pointer">
+                          <a :href="`tel: ${number.number}`" style="text-decoration: none; color: black">
+                        {{ number.number }}</a></span>
                       </v-row>
                     </v-col>
                   </v-list>

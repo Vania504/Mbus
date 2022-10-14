@@ -9,10 +9,9 @@
       lat: parseFloat(start_point.lat),
       lng: parseFloat(start_point.lng),
     }" :clickable="true" />
-    ß
     <GmapMarker :position="{
-      lat: parseFloat(49.920551),
-      lng: parseFloat(25.706484),
+      lat: parseFloat(finish_point.lat),
+      lng: parseFloat(finish_point.lng),
     }" :clickable="true" />
   </GmapMap>
 </template>

@@ -10,8 +10,7 @@
               <span style="color: white; font-size: 18px">{{ route.departure }}–{{ route.destination }}</span>
             </v-row>
           </div>
-          <route-map :start_point="{lat: route.cities[0].lat, lng: route.cities[0].lng}"
-          :finish_point="{lat: route.cities[route.cities.length - 1].lat, lng: route.cities[route.cities.length - 1].lng}"/>
+          <route-map :start_point="start_point" :finish_point="finish_point" />
           <route-description :route="route" />
           <detail-route-info :route="route" />
         </v-col>
@@ -20,8 +19,7 @@
         <routes-header :title="route.departure + '-' + route.destination"
           :image="route.images.length > 0 ? route.images[0].images.path : ''" />
         <v-row justify="center" align="start" no-gutters class="mt-15">
-          <route-map :start_point="{lat: route.cities[0].lat, lng: route.cities[0].lng}"
-            :finish_point="{lat: route.cities[route.cities.length - 1].lat, lng: route.cities[route.cities.length - 1].lng}" />
+          <route-map :start_point="start_point" :finish_point="finish_point" />
           <route-description :route="route" />
         </v-row>
         <v-col>
@@ -39,6 +37,7 @@ import routeDescription from "./routeDescription.vue";
 import detailRouteInfo from "./detailRouteInfo.vue";
 import routesService from "@/requests/admin/routesService";
 import Loader from "@/components/UI/Loader.vue";
+import googleMapsService from "@/requests/googleMaps/googleMapsService"
 export default {
   components: {
     routesHeader,
@@ -50,6 +49,8 @@ export default {
   data: () => ({
     route: {},
     showLoader: true,
+    start_point: {},
+    finish_point: {}
   }),
   mounted() {
     this.getRoute();
@@ -58,8 +59,14 @@ export default {
   methods: {
     async getRoute() {
       let response = await routesService.getRoute(this.$route.params.id);
+      this.start_point = await this.getPoint(response.data.departure);
+      this.finish_point = await this.getPoint(response.data.destination);
       this.route = response.data;
       this.showLoader = false;
+    },
+    async getPoint(city) {
+      let response = await googleMapsService.getCoordinates(city)
+      return response.results[0].geometry.location;
     },
   },
 };

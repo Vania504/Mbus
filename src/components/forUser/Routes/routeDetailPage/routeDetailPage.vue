@@ -6,7 +6,7 @@
         <v-col class="px-0 py-0">
           <div style="background-color: #243949; align-self: center; height: 40px">
             <v-row justify="start" align="center" no-gutters class="pt-2">
-              <v-icon class="ml-2 mr-2" color="white" @click="$router.push('/routes')">mdi-arrow-left</v-icon>
+              <v-icon class="ml-2 mr-2" color="white" @click="$router.push($route.query.start_route ? `/routes?start_route=${$route.query.start_route}&end_route=${$route.query.end_route}` : '/routes')">mdi-arrow-left</v-icon>
               <span style="color: white; font-size: 18px">{{ route.departure }}–{{ route.destination }}</span>
             </v-row>
           </div>

@@ -184,7 +184,7 @@ export default {
     },
     async searchRoutes(isMobile,start_route, end_route) {
       this.$v.$touch();
-      if(isMobile){
+      if(isMobile && typeof isMobile !== 'object'){
         this.$router.push(
           `/routes?start_route=${start_route}&end_route=${end_route}`
         );

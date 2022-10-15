@@ -18,7 +18,7 @@
             outlined
             dense
             color="white"
-            @click="$router.push('/routes/' + route.id)"
+            @click="$router.push($route.query.start_route ? `/routes/${route.id}?start_route=${$route.query.start_route}&end_route=${$route.query.end_route}` : '/routes/' + route.id)"
             >Детальніше</v-btn
           >
         </v-col>

@@ -9,7 +9,7 @@ export default {
         routeDetailPage
     },
     mounted(){
-      window.scrollTo(0,0)
+      this.$vuetify.goTo(0);
     }
 }
 </script>

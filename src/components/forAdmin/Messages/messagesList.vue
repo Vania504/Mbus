@@ -7,6 +7,7 @@
         :message="message"
         @updateStatus="updateStatus"
         @detailMessage="detailMessage"
+        @deleteMessage="deleteMessage"
       />
     </v-col>
   </div>
@@ -35,6 +36,9 @@ export default {
     },
     detailMessage(type, id){
       this.$emit('detailMessage', type, id)
+    },
+    deleteMessage(id){
+      this.$emit('deleteMessage', id)
     }
   },
 };

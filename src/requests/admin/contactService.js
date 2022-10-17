@@ -24,4 +24,10 @@ export default {
 		})
 		return response?.data
 	},
+	async deleteMessage(id){
+		const response = await requestService.delete(`/message/${id}`, {
+			headers: { Authorization: `Bearer ${store.getters.loggedUser.token}` }
+		})
+		return response?.data
+	}
 }

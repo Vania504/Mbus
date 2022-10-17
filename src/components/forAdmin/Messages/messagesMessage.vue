@@ -44,14 +44,14 @@
             .substr(0, 6)
             }}</span>
           <v-row align="start" justify="end" v-else>
-            <v-tooltip bottom color="rgba(0, 0, 0, 0.5)">
+            <!-- <v-tooltip bottom color="rgba(0, 0, 0, 0.5)">
               <template v-slot:activator="{ on, attrs }">
                 <div class="icon">
-                  <img v-bind="attrs" v-on="on" src="@/assets/img/messageIcon/deleteIcon.png" />
+                  <img v-bind="attrs" v-on="on" @click="deleteMessage(message.id)" src="@/assets/img/messageIcon/deleteIcon.png" />
                 </div>
               </template>
               <span>Видалити</span>
-            </v-tooltip>
+            </v-tooltip> -->
             <v-tooltip bottom color="rgba(0, 0, 0, 0.5)">
               <template v-slot:activator="{ on, attrs }">
                 <div class="icon">
@@ -122,6 +122,9 @@ export default {
     },
     detailMessage() {
       this.$emit('detailMessage', this.message.type, this.message.id)
+    },
+    deleteMessage(id){
+      this.$emit('deleteMessage', id)
     }
   },
 };

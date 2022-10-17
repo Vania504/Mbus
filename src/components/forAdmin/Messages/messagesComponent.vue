@@ -16,6 +16,7 @@
           :quantity_page="quantity_page"
           @page="changePage"
           @showLoader="showLoader = true"
+          @updateStatus="editStatus"
         />
         <Loader v-if="showLoader"/>
         <messages-list v-else
@@ -23,6 +24,7 @@
           :statusList="statusList"
           @detailMessage="detailMessage"
           @updateStatus="updateStatus"
+          @deleteMessage="deleteMessage"
           :page="page"
         />
       </v-col>
@@ -68,6 +70,7 @@ export default {
         (status) => status.name == statusName
       );
       let form = new FormData();
+      console.log(statusName, status)
       form.append("status", parseInt(status[0].id));
       messageType == "contact"
         ? this.updateContactMessage(id, form)
@@ -151,6 +154,18 @@ export default {
     changePage(page) {
       this.page = page;
     },
+    async editStatus(id, form){
+      let response = await statusService.updateStatus(id, form);
+      if(response.status == "success"){
+        this.getStatusList();
+      }
+    },
+    async deleteMessage(id){
+     let response = await contactService.deleteMessage(id);
+     if(response.status == "success"){
+      this.getMessages();
+     }
+    }
   },
   computed: {
     ...mapGetters(["loader"]),

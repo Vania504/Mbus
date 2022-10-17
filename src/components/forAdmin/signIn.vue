@@ -129,6 +129,7 @@ export default {
         if (this.rememberMe) {
           timeout = 12 * 3600;
         }
+        console.log(response)
         if (response.status == "success") {
           this.updateInfoLogged({
             email: this.user.email,

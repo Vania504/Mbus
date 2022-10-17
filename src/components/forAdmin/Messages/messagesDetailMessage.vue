@@ -15,7 +15,7 @@
           </template>
           <span>Назад</span>
         </v-tooltip>
-        <v-tooltip bottom color="rgba(0, 0, 0, 0.5)">
+        <!-- <v-tooltip bottom color="rgba(0, 0, 0, 0.5)">
           <template v-slot:activator="{ on, attrs }">
             <div class="icon">
               <img
@@ -26,7 +26,7 @@
             </div>
           </template>
           <span>Видалити</span>
-        </v-tooltip>
+        </v-tooltip> -->
         <v-tooltip bottom color="rgba(0, 0, 0, 0.5)">
           <template v-slot:activator="{ on, attrs }">
             <div class="icon">

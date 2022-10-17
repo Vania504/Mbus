@@ -19,7 +19,7 @@ axios.interceptors.response.use(
   }
 );
 
-//const SERVER_API = 'https://api-dev.mbus.if.ua/api'
+//const SERVER_API = 'https://api-prod.mbus.if.ua/api'
 const SERVER_API = 'https://api-dev.mbus.if.ua/api';
 
 export default {

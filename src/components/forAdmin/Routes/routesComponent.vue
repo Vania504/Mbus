@@ -75,8 +75,9 @@ export default {
     },
     async deleteRoute(uuid) {
       let response = await routesService.deleteRoute(uuid);
-      console.log(response);
-      alert("Function deleteRoute work success");
+      if(response.status == 'success'){
+        this.getRoutes();
+      }
     },
   },
   computed: {

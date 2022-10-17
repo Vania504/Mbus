@@ -31,5 +31,11 @@ export default {
 	async getRoutesForMain(){
 		const response = await requestService.get(`/carousel/6`)
 		return response?.data
-	}
+	},
+	async deleteRoute(uuid){
+		const response = await requestService.delete(`/route/${uuid}`,{
+			headers: { Authorization: `Bearer ${store.getters.loggedUser.token}` }
+		})
+		return response?.data
+	},
 }

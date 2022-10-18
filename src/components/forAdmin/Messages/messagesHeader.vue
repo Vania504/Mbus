@@ -1,5 +1,5 @@
 <template>
-  <v-card height="60px" class="rounded-0">
+  <v-card :height="nameError.length ? '75px' : '60px'" class="rounded-0">
     <v-row no-gutters align="center">
       <v-row
         no-gutters
@@ -9,18 +9,20 @@
         :class="showNewStatusField ? 'pt-2' : 'pt-4'"
         v-click-outside="clickOutside"
       >
-        <div v-for="status in statusList" :key="status.id">
+        <div
+          v-for="status in statusList"
+          :key="status.id"
+          :style="showNewStatusField ? 'padding-top: 8px;' : ''"
+        >
           <span
             v-if="status.id == activeStatus && !isEdit"
             class="statusStyleActive"
-            :style="showNewStatusField ? 'padding-top: 10px;' : ''"
             @dblclick="editStatus(status.id)"
             >{{ status.name }}</span
           >
           <span
             v-else-if="!isEdit"
             class="statusStyle"
-            :style="showNewStatusField ? 'padding-top: 10px;' : ''"
             @click="changeStatus(status.id)"
             @dblclick="editStatus(status.id)"
             >{{ status.name }}</span
@@ -34,6 +36,7 @@
             placeholder="Введіть категорію"
             v-model="status.name"
             v-on:keyup.enter="isEdit ? updateStatus() : newStatus()"
+            :error-messages="nameError"
           />
         </v-col>
         <v-icon
@@ -77,7 +80,10 @@
 </template>
 
 <script>
+import { validationMixin } from "vuelidate";
+import { required } from "vuelidate/lib/validators";
 export default {
+  mixins: [validationMixin],
   data: () => ({
     status: {},
     showNewStatusField: false,
@@ -85,6 +91,13 @@ export default {
     isEdit: false,
     page: 1,
   }),
+  validations: {
+    status: {
+      name: {
+        required,
+      },
+    },
+  },
   props: {
     statusList: {
       require: true,
@@ -98,13 +111,16 @@ export default {
   },
   methods: {
     newStatus() {
-      let status = new FormData();
-      status.append("name", this.status.name);
-      status.append("type", "message");
-      status.append("is_default", this.statusList.length > 0 ? "0" : "1");
-      this.$emit("createStatus", status);
-      this.showNewStatusField = false;
-      this.status = {};
+      this.$v.$touch();
+      if (!this.$v.$invalid) {
+        let status = new FormData();
+        status.append("name", this.status.name);
+        status.append("type", "message");
+        status.append("is_default", this.statusList.length > 0 ? "0" : "1");
+        this.$emit("createStatus", status);
+        this.showNewStatusField = false;
+        this.status = {};
+      }
     },
     updateStatus() {
       let status = new FormData();
@@ -128,10 +144,21 @@ export default {
         ...this.statusList.filter((status) => status.id == id)[0],
       };
     },
-    clickOutside(){
+    clickOutside() {
       this.isEdit = false;
       this.showNewStatusField = false;
-    }
+      this.$v.$reset();
+    },
+  },
+  computed: {
+    nameError() {
+      const errors = [];
+      if (!this.$v.status.name.$dirty) {
+        return errors;
+      }
+      !this.$v.status.name.required && errors.push("Поле ім'я обов'язкове");
+      return errors;
+    },
   },
   watch: {
     getMessage: {

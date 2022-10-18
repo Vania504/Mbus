@@ -8,6 +8,7 @@
         @updateStatus="updateStatus"
         @detailMessage="detailMessage"
         @deleteMessage="deleteMessage"
+        :statusList="statusList"
       />
     </v-col>
   </div>

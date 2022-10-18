@@ -1,9 +1,13 @@
 <template>
-  <div class="messageBox pointer" @mousemove="isHover = true" @mouseleave="
-    {
-      menu ? '' : (isHover = false);
-    }
-  ">
+  <div
+    class="messageBox pointer"
+    @mousemove="isHover = true"
+    @mouseleave="
+      {
+        menu ? '' : (isHover = false);
+      }
+    "
+  >
     <v-row align="center" class="mb-5 ml-5">
       <v-checkbox />
       <v-col cols="2" style="text-align: left" @click="detailMessage">
@@ -13,7 +17,9 @@
         <v-row no-gutters align="center">
           <span class="messageTitle">{{ message.type_text }}:&nbsp;</span>
           <span class="messageText pt-1">
-            Ім'я та Прізвище: {{ message.name }}&nbsp;<span v-if="message.email">Email: {{ message.email }}</span>
+            Ім'я та Прізвище: {{ message.name }}&nbsp;<span v-if="message.email"
+              >Email: {{ message.email }}</span
+            >
             Номер телефону: {{ message.phone_number }}
           </span>
         </v-row>
@@ -22,27 +28,29 @@
         <v-row justify="end" no-gutters align="center">
           <span v-if="!isHover">
             {{
-              new Date(message.created_at).getDate() == "1" 
-              || new Date(message.created_at).getDate() == "2" 
-              || new Date(message.created_at).getDate() == "3" 
-              || new Date(message.created_at).getDate() == "4" 
-              || new Date(message.created_at).getDate() == "5" 
-              || new Date(message.created_at).getDate() == "6" 
-              || new Date(message.created_at).getDate() == "7" 
-              || new Date(message.created_at).getDate() == "8" 
-              || new Date(message.created_at).getDate() == "9" ?
-            new Date(message.created_at)
-            .toLocaleDateString("uk-UA", {
-            month: "long",
-            day: "numeric",
-            })
-            .substr(0, 5) : new Date(message.created_at)
-            .toLocaleDateString("uk-UA", {
-            month: "long",
-            day: "numeric",
-            })
-            .substr(0, 6)
-            }}</span>
+              new Date(message.created_at).getDate() == "1" ||
+              new Date(message.created_at).getDate() == "2" ||
+              new Date(message.created_at).getDate() == "3" ||
+              new Date(message.created_at).getDate() == "4" ||
+              new Date(message.created_at).getDate() == "5" ||
+              new Date(message.created_at).getDate() == "6" ||
+              new Date(message.created_at).getDate() == "7" ||
+              new Date(message.created_at).getDate() == "8" ||
+              new Date(message.created_at).getDate() == "9"
+                ? new Date(message.created_at)
+                    .toLocaleDateString("uk-UA", {
+                      month: "long",
+                      day: "numeric",
+                    })
+                    .substr(0, 5)
+                : new Date(message.created_at)
+                    .toLocaleDateString("uk-UA", {
+                      month: "long",
+                      day: "numeric",
+                    })
+                    .substr(0, 6)
+            }}</span
+          >
           <v-row align="start" justify="end" v-else>
             <!-- <v-tooltip bottom color="rgba(0, 0, 0, 0.5)">
               <template v-slot:activator="{ on, attrs }">
@@ -55,9 +63,14 @@
             <v-tooltip bottom color="rgba(0, 0, 0, 0.5)">
               <template v-slot:activator="{ on, attrs }">
                 <div class="icon">
-                  <img v-bind="attrs" v-on="on" @click="
-                    updateStatus(message.id, message.type, 'Архівовані')
-                  " src="@/assets/img/messageIcon/archiveIcon.png" />
+                  <img
+                    v-bind="attrs"
+                    v-on="on"
+                    @click="
+                      updateStatus(message.id, message.type, 'Архівовані')
+                    "
+                    src="@/assets/img/messageIcon/archiveIcon.png"
+                  />
                 </div>
               </template>
               <span>Архівувати</span>
@@ -79,18 +92,25 @@
                 <v-col class="px-0">
                   <p class="menuTitle">Перемістити у...</p>
                   <v-divider />
-                  <v-list shaped width="96px">
+                  <v-list shaped width="120px">
                     <v-list-item-group v-model="model">
-                      <v-list-item dense class="py-0" active-class="contentActive" @click="
-                        updateStatus(message.id, message.type, 'Відповіли')
-                      ">
-                        <span class="content">Відповіли</span>
+                      <v-list-item
+                        v-for="status in statusList"
+                        :key="status.id"
+                        dense
+                        class="py-0"
+                        active-class="contentActive"
+                        @click="
+                          updateStatus(message.id, message.type, status.name)
+                        "
+                      >
+                        <span class="content">{{status.name}}</span>
                       </v-list-item>
-                      <v-list-item dense class="py-0" active-class="contentActive" @click="
+                      <!-- <v-list-item dense class="py-0" active-class="contentActive" @click="
                         updateStatus(message.id, message.type, 'Архівовані')
                       ">
                         <span class="content">Архівовані</span>
-                      </v-list-item>
+                      </v-list-item> -->
                     </v-list-item-group>
                   </v-list>
                 </v-col>
@@ -114,6 +134,9 @@ export default {
     message: {
       require: true,
     },
+    statusList: {
+      require: true,
+    },
   },
   methods: {
     updateStatus(id, messageType, statusName) {
@@ -121,11 +144,11 @@ export default {
       this.isHover = false;
     },
     detailMessage() {
-      this.$emit('detailMessage', this.message.type, this.message.id)
+      this.$emit("detailMessage", this.message.type, this.message.id);
     },
-    deleteMessage(id){
-      this.$emit('deleteMessage', id)
-    }
+    deleteMessage(id) {
+      this.$emit("deleteMessage", id);
+    },
   },
 };
 </script>

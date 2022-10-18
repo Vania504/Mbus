@@ -13,7 +13,7 @@
                   : 'margin-right: 80%; margin-bottom: 350px'
               "
             ></div>
-            <v-col cols="10" xl="5" lg="5" md="5" sm="5">
+            <v-col cols="10" xl="5" lg="5" md="5" sm="5" class="mr-10">
               <p style="color: #243949; font-size: 24px" v-if="content.length">
                 {{ content[0].title }}
               </p>
@@ -45,6 +45,7 @@
                 "
                 :width="$vuetify.breakpoint.xs ? '280px' : '600px'"
                 :height="$vuetify.breakpoint.xs ? '140px' : '400px'"
+                style="object-fit: cover;"
               />
             </div>
             <div

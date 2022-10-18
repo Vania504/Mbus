@@ -49,7 +49,7 @@
                 :width="$vuetify.breakpoint.xs ? '280px' : '454px'"
                 class="ml-10"
                 :src="content[0].images[0].images ? content[0].images[0].images.path : ''"
-                style="opacity: 1"      
+                style="opacity: 1; object-fit:cover;"      
               />
             </div>
           </v-row>

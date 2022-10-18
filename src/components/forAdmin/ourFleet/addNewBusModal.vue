@@ -328,22 +328,24 @@ export default {
       }
     },
     setBus() {
-      if (this.detailInfoBus.options) {
-        this.service.forEach((service) => {
-          this.detailInfoBus.options[service.key] == 0
-            ? (service.enters = false)
-            : (service.enters = true);
-        });
-      }
-      this.$set(this.bus, "id", this.detailInfoBus.id);
-      this.$set(this.bus, "model_name", this.detailInfoBus.model);
-      this.$set(this.bus, "description", this.detailInfoBus.description);
-      this.$set(this.bus, "quantity_seats", this.detailInfoBus.seats);
-      this.$set(this.bus, "status", this.detailInfoBus.status);
-      if (this.detailInfoBus.images) {
-        this.detailInfoBus.images.forEach((image) => {
-          this.busImages.push(image.images);
-        });
+      if (this.isEdit) {
+        if (this.detailInfoBus.options) {
+          this.service.forEach((service) => {
+            this.detailInfoBus.options[service.key] == 0
+              ? (service.enters = false)
+              : (service.enters = true);
+          });
+        }
+        this.$set(this.bus, "id", this.detailInfoBus.id);
+        this.$set(this.bus, "model_name", this.detailInfoBus.model);
+        this.$set(this.bus, "description", this.detailInfoBus.description);
+        this.$set(this.bus, "quantity_seats", this.detailInfoBus.seats);
+        this.$set(this.bus, "status", this.detailInfoBus.status);
+        if (this.detailInfoBus.images) {
+          this.detailInfoBus.images.forEach((image) => {
+            this.busImages.push(image.images);
+          });
+        }
       }
     },
     setImages(image) {
@@ -366,20 +368,20 @@ export default {
       );
       close ? this.$emit("close") : "";
     },
-    deleteImg(id){
+    deleteImg(id) {
       this.busImages = this.busImages.filter((image) => image.id !== id);
-    }
+    },
   },
   watch: {
-    'bus.quantity_seats': {
+    "bus.quantity_seats": {
       deep: true,
-      handler(){
-        console.log("quantity seats",this.bus.quantity_seats)
-        if(this.bus.quantity_seats < 1 && this.bus.quantity_seats !== ''){
+      handler() {
+        console.log("quantity seats", this.bus.quantity_seats);
+        if (this.bus.quantity_seats < 1 && this.bus.quantity_seats !== "") {
           this.bus.quantity_seats = 1;
         }
-      }
-    }
+      },
+    },
   },
   computed: {
     visibility: {

@@ -43,34 +43,36 @@
         style="overflow: hidden; transition: all 0.3s ease-out; width: 100%"
         :style="'max-width: ' + forAdmin ? '350px' : '405px'"
       >
-        <img
-          v-if="bus.images"
-          :width="forAdmin ? '350px' : '405px'"
-          height="300px"
-          :class="isHover ? 'busImg' : ''"
-          style="
-            width: 100%;
-            height: 100%;
-            max-height: 300px;
-            transition: 1s;
-            object-fit: cover;
-          "
-          :src="bus.images[0].images.path"
-        />
-        <img
-          v-else
-          :width="forAdmin ? '350px' : '405px'"
-          height="300px"
-          :class="isHover ? 'busImg' : ''"
-          style="
-            width: 100%;
-            height: 100%;
-            max-height: 300px;
-            transition: 1s;
-            object-fit: cover;
-          "
-          :src="''"
-        />
+        <div v-if="bus.images">
+          <img
+            v-if="bus.images[0].images"
+            :width="forAdmin ? '350px' : '405px'"
+            height="300px"
+            :class="isHover ? 'busImg' : ''"
+            style="
+              width: 100%;
+              height: 100%;
+              max-height: 300px;
+              transition: 1s;
+              object-fit: cover;
+            "
+            :src="bus.images[0].images.path"
+          />
+          <img
+            v-else
+            :width="forAdmin ? '350px' : '405px'"
+            height="300px"
+            :class="isHover ? 'busImg' : ''"
+            style="
+              width: 100%;
+              height: 100%;
+              max-height: 300px;
+              transition: 1s;
+              object-fit: cover;
+            "
+            src="@/assets/img/defaulBusImg.jpg"
+          />
+        </div>
       </div>
     </div>
     <v-divider
@@ -110,10 +112,10 @@ export default {
     },
   },
   methods: {
-    archivedBus(){
-      this.$emit('archived')
-    }
-  }
+    archivedBus() {
+      this.$emit("archived");
+    },
+  },
 };
 </script>
 

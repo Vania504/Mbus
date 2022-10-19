@@ -156,7 +156,7 @@ export default {
       if (!this.$v.irregular.name.$dirty) {
         return errors;
       }
-      !this.$v.irregular.name.required && errors.push("Поле ім'я обов'язкове");
+      !this.$v.irregular.name.required && errors.push("Поле назва обов'язкове");
       return errors;
     },
     descriptionError() {

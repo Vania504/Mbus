@@ -38,8 +38,8 @@
         lg="5"
         md="5"
         sm="12"
-        xl="5"
-        :class="$vuetify.breakpoint.xs || $vuetify.breakpoint.sm ? '' : 'ml-13'"
+        xl="6"
+        :class="$vuetify.breakpoint.xs || $vuetify.breakpoint.sm ? '' : 'pl-13'"
         ><span class="blackSpan"
           >Номер телефону<span class="requireColor">*</span></span
         >

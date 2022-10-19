@@ -22,7 +22,7 @@
         @blur="$v.userMessage.name.$touch()"
     /></v-col>
     <v-row no-gutters align="start">
-      <v-col cols="12" lg="6" md="5" sm="12" xl="6"
+      <v-col cols="12" lg="6" md="6" sm="12" xl="6"
         ><span class="blackSpan">Email<span class="requireColor">*</span></span>
         <v-text-field
           dense
@@ -35,8 +35,8 @@
       /></v-col>
       <v-col
         cols="12"
-        lg="5"
-        md="5"
+        lg="6"
+        md="6"
         sm="12"
         xl="6"
         :class="$vuetify.breakpoint.xs || $vuetify.breakpoint.sm ? '' : 'pl-13'"

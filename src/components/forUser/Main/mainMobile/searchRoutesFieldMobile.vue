@@ -20,14 +20,13 @@
       </v-btn>
     </v-col>
     <div style="
-        background-color: white;
         width: 40px;
         height: 35px;
         margin-top: 0px !important;
         margin-top: 35px;
         cursor: pointer;
       " @click="reverseItem" v-if="!loader">
-      <img src="@/assets/img/reverseIcon.png" style="transform: rotate(90deg)" class="mt-2" />
+      <img src="@/assets/img/reverseIcon.svg" class="mt-2" />
     </div>
   </v-row>
 </template>

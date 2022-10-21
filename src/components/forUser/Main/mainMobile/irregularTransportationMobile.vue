@@ -74,7 +74,7 @@
             </v-col>
             <div
               class="irregularTransportationBorderBottomRightMobile"
-              style="margin-left: 90%; margin-top: 100px"
+              style="margin-left: 90%; margin-top: 120px"
             ></div>
           </v-row>
         </v-container>

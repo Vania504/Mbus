@@ -37,9 +37,9 @@
             <v-icon v-if="item.social_network == 'Facebook'" color="white">mdi-facebook</v-icon>
             <v-icon v-if="item.social_network == 'Whatsapp'" color="white">mdi-whatsapp</v-icon>
             <v-icon v-if="item.social_network == 'Twitter'" color="white">mdi-twitter</v-icon>
-            <img width="24px" height="20px" v-if="item.social_network == 'Viber'" src="@/assets/img/viberIcon.png"
+            <img width="24px" height="20px" v-if="item.social_network == 'Viber'" src="@/assets/img/viberIcon.svg"
               alt="viber" class="mb-1 mt-1" />
-            <img width="24px" height="18px" v-if="item.social_network == 'Telegram'" src="@/assets/img/telegramIcon.png"
+            <img width="24px" height="18px" v-if="item.social_network == 'Telegram'" src="@/assets/img/telegramIcon.svg"
               alt="telegram" class="mt-1" />
           </a>
         </v-row>
@@ -56,10 +56,10 @@
               <v-icon v-if="item.social_network == 'Facebook'" color="white">mdi-facebook</v-icon>
               <v-icon v-if="item.social_network == 'Whatsapp'" color="white">mdi-whatsapp</v-icon>
               <v-icon v-if="item.social_network == 'Twitter'" color="white">mdi-twitter</v-icon>
-              <img width="24px" height="20px" v-if="item.social_network == 'Viber'" src="@/assets/img/viberIcon.png"
+              <img width="24px" height="20px" v-if="item.social_network == 'Viber'" src="@/assets/img/viberIcon.svg"
                 alt="viber" class="mb-1 mt-1" />
               <img width="24px" height="18px" v-if="item.social_network == 'Telegram'"
-                src="@/assets/img/telegramIcon.png" alt="telegram" class="mt-1" />
+                src="@/assets/img/telegramIcon.svg" alt="telegram" class="mt-1" />
             </a>
           </v-row>
         </v-col>

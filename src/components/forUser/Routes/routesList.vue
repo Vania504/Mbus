@@ -29,7 +29,7 @@
       <card-add-new
         title="Новий маршрут"
         width="330px"
-        height="358px"
+        height="328px"
         class="mt-5 mx-5"
         @addNew="$emit('addNew')"
         v-if="forAdmin"

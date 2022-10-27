@@ -17,7 +17,7 @@
         </v-col>
       </v-row>
     </div>
-    <div style="border-bottom: 1px solid #a7b8c6" v-for="item in shedule" :key="item.id">
+    <div style="border-bottom: 1px solid #a7b8c6" v-for="item in shedule" :key="item.time">
       <!-- Output shedule item for Ukraine -->
       <v-row no-gutters justify="center" class="pt-3 pb-3 pointer"
         v-if="isUkraine && item.is_reverse == '0' && !isEditItem" v-on:keyup.enter="isEditItem = false"
@@ -126,10 +126,12 @@ export default {
   },
   methods: {
     addNewItemInShedule() {
+      let id = 0;
+      id++;
       this.$v.$touch();
       if (!this.$v.$invalid) {
         this.shedule.push({
-          id: new Date(),
+          id: id,
           time: this.sheduleItem.time,
           city: this.sheduleItem.city,
           is_reverse: this.isUkraine ? "0" : "1",

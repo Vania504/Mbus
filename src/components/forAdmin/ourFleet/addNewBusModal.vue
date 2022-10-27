@@ -1,5 +1,6 @@
 <template>
   <v-dialog v-model="visibility" width="725px" persistent>
+    <error-snackbar :snackbarText="errorSnackbarText" v-if="errorSnackbar" />
     <v-card style="overflow-x: hidden">
       <modal-header
         :title="isEdit ? 'Редагувати автобус' : 'Новий автобус'"
@@ -164,6 +165,7 @@ import { required, maxLength, minLength } from "vuelidate/lib/validators";
 import RecentlyAddImageModal from "@/components/UI/recentlyAddImageModal.vue";
 import requestFormData from "@/requests/requestFormData";
 import smallItemImage from "@/components/UI/smallItemImage";
+import errorSnackbar from "@/components/UI/errorSnackbar.vue";
 export default {
   mixins: [validationMixin],
   components: {
@@ -171,6 +173,7 @@ export default {
     recentlyAddImageModal,
     RecentlyAddImageModal,
     smallItemImage,
+    errorSnackbar,
   },
   data: () => ({
     bus: {
@@ -246,6 +249,8 @@ export default {
         value: "Archive",
       },
     ],
+    errorSnackbarText: "",
+    errorSnackbar: false,
   }),
   validations: {
     bus: {
@@ -278,8 +283,9 @@ export default {
   },
   methods: {
     addNewBus() {
+      this.errorSnackbar = false;
       this.$v.$touch();
-      if (!this.$v.$invalid) {
+      if (!this.$v.$invalid && this.busImages.length > 0) {
         let images = [];
         let options = [];
         this.busImages.forEach((image) => {
@@ -300,6 +306,10 @@ export default {
         };
         let form = requestFormData.jsonToFormData(data);
         this.$emit("createBus", form);
+      } else {
+        console.log(this.errorSnackbar);
+        this.errorSnackbarText = "Потрібно додати хоча б одну фотографію";
+        setTimeout(() => (this.errorSnackbar = true), 100);
       }
     },
     editBus() {

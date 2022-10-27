@@ -26,7 +26,7 @@
       <card-add-new
         title="Додати автобус"
         width="350px"
-        height="394px"
+        height="403px"
         v-if="forAdmin"
         @addNew="$emit('addNew')"
       />

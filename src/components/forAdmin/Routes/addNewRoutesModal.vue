@@ -1,5 +1,6 @@
 <template>
   <v-dialog v-model="visibility" width="725px" persistent>
+    <error-snackbar :snackbarText="errorSnackbarText" v-if="errorSnackbar" />
     <modal-header
       :title="isEdit ? 'Редагувати маршрут' : 'Новий маршрут'"
       @close="closeModal"
@@ -373,6 +374,7 @@ import googleMapsService from "@/requests/googleMaps/googleMapsService";
 import requestFormData from "@/requests/requestFormData";
 import recentlyAddImageModal from "@/components/UI/recentlyAddImageModal";
 import smallItemImage from "@/components/UI/smallItemImage";
+import ErrorSnackbar from "@/components/UI/errorSnackbar.vue";
 export default {
   mixins: [validationMixin],
   components: {
@@ -380,6 +382,7 @@ export default {
     routeShedule,
     recentlyAddImageModal,
     smallItemImage,
+    ErrorSnackbar,
   },
   data: () => ({
     route: {
@@ -438,6 +441,8 @@ export default {
     shedule: [],
     routesSheduleKey: 0,
     showRecentlyImage: false,
+    errorSnackbar: false,
+    errorSnackbarText: "",
     routeImages: [],
     routeStatus: [
       {
@@ -496,8 +501,9 @@ export default {
   },
   methods: {
     createRoute() {
+      this.errorSnackbar = false;
       this.$v.$touch();
-      if (!this.$v.$invalid) {
+      if (!this.$v.$invalid && this.routeImages.length > 0 && this.shedule.length > 0) {
         let images = [];
         this.routeImages.forEach((image) => {
           images.push(image.id);
@@ -526,6 +532,12 @@ export default {
         };
         let route = requestFormData.jsonToFormData(data);
         this.$emit("createRoute", route);
+      } else if(this.routeImages.length <= 0){
+        this.errorSnackbarText = "Потрібно додати хоча б одну фотографію";
+        setTimeout(() => this.errorSnackbar = true, 100);
+      }else if(this.shedule.length <= 0){
+        this.errorSnackbarText = "Потрібно додати розклад руху ";
+        setTimeout(() => this.errorSnackbar = true, 100);
       }
     },
     editRoute() {
@@ -750,7 +762,9 @@ export default {
       deep: true,
       handler() {
         let bus = this.busList.data.filter((bus) => bus.id === this.route.bus);
-        this.route.quantity_seats = bus[0].seats;
+        if (bus.length > 0) {
+          this.route.quantity_seats = bus[0].seats;
+        }
       },
     },
   },

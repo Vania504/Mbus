@@ -45,7 +45,7 @@
       >
         <div v-if="bus.images">
           <img
-            v-if="bus.images[0].images"
+            v-if="bus.images.length > 0 && bus.images[0].images"
             :width="forAdmin ? '350px' : '405px'"
             height="300px"
             :class="isHover ? 'busImg' : ''"
@@ -55,7 +55,7 @@
               max-height: 300px;
               transition: 1s;
               object-fit: cover;
-            "
+            " 
             :src="bus.images[0].images.path"
           />
           <img

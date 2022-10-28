@@ -1,49 +1,51 @@
 <template>
-  <v-col class="mt-10 mb-10">
-    <v-row no-gutters :justify="forAdmin ? 'start' : 'center'">
-      <div v-if="$vuetify.breakpoint.xs && $vuetify.breakpoint.sm"></div>
-      <bus-card-mobile
-        v-else-if="$vuetify.breakpoint.xs"
-        v-for="(bus,index) in busList"
-        :key="index"
-        :bus="bus"
-        @detailInfo="getBus"
-        @edit="editBus"
-        @delete="$emit('delete', i)"
-        :forAdmin="forAdmin"
+  <v-row no-gutters class="mt-10 mb-10" justify="center">
+    <v-col>
+      <v-row no-gutters :justify="forAdmin ? 'center' : 'center'">
+        <div v-if="$vuetify.breakpoint.xs && $vuetify.breakpoint.sm"></div>
+        <bus-card-mobile
+          v-else-if="$vuetify.breakpoint.xs"
+          v-for="(bus, index) in busList"
+          :key="index"
+          :bus="bus"
+          @detailInfo="getBus"
+          @edit="editBus"
+          @delete="$emit('delete', i)"
+          :forAdmin="forAdmin"
+        />
+        <bus-card
+          v-else
+          v-for="bus in busList"
+          :key="bus.id"
+          :bus="bus"
+          @detailInfo="getBus"
+          @edit="editBus"
+          @delete="$emit('delete', i)"
+          @archived="archivedBus(bus)"
+          :forAdmin="forAdmin"
+        />
+        <card-add-new
+          title="Додати автобус"
+          width="350px"
+          height="403px"
+          v-if="forAdmin"
+          @addNew="$emit('addNew')"
+        />
+      </v-row>
+      <bus-detail-dialog-mobile
+        v-if="$vuetify.breakpoint.xs && visible"
+        :visible="visible"
+        @close="visible = false"
+        :bus="busDetailInfo"
       />
-      <bus-card
-        v-else
-        v-for="bus in busList"
-        :key="bus.id"
-        :bus="bus"
-        @detailInfo="getBus"
-        @edit="editBus"
-        @delete="$emit('delete', i)"
-        @archived="archivedBus(bus)"
-        :forAdmin="forAdmin"
+      <bus-detail-dialog
+        v-else-if="visible"
+        :visible="visible"
+        @close="visible = false"
+        :bus="busDetailInfo"
       />
-      <card-add-new
-        title="Додати автобус"
-        width="350px"
-        height="403px"
-        v-if="forAdmin"
-        @addNew="$emit('addNew')"
-      />
-    </v-row>
-    <bus-detail-dialog-mobile
-      v-if="$vuetify.breakpoint.xs && visible"
-      :visible="visible"
-      @close="visible = false"
-      :bus="busDetailInfo"
-    />
-    <bus-detail-dialog
-      v-else-if="visible"
-      :visible="visible"
-      @close="visible = false"
-      :bus="busDetailInfo"
-    />
-  </v-col>
+    </v-col>
+  </v-row>
 </template>
 
 <script>
@@ -81,12 +83,12 @@ export default {
         this.visible = true;
       }
     },
-    editBus(id){
-      this.$emit('edit', id)
+    editBus(id) {
+      this.$emit("edit", id);
     },
-    archivedBus(bus){
-      this.$emit('archived', bus);
-    }
+    archivedBus(bus) {
+      this.$emit("archived", bus);
+    },
   },
 };
 </script>

@@ -17,7 +17,7 @@
             <v-text-field
               dense
               outlined
-              v-model="user.email"
+              v-model.trim="user.email"
               color="7B8892"
               placeholder="Email"
               :error-messages="emailError"
@@ -26,13 +26,15 @@
             <v-text-field
               dense
               outlined
-              v-model="user.password"
+              v-model.trim="user.password"
               color="7B8892"
               placeholder="Пароль"
-              type="password"
+              :type="showPassword ? 'text' : 'password'"
               :error-messages="passwordError"
               @blur="$v.user.password.$touch()"
               :hide-details="!passwordError.length"
+              :append-icon="showPassword ? 'mdi-eye-outline' : 'mdi-eye-off-outline'"
+              @click:append="showPassword = !showPassword"
             />
             <v-row no-gutters align="center" class="py-0">
               <v-row no-gutters align="center" justify="start" class="py-0">
@@ -94,6 +96,7 @@ export default {
     rememberMe: false,
     snackbarText: "",
     showErrorSnackbar: false,
+    showPassword: false,
   }),
   validations: {
     user: {
@@ -120,7 +123,6 @@ export default {
         let user = new FormData();
         user.append("email", this.user.email);
         user.append("password", this.user.password);
-        console.log("work");
         let response = await authService.signIn(user).catch(() => {
           this.snackbarText = "Email або пароль введено неправильно";
           this.showErrorSnackbar = true;
@@ -129,7 +131,6 @@ export default {
         if (this.rememberMe) {
           timeout = 12 * 3600;
         }
-        console.log(response)
         if (response.status == "success") {
           this.updateInfoLogged({
             email: this.user.email,

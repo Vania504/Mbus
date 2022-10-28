@@ -31,7 +31,7 @@
         >
           <img
             v-if="irregular.image.length > 0"
-            style="width: 428px; height: 288px"
+            style="width: 428px; height: 288px; object-fit: cover"
             :src="irregular.image[0].path"
           />
           <div class="newImage" v-if="isHover">
@@ -135,16 +135,15 @@ export default {
     },
     setIrregularContent() {
       this.irregular = { image: [] };
-      console.log("content", this.content);
-      if(this.content.length > 0){
-      this.$set(this.irregular, "id", this.content[0].id);
-      this.$set(this.irregular, "name", this.content[0].title);
-      this.$set(this.irregular, "description", this.content[0].content);
-      if (this.content[0].images.length > 0) {
-        if (this.content[0].images[0].images) {
-          this.irregular.image.push(this.content[0].images[0].images);
+      if (this.content.length > 0) {
+        this.$set(this.irregular, "id", this.content[0].id);
+        this.$set(this.irregular, "name", this.content[0].title);
+        this.$set(this.irregular, "description", this.content[0].content);
+        if (this.content[0].images.length > 0) {
+          if (this.content[0].images[0].images) {
+            this.irregular.image.push(this.content[0].images[0].images);
+          }
         }
-      }
       }
       this.updateLoader(false);
     },

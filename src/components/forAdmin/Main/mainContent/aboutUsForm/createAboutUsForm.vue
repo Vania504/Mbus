@@ -23,7 +23,7 @@
         >
           <img
             v-if="about_us.image.length"
-            style="width: 428px; height: 288px"
+            style="width: 428px; height: 288px; object-fit: cover;"
             :src="about_us.image[0].path"
           />
           <div class="newImage" v-if="isHover">

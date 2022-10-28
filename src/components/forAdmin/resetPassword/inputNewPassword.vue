@@ -19,7 +19,7 @@
                   class="mt-5"
                   dense
                   outlined
-                  v-model="password.password"
+                  v-model.trim="password.password"
                   label="Новий пароль"
                   v-bind="attrs"
                   type="password"
@@ -35,7 +35,7 @@
             <v-text-field
               dense
               outlined
-              v-model="password.confirm_password"
+              v-model.trim="password.confirm_password"
               label="Підтвердіть пароль"
               type="password"
               :error-messages="confirmPasswordError"
@@ -94,6 +94,7 @@ export default {
       this.$v.$touch();
       if (!this.$v.password.$invalid) {
         let form = new FormData();
+        console.log("Mbuskolomyia")
         form.append("token", this.$route.params.code);
         form.append("email", localStorage.getItem("userEmail"));
         form.append("password", this.password.password);

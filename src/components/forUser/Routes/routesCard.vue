@@ -51,6 +51,7 @@
         v-if="route.images.length"
         :width="$vuetify.breakpoint.xs ? '180px' : '320px'"
         :height="$vuetify.breakpoint.xs ? '120px' : '200px'"
+        style="object-fit: cover;"
         :src="route.images[0].images.path"
       />
       <img

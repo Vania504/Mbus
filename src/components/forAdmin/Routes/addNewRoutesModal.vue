@@ -72,7 +72,7 @@
                 </v-col>
                 <v-col cols="7" class="ml-5 py-0">
                   <v-text-field
-                    v-mask="'+38 (###) ###-##-##'"
+                    v-mask="'+## (###) ###-##-##'"
                     class="rounded-lg"
                     outlined
                     dense

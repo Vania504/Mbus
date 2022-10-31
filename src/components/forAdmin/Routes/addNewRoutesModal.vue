@@ -503,7 +503,11 @@ export default {
     createRoute() {
       this.errorSnackbar = false;
       this.$v.$touch();
-      if (!this.$v.$invalid && this.routeImages.length > 0 && this.shedule.length > 0) {
+      if (
+        !this.$v.$invalid &&
+        this.routeImages.length > 0 &&
+        this.shedule.length > 0
+      ) {
         let images = [];
         this.routeImages.forEach((image) => {
           images.push(image.id);
@@ -532,12 +536,12 @@ export default {
         };
         let route = requestFormData.jsonToFormData(data);
         this.$emit("createRoute", route);
-      } else if(this.routeImages.length <= 0){
+      } else if (this.routeImages.length <= 0) {
         this.errorSnackbarText = "Потрібно додати хоча б одну фотографію";
-        setTimeout(() => this.errorSnackbar = true, 100);
-      }else if(this.shedule.length <= 0){
+        setTimeout(() => (this.errorSnackbar = true), 100);
+      } else if (this.shedule.length <= 0) {
         this.errorSnackbarText = "Потрібно додати розклад руху ";
-        setTimeout(() => this.errorSnackbar = true, 100);
+        setTimeout(() => (this.errorSnackbar = true), 100);
       }
     },
     editRoute() {
@@ -623,7 +627,7 @@ export default {
       this.$set(this.route, "route_name_end", this.routeDetailInfo.destination);
       this.$set(this.route, "bus", this.routeDetailInfo.bus_id);
       this.$set(this.route, "quantity_seats", this.routeDetailInfo.bus.seats);
-      this.$set(this.route, "status", this.routeDetailInfo.bus.status);
+      this.$set(this.route, "status", this.routeDetailInfo.status);
       this.$set(
         this.route,
         "departure_time",
@@ -664,7 +668,11 @@ export default {
         ? this.route.daysOfDeparture.push(6)
         : "";
       this.routesSheduleKey++;
-      console.log(this.route);
+      this.routeDetailInfo.images.forEach((image) => {
+        if (image.images !== null) {
+          this.setImages(image.images);
+        }
+      });
     },
     isNumber(evt) {
       evt = evt ? evt : window.event;

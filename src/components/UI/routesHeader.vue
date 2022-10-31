@@ -24,6 +24,7 @@
             backgroundSize: 'cover',
             backgroundRepeat: 'norepeat',
             height: '330px',
+            backgroundPosition: 'center',
           }
     "
   >
@@ -39,7 +40,7 @@ export default {
     },
     image: {
       require: true,
-    }
+    },
   },
 };
 </script>

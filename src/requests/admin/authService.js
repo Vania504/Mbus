@@ -14,13 +14,13 @@ export default {
 		var form = new FormData();
 		form.append("token", store.getters.loggedUser.token);
 		let res = requestService.post(`/refresh`, form).then((response) => {
-			let result = response?.data.result;
+			let result = response?.data.authorisation;
 			store.dispatch('updateInfoLogged', {
 				token: result.token
 			})
 			return response
 		})
-		return res
+		return res.data
 	},
 	async resetPassword(form){
 		const response = await requestService.post(`/resetRequest`, form)

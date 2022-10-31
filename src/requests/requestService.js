@@ -1,19 +1,21 @@
 import axios from 'axios';
-import store from '@/store';
 import authService from '@/requests/admin/authService';
 
 axios.interceptors.response.use(
   response => {
     return Promise.resolve(response);
   },
-  error => {
-    const { status } = error.response;
+  async error => {
+    console.log(typeof error, error);
+    if(typeof error == 'object'){
+      const { status } = error.response;
     if (status === 401) {
-      let res = authService.refreshToken()
+      let res = await authService.refreshToken()
       if (res) {
-        error.config.headers['Authorization'] = 'Bearer ' + store.getters.loggedUser.token;
+        error.config.headers['Authorization'] = 'Bearer ' + res.authorisation.token;
         return axios.request(error.config);
       }
+    }
     }
     return Promise.reject(error);
   }

@@ -4,7 +4,7 @@
       :forAdmin="true"
       @addNew="showModal = true"
       @edit="getBus"
-      @archived="archivedBus"
+      @changeStatusBus="changeStatusBus"
       :busList="busList"
     />
     <add-new-bus-modal
@@ -71,16 +71,14 @@ export default {
         this.updateLoader(false);
       }
     },
-    async archivedBus(bus) {
-      console.log(bus);
+    async changeStatusBus(bus, status) {
+      console.log("work", bus, status)
       let images = [];
       bus.images.forEach((image) => {
-        console.log(image.id)
-        images.push(image.id);
+        images.push(image.image_id);
       });
-      console.log("images", images)
       let data = {
-        status: "Archive",
+        status: status,
         model: bus.model,
         description: bus.description,
         seats: bus.seats,

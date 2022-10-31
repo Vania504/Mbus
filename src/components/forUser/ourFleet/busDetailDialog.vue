@@ -1,7 +1,11 @@
 <template>
   <v-dialog v-model="visibility" height="630px">
     <v-card>
-      <modal-header :title="bus.model" @close="$emit('close')" :showCloseIcon="true"/>
+      <modal-header
+        :title="bus.model"
+        @close="$emit('close')"
+        :showCloseIcon="true"
+      />
       <v-row no-gutters class="mt-5">
         <v-col cols="7" class="py-0">
           <swiper
@@ -12,7 +16,17 @@
             :options="swiperOption"
           >
             <swiper-slide v-for="image in bus.images" :key="image.id">
-              <img width="580px" height="400px;" :src="image.images.path" style="object-fit: cover;"/>
+              <img
+                width="580px"
+                height="400px;"
+                :src="image.images.path"
+                style="
+                  object-fit: cover;
+                  max-width: 100%;
+                  max-height: 100%;
+                  vertical-align: middle;
+                "
+              />
             </swiper-slide>
             <div
               class="swiper-button-prev ml-5"

@@ -21,7 +21,7 @@
           @detailInfo="getBus"
           @edit="editBus"
           @delete="$emit('delete', i)"
-          @archived="archivedBus(bus)"
+          @changeStatusBus="changeStatusBus"
           :forAdmin="forAdmin"
         />
         <card-add-new
@@ -86,8 +86,8 @@ export default {
     editBus(id) {
       this.$emit("edit", id);
     },
-    archivedBus(bus) {
-      this.$emit("archived", bus);
+    changeStatusBus(bus, status) {
+      this.$emit("changeStatusBus", bus, status);
     },
   },
 };

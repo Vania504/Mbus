@@ -109,12 +109,14 @@
         <v-col class="px-0">
           <p class="itemTitle">Фотографії автобуса:</p>
           <v-row no-gutters>
-            <small-item-image
-              v-for="img in busImages"
-              :key="img.id"
-              :img="img"
-              @delete="deleteImg"
-            />
+            <v-row no-gutters align="center" v-if="busImages.length > 0">
+              <small-item-image
+                v-for="img in busImages"
+                :key="img.id"
+                :img="img"
+                @delete="deleteImg"
+              />
+            </v-row>
             <img
               src="@/assets/img/addImageIcon.svg"
               class="pointer"
@@ -351,11 +353,14 @@ export default {
         this.$set(this.bus, "description", this.detailInfoBus.description);
         this.$set(this.bus, "quantity_seats", this.detailInfoBus.seats);
         this.$set(this.bus, "status", this.detailInfoBus.status);
-        if (this.detailInfoBus.images) {
+        if (this.detailInfoBus.images.length > 0) {
           this.detailInfoBus.images.forEach((image) => {
-            this.busImages.push(image.images);
+            if (image.images !== null) {
+              this.setImages(image.images);
+            }
           });
         }
+        console.log(this.bus);
       }
     },
     setImages(image) {

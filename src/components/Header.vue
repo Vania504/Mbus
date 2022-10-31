@@ -96,14 +96,19 @@
                         v-for="number in phoneNumbers"
                         :key="number.id"
                         class="mb-1"
+                        align="center"
                       >
                         <img
                           v-if="number.type == 'UA'"
+                          width="15px"
+                          height="15px"
                           src="@/assets/img/UA.png"
                           class="mr-2"
                         />
                         <img
                           v-if="number.type == 'PL'"
+                          width="15px"
+                          height="15px"
                           src="@/assets/img/PL.png"
                           class="mr-2"
                         />

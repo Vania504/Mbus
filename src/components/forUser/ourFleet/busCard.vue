@@ -1,11 +1,10 @@
 <template>
   <div>
-    <v-card class="mx-1 mb-10" :width="forAdmin ? '350px' : '405px'">
-      <div
-        @mousemove="isHover = true"
-        v-if="forAdmin && bus.status == 'Archive'"
-        class="archiveBus"
-      ></div>
+    <v-card
+      class="mx-1 mb-10"
+      :width="forAdmin ? '350px' : '405px'"
+      :style="forAdmin && bus.status == 'Archive' ? 'opacity: 0.4' : ''"
+    >
       <div
         class="hover"
         :style="{
@@ -74,7 +73,7 @@
                 max-height: 280px;
                 min-height: 280px;
                 transition: 1s;
-                object-fit: cover;   
+                object-fit: cover;
               "
               :src="bus.images[0].images.path"
             />
@@ -87,8 +86,8 @@
                 width: 100%;
                 height: 100%;
                 min-height: 280px;
-                max-height: 280px; 
-                transition: 1s; 
+                max-height: 280px;
+                transition: 1s;
                 object-fit: cover;
               "
               src="@/assets/img/defaulBusImg.jpg"
@@ -158,14 +157,5 @@ export default {
 }
 .v-btn--outlined {
   border: thin solid white;
-}
-.archiveBus {
-  background-color: rgb(200, 200, 200, 0.3);
-  position: absolute;
-  z-index: 10;
-  width: 351px;
-  height: 405px;
-  border-bottom-left-radius: 3px;
-  border-bottom-right-radius: 3px;
 }
 </style>

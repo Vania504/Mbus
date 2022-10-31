@@ -9,7 +9,13 @@
     "
     :width="$vuetify.breakpoint.xs ? '180px' : '320px'"
     :height="$vuetify.breakpoint.xs ? '120px' : ''"
-    :style="$vuetify.breakpoint.xs ? 'text-align: left;' : ''"
+    :style="
+      $vuetify.breakpoint.xs
+        ? 'text-align: left;'
+        : route.status == 'Archive'
+        ? 'opacity: 0.4;'
+        : ''
+    "
   >
     <div
       @click="$router.push('/routes/' + route.id)"
@@ -33,7 +39,7 @@
             font-size: 12px;
             color: white;
             margin-top: 70px;
-            margin-right: 20px;
+            margin-right: 20px; 
           "
         >
           {{ route.departure }} - {{ route.destination }}
@@ -51,7 +57,7 @@
         v-if="route.images.length"
         :width="$vuetify.breakpoint.xs ? '180px' : '320px'"
         :height="$vuetify.breakpoint.xs ? '120px' : '200px'"
-        style="object-fit: cover;"
+        style="object-fit: cover"
         :src="route.images[0].images.path"
       />
       <img

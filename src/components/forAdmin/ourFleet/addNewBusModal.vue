@@ -108,15 +108,21 @@
         </v-col>
         <v-col class="px-0">
           <p class="itemTitle">Фотографії автобуса:</p>
-          <v-row no-gutters>
-            <v-row no-gutters align="center" v-if="busImages.length > 0">
-              <small-item-image
-                v-for="img in busImages"
-                :key="img.id"
-                :img="img"
-                @delete="deleteImg"
-              />
-            </v-row>
+          <v-row no-gutters justify="start" v-if="busImages.length > 0">
+            <small-item-image
+              v-for="img in busImages"
+              :key="img.id"
+              :img="img"
+              @delete="deleteImg"
+            />
+            <img
+              src="@/assets/img/addImageIcon.svg"
+              class="pointer"
+              @click="showRecentlyImage = true"
+            />
+            <input type="file" ref="upload_img" style="display: none" />
+          </v-row>
+          <v-row no-gutters v-else>
             <img
               src="@/assets/img/addImageIcon.svg"
               class="pointer"

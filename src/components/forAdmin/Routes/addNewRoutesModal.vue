@@ -208,7 +208,12 @@
           </v-col>
         </v-row>
         <!-- Detail route -->
-        <v-row align="start" justify="start" no-gutters>
+        <v-row
+          align="start"
+          justify="start"
+          no-gutters
+          v-click-outside="clickOutside"
+        >
           <v-col cols="12" class="px-0">
             <p class="itemTitle" style="text-align: center">
               Детальний маршрут:
@@ -224,17 +229,59 @@
                     <span
                       v-for="(city, index) in route.ukraine_city"
                       :key="city.id"
-                      style="margin-right: 5px"
+                      :style="
+                        editCityList.type == 'Ukraine' &&
+                        editCityList.indexUkraine == index - 1 &&
+                        index !== 0
+                          ? 'margin-left: 100px;'
+                          : 'margin-right: 5px'
+                      "
                     >
-                      <div class="mt-2">
+                      <div
+                        style="display: flex"
+                        :class="
+                          editCityList.indexUkraine == index ? '' : 'mt-2'
+                        "
+                      >
                         <v-icon
                           color="#960909"
                           v-if="index !== 0"
                           style="margin-right: 5px"
+                          :class="
+                            editCityList.indexUkraine == index ? 'mt-2' : ''
+                          "
                           >mdi-minus</v-icon
-                        >{{ city.name }}
-                      </div></span
-                    >
+                        >
+                        <div
+                          v-if="
+                            editCityList.type == 'Ukraine' &&
+                            editCityList.indexUkraine == index
+                          "
+                          style="
+                            width: 100px;
+                            heigth: 20px;
+                            position: absolute;
+                            margin-left: 30px;
+                          "
+                        >
+                          <v-text-field
+                            class="rounded-lg"
+                            outlined
+                            dense
+                            placeholder="Введіть місто.."
+                            v-model="city.name"
+                            width="20px"
+                            color="#085895"
+                            v-on:keyup.enter="clickOutside"
+                          />
+                        </div>
+                        <span
+                          v-if="editCityList.indexUkraine !== index"
+                          @dblclick="setEditCityList('Ukraine', index)"
+                          >{{ city.name }}</span
+                        >
+                      </div>
+                    </span>
                     <v-col cols="3" class="px-1" align-self="center">
                       <v-text-field
                         class="rounded-lg"
@@ -269,15 +316,55 @@
                     <span
                       v-for="(city, index) in route.other_country_city"
                       :key="city.id"
-                      style="margin-right: 5px"
+                      :style="
+                        editCityList.type == 'Other' &&
+                        editCityList.indexOther == index - 1 &&
+                        index !== 0
+                          ? 'margin-left: 100px;'
+                          : 'margin-right: 5px'
+                      "
                     >
-                      <div class="mt-2">
+                      <div
+                        style="display: flex"
+                        :class="editCityList.indexOther == index ? '' : 'mt-2'"
+                      >
                         <v-icon
                           color="#960909"
                           v-if="index !== 0"
                           style="margin-right: 5px"
+                          :class="
+                            editCityList.indexOther == index ? 'mt-2' : ''
+                          "
                           >mdi-minus</v-icon
-                        >{{ city.name }}
+                        >
+                        <div
+                          v-if="
+                            editCityList.type == 'Other' &&
+                            editCityList.indexOther == index
+                          "
+                          style="
+                            width: 100px;
+                            heigth: 20px;
+                            position: absolute;
+                            margin-left: 30px;
+                          "
+                        >
+                          <v-text-field
+                            class="rounded-lg"
+                            outlined
+                            dense
+                            placeholder="Введіть місто.."
+                            v-model="city.name"
+                            width="20px"
+                            color="#085895"
+                            v-on:keyup.enter="clickOutside"
+                          />
+                        </div>
+                        <span
+                          v-if="editCityList.indexOther !== index"
+                          @dblclick="setEditCityList('Other', index)"
+                          >{{ city.name }}</span
+                        >
                       </div>
                     </span>
                     <v-col cols="3" class="px-1" align-self="center">
@@ -454,6 +541,10 @@ export default {
         value: "Archive",
       },
     ],
+    editCityList: {
+      type: "",
+      index: -1,
+    },
   }),
   validations: {
     route: {
@@ -577,6 +668,20 @@ export default {
         this.$emit("editRoute", this.route.id, route);
       }
     },
+    editCity(country, city, index) {
+      console.log(country, city, index);
+    },
+    setEditCityList(type, index) {
+      this.editCityList.type = "";
+      this.editCityList.type = type;
+      if (type == "Ukraine") {
+        this.editCityList.indexOther = -1;
+        this.editCityList.indexUkraine = index;
+      } else {
+        this.editCityList.indexUkraine = -1;
+        this.editCityList.indexOther = index;
+      }
+    },
     addNewDriverPhoneNumber() {
       this.$v.route.driver_phone_number.$touch();
       if (!this.$v.route.driver_phone_number.$each.$invalid) {
@@ -689,6 +794,20 @@ export default {
         "Ви дійсно хочете закрити модальне вікно, внесені зміни не буде збережено?"
       );
       close ? this.$emit("close") : "";
+    },
+    clickOutside() {
+      if (this.editCityList.type == "Ukraine") {
+        this.route.ukraine_city = this.route.ukraine_city.filter(
+          (city) => city.name !== ""
+        );
+        this.editCityList.indexUkraine = -1;
+      } else if (this.editCityList.type == "Other") {
+        this.route.other_country_city = this.route.other_country_city.filter(
+          (city) => city.name !== ""
+        );
+        this.editCityList.indexOther = -1;
+      }
+      this.editCityList.type = "";
     },
     async getCoordinates(cityname) {
       let response = await googleMapsService.getCoordinates(cityname);

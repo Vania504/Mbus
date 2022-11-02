@@ -750,7 +750,6 @@ export default {
       this.route.other_country_city = this.routeDetailInfo.cities
         .filter((city) => city.type == "Foreign")
         .sort((a, b) => a.id - b.id);
-      console.log();
       this.routeDetailInfo.departure_days.mon == "1"
         ? this.route.daysOfDeparture.push(0)
         : "";

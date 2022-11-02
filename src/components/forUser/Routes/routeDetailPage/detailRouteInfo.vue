@@ -164,24 +164,22 @@ export default {
   },
   methods: {
     filterCity() {
-      console.log("filteredCity", this.route);
-      if (this.route.cities) {
-        this.route.cities.forEach((city) => {
-          city.type == "Ukraine"
-            ? this.ukraine_city.push(city)
-            : this.foreign_city.push(city);
-        });
-      }
+      this.ukraine_city = this.route.cities
+        .filter((city) => city.type == "Ukraine")
+        .sort((a, b) => a.id - b.id);
+      this.foreign_city = this.route.cities
+        .filter((city) => city.type == "Foreign")
+        .sort((a, b) => a.id - b.id);
     },
   },
   watch: {
     route: {
       deep: true,
-      handler(){
+      handler() {
         this.filterCity();
-      }
-    }
-  }
+      },
+    },
+  },
 };
 </script>
 

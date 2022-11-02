@@ -744,13 +744,13 @@ export default {
         this.routeDetailInfo.driver_phones
       );
       this.shedule = this.routeDetailInfo.route_time;
-      this.routeDetailInfo.cities.forEach((city) => {
-        if (city.type == "Ukraine") {
-          this.route.ukraine_city.push(city);
-        } else {
-          this.route.other_country_city.push(city);
-        }
-      });
+      this.route.ukraine_city = this.routeDetailInfo.cities
+        .filter((city) => city.type == "Ukraine")
+        .sort((a, b) => a.id - b.id);
+      this.route.other_country_city = this.routeDetailInfo.cities
+        .filter((city) => city.type == "Foreign")
+        .sort((a, b) => a.id - b.id);
+      console.log();
       this.routeDetailInfo.departure_days.mon == "1"
         ? this.route.daysOfDeparture.push(0)
         : "";

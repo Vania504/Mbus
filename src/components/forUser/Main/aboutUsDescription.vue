@@ -97,6 +97,7 @@ export default {
 .otherTextDescription {
   font-size: 16px;
   color: #243949;
+  text-align: justify;
 }
 .mobileLogo {
   position: absolute;

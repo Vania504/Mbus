@@ -50,7 +50,7 @@
                 justify="center"
                 no-gutters
                 ><span style="color: #efc148" v-if="isUkraine">України</span>
-                <span v-else style="color: #efc148">Польщі</span>
+                <span v-else style="color: #efc148">Інша країна</span>
                 <v-icon
                   color="#EFC148"
                   small

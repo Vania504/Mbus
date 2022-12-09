@@ -1,0 +1,85 @@
+<template>
+  <v-dialog v-model="visibility" width="400px">
+    <v-card style="padding-top: 30px; padding-bottom: 30px">
+      <v-row no-gutters justify="center">
+        <v-col cols="8">
+          <p
+            style="
+              font-weight: 400;
+              font-size: 16px;
+              line-height: 19px;
+              text-align: center;
+              letter-spacing: 0.1em;
+              color: #243949;
+              margin-bottom: 30px;
+            "
+          >
+            {{ modalText }}
+          </p>
+          <v-btn
+            color="#960909"
+            style="
+              background: radial-gradient(
+                2654.82% 540.28% at 54.66% 50%,
+                #960909 0%,
+                rgba(150, 9, 9, 0.078125) 99.99%,
+                rgba(150, 9, 9, 0.71) 100%
+              );
+              box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.15);
+              border-radius: 30px;
+              text-transform: none; 
+            " 
+            width="247px"
+            height="46px"
+            class="white--text"
+            @click="$emit('confirm')"
+          >
+            Підтвердити
+          </v-btn>
+          <v-btn
+            text
+            color="#085895"
+            style="
+              font-weight: 400;
+              font-size: 14px;
+              line-height: 16px;
+              letter-spacing: 0.1em;
+              text-transform: none;
+              margin-top: 20px;
+            "
+            @click="$emit('close')"
+            width="247px"
+          >
+            Скасувати
+          </v-btn>
+        </v-col>
+      </v-row>
+    </v-card>
+  </v-dialog>
+</template>
+
+<script>
+export default {
+  props: {
+    visible: {
+      require: true,
+    },
+    modalText: {
+      require: true,
+    },
+  },
+  computed: {
+    visibility: {
+      get() {
+        return this.visible;
+      },
+      set() {
+        this.$emit("close");
+      },
+    },
+  },
+};
+</script>
+
+<style>
+</style>

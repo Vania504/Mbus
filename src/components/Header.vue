@@ -4,18 +4,18 @@
       <v-row
         align="center"
         no-gutters
-        justify="center"
+        justify="start"
         v-if="!$vuetify.breakpoint.xs"
       >
-        <v-col :cols="isAdmin ? '3' : '2'" style="text-align: left">
+        <v-col :cols="isAdmin ? '3' : '1'" style="text-align: left">
           <v-row no-gutters justify="start">
             <router-link to="/">
-               <img src="@/assets/img/logoMbus.png" />
+              <img src="@/assets/img/logoMbus.png" />
             </router-link>
           </v-row>
         </v-col>
-        <v-col :cols="isAdmin ? '6' : '8'" style="align-self: center">
-          <v-row justify="center" align="center">
+        <v-col :cols="isAdmin ? '5' : '8'" style="align-self: center">
+          <v-row justify="end" align="center">
             <router-link to="/">
               <span class="headerItems">Головна</span></router-link
             >
@@ -63,8 +63,53 @@
             >
           </v-row>
         </v-col>
+        <v-col cols="2" class="px-0">
+          <v-row no-gutters justify="end" v-if="!loggedUser">
+            <v-icon color="black" class="mr-1">mdi-account</v-icon
+            ><span class="pointer" @click="showSignInModal = true">Увійти</span
+            >/<span @click="showSignUpModal = true" class="pointer"
+              >Реєстрація</span
+            >
+          </v-row>
+          <v-row no-gutters justify="end" align="center" v-else>
+            <v-menu open-on-hover botoom offset-y max-width="200px">
+              <template v-slot:activator="{ on, attrs }">
+                <div v-bind="attrs" v-on="on">
+                  <v-row no-gutters align="center" justify="end">
+                    <v-icon class="mr-1">mdi-ticket</v-icon>
+                    <span class="pointer myCabinet">Мій кабінет</span>
+                    <v-icon small class="pointer ml-1" style="color: black"
+                      >mdi-chevron-down</v-icon
+                    >
+                  </v-row>
+                </div>
+              </template>
+              <v-card>
+                <v-row no-gutters justify="center">
+                  <v-col>
+                    <v-row
+                      no-gutters
+                      align="center"
+                      style="padding: 10px 10px 10px 10px"
+                    >
+                      <v-icon style="margin-right: 5px" color="black"
+                        >mdi-account</v-icon
+                      >
+                      <span>Герцюк Ігор</span>
+                    </v-row>
+                    <v-divider />
+                    <v-col class="py-0 px-0" style="text-align: left">
+                      <p class="myTicketLabel">Мої квитки</p>
+                      <p class="logOutLabel" @click="showConfirmModal = true">Вихід</p>
+                    </v-col>
+                  </v-col>
+                </v-row>
+              </v-card>
+            </v-menu>
+          </v-row>
+        </v-col>
         <v-col
-          :cols="isAdmin ? '3' : '2'"
+          :cols="isAdmin ? '2' : '1'"
           style="align-self: center; align-items: center"
         >
           <v-row no-gutters align="center" justify="end">
@@ -113,8 +158,13 @@
                           class="mr-2"
                         />
                         <span class="pointer">
-                          <a :href="`tel: ${number.number}`" style="text-decoration: none; color: black">
-                        {{ number.number }}</a></span>
+                          <a
+                            :href="`tel: ${number.number}`"
+                            style="text-decoration: none; color: black"
+                          >
+                            {{ number.number }}</a
+                          ></span
+                        >
                       </v-row>
                     </v-col>
                   </v-list>
@@ -128,12 +178,33 @@
         <img src="@/assets/img/logoMbus.png" width="60px" height="40px" />
       </v-row>
     </v-app-bar>
+    <sign-up-modal
+      v-if="showSignUpModal"
+      :visible="showSignUpModal"
+      @close="showSignUpModal = false"
+    />
+    <sign-in
+      v-if="showSignInModal"
+      :visible="showSignInModal"
+      @close="showSignInModal = false"
+    />
+    <confirm-modal
+      v-if="showConfirmModal"
+      @close="showConfirmModal = false"
+      :visible="showConfirmModal"
+      modalText="Ви підтверджуєте вихід?"
+      @confirm="logout"
+    />
   </div>
 </template>
 
 <script>
 import { mapGetters } from "vuex";
+import SignIn from "./forAdmin/signIn.vue";
+import signUpModal from "./forAdmin/signUpModal.vue";
+import ConfirmModal from "./UI/modals/confirmModal.vue";
 export default {
+  components: { signUpModal, SignIn, ConfirmModal },
   name: "appHeader",
   data: () => ({
     forPassengerItems: [
@@ -155,9 +226,16 @@ export default {
     ],
     isActiveMenu: "",
     isAdmin: true,
-    signInVisibleModal: false,
-    signUpVisibleModal: false,
+    showSignInModal: false,
+    showSignUpModal: false,
+    showConfirmModal: false,
   }),
+  methods: {
+    logout(){
+      console.log("WORK LOGOUT")
+      this.showConfirmModal = false;
+    }
+  },
   computed: {
     ...mapGetters(["loggedUser"]),
     ...mapGetters(["phoneNumbers"]),
@@ -184,5 +262,29 @@ export default {
 a {
   text-decoration: none;
   color: black;
+}
+.myCabinet {
+  font-weight: 400;
+  font-size: 14px;
+  line-height: 16px;
+  letter-spacing: 0.1em;
+  color: #000000;
+}
+.myTicketLabel {
+  padding-left: 15px;
+  padding-top: 10px;
+  font-weight: 400;
+  font-size: 14px;
+  line-height: 16px;
+  letter-spacing: 0.1em;
+  color: #243949;
+}
+.logOutLabel {
+  font-weight: 400;
+  font-size: 14px;
+  line-height: 16px;
+  letter-spacing: 0.1em;
+  color: #960909;
+  padding-left: 15px;
 }
 </style>

@@ -1,9 +1,13 @@
 <template>
-  <v-row no-gutters justify="center" class="mt-10 mb-10">
+  <v-dialog
+    v-model="visibility"
+    :width="$vuetify.breakpoint.xs ? '90%' : '900px'"
+    style="overflow: hidden"
+  >
     <error-snackbar v-if="showErrorSnackbar" :snackbarText="snackbarText" />
     <v-card
       :width="$vuetify.breakpoint.xs ? '90%' : '900px'"
-      height="320px"
+      height="390px"
       class="mb-15"
     >
       <modal-header
@@ -11,7 +15,7 @@
         @close="$emit('close')"
         :showCloseIcon="false"
       />
-      <v-card style="overflow: hidden" height="320px">
+      <v-card style="overflow: hidden" height="390px">
         <v-row justify="center" class="pt-10">
           <v-col cols="10" lg="7" md="7" sm="7" xl="7">
             <v-text-field
@@ -58,7 +62,7 @@
               @click="signIn"
               >Увійти</v-btn
             >
-            <!-- <v-row no-gutters align="center">
+            <v-row no-gutters align="center">
               <v-col>
                 <v-divider class="mt-10 mb-5 mr-5 px-15 divider" />
               </v-col>
@@ -70,12 +74,12 @@
               <span class="signInTextStyle pointer" @click="$emit('goToSignUp')"
                 >Зареєструватись</span
               >
-            </div> -->
+            </div>
           </v-col>
         </v-row>
       </v-card>
     </v-card>
-  </v-row>
+  </v-dialog>
 </template>
 
 <script>

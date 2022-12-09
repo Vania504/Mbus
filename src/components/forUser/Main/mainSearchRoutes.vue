@@ -67,48 +67,16 @@
             @reverseItem="reverseItem"
             @searchRoutes="searchRoutes"/>
           <v-row v-else justify="center" no-gutters>
-            <div class="backgroundSearchField" :style="
+            <!-- :style="
               startRouteError.length || endRouteError.length
                 ? 'height: 70px;'
                 : 'height: 60px;'
-            ">
+            " -->
+            <div class="backgroundSearchField">
               <div v-if="loader" class="d-flex align-center mt-3">
                 <v-progress-circular class="mx-auto" indeterminate color="#085895"></v-progress-circular>
               </div>
-              <v-row justify="center" class="pt-2" v-else>
-                <v-col cols="4" class="px-0">
-                  <v-autocomplete background-color="white" prepend-inner-icon="mdi-map-marker-outline"
-                    placeholder="Звідки" outlined dense class="rounded-l-lg" 
-                    :items="Object.values(startCities)"
-                    :item-text="'name'" 
-                    :item-value="'name'" 
-                    v-model="start_route" 
-                    :error-messages="startRouteError" />
-                </v-col>
-                <div style="
-                    background-color: white;
-                    width: 34px;
-                    height: 38px;
-                    margin-top: 13px;
-                    cursor: pointer;
-                  " @click="reverseItem">
-                  <img src="@/assets/img/reverseIcon.png" class="mt-2" />
-                </div>
-                <v-col cols="4" class="px-0">
-                  <v-autocomplete background-color="white" prepend-inner-icon="mdi-map-marker-outline"
-                    placeholder="Куди" outlined dense class="rounded-r-lg" :items="Object.values(nextCities)"
-                    :item-text="'name'" :item-value="'name'" v-model="end_route" :disabled="!nextCities.length"
-                    :error-messages="endRouteError" />
-                </v-col>
-                <v-btn style="
-                    margin-left: 20px;
-                    margin-top: 13px;
-                    box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.15);
-                    border-radius: 10px;
-                  " width="80px" height="38px" color="#085895" @click="searchRoutes">
-                  <v-icon color="white">mdi-magnify</v-icon>
-                </v-btn>
-              </v-row>
+              <search-routes-field />
             </div>
           </v-row>
         </v-col>
@@ -121,29 +89,16 @@
 import searchRoutesFieldMobile from "./mainMobile/searchRoutesFieldMobile.vue";
 import settingsService from "@/requests/admin/settingsService";
 import searchRoutesService from "@/requests/main/searchRoutesService";
-import { validationMixin } from "vuelidate";
-import { required } from "vuelidate/lib/validators";
 import { mapActions, mapGetters } from "vuex";
+import searchRoutesField from "@/components/UI/searchRoutesField.vue";
 export default {
-  mixins: [validationMixin],
   components: {
     searchRoutesFieldMobile,
+    searchRoutesField,
   },
   data: () => ({
-    start_route: "",
-    end_route: "",
     socialNetworks: [],
-    startCities: [],
-    nextCities: [],
   }),
-  validations: {
-    start_route: {
-      required,
-    },
-    end_route: {
-      required,
-    },
-  },
   mounted() {
     this.getSocialNetwork();
     this.getStartCities();
@@ -260,7 +215,9 @@ export default {
 }
 
 .backgroundSearchField {
-  width: 600px;
+  width: 800px;
+  height: 80px;
+  padding: 12px;
   background: rgba(255, 255, 255, 0.9);
   border: 0.5px solid #085895;
   box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.15);

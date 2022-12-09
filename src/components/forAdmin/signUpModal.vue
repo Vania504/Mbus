@@ -1,6 +1,10 @@
 <template>
-  <v-dialog v-model="visibility" :width="$vuetify.breakpoint.xs ? '90%' : '900px'" style="overflow: hidden;">
-    <modal-header title="Реєстрація користувача" @close="$emit('close')" />
+  <v-dialog
+    v-model="visibility"
+    :width="$vuetify.breakpoint.xs ? '90%' : '900px'"
+    style="overflow: hidden"
+  >
+    <modal-header title="Реєстрація користувача" @close="$emit('close')" :showCloseIcon="true"/>
     <v-card style="overflow: hidden">
       <v-row justify="center" class="pt-10">
         <v-col cols="10" lg="7" md="7" sm="7" xl="7">
@@ -42,12 +46,35 @@
             :error-messages="passwordConfirmError"
             @blur="$v.user.password_confirm.$touch()"
           />
-          <v-row no-gutters :align="$vuetify.breakpoint.xs ? 'start' : 'end'" justify="start" class="py-0 mb-5">
-            <v-checkbox color="#085895" />
-            <v-col cols="10" lg="11" md="11" sm="11" xl="11">
+          <v-row
+            no-gutters
+            :align="$vuetify.breakpoint.xs ? 'start' : 'end'"
+            justify="start"
+            class="py-0 mb-5"
+          >
+            <v-checkbox color="#085895"/>
+            <v-col
+              cols="10"
+              lg="11"
+              md="11"
+              sm="11"
+              xl="11"
+              style="text-align: left"
+              class="mb-1"
+            >
               <span
-                >Згоден з Угодою користувача, з Обробкою моїх пересональних
-                даних у відпповідніості з Політикою конфіденційності</span
+                style="
+                  font-weight: 400;
+                  font-size: 12px;
+                  line-height: 14px;
+                  letter-spacing: 0.1em;
+                  color: #50616e;
+                  text-align: left;
+                "
+                >Згоден з <span class="linkColor">Угодою користувача</span>, з
+                <span class="linkColor">Обробкою моїх пересональних</span> даних
+                у відпповідніості з
+                <span class="linkColor">Політикою конфіденційності</span></span
               >
             </v-col>
           </v-row>
@@ -83,7 +110,7 @@ import modalHeader from "../UI/modalHeader.vue";
 import { validationMixin } from "vuelidate";
 import { required, email, minLength, sameAs } from "vuelidate/lib/validators";
 import authService from "@/requests/admin/authService";
-import { mapActions } from 'vuex';
+import { mapActions } from "vuex";
 export default {
   mixins: [validationMixin],
   components: {
@@ -151,13 +178,13 @@ export default {
       this.$v.$touch();
       if (!this.$v.$invalid) {
         let user = new FormData();
-        user.append('name', this.user.username);
-        user.append('email', this.user.email);
-        user.append('password', this.user.password);
+        user.append("name", this.user.username);
+        user.append("email", this.user.email);
+        user.append("password", this.user.password);
         let response = await authService.signUp(user);
         this.updateInfo({
-              token: response.authorisation.token,
-            });
+          token: response.authorisation.token,
+        });
       }
     },
   },

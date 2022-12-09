@@ -100,11 +100,17 @@
                     <v-divider />
                     <v-col class="py-0 px-0" style="text-align: left">
                       <v-list dense>
-                        <v-list-item-group v-model="selectedItem" active-class="activeMenu">
-                          <v-list-item style="height: 26px;">
+                        <v-list-item-group
+                          v-model="selectedItem"
+                          active-class="activeMenu"
+                        >
+                          <v-list-item
+                            style="height: 26px"
+                            @click="showMyTicketModal = true"
+                          >
                             <p class="myTicketLabel">Мої квитки</p>
                           </v-list-item>
-                          <v-list-item style="height: 26px;">
+                          <v-list-item style="height: 26px">
                             <p>
                               <v-row no-gutters align="center" class="pt-4">
                                 <output
@@ -214,6 +220,11 @@
       modalText="Ви підтверджуєте вихід?"
       @confirm="logout"
     />
+    <my-ticket-modal
+      v-if="showMyTicketModal"
+      :visible="showMyTicketModal"
+      @close="showConfirmModal = false"
+    />
   </div>
 </template>
 
@@ -221,9 +232,10 @@
 import { mapGetters } from "vuex";
 import SignIn from "./forAdmin/signIn.vue";
 import signUpModal from "./forAdmin/signUpModal.vue";
+import MyTicketModal from "./forUser/myTicket/myTicketModal.vue";
 import ConfirmModal from "./UI/modals/confirmModal.vue";
 export default {
-  components: { signUpModal, SignIn, ConfirmModal },
+  components: { signUpModal, SignIn, ConfirmModal, MyTicketModal },
   name: "appHeader",
   data: () => ({
     forPassengerItems: [
@@ -248,6 +260,7 @@ export default {
     showSignInModal: false,
     showSignUpModal: false,
     showConfirmModal: false,
+    showMyTicketModal: false,
     selectedItem: 0,
   }),
   methods: {
@@ -310,6 +323,6 @@ a {
 .activeMenu {
   background: rgba(8, 88, 149, 0.1);
   border-radius: 10px;
-  height: 26px!important;
+  height: 26px !important;
 }
 </style>

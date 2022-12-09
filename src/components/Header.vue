@@ -64,7 +64,7 @@
           </v-row>
         </v-col>
         <v-col cols="2" class="px-0">
-          <v-row no-gutters justify="end" v-if="!loggedUser">
+          <v-row no-gutters justify="end" v-if="loggedUser">
             <v-icon color="black" class="mr-1">mdi-account</v-icon
             ><span class="pointer" @click="showSignInModal = true">Увійти</span
             >/<span @click="showSignUpModal = true" class="pointer"
@@ -76,7 +76,7 @@
               <template v-slot:activator="{ on, attrs }">
                 <div v-bind="attrs" v-on="on">
                   <v-row no-gutters align="center" justify="end">
-                    <v-icon class="mr-1">mdi-ticket</v-icon>
+                    <img class="mr-1" src="@/assets/img/profileIcon.svg" />
                     <span class="pointer myCabinet">Мій кабінет</span>
                     <v-icon small class="pointer ml-1" style="color: black"
                       >mdi-chevron-down</v-icon
@@ -99,8 +99,27 @@
                     </v-row>
                     <v-divider />
                     <v-col class="py-0 px-0" style="text-align: left">
-                      <p class="myTicketLabel">Мої квитки</p>
-                      <p class="logOutLabel" @click="showConfirmModal = true">Вихід</p>
+                      <v-list dense>
+                        <v-list-item-group v-model="selectedItem" active-class="activeMenu">
+                          <v-list-item style="height: 26px;">
+                            <p class="myTicketLabel">Мої квитки</p>
+                          </v-list-item>
+                          <v-list-item style="height: 26px;">
+                            <p>
+                              <v-row no-gutters align="center" class="pt-4">
+                                <output
+                                  class="logOutLabel"
+                                  @click="showConfirmModal = true"
+                                >
+                                  Вихід </output
+                                ><img
+                                  style="margin-left: 5px"
+                                  src="@/assets/img/logoutIcon.svg"
+                                />
+                              </v-row>
+                            </p>
+                          </v-list-item> </v-list-item-group
+                      ></v-list>
                     </v-col>
                   </v-col>
                 </v-row>
@@ -229,12 +248,13 @@ export default {
     showSignInModal: false,
     showSignUpModal: false,
     showConfirmModal: false,
+    selectedItem: 0,
   }),
   methods: {
-    logout(){
-      console.log("WORK LOGOUT")
+    logout() {
+      console.log("WORK LOGOUT");
       this.showConfirmModal = false;
-    }
+    },
   },
   computed: {
     ...mapGetters(["loggedUser"]),
@@ -286,5 +306,10 @@ a {
   letter-spacing: 0.1em;
   color: #960909;
   padding-left: 15px;
+}
+.activeMenu {
+  background: rgba(8, 88, 149, 0.1);
+  border-radius: 10px;
+  height: 26px!important;
 }
 </style>

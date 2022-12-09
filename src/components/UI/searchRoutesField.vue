@@ -44,19 +44,31 @@
       />
     </v-col>
     <v-col cols="2" class="px-0">
-      <v-text-field
-        background-color="white"
-        prepend-inner-icon="mdi-calendar"
-        placeholder="Сьогодні"
-        outlined
-        dense
-        class="rounded-0"
-        v-model="routeDate"
-        :error-messages="endRouteError"
-      />
+      <v-menu ref="menu" v-model="menu" bottom offset-y>
+        <template v-slot:activator="{ on, attrs }">
+          <v-text-field
+            background-color="white"
+            prepend-inner-icon="mdi-calendar"
+            placeholder="Сьогодні"
+            outlined
+            dense
+            class="rounded-0"
+            v-model="routeDate"
+            v-bind="attrs"
+            v-on="on"
+            :error-messages="endRouteError"
+          />
+        </template>
+        <v-date-picker
+          v-model="date"
+          color="#085895"
+          no-title
+          locale="uk"
+        ></v-date-picker>
+      </v-menu>
     </v-col>
     <v-col cols="1" class="px-0">
-      <v-menu open-on-hover botoom offset-y width="261px">
+      <v-menu left offset-y width="261px" :close-on-content-click="isClose">
         <template v-slot:activator="{ on, attrs }">
           <v-text-field
             v-bind="attrs"
@@ -67,32 +79,38 @@
             outlined
             dense
             class="rounded-l-0 rounded-r-lg"
+            @click="isClose = false"
           />
         </template>
-        <v-card width="261px" style="padding: 15px 30px 15px 30px">
+        <v-card width="261px" style="padding: 15px 30px 15px 30px;">
           <v-row no-gutters align="center" justify="start">
             <v-col cols="6" style="text-align: left"
               ><span class="peopleTypeStyle">Дорослий:</span></v-col
             >
-            <v-icon>mdi-minus-circle-outline</v-icon>
+            <v-icon
+              @click="quantityAdult > 0 ? quantityAdult-- : (quantityAdult = 0)"
+              >mdi-minus-circle-outline</v-icon
+            >
             <output
               style="margin-left: 15px; margin-right: 15px"
               class="peopleTypeStyle"
               >{{ quantityAdult }}</output
             >
-            <v-icon>mdi-plus-circle-outline</v-icon>
+            <v-icon @click="quantityAdult++">mdi-plus-circle-outline</v-icon>
           </v-row>
-          <v-row no-gutters align="center" justify="start">
+          <v-row no-gutters align="center" justify="start" class="mt-5">
             <v-col cols="6" style="text-align: left"
               ><span class="peopleTypeStyle">Дитячий:</span></v-col
             >
-            <v-icon>mdi-minus-circle-outline</v-icon>
+            <v-icon @click="quantityKid > 0 ? quantityKid-- : (quantityKid = 0)"
+              >mdi-minus-circle-outline</v-icon
+            >
             <output
               style="margin-left: 15px; margin-right: 15px"
               class="peopleTypeStyle"
               >{{ quantityKid }}</output
             >
-            <v-icon>mdi-plus-circle-outline</v-icon>
+            <v-icon @click="quantityKid++">mdi-plus-circle-outline</v-icon>
           </v-row>
         </v-card>
       </v-menu>
@@ -125,10 +143,12 @@ export default {
     start_route: "",
     end_route: "",
     routeDate: "",
+    date: "",
     startCities: [],
     nextCities: [],
     quantityAdult: 0,
     quantityKid: 0,
+    isClose: false,
   }),
   validations: {
     start_route: {

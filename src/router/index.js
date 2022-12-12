@@ -41,6 +41,11 @@ const routes = [
         component: () => import('@/views/forUser/Contact.vue'),
     },
     {
+        path: '/tickets',
+        name: 'ticket_search_page',
+        component: () => import('@/views/forUser/ticketSearch.vue'),
+    },
+    {
         path: '/admin',
         name: 'admin',
         component: () => import('@/views/forAdmin/Main.vue'),

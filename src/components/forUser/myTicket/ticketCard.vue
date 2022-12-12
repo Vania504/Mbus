@@ -235,6 +235,7 @@
               letter-spacing: 0.1em;
               color: #960909;
             "
+            @click="showConfirmModal = true"
             >Скасувати бронювання</v-btn
           >
           <v-btn
@@ -254,15 +255,36 @@
       </v-card-actions>
     </v-card>
     <ticket-card-detail v-if="showTicketDetail" />
+    <confirm-modal
+      v-if="showConfirmModal"
+      :visible="showConfirmModal"
+      :refund="true"
+      :modalText="refundText"
+      modalTitle="Скасувати бронювання"
+      modalSubtitle="Ви впевнені, що бажаєте скасувати бронювання квитка?"
+      @close="showConfirmModal = false"
+      @confirm="(showConfirmModal = false), (reservationCanceled = true)"
+    />
+    <reservation-canceled
+      v-if="reservationCanceled"
+      :visible="reservationCanceled"
+      @close="reservationCanceled = false"
+    />
   </v-col>
 </template>
 
 <script>
+import ReservationCanceled from "@/components/UI/modals/reservationCanceled.vue";
 import ticketCardDetail from "./ticketCardDetail.vue";
+import ConfirmModal from "@/components/UI/modals/confirmModal.vue";
 export default {
-  components: { ticketCardDetail },
+  components: { ticketCardDetail, ReservationCanceled, ConfirmModal },
   data: () => ({
     showTicketDetail: false,
+    reservationCanceled: false,
+    showConfirmModal: false,
+    refundText:
+      "<li>до 240 год. до від`їзду: 80%</li><li>від 240 год. до 72 год. до від`їзду: 50%</li><li>від 72 год. до 24 год. до від`їзду: 10%</li><li>менше 24 год. до від`їзду: квиток не повертається</li>",
   }),
   props: {
     ticket: {

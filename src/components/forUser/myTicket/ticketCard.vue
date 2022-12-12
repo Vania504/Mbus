@@ -221,6 +221,7 @@
               letter-spacing: 0.1em;
               color: #243949;
             "
+            @click="showQrCodeModal = true"
             text
             ><img src="@/assets/img/qrCodeIcon.svg" class="mr-1" /><span
               >E-tickets</span
@@ -270,6 +271,11 @@
       :visible="reservationCanceled"
       @close="reservationCanceled = false"
     />
+    <qr-code-modal
+      v-if="showQrCodeModal"
+      :visible="showQrCodeModal"
+      @close="showQrCodeModal = false"
+    />
   </v-col>
 </template>
 
@@ -277,12 +283,19 @@
 import ReservationCanceled from "@/components/UI/modals/reservationCanceled.vue";
 import ticketCardDetail from "./ticketCardDetail.vue";
 import ConfirmModal from "@/components/UI/modals/confirmModal.vue";
+import QrCodeModal from "@/components/UI/modals/qrCodeModal.vue";
 export default {
-  components: { ticketCardDetail, ReservationCanceled, ConfirmModal },
+  components: {
+    ticketCardDetail,
+    ReservationCanceled,
+    ConfirmModal,
+    QrCodeModal,
+  },
   data: () => ({
     showTicketDetail: false,
     reservationCanceled: false,
     showConfirmModal: false,
+    showQrCodeModal: false,
     refundText:
       "<li>до 240 год. до від`їзду: 80%</li><li>від 240 год. до 72 год. до від`їзду: 50%</li><li>від 72 год. до 24 год. до від`їзду: 10%</li><li>менше 24 год. до від`їзду: квиток не повертається</li>",
   }),

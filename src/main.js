@@ -7,7 +7,7 @@ import VueMask from 'v-mask'
 import Vuelidate from 'vuelidate'
 import './assets/layouts/index.scss'
 import store from './store';
-import Vidle from 'v-idle'
+import Vidle from 'v-idle';
 
 Vue.config.productionTip = false
 

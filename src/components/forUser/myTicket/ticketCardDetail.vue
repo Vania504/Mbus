@@ -1,6 +1,6 @@
 <template>
   <v-card class="detailTicketCard rounded-lg">
-    <v-col>
+    <v-col style="text-align: center;">
       <p class="heading">
         Умови перевізника
       </p>

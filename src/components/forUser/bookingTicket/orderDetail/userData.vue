@@ -49,6 +49,7 @@
             label="Номер телефону"
             color="#085895"
             :error-messages="phoneNumberError"
+            v-mask="'+### (##) ###-##-##'"
             :append-icon="
               phoneNumberError.length ? 'mdi-alert-circle-outline' : ''
             "
@@ -90,7 +91,9 @@ import { required, minLength, email } from "vuelidate/lib/validators";
 export default {
   mixins: [validationMixin],
   data: () => ({
-    userData: {},
+    userData: {
+      phone_number: "38",
+    },
   }),
   props: {
     touch: {
@@ -107,7 +110,7 @@ export default {
       },
       phone_number: {
         required,
-        minLength: minLength(15),
+        minLength: minLength(19),
       },
       email: {
         required,
@@ -122,14 +125,14 @@ export default {
         this.$v.$touch();
       },
     },
-    '$v.userData.$invalid': {
+    "$v.userData.$invalid": {
       deep: true,
-      handler(){
-        if(this.$v.userData.$invalid == false){
-          this.$emit('userInputValidUserData')
+      handler() {
+        if (this.$v.userData.$invalid == false) {
+          this.$emit("userInputValidUserData");
         }
-      }
-    }
+      },
+    },
   },
   computed: {
     firstNameError() {

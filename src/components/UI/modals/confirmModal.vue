@@ -2,7 +2,7 @@
   <v-dialog v-model="visibility" width="400px">
     <v-card style="padding-top: 30px; padding-bottom: 30px">
       <v-row no-gutters justify="center">
-        <v-col cols="8" style="text-align: center">
+        <v-col cols="10" style="text-align: center">
           <p
             style="
               font-weight: 500;

@@ -225,16 +225,24 @@
             padding-left: 34px;
           "
         >
-          <span
-            style="
-              font-weight: 400;
-              font-size: 12px;
-              line-height: 14px;
-              letter-spacing: 0.1em;
-              color: #243949;
-            "
-          >
-            Автобус:
+          <v-row no-gutters align="center">
+            <span
+              style="
+                font-weight: 400;
+                font-size: 12px;
+                line-height: 14px;
+                letter-spacing: 0.1em;
+                color: #243949;
+              "
+            >
+              Автобус: &nbsp;
+            </span>
+            <img
+              width="12px"
+              height="12px;"
+              src="@/assets/img/busServiceIcon/busIcon.png"
+              style="margin-right: 5px"
+            />
             <span
               style="
                 font-weight: 400;
@@ -245,7 +253,7 @@
               "
               >Setra S 417 GT-HD</span
             >
-          </span>
+          </v-row>
           <v-row no-gutters align="center" justify="end">
             <v-btn
               text

@@ -5,7 +5,7 @@
       <div style="padding: 15px 0px 0px 25px">
         <create-new-outline-btn
           width="380px"
-          height="49px"
+          height="45px"
           text="Новий маршрут"
           @click="showCreateRouteModal = true"
         />
@@ -18,7 +18,9 @@
         @delete="deleteRoute"
       />
     </div>
-    <div v-if="activeCategory == 1"></div>
+    <div v-if="activeCategory == 1">
+      <tickets-component />
+    </div>
     <add-new-routes-modal
       v-if="showCreateRouteModal"
       :visible="showCreateRouteModal"
@@ -40,12 +42,14 @@ import ourFleetService from "@/requests/admin/ourFleetService";
 import { mapGetters, mapActions } from "vuex";
 import RoutesHeaderAdmin from "./routesHeaderAdmin.vue";
 import CreateNewOutlineBtn from "@/components/UI/buttons/createNewOutlineBtn.vue";
+import TicketsComponent from './Tickets/ticketsComponent.vue';
 export default {
   components: {
     routesList,
     addNewRoutesModal,
     RoutesHeaderAdmin,
     CreateNewOutlineBtn,
+    TicketsComponent,
   },
   data: () => ({
     showCreateRouteModal: false,

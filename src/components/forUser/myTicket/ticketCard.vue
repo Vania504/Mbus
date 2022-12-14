@@ -266,9 +266,11 @@
       @close="showConfirmModal = false"
       @confirm="(showConfirmModal = false), (reservationCanceled = true)"
     />
-    <reservation-canceled
+    <success-modal
       v-if="reservationCanceled"
       :visible="reservationCanceled"
+      modalTitle="Ваше бронювання скасовано!"
+      modalText="Найближчим часом наш менеджер зв’яжиться з Вами для уточнення деталей."
       @close="reservationCanceled = false"
     />
     <qr-code-modal
@@ -280,14 +282,14 @@
 </template>
 
 <script>
-import ReservationCanceled from "@/components/UI/modals/reservationCanceled.vue";
+import successModal from "@/components/UI/modals/successModal.vue";
 import ticketCardDetail from "./ticketCardDetail.vue";
 import ConfirmModal from "@/components/UI/modals/confirmModal.vue";
 import QrCodeModal from "@/components/UI/modals/qrCodeModal.vue";
 export default {
   components: {
     ticketCardDetail,
-    ReservationCanceled,
+    successModal,
     ConfirmModal,
     QrCodeModal,
   },

@@ -74,7 +74,7 @@
             </v-row>
           </v-col>
           <v-col cols="2" class="px-0">
-            <v-row no-gutters justify="end" v-if="loggedUser">
+            <v-row no-gutters justify="end" v-if="!loggedUser">
               <v-icon color="black" class="mr-1">mdi-account</v-icon
               ><span class="pointer" @click="showSignInModal = true"
                 >Увійти</span
@@ -294,7 +294,8 @@ export default {
   }),
   methods: {
     logout() {
-      console.log("WORK LOGOUT");
+      this.$store.commit("clearUserLogged");
+      this.$router.push("/");
       this.showConfirmModal = false;
     },
   },

@@ -143,6 +143,7 @@ export default {
             //accessToken: response.
             timeout: timeout,
           });
+          this.$emit('close')
           this.$router.push({ name: "admin" });
         }
       }

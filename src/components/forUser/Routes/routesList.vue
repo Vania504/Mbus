@@ -26,14 +26,14 @@
         @edit="$emit('edit', route.id)"
         @delete="$emit('delete', route.id)"
       />    
-      <card-add-new
+      <!-- <card-add-new
         title="Новий маршрут"
         width="330px"
         height="358px"
         class="mt-5 mx-5"
         @addNew="$emit('addNew')"
         v-if="forAdmin"
-      />
+      /> -->
     </v-row>
   </v-col>
 </template>
@@ -41,12 +41,12 @@
 <script>
 import routesCard from "./routesCard.vue";
 import routesCardMobile from '@/components/forUser/Routes/routesMobile/routesCardMobile';
-import cardAddNew from "@/components/UI/cardAddNew.vue";
+// import cardAddNew from "@/components/UI/cardAddNew.vue";
 export default {
   components: {
     routesCard,
     routesCardMobile,
-    cardAddNew,
+    //cardAddNew,
   },
   props: {
     routes: {

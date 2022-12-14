@@ -1,21 +1,33 @@
 <template>
   <div v-if="!loader">
-    <routes-list
-      :routes="routes"
-      :forAdmin="true"
-      @addNew="showModal = true"
-      @edit="getRoute"
-      @delete="deleteRoute"
-    />
+    <routes-header-admin @setActiveCategory="setActiveCategory" />
+    <div v-if="activeCategory == 0">
+      <div style="padding: 15px 0px 0px 25px">
+        <create-new-outline-btn
+          width="380px"
+          height="49px"
+          text="Новий маршрут"
+          @click="showCreateRouteModal = true"
+        />
+      </div>
+      <routes-list
+        :routes="routes"
+        :forAdmin="true"
+        @addNew="showCreateRouteModal = true"
+        @edit="getRoute"
+        @delete="deleteRoute"
+      />
+    </div>
+    <div v-if="activeCategory == 1"></div>
     <add-new-routes-modal
-      v-if="showModal"
-      :visible="showModal"
+      v-if="showCreateRouteModal"
+      :visible="showCreateRouteModal"
       :isEdit="isEdit"
       :routeDetailInfo="routeDetailInfo"
       :busList="busList"
       @createRoute="createRoute"
       @editRoute="editRoute"
-      @close="(showModal = false), (isEdit = false)"
+      @close="(showCreateRouteModal = false), (isEdit = false)"
     />
   </div>
 </template>
@@ -26,34 +38,39 @@ import addNewRoutesModal from "@/components/forAdmin/Routes/addNewRoutesModal";
 import routesService from "@/requests/admin/routesService";
 import ourFleetService from "@/requests/admin/ourFleetService";
 import { mapGetters, mapActions } from "vuex";
+import RoutesHeaderAdmin from "./routesHeaderAdmin.vue";
+import CreateNewOutlineBtn from "@/components/UI/buttons/createNewOutlineBtn.vue";
 export default {
   components: {
     routesList,
     addNewRoutesModal,
+    RoutesHeaderAdmin,
+    CreateNewOutlineBtn,
   },
   data: () => ({
-    showModal: false,
+    showCreateRouteModal: false,
     isEdit: false,
     busList: [],
     routes: [],
     routeDetailInfo: {},
+    activeCategory: 0,
   }),
-  mounted(){
+  mounted() {
     this.getBuses();
     this.getRoutes();
   },
   methods: {
-    ...mapActions(['updateLoader']),
-    async createRoute(route){
+    ...mapActions(["updateLoader"]),
+    async createRoute(route) {
       let response = await routesService.createRoute(route);
-      if(response.status == 'success'){
+      if (response.status == "success") {
         this.showModal = false;
         this.getRoutes();
       }
     },
-    async editRoute(id, route){
+    async editRoute(id, route) {
       let response = await routesService.updateRoute(id, route);
-      if(response.status == 'success'){
+      if (response.status == "success") {
         this.showModal = false;
         this.getRoutes();
       }
@@ -61,7 +78,7 @@ export default {
     async getRoutes() {
       let response = await routesService.getRouteForAdmin();
       this.routes = response.data;
-      this.updateLoader(false)
+      this.updateLoader(false);
     },
     async getRoute(id) {
       let response = await routesService.getRoute(id);
@@ -69,20 +86,23 @@ export default {
       this.showModal = true;
       this.isEdit = true;
     },
-    async getBuses(){
+    async getBuses() {
       let response = await ourFleetService.getBuses();
       this.busList = response.data;
     },
     async deleteRoute(uuid) {
       let response = await routesService.deleteRoute(uuid);
-      if(response.status == 'success'){
+      if (response.status == "success") {
         this.getRoutes();
       }
     },
+    setActiveCategory(activeCategory) {
+      this.activeCategory = activeCategory;
+    },
   },
   computed: {
-    ...mapGetters(['loader'])
-  }
+    ...mapGetters(["loader"]),
+  },
 };
 </script>
 

@@ -1,17 +1,11 @@
 <template>
-  <v-navigation-drawer
-    v-model="visible"
-    absolute
-    right
-    temporary
-    style="z-index: 50"
-    width="100%"
-  >
+  <v-navigation-drawer v-model="visible" absolute right temporary width="100%">
     <div
       style="
         background-color: #243949;
         height: 40px;
         padding: 10px 0px 10px 15px;
+        border-radius: 0px;
       "
       class="white--text"
     >

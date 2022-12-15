@@ -1,44 +1,15 @@
 <template>
   <v-dialog v-model="visibility" width="900px" height="393px">
-    <v-card min-height="393px">
-      <modal-header
-        :showTicketIcon="true"
-        :showCloseIcon="true"
-        title="Мої квитки"
-        @close="$emit('close')"
-      />
-      <div
-        style="
-          dispay: flex;
-          justify-content: center;
-          align-items: center;
-          margin-top: 100px;
-        "
-        v-if="myTicketsList.length == 0"
-      >
-        <v-col align-self="center">
-          <p>Ваш список білетів порожній</p>
-          <search-route-btn />
-        </v-col>
-      </div>
-      <ticket-list :ticketList="myTicketsList" v-else />
-    </v-card>
+    <my-ticket-content />
   </v-dialog>
 </template>
 
 <script>
-import modalHeader from "@/components/UI/modalHeader.vue";
-import TicketList from "./ticketList.vue";
-import SearchRouteBtn from '@/components/UI/searchRouteBtn.vue';
+import MyTicketContent from "./myTicketContent.vue";
 export default {
-  components: { modalHeader, TicketList, SearchRouteBtn },
+  components: { MyTicketContent },
   data: () => ({
-    myTicketsList: [
-        {id: 1},
-        {id: 2},
-        {id: 3},
-        {id: 4},
-    ],
+    myTicketsList: [],
   }),
   props: {
     visible: {
@@ -59,4 +30,15 @@ export default {
 </script>
 
 <style>
+@media only screen and (max-width: 600px) {
+  .ticketListEmpty {
+    font-weight: 400;
+    font-size: 20px;
+    line-height: 23px;
+    text-align: center;
+    letter-spacing: 0.1em;
+    color: rgba(18, 43, 62, 0.7);
+    padding-bottom: 40px;
+  }
+}
 </style>

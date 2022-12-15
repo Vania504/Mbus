@@ -5,7 +5,7 @@
       :key="ticket.id"
       :ticket="ticket"
     />
-    <v-row no-gutters justify="end">
+    <v-row no-gutters justify="end" v-if="!$vuetify.breakpoint.xs">
       <search-route-btn />
     </v-row>
   </v-col>

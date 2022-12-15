@@ -144,7 +144,7 @@ export default {
             timeout: timeout,
           });
           this.$emit('close')
-          this.$router.push({ name: "admin" });
+          this.$router.push({ name: "main" });
         }
       }
     },

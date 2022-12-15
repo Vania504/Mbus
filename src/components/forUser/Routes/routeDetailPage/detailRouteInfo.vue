@@ -138,11 +138,22 @@
               </v-col>
             </v-row>
           </div>
+          <div
+            :style="
+              $vuetify.breakpoint.xs
+                ? 'width: 100%;'
+                : 'width: 790px; margin-left: 2px;'
+            "
+          >
+            <v-row no-gutters justify="start">
+              <span style="color: #6b7c8a; font-size: 10px"
+                ><span class="requireColor">*</span>час прибуття вказаний
+                приблизний і залежить від часу проходження кордону та інших
+                обставин</span
+              >
+            </v-row>
+          </div>
         </center>
-        <span style="color: #6b7c8a; font-size: 10px; text-align: left"
-          ><span class="requireColor">*</span>час прибуття вказаний приблизний і
-          залежить від часу проходження кордону та інших обставин</span
-        >
       </v-col>
     </v-row>
   </v-col>

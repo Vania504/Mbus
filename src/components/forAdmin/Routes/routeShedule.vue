@@ -4,10 +4,18 @@
       <v-row align="center" no-gutters>
         <v-col cols="4">
           <p class="textStyle">
-            Час відправлення і прибуття з<v-row align="center" justify="center" no-gutters><span style="color: #efc148"
-                v-if="isUkraine">України</span>
+            Час відправлення і прибуття з<v-row
+              align="center"
+              justify="center"
+              no-gutters
+              ><span style="color: #efc148" v-if="isUkraine">України</span>
               <span v-else style="color: #efc148">Інша країна</span>
-              <v-icon color="#EFC148" small class="ml-1 pointer" @click="isUkraine = !isUkraine">mdi-sync mdi-rotate-135
+              <v-icon
+                color="#EFC148"
+                small
+                class="ml-1 pointer"
+                @click="isUkraine = !isUkraine"
+                >mdi-sync mdi-rotate-135
               </v-icon>
             </v-row>
           </p>
@@ -17,11 +25,17 @@
         </v-col>
       </v-row>
     </div>
-    <div style="border-bottom: 1px solid #a7b8c6" v-for="item in shedule" :key="item.time">
+    <div v-for="item in shedule" :key="item.time">
       <!-- Output shedule item for Ukraine -->
-      <v-row no-gutters justify="center" class="pt-3 pb-3 pointer"
-        v-if="isUkraine && item.is_reverse == '0' && !isEditItem" v-on:keyup.enter="isEditItem = false"
-        @dblclick="editItem(item.id)">
+      <v-row
+        no-gutters
+        justify="center"
+        class="pt-3 pb-3 pointer"
+        style="border-bottom: 1px solid #a7b8c6"
+        v-if="isUkraine && item.is_reverse == '0' && !isEditItem"
+        v-on:keyup.enter="isEditItem = false"
+        @dblclick="editItem(item.id)"
+      >
         <v-col cols="3" class="ml-7">
           <span>{{ item.time }}</span>
         </v-col>
@@ -31,22 +45,53 @@
       </v-row>
       <!-- /Output shedule item for Ukraine -->
       <!-- Edit item field for Ukraine -->
-      <v-row justify="center" class="mt-3" v-on:keyup.enter="isEditItem ? isEditItem = false : addNewItemInShedule"
-        v-else-if="isUkraine && item.is_reverse == '0' && isEditItem && item.id == editItemId"
-        v-click-outside="clickOutside">
+      <v-row
+        justify="center"
+        class="mt-3"
+        v-on:keyup.enter="
+          isEditItem ? (isEditItem = false) : addNewItemInShedule
+        "
+        style="border-bottom: 1px solid #a7b8c6"
+        v-else-if="
+          isUkraine &&
+          item.is_reverse == '0' &&
+          isEditItem &&
+          item.id == editItemId
+        "
+        v-click-outside="clickOutside"
+      >
         <v-col cols="3" class="ml-7">
-          <v-text-field class="rounded-lg" dense outlined placeholder="Введіть годину" v-mask="'##:##'"
-            v-model="item.time" :error-messages="timeError" />
+          <v-text-field
+            class="rounded-lg"
+            dense
+            outlined
+            placeholder="Введіть годину"
+            v-mask="'##:##'"
+            v-model="item.time"
+            :error-messages="timeError"
+          />
         </v-col>
         <v-col cols="8">
-          <v-text-field class="ml-15 rounded-lg" dense outlined placeholder="Введіть місце.." v-model="item.city"
-            :error-messages="cityError" />
+          <v-text-field
+            class="ml-15 rounded-lg"
+            dense
+            outlined
+            placeholder="Введіть місце.."
+            v-model="item.city"
+            :error-messages="cityError"
+          />
         </v-col>
       </v-row>
       <!-- /Edit item field for Ukraine -->
       <!-- Output shedule item for other country -->
-      <v-row no-gutters justify="center" class="pt-3 pb-3"
-        v-else-if="!isUkraine && item.is_reverse == '1' && !isEditItem" @dblclick="editItem(item.id)">
+      <v-row
+        no-gutters
+        justify="center"
+        class="pt-3 pb-3"
+        v-else-if="!isUkraine && item.is_reverse == '1' && !isEditItem"
+        @dblclick="editItem(item.id)"
+        style="border-bottom: 1px solid #a7b8c6"
+      >
         <v-col cols="3" class="ml-7">
           <span>{{ item.time }}</span>
         </v-col>
@@ -56,34 +101,73 @@
       </v-row>
       <!-- /Output shedule item for other country -->
       <!-- Edit item field for Ukraine -->
-      <v-row justify="center" class="mt-3" v-on:keyup.enter="isEditItem ? isEditItem = false : addNewItemInShedule"
-        v-else-if="!isUkraine && item.is_reverse == '1' && isEditItem && item.id == editItemId"
-        v-click-outside="clickOutside">
+      <v-row
+        justify="center"
+        class="mt-3"
+        v-on:keyup.enter="
+          isEditItem ? (isEditItem = false) : addNewItemInShedule
+        "
+        v-else-if="
+          !isUkraine &&
+          item.is_reverse == '1' &&
+          isEditItem &&
+          item.id == editItemId
+        "
+        style="border-bottom: 1px solid #a7b8c6"
+        v-click-outside="clickOutside"
+      >
         <v-col cols="3" class="ml-7">
-          <v-text-field class="rounded-lg" dense outlined placeholder="Введіть годину" v-mask="'##:##'"
-            v-model="item.time" :error-messages="timeError" />
+          <v-text-field
+            class="rounded-lg"
+            dense
+            outlined
+            placeholder="Введіть годину"
+            v-mask="'##:##'"
+            v-model="item.time"
+            :error-messages="timeError"
+          />
         </v-col>
         <v-col cols="8">
-          <v-text-field class="ml-15 rounded-lg" dense outlined placeholder="Введіть місце.." v-model="item.city"
-            :error-messages="cityError" />
+          <v-text-field
+            class="ml-15 rounded-lg"
+            dense
+            outlined
+            placeholder="Введіть місце.."
+            v-model="item.city"
+            :error-messages="cityError"
+          />
         </v-col>
       </v-row>
       <!-- /Edit item field for Ukraine -->
     </div>
 
-
     <v-row justify="center" class="mt-3" v-on:keyup.enter="addNewItemInShedule">
       <v-col cols="3" class="ml-7">
-        <v-text-field class="rounded-lg" dense outlined placeholder="Введіть годину" v-mask="'##:##'"
-          v-model="sheduleItem.time" :error-messages="timeError" />
+        <v-text-field
+          class="rounded-lg"
+          dense
+          outlined
+          placeholder="Введіть годину"
+          v-mask="'##:##'"
+          v-model="sheduleItem.time"
+          :error-messages="timeError"
+        />
       </v-col>
       <v-col cols="8">
-        <v-text-field class="ml-15 rounded-lg" dense outlined placeholder="Введіть місце.." v-model="sheduleItem.city"
-          :error-messages="cityError" />
+        <v-text-field
+          class="ml-15 rounded-lg"
+          dense
+          outlined
+          placeholder="Введіть місце.."
+          v-model="sheduleItem.city"
+          :error-messages="cityError"
+        />
       </v-col>
     </v-row>
     <v-btn icon class="mt-2">
-      <v-icon large color="#243949" @click="addNewItemInShedule">mdi-plus-circle</v-icon>
+      <v-icon large color="#243949" @click="addNewItemInShedule"
+        >mdi-plus-circle</v-icon
+      >
     </v-btn>
   </div>
 </template>
@@ -112,7 +196,7 @@ export default {
     sheduleItem: {
       time: {
         required,
-        minLength: minLength(5)
+        minLength: minLength(5),
       },
       city: {
         required,
@@ -147,7 +231,7 @@ export default {
     },
     clickOutside() {
       this.isEditItem = false;
-    }
+    },
   },
   computed: {
     timeError() {

@@ -79,7 +79,6 @@
           <div
             v-for="time in route.route_time"
             :key="time.id"
-            style="border: 1px solid #acbdcb; border-top: 0px"
             :style="
               $vuetify.breakpoint.xs
                 ? 'width: 100%;'
@@ -91,6 +90,7 @@
               justify="start"
               class="pt-2"
               align="center"
+              style="border: 1px solid #acbdcb; border-top: 0px"
               v-if="isUkraine && time.is_reverse == '0'"
             >
               <v-col
@@ -116,6 +116,7 @@
               justify="start"
               class="pt-2"
               align="center"
+              style="border: 1px solid #acbdcb; border-top: 0px"
               v-else-if="!isUkraine && time.is_reverse == '1'"
             >
               <v-col

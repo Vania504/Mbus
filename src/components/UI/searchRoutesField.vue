@@ -25,7 +25,7 @@
       "
       @click="reverseItem"
     >
-      <img src="@/assets/img/reverseIcon.png" class="mt-2" />
+      <img src="@/assets/img/reverseIconHorizontal.svg" class="mt-2" />
     </div>
     <v-col cols="3" class="px-0">
       <v-autocomplete
@@ -44,7 +44,7 @@
       />
     </v-col>
     <v-col cols="2" class="px-0">
-      <v-menu ref="menu" v-model="menu" bottom offset-y>
+      <v-menu ref="menu" v-model="menu" bottom offset-y nudge-left="70px">
         <template v-slot:activator="{ on, attrs }">
           <v-text-field
             background-color="white"
@@ -56,6 +56,8 @@
             v-model="routeDate"
             v-bind="attrs"
             v-on="on"
+            @click:prepend-inner-icon="on.click"
+            hide-details
             :error-messages="endRouteError"
           />
         </template>
@@ -80,9 +82,11 @@
             dense
             class="rounded-l-0 rounded-r-lg"
             @click="isClose = false"
+            @click:prepend-inner-icon="on.click"
+            hide-details
           />
         </template>
-        <v-card width="261px" style="padding: 15px 30px 15px 30px;">
+        <v-card width="261px" style="padding: 15px 30px 15px 30px">
           <v-row no-gutters align="center" justify="start">
             <v-col cols="6" style="text-align: left"
               ><span class="peopleTypeStyle">Дорослий:</span></v-col

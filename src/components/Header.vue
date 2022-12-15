@@ -3,7 +3,7 @@
     <v-app-bar
       :height="
         $vuetify.breakpoint.xs
-          ? '40px'
+          ? '50px'
           : $route.name == 'ticket_search_page'
           ? '178px'
           : '98px'
@@ -41,7 +41,7 @@
                       style="
                         margin-right: 24px;
                         cursor: pointer;
-                        font-weight: 400;
+                        font-weight: 400; 
                       "
                       :color="!isActiveMenu ? 'black' : '#085895'"
                       >mdi-chevron-down</v-icon
@@ -231,7 +231,7 @@
             >
           </v-col>
         </v-row>
-        <v-row v-else align="center" justify="center" no-gutters>
+        <v-row v-else align="center" justify="center" no-gutters style="padding: 5px 0px 5px 0px;">
           <img src="@/assets/img/logoMbus.png" width="60px" height="40px" />
         </v-row>
         <v-row

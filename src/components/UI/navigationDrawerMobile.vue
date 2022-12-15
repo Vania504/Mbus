@@ -25,10 +25,29 @@
       >
     </div>
     <div style="padding: 20px 0px 20px 15px" v-if="!loggedUser">
-      <v-row no-gutters justify="start">
+      <v-row no-gutters justify="start" align="center">
         <v-icon color="black" class="mr-1">mdi-account</v-icon
-        ><span class="pointer" @click="showSignInModal = true">Увійти</span
-        >/<span @click="showSignUpModal = true" class="pointer"
+        ><span
+          style="
+            font-weight: 400;
+            font-size: 16px;
+            line-height: 19px;
+            letter-spacing: 0.055em;
+            color: #243949;
+          "
+          class="pointer"
+          @click="showSignInModal = true"
+          >Увійти</span
+        >/<span
+          style="
+            font-weight: 400;
+            font-size: 16px;
+            line-height: 19px;
+            letter-spacing: 0.055em;
+            color: #243949;
+          "
+          @click="showSignUpModal = true"
+          class="pointer"
           >Реєстрація</span
         >
       </v-row>
@@ -57,7 +76,12 @@
           ><img style="margin-left: 5px" src="@/assets/img/logoutIcon.svg" />
         </v-row>
       </v-row>
-      <v-row no-gutters align="center" class="pointer">
+      <v-row
+        no-gutters
+        align="center"
+        class="pointer"
+        @click="$router.push('/edit_profile')"
+      >
         <img
           width="20px"
           height="20px"
@@ -114,15 +138,27 @@
         </router-link>
       </v-list-item-group>
     </v-list>
+    <confirmModal
+      v-if="showConfirmModal"
+      @close="showConfirmModal = false"
+      :visible="showConfirmModal"
+      modalText="Ви підтверджуєте вихід?"
+      @confirm="logout"
+    />
   </v-navigation-drawer>
 </template>
 
 <script>
 import { mapGetters } from "vuex";
+import confirmModal from "./modals/confirmModal.vue";
 export default {
+  components: {
+    confirmModal,
+  },
   data: () => ({
     group: "",
     visible: false,
+    showConfirmModal: false,
   }),
   props: {
     showNavigationDrawer: {
@@ -132,6 +168,13 @@ export default {
   mounted() {
     this.visible = this.showNavigationDrawer;
     window.scrollTo(0, 0);
+  },
+  methods: {
+    logout() {
+      this.$store.commit("clearUserLogged");
+      this.$router.push("/");
+      this.showConfirmModal = false;
+    },
   },
   computed: {
     ...mapGetters(["loggedUser"]),

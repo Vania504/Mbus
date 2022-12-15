@@ -20,7 +20,7 @@
           <v-col :cols="isAdmin ? '3' : '1'" style="text-align: left">
             <v-row no-gutters justify="start">
               <router-link to="/">
-                <img class="pt-2" src="@/assets/img/logoMbus.png" />
+                <img class="pt-2" src="@/assets/img/logoMbus.svg" />
               </router-link>
             </v-row>
           </v-col>

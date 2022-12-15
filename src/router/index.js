@@ -75,6 +75,11 @@ const routes = [
         path: '/reset_password/:code',
         name: 'reset_password_code',
         component: () => import('@/views/forAdmin/inputNewPassword.vue'),
+    },
+    {
+        path: '/test',
+        name: 'test',
+        component: () => import('@/components/forUser/pdfTicket.vue')
     }
 ];
 const router = new VueRouter({

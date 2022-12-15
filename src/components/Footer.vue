@@ -2,7 +2,7 @@
   <v-footer color="#122B3E" :height="$vuetify.breakpoint.xs ? '' : '223px'">
     <v-row justify="start" v-if="!$vuetify.breakpoint.xs">
       <v-col style="text-align: left">
-        <img width="136px" height="90px" src="@/assets/img/logoMbus.png" alt="logo" />
+        <img width="136px" height="90px" src="@/assets/img/logoMbus.svg" alt="logo" />
       </v-col>
       <v-col class="white--text" style="text-align: left">
         <span>ТЕЛЕФОНИ ДИСПЕТЧЕРІВ</span>

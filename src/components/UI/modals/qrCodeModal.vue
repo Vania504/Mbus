@@ -109,14 +109,38 @@
         >
       </v-col>
     </v-card>
+    <vue-html2pdf
+      :show-layout="false"
+      :float-layout="true"
+      :enable-download="true"
+      :preview-modal="true"
+      :paginate-elements-by-height="1400"
+      filename="ticket"
+      :pdf-quality="1"
+      :manual-pagination="false"
+      pdf-format="a4"
+      :pdf-margin="50"
+      pdf-orientation="landscape"
+      pdf-content-width="1146px"
+      @progress="onProgress($event)"
+      ref="html2Pdf"
+    >
+      <section slot="pdf-content">
+        <pdf-ticket />
+      </section>
+    </vue-html2pdf>
   </v-dialog>
 </template>
 
 <script>
 import VueQRCodeComponent from "vue-qrcode-component";
+import VueHtml2pdf from "vue-html2pdf";
+import PdfTicket from "@/components/forUser/pdfTicket.vue";
 export default {
   components: {
     VueQRCodeComponent,
+    VueHtml2pdf,
+    PdfTicket,
   },
   data: () => ({
     downloadPDF: false,
@@ -133,6 +157,7 @@ export default {
     },
     downloadQrToPDF() {
       this.downloadPDF = true;
+      this.$refs.html2Pdf.generatePdf();
     },
   },
   computed: {

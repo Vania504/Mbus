@@ -1,40 +1,124 @@
 <template>
-  <v-navigation-drawer v-model="visible" absolute right temporary style="z-index: 50">
-    <div style="background-color: #243949; height: 30px" class="white--text">
+  <v-navigation-drawer
+    v-model="visible"
+    absolute
+    right
+    temporary
+    style="z-index: 50"
+    width="100%"
+  >
+    <div
+      style="
+        background-color: #243949;
+        height: 40px;
+        padding: 10px 0px 10px 15px;
+      "
+      class="white--text"
+    >
       <v-row no-gutters align="center" justify="start"
-        ><v-app-bar-nav-icon color="white"></v-app-bar-nav-icon>
+        ><v-icon color="white" style="margin-right: 10px"
+          >mdi-dots-horizontal-circle-outline</v-icon
+        >
         <span style="font-size: 16px; line-height: 19px; letter-spacing: 0.1em"
           >Інше</span
         ></v-row
       >
     </div>
+    <div style="padding: 20px 0px 20px 15px" v-if="!loggedUser">
+      <v-row no-gutters justify="start">
+        <v-icon color="black" class="mr-1">mdi-account</v-icon
+        ><span class="pointer" @click="showSignInModal = true">Увійти</span
+        >/<span @click="showSignUpModal = true" class="pointer"
+          >Реєстрація</span
+        >
+      </v-row>
+    </div>
+    <div v-else style="padding: 20px 15px 20px 15px">
+      <v-row no-gutters align="center" style="margin-bottom: 20px">
+        <v-icon style="margin-right: 10px" color="black">mdi-account</v-icon>
+        <span
+          style="
+            font-weight: 400;
+            font-size: 16px;
+            line-height: 19px;
+            letter-spacing: 0.055em;
+            color: #243949;
+          "
+          >Герцюк Ігор</span
+        >
+        <v-row
+          no-gutters
+          align="center"
+          justify="end"
+          class="pointer"
+          @click="showConfirmModal = true"
+        >
+          <output class="logOutLabel"> Вихід </output
+          ><img style="margin-left: 5px" src="@/assets/img/logoutIcon.svg" />
+        </v-row>
+      </v-row>
+      <v-row no-gutters align="center" class="pointer">
+        <img
+          width="20px"
+          height="20px"
+          style="margin-right: 10px; margin-left: 3px"
+          src="@/assets/img/editProfileIcon.svg"
+        />
+        <span
+          style="
+            font-weight: 400;
+            font-size: 16px;
+            line-height: 19px;
+            letter-spacing: 0.055em;
+            color: #243949;
+          "
+          >Налаштування</span
+        >
+      </v-row>
+    </div>
+    <v-divider />
     <v-list nav dense>
       <v-list-item-group
         v-model="group"
         active-class="blue-purple--text text--accent-4"
       >
         <router-link to="/irregular_transportation">
-          <v-list-item>
+          <v-list-item active-class="activeItem">
             <v-row no-gutters justify="start" align="center">
-              <v-icon color="#243949">mdi-minus</v-icon>
               <span class="textStyleDrawer">Нерегулярні перевезення</span>
+              <v-row no-gutters justify="end">
+                <v-icon color="#243949">mdi-chevron-right</v-icon>
+              </v-row>
             </v-row>
           </v-list-item>
         </router-link>
         <router-link to="/transportation_rules">
           <v-list-item>
             <v-row no-gutters justify="start" align="center">
-              <v-icon color="#243949">mdi-minus</v-icon>
               <span class="textStyleDrawer">Правила перевезення</span>
+              <v-row no-gutters justify="end">
+                <v-icon color="#243949">mdi-chevron-right</v-icon>
+              </v-row>
             </v-row>
           </v-list-item>
-          </router-link>
+        </router-link>
+        <router-link to="/transportation_rules">
+          <v-list-item>
+            <v-row no-gutters justify="start" align="center">
+              <span class="textStyleDrawer">Контакти</span>
+              <v-row no-gutters justify="end">
+                <v-icon color="#243949">mdi-chevron-right</v-icon>
+              </v-row>
+            </v-row>
+          </v-list-item>
+        </router-link>
       </v-list-item-group>
     </v-list>
   </v-navigation-drawer>
 </template>
 
 <script>
+import { mapGetters } from "vuex";
 export default {
   data: () => ({
     group: "",
@@ -47,27 +131,34 @@ export default {
   },
   mounted() {
     this.visible = this.showNavigationDrawer;
-    window.scrollTo(0,0);
+    window.scrollTo(0, 0);
+  },
+  computed: {
+    ...mapGetters(["loggedUser"]),
   },
   watch: {
     visible: {
       deep: true,
-      handler(){
-        if(this.visible == false){
-           this.$emit('close')
+      handler() {
+        if (this.visible == false) {
+          this.$emit("close");
         }
-      }
-    }
-  }
+      },
+    },
+  },
 };
 </script>
 
 <style>
 .textStyleDrawer {
   font-weight: 400;
-  font-size: 14px;
-  line-height: 16px;
-  letter-spacing: 0.055em;
-  color: #243949;
+  font-size: 16px;
+  line-height: 19px;
+  letter-spacing: 0.1em;
+  color: #4c5d6c;
+}
+.activeItem {
+  background: rgba(8, 88, 149, 0.1);
+  border-radius: 10px;
 }
 </style>

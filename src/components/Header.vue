@@ -83,7 +83,14 @@
               >
             </v-row>
             <v-row no-gutters justify="end" align="center" v-else>
-              <v-menu open-on-hover botoom offset-y max-width="200px">
+              <v-menu
+                open-on-hover
+                botoom
+                offset-y
+                width="200px"
+                nudge-left="30px"
+                v-model="menu"
+              >
                 <template v-slot:activator="{ on, attrs }">
                   <div v-bind="attrs" v-on="on">
                     <v-row no-gutters align="center" justify="end">
@@ -95,9 +102,9 @@
                     </v-row>
                   </div>
                 </template>
-                <v-card>
+                <v-card width="200px" height="110px" style="overflow: hidden">
                   <v-row no-gutters justify="center">
-                    <v-col>
+                    <v-col style="text-align: left">
                       <v-row
                         no-gutters
                         align="center"
@@ -106,37 +113,51 @@
                         <v-icon style="margin-right: 5px" color="black"
                           >mdi-account</v-icon
                         >
-                        <span>Герцюк Ігор</span>
+                        <span
+                          style="
+                            font-weight: 400;
+                            font-size: 14px;
+                            line-height: 16px;
+                            letter-spacing: 0.1em;
+                            color: #000000;
+                          "
+                          >Герцюк Ігор</span
+                        >
+                        <v-row no-gutters align="center" justify="end">
+                          <img
+                            height="20px"
+                            width="20px"
+                            class="pointer"
+                            src="@/assets/img/editProfileIcon.svg"
+                            @click="$router.push('/edit_profile')"
+                          />
+                        </v-row>
                       </v-row>
                       <v-divider />
                       <v-col class="py-0 px-0" style="text-align: left">
-                        <v-list dense>
-                          <v-list-item-group
-                            v-model="selectedItem"
-                            active-class="activeMenu"
+                        <div style="height: 66px">
+                          <div
+                            class="dropdownItem"
+                            @click="showMyTicketModal = true"
                           >
-                            <v-list-item
-                              style="height: 26px"
-                              @click="showMyTicketModal = true"
-                            >
-                              <p class="myTicketLabel">Мої квитки</p>
-                            </v-list-item>
-                            <v-list-item style="height: 26px">
-                              <p>
-                                <v-row no-gutters align="center" class="pt-4">
-                                  <output
-                                    class="logOutLabel"
-                                    @click="showConfirmModal = true"
-                                  >
-                                    Вихід </output
-                                  ><img
-                                    style="margin-left: 5px"
-                                    src="@/assets/img/logoutIcon.svg"
-                                  />
-                                </v-row>
-                              </p>
-                            </v-list-item> </v-list-item-group
-                        ></v-list>
+                            <span class="myTicketLabel">Мої квитки</span>
+                          </div>
+                          <div class="dropdownItem">
+                            <p>
+                              <v-row no-gutters align="center" class="pt-4">
+                                <output
+                                  class="logOutLabel"
+                                  @click="showConfirmModal = true"
+                                >
+                                  Вихід </output
+                                ><img
+                                  style="margin-left: 5px"
+                                  src="@/assets/img/logoutIcon.svg"
+                                />
+                              </v-row>
+                            </p>
+                          </div>
+                        </div>
                       </v-col>
                     </v-col>
                   </v-row>
@@ -245,7 +266,7 @@
     <my-ticket-modal
       v-if="showMyTicketModal"
       :visible="showMyTicketModal"
-      @close="showConfirmModal = false"
+      @close="showMyTicketModal = false"
     />
   </div>
 </template>
@@ -335,7 +356,6 @@ a {
 }
 .myTicketLabel {
   padding-left: 15px;
-  padding-top: 10px;
   font-weight: 400;
   font-size: 14px;
   line-height: 16px;
@@ -350,7 +370,14 @@ a {
   color: #960909;
   padding-left: 15px;
 }
-.activeMenu {
+.dropdownItem {
+  height: 26px;
+  margin: 5px;
+  display: flex;
+  align-items: center;
+  cursor: pointer;
+}
+.dropdownItem:hover {
   background: rgba(8, 88, 149, 0.1);
   border-radius: 10px;
   height: 26px !important;

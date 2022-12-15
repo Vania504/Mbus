@@ -51,6 +51,11 @@ const routes = [
         component: () => import('@/views/forUser/bookingTicket.vue')
     },
     {
+        path: '/edit_profile',
+        name: 'editProfile',
+        component: () => import('@/components/forUser/editUserProfile.vue')
+    },
+    {
         path: '/admin',
         name: 'admin',
         component: () => import('@/views/forAdmin/Main.vue'),

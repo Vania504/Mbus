@@ -17,6 +17,7 @@
                 : 'color: #085895;'
             "
             class="pointer"
+            @click="editRoute(ticket.route)"
             >Редагування маршруту</span
           >
         </v-row>
@@ -168,21 +169,34 @@
         </v-col>
       </v-row>
     </v-col>
+    <add-new-routes-modal
+      v-if="isEditRoute"
+      :isEdit="true"
+      :visible="isEditRoute"
+      :routeDetailInfo="routeDetailInfo"
+      :busList="buses"
+      @close="isEditRoute = false"
+    />
   </v-card>
 </template>
 
 <script>
 import routesService from "@/requests/admin/routesService";
 import ourFleetService from "@/requests/admin/ourFleetService";
+import addNewRoutesModal from "../../addNewRoutesModal.vue";
 export default {
+  components: {
+    addNewRoutesModal,
+  },
   data: () => ({
-    disableEditRoute: true,
     isClose: true,
+    isEditRoute: false,
     dates: [],
     minutes: ["00:00", "00:01"],
     routes: [],
     buses: [],
     ticket: {},
+    routeDetailInfo: {},
     menu: "",
   }),
   mounted() {
@@ -195,8 +209,13 @@ export default {
       this.routes = response.data.data;
     },
     async getBuses() {
-      let response = await ourFleetService.getBusesForAdmin();
+      let response = await ourFleetService.getBuses();
       this.buses = response.data;
+    },
+    async editRoute(id) {
+      let response = await routesService.getRoute(id);
+      this.routeDetailInfo = response.data;
+      this.isEditRoute = true;
     },
   },
 };

@@ -19,7 +19,10 @@
       />
     </div>
     <div v-if="activeCategory == 1">
-      <create-new-ticket-component v-if="createNewTicket" @back="createNewTicket = false"/>
+      <create-new-ticket-component
+        v-if="createNewTicket"
+        @back="createNewTicket = false"
+      />
       <tickets-component v-else @createNewTicket="createNewTicket = true" />
     </div>
     <add-new-routes-modal
@@ -91,7 +94,7 @@ export default {
     async getRoute(id) {
       let response = await routesService.getRoute(id);
       this.routeDetailInfo = response.data;
-      this.showModal = true;
+      this.showCreateRouteModal = true;
       this.isEdit = true;
     },
     async getBuses() {

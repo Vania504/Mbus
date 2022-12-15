@@ -1,7 +1,10 @@
 <template>
   <v-col style="text-align: left">
-    <v-row no-gutters align="center" class="pointer" @click="$emit('back')">
-      <v-icon color="black">mdi-menu-left</v-icon>&nbsp;<span
+    <v-row no-gutters align="center">
+      <v-icon color="black" @click="$emit('back')" class="pointer"
+        >mdi-menu-left</v-icon
+      >&nbsp;<span
+        @click="$emit('back')"
         style="
           font-weight: 400;
           font-size: 14px;
@@ -9,6 +12,7 @@
           letter-spacing: 0.1em;
           color: #243949;
         "
+        class="pointer"
         >Назад</span
       >
     </v-row>

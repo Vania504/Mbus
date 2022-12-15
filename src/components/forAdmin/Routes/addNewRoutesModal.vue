@@ -576,7 +576,7 @@ export default {
       require: true,
     },
     isEdit: {
-      require: true,
+      require: false,
     },
     busList: {
       require: true,
@@ -727,6 +727,7 @@ export default {
       this.routeImages.push(image);
     },
     setRoute() {
+      console.log(this.route, this.routeDetailInfo, this.isEdit)
       this.$set(this.route, "id", this.routeDetailInfo.id);
       this.$set(this.route, "route_name_start", this.routeDetailInfo.departure);
       this.$set(this.route, "route_name_end", this.routeDetailInfo.destination);

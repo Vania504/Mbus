@@ -19,7 +19,8 @@
       />
     </div>
     <div v-if="activeCategory == 1">
-      <tickets-component />
+      <create-new-ticket-component v-if="createNewTicket" @back="createNewTicket = false"/>
+      <tickets-component v-else @createNewTicket="createNewTicket = true" />
     </div>
     <add-new-routes-modal
       v-if="showCreateRouteModal"
@@ -42,7 +43,8 @@ import ourFleetService from "@/requests/admin/ourFleetService";
 import { mapGetters, mapActions } from "vuex";
 import RoutesHeaderAdmin from "./routesHeaderAdmin.vue";
 import CreateNewOutlineBtn from "@/components/UI/buttons/createNewOutlineBtn.vue";
-import TicketsComponent from './Tickets/ticketsComponent.vue';
+import TicketsComponent from "./Tickets/ticketsComponent.vue";
+import CreateNewTicketComponent from "./Tickets/createNewTickets/createNewTicketComponent.vue";
 export default {
   components: {
     routesList,
@@ -50,10 +52,12 @@ export default {
     RoutesHeaderAdmin,
     CreateNewOutlineBtn,
     TicketsComponent,
+    CreateNewTicketComponent,
   },
   data: () => ({
     showCreateRouteModal: false,
     isEdit: false,
+    createNewTicket: false,
     busList: [],
     routes: [],
     routeDetailInfo: {},

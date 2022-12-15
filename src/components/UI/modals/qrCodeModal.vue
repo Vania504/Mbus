@@ -97,13 +97,14 @@
           height="36px"
           @click="downloadQrToPDF"
         >
-          <span v-if="!downloadPDF"
-            >Завантажити PDF квиток
+          <v-row v-if="!downloadPDF" no-gutters align="center">
+            <span>Завантажити PDF квиток </span>
             <img
               src="@/assets/img/downloadIcon.svg"
               alt="download"
-              style="margin-left: 15px"
-          /></span>
+              style="margin-left: 10px"
+            />
+          </v-row>
           <span v-else>Завантажено</span></v-btn
         >
       </v-col>

@@ -9,7 +9,8 @@
           border-radius: 10px;
           display: flex;
         "
-        v-for="i in 9" :key="i"
+        v-for="i in 9"
+        :key="i"
       >
         <div style="width: 25px; text-align: right">
           <img src="@/assets/img/dottedLine.svg" />
@@ -21,7 +22,12 @@
     </v-col>
     <v-col cols="4">
       <v-row no-gutters justify="center">
-        <create-new-outline-btn width="264px" height="39" text="Новий квиток" />
+        <create-new-outline-btn
+          width="264px"
+          height="39"
+          text="Новий квиток"
+          @click="$emit('createNewTicket')"
+        />
         <status-filter-card />
         <availabele-route-filter />
       </v-row>

@@ -2,7 +2,10 @@
   <div>
     <v-app-bar
       :height="
-        $vuetify.breakpoint.xs
+        ($vuetify.breakpoint.xs && $route.name == 'ticket_search_page') ||
+        ($vuetify.breakpoint.xs && $route.name == 'routes_detail_page')
+          ? '140px'
+          : $vuetify.breakpoint.xs
           ? '50px'
           : $route.name == 'ticket_search_page'
           ? '178px'
@@ -41,7 +44,7 @@
                       style="
                         margin-right: 24px;
                         cursor: pointer;
-                        font-weight: 400; 
+                        font-weight: 400;
                       "
                       :color="!isActiveMenu ? 'black' : '#085895'"
                       >mdi-chevron-down</v-icon
@@ -231,18 +234,35 @@
             >
           </v-col>
         </v-row>
-        <v-row v-else align="center" justify="center" no-gutters style="padding: 5px 0px 5px 0px;">
+        <v-row
+          v-else
+          align="center"
+          justify="center"
+          no-gutters
+          style="padding: 5px 0px 5px 0px"
+        >
           <img src="@/assets/img/logoMbus.png" width="60px" height="40px" />
         </v-row>
         <v-row
           no-gutters
           justify="center"
           class="pt-7"
-          v-if="$route.name == 'ticket_search_page'"
+          v-if="$route.name == 'ticket_search_page' && !$vuetify.breakpoint.xs"
         >
           <div style="width: 800px">
             <search-routes-field />
           </div>
+        </v-row>
+        <v-row
+          no-gutters
+          justify="center"
+          class="pt-2"
+          v-if="
+            ($route.name == 'ticket_search_page' && $vuetify.breakpoint.xs) ||
+            ($route.name == 'routes_detail_page' && $vuetify.breakpoint.xs)
+          "
+        >
+          <mobile-search-menu @show="showQuantityPassangerModal = true" />
         </v-row>
       </v-col>
     </v-app-bar>
@@ -276,6 +296,7 @@ import { mapGetters } from "vuex";
 import SignIn from "./forAdmin/signIn.vue";
 import signUpModal from "./forAdmin/signUpModal.vue";
 import MyTicketModal from "./forUser/myTicket/myTicketModal.vue";
+import MobileSearchMenu from "./UI/mobileSearchMenu.vue";
 import ConfirmModal from "./UI/modals/confirmModal.vue";
 import searchRoutesField from "./UI/searchRoutesField.vue";
 export default {
@@ -285,6 +306,7 @@ export default {
     ConfirmModal,
     MyTicketModal,
     searchRoutesField,
+    MobileSearchMenu,
   },
   name: "appHeader",
   data: () => ({
@@ -311,6 +333,7 @@ export default {
     showSignUpModal: false,
     showConfirmModal: false,
     showMyTicketModal: false,
+    menu: false,
     selectedItem: 0,
   }),
   methods: {

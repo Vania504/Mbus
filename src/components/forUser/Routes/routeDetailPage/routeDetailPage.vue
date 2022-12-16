@@ -26,6 +26,7 @@
             </v-row>
           </div>
           <div
+            v-if="!$vuetify.breakpoint.xs"
             style="
               width: 1440px;
               height: 80px;

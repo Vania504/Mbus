@@ -22,7 +22,7 @@ const routes = [
     },
     {
         path: '/routes/:id',
-        name: 'routes',
+        name: 'routes_detail_page',
         component: () => import('@/views/forUser/routeDetailPage.vue'),
     },
     {

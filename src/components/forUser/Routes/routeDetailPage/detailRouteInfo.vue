@@ -10,7 +10,7 @@
     <p class="mt-2">
       <span
         ><span class="countryName">Україна:&nbsp;</span
-        ><span v-for="(city, index) in ukraine_city" :key="city.id">
+        ><span v-for="(city, index) in ukraine_city" :key="city.name">
           <span v-if="index == 0">{{ city.name }}</span>
           <span v-if="index !== 0">&nbsp;— {{ city.name }}</span>
         </span>
@@ -18,7 +18,7 @@
       <br />
       <span
         ><span class="countryName">Інша країна:&nbsp;</span>
-        <span v-for="(city, index) in foreign_city" :key="city.id">
+        <span v-for="(city, index) in foreign_city" :key="city.name">
           <span v-if="index == 0">{{ city.name }}</span>
           <span v-if="index !== 0">&nbsp;— {{ city.name }}</span>
         </span>
@@ -78,7 +78,7 @@
         <center>
           <div
             v-for="time in route.route_time"
-            :key="time.id"
+            :key="time.time"
             :style="
               $vuetify.breakpoint.xs
                 ? 'width: 100%;'
@@ -154,7 +154,7 @@
             </v-row>
           </div>
         </center>
-      </v-col>
+      </v-col>÷
     </v-row>
   </v-col>
 </template>

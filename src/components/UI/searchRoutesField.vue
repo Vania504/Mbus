@@ -153,6 +153,7 @@ export default {
     quantityAdult: 0,
     quantityKid: 0,
     isClose: false,
+    menu: false,
   }),
   validations: {
     start_route: {

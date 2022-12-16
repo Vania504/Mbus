@@ -77,14 +77,7 @@
           >
             Пошук автобусних рейсів:
           </h4>
-          <search-routes-field-mobile
-            v-if="$vuetify.breakpoint.xs"
-            :startCities="startCities"
-            :nextCities="nextCities"
-            @nextCities="getNextCities"
-            @reverseItem="reverseItem"
-            @searchRoutes="searchRoutes"
-          />
+          <search-routes-field-mobile v-if="$vuetify.breakpoint.xs" />
           <v-row v-else justify="center" no-gutters>
             <!-- :style="
               startRouteError.length || endRouteError.length
@@ -110,10 +103,8 @@
 
 <script>
 import searchRoutesFieldMobile from "./mainMobile/searchRoutesFieldMobile.vue";
-import settingsService from "@/requests/admin/settingsService";
-import searchRoutesService from "@/requests/main/searchRoutesService";
-import { mapActions, mapGetters } from "vuex";
 import searchRoutesField from "@/components/UI/searchRoutesField.vue";
+import { mapGetters } from "vuex";
 export default {
   components: {
     searchRoutesFieldMobile,
@@ -126,86 +117,8 @@ export default {
     nextCities: [],
     startCities: [],
   }),
-  mounted() {
-    this.getSocialNetwork();
-    this.getStartCities();
-  },
-  methods: {
-    ...mapActions(["updateLoader"]),
-    reverseItem(start_route, end_route) {
-      if (start_route && end_route) {
-        this.updateLoader(true);
-        this.start_route = end_route;
-        this.end_route = start_route;
-      } else if (this.start_route && this.end_route) {
-        this.updateLoader(true);
-        let old_start_route = this.start_route;
-        this.start_route = this.end_route;
-        this.end_route = old_start_route;
-      }
-    },
-    hideLoader() {
-      this.updateLoader(false);
-    },
-    async getSocialNetwork() {
-      let response = await settingsService.getSettingList("socials");
-      this.socialNetworks = response.data;
-    },
-    async getStartCities() {
-      let response = await searchRoutesService.getStartCities();
-      this.startCities = response.data;
-      this.hideLoader();
-    },
-    async getNextCities(start_route) {
-      let response = await searchRoutesService.getNextCities(
-        start_route ? start_route : this.start_route
-      );
-      this.nextCities = response.data;
-      setTimeout(this.hideLoader, 1500);
-    },
-    async searchRoutes(isMobile, start_route, end_route) {
-      this.$v.$touch();
-      if (isMobile && typeof isMobile !== "object") {
-        this.$router.push(
-          `/routes?start_route=${start_route}&end_route=${end_route}`
-        );
-      } else if (!this.$v.$invalid) {
-        this.$router.push(
-          `/routes?start_route=${this.start_route}&end_route=${this.end_route}`
-        );
-        this.hideLoader();
-      }
-    },
-  },
   computed: {
     ...mapGetters(["loader"]),
-    startRouteError() {
-      const errors = [];
-      if (!this.$v.start_route.$dirty) {
-        return errors;
-      }
-      !this.$v.start_route.required &&
-        errors.push("Оберіть місце відправлення");
-      return errors;
-    },
-    endRouteError() {
-      const errors = [];
-      if (!this.$v.end_route.$dirty) {
-        return errors;
-      }
-      !this.$v.end_route.required && errors.push("Оберіть місце прибуття");
-      return errors;
-    },
-  },
-  watch: {
-    start_route: {
-      deep: true,
-      handler() {
-        if (this.start_route.length > 0) {
-          this.getNextCities();
-        }
-      },
-    },
   },
 };
 </script>

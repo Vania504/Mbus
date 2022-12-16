@@ -2,7 +2,7 @@
   <v-card :min-height="$vuetify.breakpoint.xs ? '100%' : '393px'">
     <modal-header
       :showTicketIcon="true"
-      :showCloseIcon="true"
+      :showCloseIcon="$vuetify.breakpoint.xs ? false : true"
       title="Мої квитки"
       @close="$emit('close')"
     />

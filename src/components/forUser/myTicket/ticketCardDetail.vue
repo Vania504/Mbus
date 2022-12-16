@@ -1,11 +1,84 @@
 <template>
   <v-card class="detailTicketCard rounded-lg">
+    <div v-if="$vuetify.breakpoint.xs">
+      <v-row no-gutters align="center" style="padding: 10px;">
+        <span style="
+        font-weight: 400;
+        font-size: 12px;
+        line-height: 14px;
+        letter-spacing: 0.1em;  
+        color: #243949;">Автобус:</span>&nbsp;
+        <img width="12px" height="12px" src="@/assets/img/busServiceIcon/busIcon.png"/>
+        &nbsp;
+        <v-col cols="4" class="px-0 py-0">
+          <span style="
+        font-weight: 400;
+        font-size: 12px;
+        line-height: 14px;
+        letter-spacing: 0.1em;
+        color: #085895;">Setra S 417 GT-HD</span>
+      </v-col>
+      
+        <v-row no-gutters justify="end">
+          <span style="
+          font-weight: 400;
+          font-size: 12px;
+          line-height: 14px;
+          letter-spacing: 0.1em;
+          text-decoration-line: underline;
+          color: #6B7C8A;
+          ">
+          Переглянути маршрут
+        </span>
+        </v-row>
+      </v-row>
+      <v-divider style="border: 0.5px solid rgba(173, 197, 217, 0.4);"/>
+      <v-col
+      class="px-0 py-0"
+      cols="8"
+      style="text-align: left; margin: 10px"
+    >
+      <v-row no-gutters align="center">
+        <v-col cols="6" class="py-0"
+          ><span class="itemTicketTitleMobile">Прізвище та ім’я:</span></v-col
+        >
+        <v-col cols="6" class="py-0"
+          ><span class="itemTicketTextMobile">Герцюк Ігор</span></v-col
+        >
+      </v-row>
+      <v-row no-gutters align="center">
+        <v-col cols="6" class="py-0">
+          <span class="itemTicketTitleMobile">Номер телефону:</span></v-col
+        >
+        <v-col cols="6" class="py-0"
+          ><span class="itemTicketTextMobile">38(098)-654-77-40</span></v-col
+        >
+      </v-row>
+      <v-row no-gutters align="center">
+        <v-col cols="6" class="py-0"
+          ><span class="itemTicketTitleMobile">Кількість місць:</span></v-col
+        >
+        <v-col cols="6" class="py-0"
+          ><span class="itemTicketTextMobile">2 місця (1 дитячий)</span></v-col
+        >
+      </v-row>
+      <v-row no-gutters align="center">
+        <v-col cols="6" class="py-0"
+          ><span class="itemTicketTitleMobile">Місце:</span></v-col
+        >
+        <v-col cols="6" class="py-0"
+          ><span class="itemTicketTextMobile">01, 02</span></v-col
+        >
+      </v-row>
+    </v-col>
+    <v-divider style="border: 0.5px solid rgba(173, 197, 217, 0.4);"/>
+    </div>
     <v-col style="text-align: center;">
       <p class="heading">
         Умови перевізника
       </p>
       <v-row no-gutters justify="center">
-        <v-col cols="4" style="text-align: left;">
+        <v-col cols="12" xl="4" lg="4" md="4" sm="12" style="text-align: left;">
           <p style="
           font-weight: 500;
           font-size: 12px;
@@ -25,7 +98,7 @@
             </ul>  
           </p>
         </v-col>
-        <v-col cols="4" style="text-align: left;">
+        <v-col cols="12" xl="4" lg="4" md="4" sm="12" style="text-align: left;">
             <p style="
             font-weight: 500;
             font-size: 12px;
@@ -44,7 +117,7 @@
             </span>
         </p>
           </v-col>
-          <v-col cols="4" style="text-align: left;">
+          <v-col cols="12" xl="4" lg="4" md="4" sm="12" style="text-align: left;">
             <p style="
             font-weight: 500;
             font-size: 12px;
@@ -75,6 +148,7 @@
                 class="mt-5 mr-5"
                 width="30px"
                 height="30px"
+                style="objcet-for: cover;"
                 v-bind="attrs"
                 v-on="on"
               />
@@ -161,6 +235,21 @@ export default {
 }
 .heading {
   font-weight: 500;
+  font-size: 12px;
+  line-height: 14px;
+  letter-spacing: 0.1em;
+  color: #243949;
+}
+.itemTicketTitleMobile {
+  font-weight: 500;
+  font-size: 12px;
+  line-height: 14px;
+  letter-spacing: 0.1em;
+  color: #243949;
+  margin-right: 3px;
+}
+.itemTicketTextMobile {
+  font-weight: 400;
   font-size: 12px;
   line-height: 14px;
   letter-spacing: 0.1em;

@@ -63,7 +63,9 @@ import { mapGetters } from "vuex";
 export default {
   components: { modalHeader, TicketList, SearchRouteBtn },
   data: () => ({
-    myTicketsList: [],
+    myTicketsList: [
+      {id: 1}
+    ],
   }),
   computed: {
     ...mapGetters(["loggedUser"]),

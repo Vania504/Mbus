@@ -28,9 +28,19 @@
           color: #085895;
         "
       >
-        Вхід
+        Реєстрація
       </p>
       <v-col>
+        <v-text-field
+          outlined
+          dense
+          color="#085895"
+          v-model="user.username"
+          :append-icon="usernameError.length ? 'mdi-alert-circle-outline' : ''"
+          label="Ім'я користувача"
+          placeholder="Введіть тут.."
+          :error-messages="usernameError"
+        />
         <v-text-field
           outlined
           dense
@@ -51,36 +61,47 @@
           type="password"
           placeholder="Введіть тут.."
           :error-messages="passwordError"
+        />
+        <v-text-field
+          outlined
+          dense
+          color="#085895"
+          v-model="user.confirm_password"
+          :append-icon="
+            confirmPasswordError.length ? 'mdi-alert-circle-outline' : ''
+          "
+          label="Пароль"
+          type="password"
+          placeholder="Введіть тут.."
+          :error-messages="confirmPasswordError"
           hide-details
         />
-        <v-row no-gutters align="center">
-          <v-checkbox v-model="rememberMe" color="#085895" class="mr-1" />
-          <span
-            style="
-              font-weight: 400;
-              font-size: 14px;
-              line-height: 16px;
-              letter-spacing: 0.1em;
-              color: #50616e;
-              margin-bottom: 2px;
-            "
-            >Запам’ятати мене</span
-          >
-          <v-row no-gutters justify="end">
+        <v-row
+          no-gutters
+          align="start"
+          justify="start"
+          class="mb-5"
+          style="margin-top: 10px"
+        >
+          <v-checkbox color="#085895" v-model="isAggre"/>
+          <v-col cols="11" style="text-align: left" class="px-0 pt-4">
             <span
               style="
                 font-weight: 400;
                 font-size: 12px;
                 line-height: 14px;
                 letter-spacing: 0.1em;
-                color: #085895;
+                color: #50616e;
+                text-align: left;
               "
-              >Забули пароль</span
+              >Згоден з <span class="linkColor">Угодою користувача</span>, з
+              <span class="linkColor">Обробкою моїх пересональних</span> даних у
+              відпповідніості з
+              <span class="linkColor">Політикою конфіденційності</span></span
             >
-          </v-row>
+          </v-col>
         </v-row>
       </v-col>
-
       <v-btn
         width="208px"
         height="39px"
@@ -93,7 +114,7 @@
         "
         color="#085895"
         @click="signIn"
-        >Увійти</v-btn
+        >Зареєструватись</v-btn
       >
       <v-row no-gutters justify="center">
         <div style="width: 243px; margin-top: 20px; margin-bottom: 15px">
@@ -128,17 +149,17 @@
           letter-spacing: 0.1em;
           color: #085895;
         "
-        @click="$emit('goToSignUp')"
+        @click="$emit('goToSignIn')"
       >
-        Зареєструватись
+        Увійти
       </span>
     </v-col>
   </div>
 </template>
-
-<script>
+  
+  <script>
 import { validationMixin } from "vuelidate";
-import { required, email } from "vuelidate/lib/validators";
+import { required, email, minLength, sameAs } from "vuelidate/lib/validators";
 import { mapActions } from "vuex";
 import authService from "@/requests/admin/authService";
 import errorSnackbar from "../UI/errorSnackbar.vue";
@@ -150,50 +171,84 @@ export default {
   data: () => ({
     user: {},
     showErrorSnackbar: false,
-    rememberMe: false,
+    isAggre: false,
     snackbarText: "",
   }),
   validations: {
     user: {
+      username: {
+        required,
+      },
       email: {
         required,
         email,
       },
       password: {
         required,
+        minLength: minLength(8),
+        validUppercase: function (value) {
+          const containsUppercase = /[A-Z]/.test(value);
+          return containsUppercase;
+        },
+        validLowercase: function (value) {
+          const containsLowercase = /[a-z]/.test(value);
+          return containsLowercase;
+        },
+        validNumber: function (value) {
+          const containsNumber = /[0-9]/.test(value);
+          return containsNumber;
+        },
+        validSpecial: function (value) {
+          const containsSpecial = /[#?!@$%^&*-]/.test(value);
+          return containsSpecial;
+        },
+        valid: function (value) {
+          const containsUppercase = /[A-Z]/.test(value);
+          const containsLowercase = /[a-z]/.test(value);
+          const containsNumber = /[0-9]/.test(value);
+          const containsSpecial = /[#?!@$%^&*-]/.test(value);
+          return (
+            containsUppercase &&
+            containsLowercase &&
+            containsNumber &&
+            containsSpecial &&
+            minLength
+          );
+        },
+      },
+      confirm_password: {
+        required,
+        sameAsPassword: sameAs("password"),
       },
     },
   },
   methods: {
-    ...mapActions(["updateInfoLogged"]),
-    async signIn() {
-      this.showErrorSnackbar = false;
+    ...mapActions(["updateInfo"]),
+    async signUp() {
       this.$v.$touch();
-      if (!this.$v.$invalid) {
+      if (!this.$v.$invalid && this.isAggre) {
         let user = new FormData();
+        user.append("name", this.user.username);
         user.append("email", this.user.email);
         user.append("password", this.user.password);
-        let response = await authService.signIn(user).catch(() => {
-          this.snackbarText = "Email або пароль введено неправильно";
-          this.showErrorSnackbar = true;
+        let response = await authService.signUp(user);
+        this.updateInfo({
+          token: response.authorisation.token,
         });
-        let timeout = 2 * 3600;
-        if (this.rememberMe) {
-          timeout = 12 * 3600;
-        }
-        if (response.status == "success") {
-          this.updateInfoLogged({
-            email: this.user.email,
-            password: this.user.password,
-            token: response.authorisation.token,
-            timeout: timeout,
-          });
-          this.$emit("back");
-        }
+        this.$emit("goToSignIn");
       }
     },
   },
   computed: {
+    usernameError() {
+      const errors = [];
+      if (!this.$v.user.username.$dirty) {
+        return errors;
+      } else if (!this.$v.user.username.required) {
+        errors.push("");
+      }
+      return errors;
+    },
     emailError() {
       const errors = [];
       if (!this.$v.user.email.$dirty) {
@@ -211,12 +266,34 @@ export default {
       if (!this.$v.user.password.$dirty) {
         return errors;
       }
-      !this.$v.user.password.required && errors.push("");
+      if (!this.$v.user.password.required) {
+        errors.push("");
+        return errors;
+      }
+      if (
+        (!this.$v.user.password.valid && this.$v.user.password.required) ||
+        (!this.$v.user.password.minLength && this.$v.user.password.required)
+      ) {
+        errors.push("");
+        return errors;
+      }
+      return errors;
+    },
+    confirmPasswordError() {
+      const errors = [];
+      if (!this.$v.user.confirm_password.$dirty) {
+        return errors;
+      }
+      if (!this.$v.user.confirm_password.sameAsPassword) {
+        errors.push("");
+        return errors;
+      }
+      !this.$v.user.confirm_password.required && errors.push("");
       return errors;
     },
   },
 };
 </script>
-
-<style>
+  
+  <style>
 </style>

@@ -16,16 +16,17 @@
                     z-index: 10;
                     position: absolute;
                     width: 190px;
-                    height: 127px;              
+                    height: 127px;
                     border-radius: 3px;
                   "
+                  v-if="content[0].images[0].images"
                   :style="{
                     backgroundImage: `linear-gradient(
                       360deg,
                       rgba(1, 29, 51, 0.602) 35.16%,
                       rgba(91, 98, 104, 0.469) 45.62%
                     ), url(
-      ${content[0].images[0].images.path})`,
+                    ${content[0].images[0].images.path})`,
                     backgroundSize: 'cover',
                     backgroundRepeat: 'norepeat',
                   }"
@@ -35,7 +36,7 @@
                       color: #243949;
                       font-size: 10px;
                       color: white;
-                      margin-top: 90px;
+                      margin-top: 90px; 
                     "
                   >
                     {{ content[0].title }}

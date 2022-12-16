@@ -1,9 +1,5 @@
 <template>
   <div>
-    <my-ticket-drawer
-      v-if="showMyTicketDrawer"
-      :showMyTicketDrawer="showMyTicketDrawer"
-    />
     <div class="menu">
       <v-row no-gutters align="center" class="pt-3" justify="center">
         <div v-for="(item, index) in menuItems" :key="item.id">
@@ -57,11 +53,10 @@
             <div
               style="padding-bottom: 5px; text-align: left"
               :style="index == 0 ? '' : 'margin-left: 15px;'"
-              @click="index == 3 ? showMyTicketDrawer = true : ''"
             >
               <v-row no-gutters align="center" justify="start">
                 <div
-                  style=" 
+                  style="
                     border-radius: 20px;
                     background: #cbe0f0;
                     position: absolute;
@@ -97,11 +92,8 @@
 </template>
 
 <script>
-import myTicketDrawer from "./forUser/myTicket/myTicketDrawer.vue";
 export default {
-  components: { myTicketDrawer },
   data: () => ({
-    showMyTicketDrawer: false,
     menuItems: [
       {
         id: 2,

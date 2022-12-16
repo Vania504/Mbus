@@ -28,7 +28,7 @@ import signUpMobile from "@/components/forAdmin/signUpMobile.vue";
 export default {
   components: { myTicketContent, signInMobile, signUpMobile },
   data: () => ({
-    visible: false,
+    visible: true,
     signIn: false,
     signUp: false,
   }),

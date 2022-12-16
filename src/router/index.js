@@ -77,9 +77,9 @@ const routes = [
         component: () => import('@/views/forAdmin/inputNewPassword.vue'),
     },
     {
-        path: '/test',
-        name: 'test',
-        component: () => import('@/components/forUser/pdfTicket.vue')
+        path: '/ticket',
+        name: 'my_ticket_obile',
+        component: () => import('@/components/forUser/myTicket/myTicketDrawer.vue')
     }
 ];
 const router = new VueRouter({

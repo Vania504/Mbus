@@ -7,7 +7,7 @@
       :events="['keydown', 'mousedown', 'touchstart']"
       :duration="$store.getters.loggedUser.timeout"
     />
-    <Loader v-if="showLoader" style="margin-top: 10%;"/>
+    <Loader v-if="showLoader" style="margin-top: 10%" />
     <div v-show="!showLoader">
       <Header :key="keyHeader" />
       <router-view @success="keyHeader++, keyFooter++" />
@@ -47,8 +47,8 @@ export default {
     keyHeader: 1,
     keyFooter: 2,
   }),
-  mounted(){
-    setTimeout(this.setShowLoader, 1000)
+  mounted() {
+    setTimeout(this.setShowLoader, 1000);
   },
   methods: {
     ...mapActions(["updateInfoLogged"]),
@@ -59,9 +59,9 @@ export default {
     setShowNavigationDrawer() {
       this.showNavigationDrawer = true;
     },
-    setShowLoader(){
+    setShowLoader() {
       this.showLoader = false;
-    }
+    },
   },
   computed: {
     ...mapGetters(["loggedUser"]),
@@ -74,13 +74,13 @@ export default {
     if (localStorage.time) {
       let date = new Date();
       let diff = Math.abs(date - new Date(localStorage.time));
-      console.log(diff * 0.001, this.loggedUser.timeout);
-      if (diff * 0.001 > this.loggedUser.timeout) {
-        this.$store.commit("clearUserLogged");
-        this.$router.push("/");
+      if (this.loggedUser) {
+        if (diff * 0.001 > this.loggedUser.timeout) {
+          this.$store.commit("clearUserLogged");
+          this.$router.push("/");
+        }
+        localStorage.removeItem("time");
       }
-      console.log(localStorage.time);
-      localStorage.removeItem("time");
     }
   },
 };

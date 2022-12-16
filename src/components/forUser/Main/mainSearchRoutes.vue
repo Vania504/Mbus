@@ -1,14 +1,23 @@
 <template>
   <div>
-    <div class="mainBackground" :style="$vuetify.breakpoint.xs ? 'height: 300px' : ''">
-      <h1 class="mainText" :style="
-        $vuetify.breakpoint.xs
-          ? 'padding-top: 20px; font-size: 18px;'
-          : ' font-size: 40px;'
-      ">
+    <div
+      class="mainBackground"
+      :style="$vuetify.breakpoint.xs ? 'height: 300px' : ''"
+    >
+      <h1
+        class="mainText"
+        :style="
+          $vuetify.breakpoint.xs
+            ? 'padding-top: 20px; font-size: 18px;'
+            : ' font-size: 40px;'
+        "
+      >
         Подорожуйте разом з нами!
       </h1>
-      <v-row :justify="$vuetify.breakpoint.xs ? 'center' : 'start'" align="center">
+      <v-row
+        :justify="$vuetify.breakpoint.xs ? 'center' : 'start'"
+        align="center"
+      >
         <v-col cols="1" class="px-0" v-if="!$vuetify.breakpoint.xs">
           <!-- <v-row
           justify="start"
@@ -53,19 +62,29 @@
           </a>
         </v-row> -->
         </v-col>
-        <v-col cols="10" :style="
-          $vuetify.breakpoint.xs ? 'margin-top: 50px;' : 'margin-top: 30px'
-        ">
-          <h4 v-if="!$vuetify.breakpoint.xs" class="searchRoutes" :style="
-            $vuetify.breakpoint.xs ? 'font-size: 16px;' : ' font-size: 20px;'
-          ">
+        <v-col
+          cols="10"
+          :style="
+            $vuetify.breakpoint.xs ? 'margin-top: 50px;' : 'margin-top: 30px'
+          "
+        >
+          <h4
+            v-if="!$vuetify.breakpoint.xs"
+            class="searchRoutes"
+            :style="
+              $vuetify.breakpoint.xs ? 'font-size: 16px;' : ' font-size: 20px;'
+            "
+          >
             Пошук автобусних рейсів:
           </h4>
-          <search-routes-field-mobile v-if="$vuetify.breakpoint.xs" :startCities="startCities"
-            :nextCities="nextCities" 
+          <search-routes-field-mobile
+            v-if="$vuetify.breakpoint.xs"
+            :startCities="startCities"
+            :nextCities="nextCities"
             @nextCities="getNextCities"
             @reverseItem="reverseItem"
-            @searchRoutes="searchRoutes"/>
+            @searchRoutes="searchRoutes"
+          />
           <v-row v-else justify="center" no-gutters>
             <!-- :style="
               startRouteError.length || endRouteError.length
@@ -74,7 +93,11 @@
             " -->
             <div class="backgroundSearchField">
               <div v-if="loader" class="d-flex align-center mt-3">
-                <v-progress-circular class="mx-auto" indeterminate color="#085895"></v-progress-circular>
+                <v-progress-circular
+                  class="mx-auto"
+                  indeterminate
+                  color="#085895"
+                ></v-progress-circular>
               </div>
               <search-routes-field />
             </div>
@@ -98,6 +121,10 @@ export default {
   },
   data: () => ({
     socialNetworks: [],
+    start_route: "",
+    end_route: "",
+    nextCities: [],
+    startCities: [],
   }),
   mounted() {
     this.getSocialNetwork();
@@ -106,11 +133,11 @@ export default {
   methods: {
     ...mapActions(["updateLoader"]),
     reverseItem(start_route, end_route) {
-      if(start_route && end_route){
+      if (start_route && end_route) {
         this.updateLoader(true);
         this.start_route = end_route;
         this.end_route = start_route;
-      }else if (this.start_route && this.end_route) {
+      } else if (this.start_route && this.end_route) {
         this.updateLoader(true);
         let old_start_route = this.start_route;
         this.start_route = this.end_route;
@@ -131,20 +158,18 @@ export default {
     },
     async getNextCities(start_route) {
       let response = await searchRoutesService.getNextCities(
-        start_route 
-        ? start_route 
-        : this.start_route);
+        start_route ? start_route : this.start_route
+      );
       this.nextCities = response.data;
       setTimeout(this.hideLoader, 1500);
     },
-    async searchRoutes(isMobile,start_route, end_route) {
+    async searchRoutes(isMobile, start_route, end_route) {
       this.$v.$touch();
-      if(isMobile && typeof isMobile !== 'object'){
+      if (isMobile && typeof isMobile !== "object") {
         this.$router.push(
           `/routes?start_route=${start_route}&end_route=${end_route}`
         );
-      }
-      else if (!this.$v.$invalid) {
+      } else if (!this.$v.$invalid) {
         this.$router.push(
           `/routes?start_route=${this.start_route}&end_route=${this.end_route}`
         );
@@ -188,9 +213,11 @@ export default {
 <style>
 .mainBackground {
   height: 700px;
-  background: linear-gradient(0deg,
+  background: linear-gradient(
+      0deg,
       rgba(36, 57, 73, 0.5),
-      rgba(36, 57, 73, 0.5)),
+      rgba(36, 57, 73, 0.5)
+    ),
     url("@/assets/img/mainBackground.JPG");
   text-align: center;
   object-fit: cover;

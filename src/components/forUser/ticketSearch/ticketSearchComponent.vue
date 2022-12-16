@@ -41,9 +41,6 @@
       </v-col>
     </v-row>
     <v-col v-else>
-      <v-col cols="12">
-        <filters-list />
-      </v-col>
       <v-col cols="12" style="text-align: left">
         <v-row no-gutters justify="center" v-if="tickets.length == 0">
           <p
@@ -54,6 +51,7 @@
               letter-spacing: 0.1em;
               color: #243949;
               padding-top: 20px;
+              text-align: center;
             "
           >
             На заданий Вами день квитків

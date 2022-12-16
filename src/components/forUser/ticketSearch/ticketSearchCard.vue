@@ -25,12 +25,8 @@
         </div>
         <img src="@/assets/img/dottedLine.svg" />
         <div
-          style="
-            text-align: left;
-            padding-bottom: 10px;
-            padding-top: 10px;
-            width: 95%;
-          "
+          style="text-align: left; padding-bottom: 10px; padding-top: 10px"
+          :style="$vuetify.breakpoint.xs ? 'width: 75%;' : '   width: 95%;'"
         >
           <v-row no-gutters align="start">
             <div style="text-align: right; width: 130px">
@@ -92,56 +88,77 @@
                 src="@/assets/img/routeLine.svg"
               />
             </div>
-            <v-col cols="7" class="px-0 py-0">
-              <span
-                style="
-                  font-weight: 500;
-                  font-size: 14px;
-                  line-height: 16px;
-                  letter-spacing: 0.1em;
-                  color: #243949;
+            <v-col cols="5" xl="7" lg="7" md="7" sm="7" class="px-0 py-0">
+              <div
+                :style="
+                  $vuetify.breakpoint.xs
+                    ? 'width: 125%; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; margin-bottom: 25px; margin-top: 2px;'
+                    : ''
                 "
               >
-                Гдиня
                 <span
                   style="
-                    font-weight: 400;
-                    font-size: 10px;
-                    line-height: 12px;
+                    font-weight: 500;
+                    font-size: 14px;
+                    line-height: 16px;
                     letter-spacing: 0.1em;
-                    color: #4c5d6c;
+                    color: #243949;
                   "
-                  >Dworzec Autobusowy, pl. Grodnicki 1(platf.1)</span
                 >
-              </span>
-              <br /><br />
-              <span
-                style="
-                  font-weight: 500;
-                  font-size: 14px;
-                  line-height: 16px;
-                  letter-spacing: 0.1em;
-                  color: #243949;
+                  Гдиня
+                  <span
+                    style="
+                      font-weight: 400;
+                      font-size: 10px;
+                      line-height: 12px;
+                      letter-spacing: 0.1em;
+                      color: #4c5d6c;
+                    "
+                    >Dworzec Autobusowy, pl. Grodnicki 1(platf.1)</span
+                  >
+                </span>
+              </div>
+              <!-- Space for only other screen -->
+              <br v-if="!$vuetify.breakpoint.xs" /><br
+                v-if="!$vuetify.breakpoint.xs"
+              />
+              <div
+                :style="
+                  $vuetify.breakpoint.xs
+                    ? 'width: 125%; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; margin-bottom: 20px;'
+                    : ''
                 "
               >
-                Гдиня
                 <span
                   style="
-                    font-weight: 400;
-                    font-size: 10px;
-                    line-height: 12px;
+                    font-weight: 500;
+                    font-size: 14px;
+                    line-height: 16px;
                     letter-spacing: 0.1em;
-                    color: #4c5d6c;
+                    color: #243949;
                   "
-                  >Dworzec Autobusowy, pl. Grodnicki 1(platf.1)</span
                 >
-              </span>
+                  Гдиня
+                  <span
+                    style="
+                      font-weight: 400;
+                      font-size: 10px;
+                      line-height: 12px;
+                      letter-spacing: 0.1em;
+                      color: #4c5d6c;
+                    "
+                    >Dworzec Autobusowy, pl. Grodnicki 1(platf.1)</span
+                  >
+                </span>
+              </div>
             </v-col>
+            <!-- Booking btn and price for other screen -->
             <v-row
               no-gutters
               justify="end"
               class="py-0"
               style="margin-top: 10px"
+              v-if="!$vuetify.breakpoint.xs"
             >
               <v-col cols="10">
                 <!-- Price ticket -->
@@ -198,6 +215,7 @@
             </v-row>
           </v-row>
           <span
+            v-if="!$vuetify.breakpoint.xs"
             style="
               font-weight: 400;
               font-size: 12px;
@@ -218,14 +236,15 @@
           no-gutters
           justify="start"
           align="center"
-          style="
-            position: absolute;
-            bottom: 0px;
-            width: 100%;
-            padding-left: 34px;
+          :style="
+            $vuetify.breakpoint.xs
+              ? 'padding-left: 20px'
+              : 'padding-left: 34px;'
           "
+          style="position: absolute; bottom: 0px; width: 100%"
         >
-          <v-row no-gutters align="center">
+          <!-- Bus for other screen -->
+          <v-row no-gutters align="center" v-if="!$vuetify.breakpoint.xs">
             <span
               style="
                 font-weight: 400;
@@ -269,6 +288,39 @@
               >Деталі<v-icon v-if="!showTicketDetail">mdi-chevron-down</v-icon
               ><v-icon v-else>mdi-chevron-up</v-icon></v-btn
             >
+          </v-row>
+          <br />
+          <!-- Booking btn and price for mobile screen -->
+          <v-row
+            v-if="$vuetify.breakpoint.xs"
+            no-gutters
+            class="px-2"
+            align="center"
+            style="border-top: 0.5px solid #dddddd; padding-left: 15px padding-right: 15px;"
+          >
+            <span class="textStyleInBtn" style="color: #4c5d6c">
+              Ціна:
+              <span
+                style="
+                  font-weight: 500;
+                  font-size: 16px;
+                  line-height: 19px;
+                  letter-spacing: 0.1em;
+                  color: #085895;
+                "
+                >2 695 грн</span
+              >
+            </span>
+            <v-row no-gutters justify="end">
+              <v-btn
+                width="175px"
+                height="40px"
+                color="#085895"
+                class="rounded-0 rounded-br-lg white--text"
+              >
+                Бронювати
+              </v-btn>
+            </v-row>
           </v-row>
         </v-row>
       </v-card-actions>

@@ -286,37 +286,6 @@
           ></v-btn
         >
       </v-row>
-      <br />
-      <v-row
-        v-if="$vuetify.breakpoint.xs && !isAdmin"
-        no-gutters
-        align="center"
-        style="border-top: 0.5px solid #dddddd; padding-left: 15px"
-      >
-        <span class="textStyleInBtn" style="color: #4c5d6c">
-          Ціна:
-          <span
-            style="
-              font-weight: 500;
-              font-size: 16px;
-              line-height: 19px;
-              letter-spacing: 0.1em;
-              color: #085895;
-            "
-            >2 695 грн</span
-          >
-        </span>
-        <v-row no-gutters justify="end">
-          <v-btn
-            width="175px"
-            height="40px"
-            color="#085895"
-            class="rounded-0 rounded-br-lg white--text"
-          >
-            Бронювати
-          </v-btn>
-        </v-row>
-      </v-row>
     </v-row>
     <confirm-modal
       v-if="showConfirmModal"

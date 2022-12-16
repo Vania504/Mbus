@@ -1,20 +1,19 @@
 <template>
   <v-main>
     <v-container>
-        <ticket-search-component />
+      <ticket-search-component />
     </v-container>
   </v-main>
 </template>
 
 <script>
-import ticketSearchComponent from '@/components/forUser/ticketSearch/ticketSearchComponent.vue';
+import ticketSearchComponent from "@/components/forUser/ticketSearch/ticketSearchComponent.vue";
 export default {
-    components: {
-        ticketSearchComponent
-    }
-}
+  components: {
+    ticketSearchComponent,
+  },
+};
 </script>
 
 <style>
-
 </style>

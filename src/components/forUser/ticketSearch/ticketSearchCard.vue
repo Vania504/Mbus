@@ -1,6 +1,9 @@
 <template>
   <v-col class="py-0 px-0">
-    <v-card class="ticketCard my-3 rounded-lg rounded-br-0">
+    <v-card
+      class="ticketCard my-3 rounded-lg rounded-br-0"
+      :style="$vuetify.breakpoint.xs ? 'border-bottom-right-radius: 10p;' : ''"
+    >
       <v-row no-gutters justify="start" align="start">
         <div
           style="

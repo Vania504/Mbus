@@ -41,7 +41,7 @@
       </v-col>
     </v-row>
     <v-col v-else>
-      <v-col cols="12" style="text-align: left">
+      <v-col class="px-0" cols="12" style="text-align: left">
         <v-row no-gutters justify="center" v-if="tickets.length == 0">
           <p
             style="

@@ -1,6 +1,39 @@
 <template>
   <div>
     <div class="menu">
+      <div
+        style="
+          position: fixed;
+          bottom: 60px;
+          display: flex;
+          justify-content: center;
+          width: 100%;
+          height: 80px;
+          align-items: center;
+          z-index: 50;
+        "
+      >
+        <v-btn
+          color="#085895"
+          width="189px"
+          height="40px"
+          class="white--text"
+          dense
+        >
+          Фільтрувати
+        </v-btn>
+      </div>
+      <div
+        style="
+          position: fixed;
+          bottom: 60px;
+          width: 100%;
+          height: 70px;
+          background: white;
+          filter: blur(45px);
+        "
+      ></div>
+
       <v-row no-gutters align="center" class="pt-3" justify="center">
         <div v-for="(item, index) in menuItems" :key="item.id">
           <router-link

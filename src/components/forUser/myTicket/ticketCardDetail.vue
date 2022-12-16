@@ -5,7 +5,7 @@
         <span style="
         font-weight: 400;
         font-size: 12px;
-        line-height: 14px;
+        line-height: 14px; 
         letter-spacing: 0.1em;  
         color: #243949;">Автобус:</span>&nbsp;
         <img width="12px" height="12px" src="@/assets/img/busServiceIcon/busIcon.png"/>
@@ -33,7 +33,8 @@
         </v-row>
       </v-row>
       <v-divider style="border: 0.5px solid rgba(173, 197, 217, 0.4);"/>
-      <v-col
+      <div v-if="$route.name == 'my_ticket_mobile'">
+        <v-col
       class="px-0 py-0"
       cols="8"
       style="text-align: left; margin: 10px"
@@ -72,6 +73,8 @@
       </v-row>
     </v-col>
     <v-divider style="border: 0.5px solid rgba(173, 197, 217, 0.4);"/>
+      </div>
+      
     </div>
     <v-col style="text-align: center;">
       <p class="heading">

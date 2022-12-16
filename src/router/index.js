@@ -78,7 +78,7 @@ const routes = [
     },
     {
         path: '/ticket',
-        name: 'my_ticket_obile',
+        name: 'my_ticket_mobile',
         component: () => import('@/components/forUser/myTicket/myTicketDrawer.vue')
     }
 ];

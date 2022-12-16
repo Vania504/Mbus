@@ -44,7 +44,7 @@
               placeholder="Сьогодні"
               outlined
               dense
-              class="rounded-lb-lg rounded-rb-0 rounded-t-0"
+              class="rounded-lb-lg rounded-br-0 rounded-t-0"
             />
           </v-col>
           <v-col class="px-0 py-0" style="text-align: center"
@@ -57,7 +57,7 @@
               dense
               @click="showQuantityPassangerModal = true"
               class="
-                rounded-rb-lg rounded-lb-0 rounded-t-0
+                rounded-rb-lg rounded-bl-0 rounded-t-0
                 quantityPeopleTextField
               "
           /></v-col>

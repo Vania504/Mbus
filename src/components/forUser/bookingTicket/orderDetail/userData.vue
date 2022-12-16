@@ -11,7 +11,14 @@
       </v-row>
       <v-divider style="border: 1px solid rgba(8, 88, 149, 0.53)" />
       <v-row no-gutters align="center" style="padding: 15px 15px 0px 15px">
-        <v-col cols="6" style="padding-right: 20px">
+        <v-col
+          cols="12"
+          xl="6"
+          lg="6"
+          md="6"
+          sm="12"
+          :style="$vuetify.breakpoint.xs ? '' : 'padding-right: 20px'"
+        >
           <v-text-field
             v-model="userData.first_name"
             class="rounded-lg"
@@ -24,7 +31,14 @@
               firstNameError.length ? 'mdi-alert-circle-outline' : ''
             "
         /></v-col>
-        <v-col cols="6" style="padding-left: 20px">
+        <v-col
+          cols="12"
+          xl="6"
+          lg="6"
+          md="6"
+          sm="12"
+          :style="$vuetify.breakpoint.xs ? '' : 'padding-left: 20px'"
+        >
           <v-text-field
             v-model="userData.last_name"
             class="rounded-lg"
@@ -40,7 +54,14 @@
         </v-col>
       </v-row>
       <v-row no-gutters align="center" style="padding: 0px 15px 0px 15px">
-        <v-col cols="6" style="padding-right: 20px">
+        <v-col
+          cols="12"
+          xl="6"
+          lg="6"
+          md="6"
+          sm="12"
+          :style="$vuetify.breakpoint.xs ? '' : 'padding-right: 20px'"
+        >
           <v-text-field
             v-model="userData.phone_number"
             class="rounded-lg"
@@ -54,7 +75,14 @@
               phoneNumberError.length ? 'mdi-alert-circle-outline' : ''
             "
         /></v-col>
-        <v-col cols="6" style="padding-left: 20px">
+        <v-col
+          cols="12"
+          xl="6"
+          lg="6"
+          md="6"
+          sm="12"
+          :style="$vuetify.breakpoint.xs ? '' : 'padding-left: 20px'"
+        >
           <v-text-field
             v-model="userData.email"
             class="rounded-lg"
@@ -76,6 +104,7 @@
           letter-spacing: 0.1em;
           color: #243949;
           padding-left: 15px;
+          text-align: left;
         "
       >
         <span style="font-weight: 500">Багаж</span><br />

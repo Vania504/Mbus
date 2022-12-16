@@ -1,6 +1,9 @@
 <template>
   <div>
-    <v-card class="my-3">
+    <v-card
+      class="my-3"
+      :style="$vuetify.breakpoint.xs ? 'border-bottom-right-radius: 10px;' : ''"
+    >
       <v-row no-gutters>
         <div style="width: 25px; text-align: right">
           <img src="@/assets/img/dottedLine.svg" height="100%" />

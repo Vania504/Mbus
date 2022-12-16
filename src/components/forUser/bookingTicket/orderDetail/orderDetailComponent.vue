@@ -7,8 +7,8 @@
       @userInputValidUserData="$emit('userInputValidUsetData')"
     />
     <payment-data
-      ref="paymentData"
       :touch="touch"
+      @setTouch="$emit('setTouch')"
       @userInputValidCreditCardData="$emit('userInputValidCreditCardData')"
     />
   </v-col>

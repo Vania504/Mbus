@@ -61,6 +61,8 @@ export default {
       handler() {
         if (this.typePayment == "1") {
           this.$emit("userInputValidCreditCardData");
+        }else{
+          this.$emit("setTouch")
         }
       },
     },

@@ -1,5 +1,5 @@
 <template>
-  <v-col cols="5">
+  <v-col cols="12" xl="5" lg="5" md="5" sm="12">
     <span
       class="creditCardFieldLabelStyle"
       :style="cardNumberError.length ? 'color: #FF5252' : ''"

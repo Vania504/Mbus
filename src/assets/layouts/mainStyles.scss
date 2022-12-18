@@ -102,6 +102,11 @@
     margin-left: 10px;
     font-size: 12px;
 }
+
 .linkColor {
     color: #085895;
 }
+
+.hideFocus.v-btn--active::before {
+    opacity: 0;
+  }

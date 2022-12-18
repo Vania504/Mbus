@@ -1,6 +1,6 @@
 <template>
   <v-col>
-    <v-row no-gutters align="center">
+    <v-row no-gutters align="center" justify="center">
       <span
         style="
           font-weight: 500;
@@ -97,10 +97,14 @@ export default {
       },
     ],
   }),
+  mounted() {
+    this.$vuetify.goTo(0, 0);
+  },
   methods: {
     setEntersForService(id) {
       let serviceIndex = this.services.findIndex((service) => service.id == id);
       this.services[serviceIndex].enters = true;
+      this.$emit("setFilterList", this.services[serviceIndex].id);
     },
     clearAll() {
       this.services.forEach((service) => (service.enters = false));

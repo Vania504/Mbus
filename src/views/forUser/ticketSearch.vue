@@ -1,7 +1,7 @@
 <template>
   <v-main>
     <v-container>
-      <ticket-search-component />
+      <ticket-search-component :filtersListArray="filtersList" />
     </v-container>
   </v-main>
 </template>
@@ -11,6 +11,11 @@ import ticketSearchComponent from "@/components/forUser/ticketSearch/ticketSearc
 export default {
   components: {
     ticketSearchComponent,
+  },
+  props: {
+    filtersList: {
+      require: false,
+    },
   },
 };
 </script>

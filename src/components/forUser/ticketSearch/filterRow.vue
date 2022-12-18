@@ -1,5 +1,5 @@
 <template>
-  <div style="width: 326px; height: 40px;">
+  <div style="min-width: 326px; height: 40px;">
     <v-row no-gutters align="center">
       <img
         width="20px"

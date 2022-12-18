@@ -29,7 +29,7 @@
         <img src="@/assets/img/dottedLine.svg" />
         <div
           style="text-align: left; padding-bottom: 10px; padding-top: 10px"
-          :style="$vuetify.breakpoint.xs ? 'width: 75%;' : '   width: 95%;'"
+          :style="$vuetify.breakpoint.xs ? 'width: 75%;' : 'width: 95%;'"
         >
           <v-row no-gutters align="start">
             <div style="text-align: right; width: 130px">
@@ -42,7 +42,7 @@
                   color: #4c5d6c;
                   padding-right: 5px;
                 "
-                >пн. 14 лист.<span
+                >пн. 14 лист.<span 
                   style="
                     font-weight: 500;
                     font-size: 14px;
@@ -91,7 +91,7 @@
                 src="@/assets/img/routeLine.svg"
               />
             </div>
-            <v-col cols="5" xl="7" lg="7" md="7" sm="7" class="px-0 py-0">
+            <v-col cols="4" xl="7" lg="7" md="7" sm="7" class="px-0 py-0">
               <div
                 :style="
                   $vuetify.breakpoint.xs
@@ -155,6 +155,7 @@
                 </span>
               </div>
             </v-col>
+            <br />
             <!-- Booking btn and price for other screen -->
             <v-row
               no-gutters
@@ -276,7 +277,12 @@
               >Setra S 417 GT-HD</span
             >
           </v-row>
-          <v-row no-gutters align="center" justify="end">
+          <v-row
+            no-gutters
+            align="center"
+            justify="end"
+            style="padding-top: 10px; margin-top: 10px"
+          >
             <v-btn
               text
               style="
@@ -316,7 +322,7 @@
             </span>
             <v-row no-gutters justify="end">
               <v-btn
-                width="175px"
+                width="145px"
                 height="40px"
                 color="#085895"
                 class="rounded-0 rounded-br-lg white--text"

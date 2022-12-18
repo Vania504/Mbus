@@ -90,6 +90,19 @@ export default {
     quantityTicket: 4,
     tickets: [],
   }),
+  props: {
+    filtersListArray: {
+      require: false,
+    },
+  },
+  watch: {
+    filtersListArray: {
+      deep: true,
+      handler() {
+        console.log("work", this.filtersListArray);
+      },
+    },
+  },
 };
 </script>
 

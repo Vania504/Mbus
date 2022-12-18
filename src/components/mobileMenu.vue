@@ -2,6 +2,7 @@
   <div>
     <div class="menu">
       <div
+        v-if="!showFilterList && $route.name == 'ticket_search_page'"
         style="
           position: fixed;
           bottom: 60px;
@@ -15,15 +16,17 @@
       >
         <v-btn
           color="#085895"
-          width="189px"
+          width="189px" 
           height="40px"
           class="white--text"
           dense
+          @click="showFilterList = true"
         >
           Фільтрувати
         </v-btn>
       </div>
       <div
+        v-if="!showFilterList && $route.name == 'ticket_search_page'"
         style="
           position: fixed;
           bottom: 60px;
@@ -121,12 +124,54 @@
         </div>
       </v-row>
     </div>
+    <v-navigation-drawer
+      v-if="showFilterList"
+      v-model="showFilterList"
+      width="100%"
+      height="100%"
+      absolute
+      top
+    >
+      <v-row no-gutters justify="center">
+        <v-col cols="11">
+          <filters-list @setFilterList="setFilterList" />
+        </v-col>
+      </v-row>
+      <div
+        style="
+          position: absolute;
+          z-index: 100;
+          width: 100%;
+          display: flex;
+          justify-content: center;
+          bottom: 55%;
+        "
+      >
+        <v-btn
+          width="176px"
+          height="36px"
+          style="
+            background: #085895;
+            box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.1);
+            border-radius: 10px;
+            color: white;
+            text-transform: none;
+          "
+          @click="applyFilters"
+          >Застосувати</v-btn
+        >
+      </div>
+    </v-navigation-drawer>
   </div>
 </template>
 
 <script>
+import filtersList from "./forUser/ticketSearch/filtersList.vue";
 export default {
+  components: { filtersList },
   data: () => ({
+    showFilterList: false,
+    filtersListId: [],
     menuItems: [
       {
         id: 2,
@@ -160,6 +205,15 @@ export default {
       },
     ],
   }),
+  methods: {
+    setFilterList(id) {
+      this.filtersListId.push(id);
+    },
+    applyFilters() {
+      this.$emit("setFiltersList", this.filtersListId);
+      this.showFilterList = false;
+    },
+  },
 };
 </script>
 
@@ -172,5 +226,8 @@ export default {
   width: 100%;
   z-index: 100;
   width: 100%;
+}
+.slide-fade-enter-active {
+  transition: all 2s ease;
 }
 </style>

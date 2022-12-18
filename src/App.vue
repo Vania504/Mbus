@@ -10,11 +10,15 @@
     <Loader v-if="showLoader" style="margin-top: 10%" />
     <div v-show="!showLoader">
       <Header :key="keyHeader" />
-      <router-view @success="keyHeader++, keyFooter++" />
+      <router-view
+        @success="keyHeader++, keyFooter++"
+        :filtersList="filtersList"
+      />
       <Footer :key="keyFooter" />
       <mobile-menu
         v-if="$vuetify.breakpoint.xs"
         @other="setShowNavigationDrawer"
+        @setFiltersList="setFiltersList"
       />
       <navigation-drawer-mobile
         v-if="$vuetify.breakpoint.xs && showNavigationDrawer"
@@ -46,6 +50,7 @@ export default {
     showLoader: true,
     keyHeader: 1,
     keyFooter: 2,
+    filtersList: [],
   }),
   mounted() {
     setTimeout(this.setShowLoader, 1000);
@@ -61,6 +66,9 @@ export default {
     },
     setShowLoader() {
       this.showLoader = false;
+    },
+    setFiltersList(filtersList) {
+      this.filtersList = filtersList;
     },
   },
   computed: {

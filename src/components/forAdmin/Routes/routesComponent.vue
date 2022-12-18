@@ -109,6 +109,7 @@ export default {
     },
     setActiveCategory(activeCategory) {
       this.activeCategory = activeCategory;
+      this.createNewTicket = false;
     },
   },
   computed: {

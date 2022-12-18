@@ -8,7 +8,7 @@
         style="
           font-weight: 400;
           font-size: 14px;
-          line-height: 16px;
+          line-height: 16px; 
           letter-spacing: 0.1em;
           color: #243949;
         "
@@ -16,7 +16,7 @@
         >Назад</span
       >
     </v-row>
-    <basic-data />
+    <basic-data :touch="touch"/>
     <seats-in-bus />
     <additional-information />
     <v-row no-gutters justify="center">
@@ -34,6 +34,7 @@
           letter-spacing: 0.1em;
           text-transform: none;
         "
+        @click="createNewTicket"
       >
         Створити
       </v-btn>
@@ -47,6 +48,14 @@ import SeatsInBus from "./seatsInBus.vue";
 import additionalInformation from "./additionalInformation.vue";
 export default {
   components: { basicData, SeatsInBus, additionalInformation },
+  data: () => ({
+    touch: false,
+  }),
+  methods: {
+    createNewTicket(){
+      this.touch = true;
+    }
+  }
 };
 </script>
 

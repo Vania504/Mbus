@@ -36,6 +36,8 @@
               :item-text="''"
               v-model="ticket.route"
               style="margin-right: 40px"
+              :error-messages="routeError"
+              :append-icon="routeError.length ? 'mdi-alert-circle-outline' : ''"
             >
               <template slot="selection" slot-scope="{ item }">
                 <span class="autocompleteSelectedItem"
@@ -71,13 +73,17 @@
                 @click="isClose = false"
                 @click:prepend-inner="on.click"
                 hide-details
-                v-model="dates"
+                v-model="ticket.dates"
+                :error-messages="datesError"
+                :append-icon="
+                  datesError.length ? 'mdi-alert-circle-outline' : ''
+                "
               >
               </v-text-field>
             </template>
             <v-row no-gutters align="center" justify="center">
               <v-date-picker
-                v-model="dates[0]"
+                v-model="ticket.dates[0]"
                 color="#085895"
                 locale="uk"
                 no-title
@@ -92,7 +98,7 @@
                 "
               ></v-date-picker>
               <v-date-picker
-                v-model="dates[1]"
+                v-model="ticket.dates[1]"
                 color="#085895"
                 locale="uk"
                 no-title
@@ -116,6 +122,9 @@
             label="Ціна"
             placeholder="0 грн"
             color="#085895"
+            v-model="ticket.price"
+            :error-messages="priceError"
+            :append-icon="priceError.length ? 'mdi-alert-circle-outline' : ''"
           />
         </v-col>
       </v-row>
@@ -130,10 +139,13 @@
             :items="Object.values(buses)"
             :item-value="'id'"
             :item-text="'model'"
+            v-model="ticket.bus"
+            :error-messages="busError"
+            :append-icon="busError.length ? 'mdi-alert-circle-outline' : ''"
           >
             <template slot="selection" slot-scope="{ item }">
               <span class="autocompleteSelectedItem">
-                {{ item.model }}
+                {{ item.model }} {{item}}
               </span></template
             >
             <template slot="item" slot-scope="{ item }">
@@ -151,6 +163,10 @@
               color="#085895"
               v-mask="'##:##'"
               v-model="ticket.start_time"
+              :error-messages="startTimeError"
+              :append-icon="
+                startTimeError.length ? 'mdi-alert-circle-outline' : ''
+              "
             />
           </div>
         </v-col>
@@ -164,6 +180,10 @@
               color="#085895"
               v-mask="'##:##'"
               v-model="ticket.end_time"
+              :error-messages="endTimeError"
+              :append-icon="
+                endTimeError.length ? 'mdi-alert-circle-outline' : ''
+              "
             />
           </div>
         </v-col>
@@ -184,21 +204,52 @@
 import routesService from "@/requests/admin/routesService";
 import ourFleetService from "@/requests/admin/ourFleetService";
 import addNewRoutesModal from "../../addNewRoutesModal.vue";
+import { validationMixin } from "vuelidate";
+import { required } from "vuelidate/lib/validators";
 export default {
+  mixins: [validationMixin],
   components: {
     addNewRoutesModal,
   },
   data: () => ({
     isClose: true,
     isEditRoute: false,
-    dates: [],
     minutes: ["00:00", "00:01"],
     routes: [],
     buses: [],
-    ticket: {},
+    ticket: {
+      dates: [],
+    },
     routeDetailInfo: {},
     menu: "",
   }),
+  validations: {
+    ticket: {
+      route: {
+        required,
+      },
+      dates: {
+        required,
+      },
+      price: {
+        required,
+      },
+      bus: {
+        required,
+      },
+      start_time: {
+        required,
+      },
+      end_time: {
+        required,
+      },
+    },
+  },
+  props: {
+    touch: {
+      require: false,
+    },
+  },
   mounted() {
     this.getRoutes();
     this.getBuses();
@@ -210,12 +261,70 @@ export default {
     },
     async getBuses() {
       let response = await ourFleetService.getBuses();
-      this.buses = response.data;
-    },
+      this.buses = response.data.data;
+    }, 
     async editRoute(id) {
       let response = await routesService.getRoute(id);
       this.routeDetailInfo = response.data;
       this.isEditRoute = true;
+    },
+  },
+  computed: {
+    routeError() {
+      const errors = [];
+      if (!this.$v.ticket.route.$dirty) {
+        return errors;
+      }
+      !this.$v.ticket.route.required && errors.push("");
+      return errors;
+    },
+    datesError() {
+      const errors = [];
+      if (!this.$v.ticket.dates.$dirty) {
+        return errors;
+      }
+      !this.$v.ticket.dates.required && errors.push("");
+      return errors;
+    },
+    priceError() {
+      const errors = [];
+      if (!this.$v.ticket.price.$dirty) {
+        return errors;
+      }
+      !this.$v.ticket.price.required && errors.push("");
+      return errors;
+    },
+    busError() {
+      const errors = [];
+      if (!this.$v.ticket.bus.$dirty) {
+        return errors;
+      }
+      !this.$v.ticket.bus.required && errors.push("");
+      return errors;
+    },
+    startTimeError() {
+      const errors = [];
+      if (!this.$v.ticket.start_time.$dirty) {
+        return errors;
+      }
+      !this.$v.ticket.start_time.required && errors.push("");
+      return errors;
+    },
+    endTimeError() {
+      const errors = [];
+      if (!this.$v.ticket.end_time.$dirty) {
+        return errors;
+      }
+      !this.$v.ticket.end_time.required && errors.push("");
+      return errors;
+    },
+  },
+  watch: {
+    touch: {
+      deep: true,
+      handler() {
+        this.$v.$touch();
+      },
     },
   },
 };

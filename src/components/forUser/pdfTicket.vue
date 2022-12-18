@@ -105,7 +105,7 @@
 export default {};
 </script>
 
-<style>
+<style scoped>
 .logo {
   display: flex;
   justify-content: center;

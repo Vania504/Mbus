@@ -99,8 +99,8 @@
           <v-col
             cols="6"
             :xl="isAdmin ? '5' : '7'"
-            lg="isAdmin ? '5' : '7'"
-            md="isAdmin ? '5' : '7'"
+            :lg="isAdmin ? '5' : '7'"
+            :md="isAdmin ? '5' : '7'"
             class="px-0 py-0"
           >
             <div
@@ -132,7 +132,7 @@
                 >
               </span>
             </div>
-            <br v-if="!$vuetify.breakpoint.xs" /><br
+            <br v-if="!$vuetify.breakpoint.xs && !isAdmin" /><br
               v-if="!$vuetify.breakpoint.xs"
             />
             <div
@@ -173,7 +173,14 @@
             :style="isAdmin ? '' : 'position: absolute; right: 15px'"
             v-if="!$vuetify.breakpoint.xs"
           >
-            <v-col cols="12" style="text-align: right">
+            <v-col
+              cols="12"
+              xl="12"
+              lg="12"
+              md="12"
+              sm="10"
+              style="text-align: right"
+            >
               <p class="textStyleInBtn" style="color: #4c5d6c" v-if="isAdmin">
                 Дійсний до: 14 листопада(Пн), 10:30
               </p>
@@ -202,7 +209,7 @@
             style="
               text-decoration-line: underline;
               color: #6b7c8a;
-              margin-left: 14px;
+              margin-left: 14px; 
             "
             class="pointer textStyleInBtn"
           >
@@ -218,7 +225,7 @@
       class="px-0"
       :style="
         isAdmin
-          ? 'padding-left: 15px;'
+          ? 'margin-left: 15px;width: 100%;'
           : $vuetify.breakpoint.xs
           ? 'width: 100%; padding-left: 15px;'
           : 'position: absolute; bottom: 0px; width: 100%; margin-left: 15px;'

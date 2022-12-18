@@ -16,7 +16,7 @@
       >
         <v-btn
           color="#085895"
-          width="189px" 
+          width="189px"
           height="40px"
           class="white--text"
           dense
@@ -144,7 +144,7 @@
           width: 100%;
           display: flex;
           justify-content: center;
-          bottom: 55%;
+          margin-top: 220px;
         "
       >
         <v-btn

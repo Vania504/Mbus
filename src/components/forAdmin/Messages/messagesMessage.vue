@@ -28,6 +28,12 @@
         <v-row justify="end" no-gutters align="center">
           <span v-if="!isHover">
             {{
+              new Date(message.created_at).toLocaleDateString("uk-UA", {
+                month: "short",
+                day: "numeric",
+              })
+            }}
+            <!-- {{
               new Date(message.created_at).getDate() == "1" ||
               new Date(message.created_at).getDate() == "2" ||
               new Date(message.created_at).getDate() == "3" ||
@@ -49,8 +55,8 @@
                       day: "numeric",
                     })
                     .substr(0, 6)
-            }}</span
-          >
+            }} -->
+          </span>
           <v-row align="start" justify="end" v-else>
             <!-- <v-tooltip bottom color="rgba(0, 0, 0, 0.5)">
               <template v-slot:activator="{ on, attrs }">
@@ -104,7 +110,7 @@
                           updateStatus(message.id, message.type, status.name)
                         "
                       >
-                        <span class="content">{{status.name}}</span>
+                        <span class="content">{{ status.name }}</span>
                       </v-list-item>
                       <!-- <v-list-item dense class="py-0" active-class="contentActive" @click="
                         updateStatus(message.id, message.type, 'Архівовані')

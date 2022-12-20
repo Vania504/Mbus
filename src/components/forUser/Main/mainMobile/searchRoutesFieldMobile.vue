@@ -45,6 +45,15 @@
               outlined
               dense
               class="rounded-lb-lg rounded-br-0 rounded-t-0"
+              @click="showChooseDate = true"
+              :value="
+                date
+                  ? new Date(date).toLocaleDateString('uk-UA', {
+                      month: 'short',
+                      day: 'numeric',
+                    })
+                  : ''
+              "
             />
           </v-col>
           <v-col class="px-0 py-0" style="text-align: center"
@@ -94,6 +103,12 @@
       :visible="showQuantityPassangerModal"
       @close="setQuantityPassanger"
     />
+    <choose-date-mobile
+      v-if="showChooseDate"
+      :visible="showChooseDate"
+      @close="showChooseDate = false"
+      @setDate="setDate"
+    />
   </div>
 </template>
 
@@ -101,15 +116,19 @@
 import quantityPasangerMobile from "@/components/UI/modals/quantityPasangerMobile.vue";
 import searchRoutesService from "@/requests/main/searchRoutesService";
 import { mapActions, mapGetters } from "vuex";
+import ChooseDateMobile from "@/components/UI/modals/chooseDateMobile.vue";
 export default {
   components: {
     quantityPasangerMobile,
+    ChooseDateMobile,
   },
   data: () => ({
     start_route: "",
     end_route: "",
     quantity_passanger: "",
+    date: "",
     showQuantityPassangerModal: false,
+    showChooseDate: false,
     startCities: [],
     nextCities: [],
   }),
@@ -133,6 +152,10 @@ export default {
     setQuantityPassanger(quantity_passanger) {
       this.quantity_passanger = quantity_passanger;
       this.showQuantityPassangerModal = false;
+    },
+    setDate(date) {
+      this.date = date;
+      this.showChooseDate = false;
     },
     hideLoader() {
       this.updateLoader(false);

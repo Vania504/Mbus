@@ -16,7 +16,7 @@
       />
     </v-col>
     <div
-      style="
+      style=" 
         background-color: white;
         width: 34px;
         height: 38px;
@@ -44,7 +44,13 @@
       />
     </v-col>
     <v-col cols="2" class="px-0">
-      <v-menu ref="menu" v-model="menu" bottom offset-y nudge-left="70px">
+      <v-menu
+        ref="menu"
+        v-model="showChooseDateMenu"
+        bottom
+        offset-y
+        nudge-left="70px"
+      >
         <template v-slot:activator="{ on, attrs }">
           <v-text-field
             background-color="white"
@@ -53,12 +59,19 @@
             outlined
             dense
             class="rounded-0"
-            v-model="routeDate"
+            :value="
+              date
+                ? new Date(date).toLocaleDateString('uk-UA', {
+                    month: 'short',
+                    day: 'numeric',
+                  })
+                : ''
+            "
             v-bind="attrs"
             v-on="on"
-            @click:prepend-inner-icon="on.click"
+            @click:prepend-inner="showChooseDateMenu = true"
             hide-details
-            :error-messages="endRouteError"
+            :error-messages="dateError"
           />
         </template>
         <v-date-picker
@@ -66,11 +79,26 @@
           color="#085895"
           no-title
           locale="uk"
+          :min="
+            new Date(
+              new Date().getTime() +
+                1 * 60 * 60 * 1000 -
+                new Date().getTimezoneOffset() * 60000
+            )
+              .toISOString()
+              .substr(0, 10)
+          "
         ></v-date-picker>
       </v-menu>
     </v-col>
     <v-col cols="1" class="px-0">
-      <v-menu left offset-y width="261px" :close-on-content-click="isClose">
+      <v-menu
+        v-model="showQuantityPeopleMenu"
+        left
+        offset-y
+        width="261px"
+        :close-on-content-click="isClose"
+      >
         <template v-slot:activator="{ on, attrs }">
           <v-text-field
             v-bind="attrs"
@@ -80,10 +108,12 @@
             placeholder="1"
             outlined
             dense
+            v-model="quantity_people"
             class="rounded-l-0 rounded-r-lg"
             @click="isClose = false"
-            @click:prepend-inner-icon="on.click"
+            @click:prepend-inner="showQuantityPeopleMenu = true"
             hide-details
+            :error-messages="quantityPeopleError"
           />
         </template>
         <v-card width="261px" style="padding: 15px 30px 15px 30px">
@@ -148,18 +178,26 @@ export default {
     end_route: "",
     routeDate: "",
     date: "",
+    quantity_people: "",
     startCities: [],
     nextCities: [],
     quantityAdult: 0,
     quantityKid: 0,
     isClose: false,
-    menu: false,
+    showQuantityPeopleMenu: false,
+    showChooseDateMenu: false,
   }),
   validations: {
     start_route: {
       required,
     },
     end_route: {
+      required,
+    },
+    date: {
+      required,
+    },
+    quantity_people: {
       required,
     },
   },
@@ -208,6 +246,12 @@ export default {
         this.hideLoader();
       }
     },
+    setQuantityPeople() {
+      this.quantity_people =
+        this.quantityAdult + this.quantityKid == 0
+          ? ""
+          : this.quantityAdult + this.quantityKid;
+    },
   },
   computed: {
     startRouteError() {
@@ -215,8 +259,7 @@ export default {
       if (!this.$v.start_route.$dirty) {
         return errors;
       }
-      !this.$v.start_route.required &&
-        errors.push("Оберіть місце відправлення");
+      !this.$v.start_route.required && errors.push("");
       return errors;
     },
     endRouteError() {
@@ -224,7 +267,24 @@ export default {
       if (!this.$v.end_route.$dirty) {
         return errors;
       }
-      !this.$v.end_route.required && errors.push("Оберіть місце прибуття");
+      !this.$v.end_route.required && errors.push("");
+      return errors;
+    },
+    dateError() {
+      const errors = [];
+      if (!this.$v.date.$dirty) {
+        return errors;
+      }
+      !this.$v.date.required && errors.push("");
+      return errors;
+    },
+    quantityPeopleError() {
+      const errors = [];
+      if (!this.$v.quantity_people.$dirty) {
+        return errors;
+      }
+      !this.$v.quantity_people.required &&
+        errors.push("Оберіть місце прибуття");
       return errors;
     },
   },
@@ -235,6 +295,18 @@ export default {
         if (this.start_route.length > 0) {
           this.getNextCities();
         }
+      },
+    },
+    quantityAdult: {
+      deep: true,
+      handler() {
+        this.setQuantityPeople();
+      },
+    },
+    quantityKid: {
+      deep: true,
+      handler() {
+        this.setQuantityPeople();
       },
     },
   },

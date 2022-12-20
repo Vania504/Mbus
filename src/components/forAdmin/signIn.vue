@@ -13,7 +13,7 @@
       <modal-header
         title="Вхід користувача"
         @close="$emit('close')"
-        :showCloseIcon="false"
+        :showCloseIcon="true"
       />
       <v-card style="overflow: hidden" height="390px">
         <v-row justify="center" class="pt-10">
@@ -37,7 +37,9 @@
               :error-messages="passwordError"
               @blur="$v.user.password.$touch()"
               :hide-details="!passwordError.length"
-              :append-icon="showPassword ? 'mdi-eye-outline' : 'mdi-eye-off-outline'"
+              :append-icon="
+                showPassword ? 'mdi-eye-outline' : 'mdi-eye-off-outline'
+              "
               @click:append="showPassword = !showPassword"
             />
             <v-row no-gutters align="center" class="py-0">
@@ -46,10 +48,10 @@
                 <span>Запам'ятати мене</span>
               </v-row>
               <v-row no-gutters align="center" justify="end" class="py-0">
-                <router-link to="/reset_password"
-                  ><span class="signInTextStyle pointer"
-                    >Забули пароль</span
-                  ></router-link
+                <span
+                  @click="$emit('close'), $router.push('/reset_password')"
+                  class="signInTextStyle pointer"
+                  >Забули пароль</span
                 >
               </v-row>
             </v-row>
@@ -143,7 +145,7 @@ export default {
             //accessToken: response.
             timeout: timeout,
           });
-          this.$emit('close')
+          this.$emit("close");
           this.$router.push({ name: "main" });
         }
       }

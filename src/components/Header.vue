@@ -270,11 +270,13 @@
       v-if="showSignUpModal"
       :visible="showSignUpModal"
       @close="showSignUpModal = false"
+      @goToSignIn="(showSignUpModal = false), (showSignInModal = true)"
     />
     <sign-in
       v-if="showSignInModal"
       :visible="showSignInModal"
       @close="showSignInModal = false"
+      @goToSignUp="(showSignInModal = false), (showSignUpModal = true)"
     />
     <confirm-modal
       v-if="showConfirmModal"

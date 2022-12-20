@@ -82,7 +82,7 @@
             :style="
               $vuetify.breakpoint.xs
                 ? 'width: 100%;'
-                : 'width: 790px; margin-left: 2px;'
+                : 'width: 790px; margin-left: 0px;'
             "
           >
             <v-row
@@ -154,7 +154,7 @@
             </v-row>
           </div>
         </center>
-      </v-col>÷
+      </v-col>
     </v-row>
   </v-col>
 </template>

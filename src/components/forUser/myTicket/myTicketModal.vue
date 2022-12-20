@@ -1,6 +1,6 @@
 <template>
   <v-dialog v-model="visibility" width="900px" height="393px">
-    <my-ticket-content />
+    <my-ticket-content @close="$emit('close')" />
   </v-dialog>
 </template>
 

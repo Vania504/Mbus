@@ -8,7 +8,7 @@
         : 'mx-5'
     "
     :width="$vuetify.breakpoint.xs ? '180px' : '320px'"
-    :height="$vuetify.breakpoint.xs ? '120px' : ''"
+    :height="$vuetify.breakpoint.xs ? '120px' : 'max-content'"
     :style="
       $vuetify.breakpoint.xs
         ? 'text-align: left;'
@@ -39,7 +39,7 @@
             font-size: 12px;
             color: white;
             margin-top: 70px;
-            margin-right: 20px; 
+            margin-right: 20px;
           "
         >
           {{ route.departure }} - {{ route.destination }}

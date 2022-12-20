@@ -122,7 +122,7 @@
                 </span>
               </div>
               <!-- Space for only other screen -->
-              <br v-if="!$vuetify.breakpoint.xs" /><br
+              <br
                 v-if="!$vuetify.breakpoint.xs"
               />
               <div
@@ -243,12 +243,12 @@
           :style="
             $vuetify.breakpoint.xs
               ? 'padding-left: 20px'
-              : 'padding-left: 34px;'
+              : 'padding-left: 30px;'
           "
           style="position: absolute; bottom: 0px; width: 100%"
         >
           <!-- Bus for other screen -->
-          <v-row no-gutters align="center" v-if="!$vuetify.breakpoint.xs">
+          <v-row no-gutters align="center" class="mt-6" v-if="!$vuetify.breakpoint.xs">
             <span
               style="
                 font-weight: 400;

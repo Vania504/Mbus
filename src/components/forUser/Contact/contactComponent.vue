@@ -31,11 +31,13 @@
     </v-col>
     <div style="background-color: #243949; width: 100%; height: 31px"></div>
     <GmapMap
-      :center="{ lat: 48.920551, lng: 24.706484 }"
+      :center="{ lat: 48.53115, lng: 25.03649 }"
       :zoom="10"
       map-type-id="roadmap"
       style="width: 100%; height: 545px"
-    ></GmapMap>
+    >
+      <GmapMarker :position="{ lat: 48.53115, lng: 25.03649 }" />
+    </GmapMap>
   </div>
 </template>
 

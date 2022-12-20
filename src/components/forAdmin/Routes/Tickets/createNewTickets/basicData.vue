@@ -23,7 +23,7 @@
         </v-row>
       </v-row>
       <v-row no-gutters align="start" style="margin-top: 20px">
-        <v-col cols="5">
+        <v-col cols="5" xl="4" lg="5" md="5" sm="12">
           <div style="width: 500px">
             <v-autocomplete
               dense
@@ -52,7 +52,14 @@
             </v-autocomplete>
           </div>
         </v-col>
-        <v-col cols="3" style="padding-right: 50px; padding-left: 40px">
+        <v-col
+          cols="3" xl="3" lg="3" md="3" sm="9"
+          :style="
+            !$vuetify.breakpoint.xl
+              ? 'padding-right: 50px; padding-left: 40px'
+              : 'padding-right: 50px'
+          "
+        >
           <v-menu
             ref="menu"
             v-model="menu"
@@ -115,7 +122,7 @@
             </v-row>
           </v-menu>
         </v-col>
-        <v-col cols="1">
+        <v-col cols="1" xl="1" lg="1" md="1" sm="9">
           <v-text-field
             dense
             outlined
@@ -129,14 +136,14 @@
         </v-col>
       </v-row>
       <v-row no-gutters align="center">
-        <v-col cols="4" style="padding-right: 50px">
+        <v-col cols="4" xl="4" lg="4" md="4" sm="9" style="padding-right: 50px">
           <v-autocomplete
             dense
             outlined
             label="Автобус"
             placeholder="Виберіть автобус"
             color="#085895"
-            :items="Object.values(buses)"
+            :items="Object.values(buses.data)"
             :item-value="'id'"
             :item-text="'model'"
             v-model="ticket.bus"
@@ -145,7 +152,7 @@
           >
             <template slot="selection" slot-scope="{ item }">
               <span class="autocompleteSelectedItem">
-                {{ item.model }} {{item}}
+                {{ item.model }} {{ item }}
               </span></template
             >
             <template slot="item" slot-scope="{ item }">
@@ -153,7 +160,14 @@
             </template>
           </v-autocomplete>
         </v-col>
-        <v-col cols="2">
+        <v-col
+          cols="2"
+          xl="1"
+          lg="2"
+          md="2"
+          sm="12"
+          :style="$vuetify.breakpoint.xl ? 'margin-right: 50px' : ''"
+        >
           <div style="width: 130px">
             <v-text-field
               dense
@@ -261,11 +275,12 @@ export default {
     },
     async getBuses() {
       let response = await ourFleetService.getBuses();
-      this.buses = response.data.data;
-    }, 
+      this.buses = response.data;
+    },
     async editRoute(id) {
       let response = await routesService.getRoute(id);
       this.routeDetailInfo = response.data;
+      console.log("detail", this.routeDetailInfo);
       this.isEditRoute = true;
     },
   },

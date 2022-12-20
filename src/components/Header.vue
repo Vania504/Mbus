@@ -145,14 +145,13 @@
                           >
                             <span class="myTicketLabel">Мої квитки</span>
                           </div>
-                          <div class="dropdownItem">
+                          <div
+                            class="dropdownItem"
+                            @click="showConfirmModal = true"
+                          >
                             <p>
                               <v-row no-gutters align="center" class="pt-4">
-                                <output
-                                  class="logOutLabel"
-                                  @click="showConfirmModal = true"
-                                >
-                                  Вихід </output
+                                <output class="logOutLabel"> Вихід </output
                                 ><img
                                   style="margin-left: 5px"
                                   src="@/assets/img/logoutIcon.svg"

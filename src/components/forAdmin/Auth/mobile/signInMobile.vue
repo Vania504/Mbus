@@ -141,7 +141,7 @@ import { validationMixin } from "vuelidate";
 import { required, email } from "vuelidate/lib/validators";
 import { mapActions } from "vuex";
 import authService from "@/requests/admin/authService";
-import errorSnackbar from "../UI/errorSnackbar.vue";
+import errorSnackbar from "@/components/UI/errorSnackbar.vue";
 export default {
   mixins: [validationMixin],
   components: {

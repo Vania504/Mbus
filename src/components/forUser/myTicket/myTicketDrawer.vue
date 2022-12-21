@@ -23,8 +23,8 @@
 
 <script>
 import myTicketContent from "./myTicketContent.vue";
-import signInMobile from "@/components/forAdmin/signInMobile.vue";
-import signUpMobile from "@/components/forAdmin/signUpMobile.vue";
+import signInMobile from "@/components/forAdmin/Auth/mobile/signInMobile.vue";
+import signUpMobile from "@/components/forAdmin/Auth/mobile/signUpMobile.vue";
 export default {
   components: { myTicketContent, signInMobile, signUpMobile },
   data: () => ({

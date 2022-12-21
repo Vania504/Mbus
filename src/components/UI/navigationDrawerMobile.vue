@@ -158,8 +158,8 @@
 <script>
 import { mapGetters } from "vuex";
 import confirmModal from "./modals/confirmModal.vue";
-import signInMobile from "../forAdmin/signInMobile.vue";
-import signUpMobile from "../forAdmin/signUpMobile.vue";
+import signUpMobile from "../forAdmin/Auth/mobile/signUpMobile.vue";
+import signInMobile from "../forAdmin/Auth/mobile/signInMobile.vue";
 export default {
   components: {
     confirmModal,

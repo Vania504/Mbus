@@ -301,8 +301,8 @@
 
 <script>
 import { mapGetters } from "vuex";
-import SignIn from "./forAdmin/signIn.vue";
-import signUpModal from "./forAdmin/signUpModal.vue";
+import signIn from "./forAdmin/Auth/desktop/signIn.vue";
+import signUpModal from "./forAdmin/Auth/desktop/signUpModal.vue";
 import MyTicketModal from "./forUser/myTicket/myTicketModal.vue";
 import MobileSearchMenu from "./UI/mobileSearchMenu.vue";
 import ConfirmModal from "./UI/modals/confirmModal.vue";
@@ -310,7 +310,7 @@ import searchRoutesField from "./UI/searchRoutesField.vue";
 export default {
   components: {
     signUpModal,
-    SignIn,
+    signIn,
     ConfirmModal,
     MyTicketModal,
     searchRoutesField,

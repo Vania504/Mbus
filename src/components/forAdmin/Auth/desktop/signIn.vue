@@ -85,7 +85,7 @@
 </template>
 
 <script>
-import modalHeader from "../UI/modalHeader.vue";
+import modalHeader from "@/components/UI/modalHeader.vue";
 import { validationMixin } from "vuelidate";
 import { required, email } from "vuelidate/lib/validators";
 import authService from "@/requests/admin/authService";

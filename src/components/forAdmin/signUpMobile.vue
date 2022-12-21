@@ -113,7 +113,7 @@
           color: #ffffff;
         "
         color="#085895"
-        @click="signIn"
+        @click="signUp"
         >Зареєструватись</v-btn
       >
       <v-row no-gutters justify="center">
@@ -129,7 +129,7 @@
                 font-size: 12px;
                 line-height: 14px;
                 letter-spacing: 0.1em;
-                color: #50616e;
+                color: #50616e; 
                 margin: 0px 10px 0px 10px;
               "
               >або</output
@@ -228,7 +228,7 @@ export default {
       this.$v.$touch();
       if (!this.$v.$invalid && this.isAggre) {
         let user = new FormData();
-        user.append("name", this.user.username);
+        user.append("first_name", this.user.username);
         user.append("email", this.user.email);
         user.append("password", this.user.password);
         let response = await authService.signUp(user);

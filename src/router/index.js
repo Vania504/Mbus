@@ -90,6 +90,8 @@ const router = new VueRouter({
 router.beforeEach((to, from, next) => {
     if (to.matched.some(record => record.meta.requiresLogin) && store.getters.loggedUser == null) {
         next({ name: 'main' })
+    } else if (store.getters.loggedUser && store.getters.loggedUser.role_id == 3) {
+        next({ name: 'main' })
     }
     else {
         next();

@@ -178,7 +178,7 @@ export default {
       this.$v.$touch();
       if (!this.$v.$invalid) {
         let user = new FormData();
-        user.append("name", this.user.username);
+        user.append("first_name", this.user.username);
         user.append("email", this.user.email);
         user.append("password", this.user.password);
         let response = await authService.signUp(user);

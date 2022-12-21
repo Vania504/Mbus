@@ -71,7 +71,12 @@
               <router-link to="/contact"
                 ><span class="headerItems">Контакти</span></router-link
               >
-              <router-link to="/admin" v-if="loggedUser"
+              <router-link
+                to="/admin"
+                v-if="
+                  (loggedUser && loggedUser.role_id == 1) ||
+                  (loggedUser && loggedUser.role_id == 2)
+                "
                 ><span class="headerItems">Адмін</span></router-link
               >
             </v-row>
@@ -124,7 +129,9 @@
                             letter-spacing: 0.1em;
                             color: #000000;
                           "
-                          >Герцюк Ігор</span
+                          >{{ loggedUser.first_name }}&nbsp;{{
+                            loggedUser.last_name
+                          }}</span
                         >
                         <v-row no-gutters align="center" justify="end">
                           <img

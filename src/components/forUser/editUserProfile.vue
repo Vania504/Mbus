@@ -200,6 +200,7 @@
 <script>
 import { validationMixin } from "vuelidate";
 import { email, required, minLength, sameAs } from "vuelidate/lib/validators";
+import profileService from "@/requests/main/profileService";
 export default {
   mixins: [validationMixin],
   data: () => ({
@@ -266,19 +267,37 @@ export default {
       },
     },
   },
+  mounted() {
+    this.getUserProfile();
+  },
   methods: {
-    updateUserData() {
+    async getUserProfile() {
+      let response = await profileService.getUserProfile();
+      console.log("user Profile: ", response);
+      this.user = response.data;
+    },
+    async updateUserData() {
       this.$v.user.$touch();
       if (!this.$v.user.$invalid) {
+        let user = new FormData();
+        user.append("first_name", this.user.first_name);
+        user.append("last_name", this.user.last_name);
+        user.append("phone_number", this.user.phone_number);
+        user.append("email", this.user.email);
+        await profileService.updateUserProfile(user).then(() => {
+          this.getUserProfile();
+        });
         if (this.isChangePassword) {
           this.updateUserPassword();
         }
       }
     },
-    updateUserPassword() {
+    async updateUserPassword() {
       this.$v.password.$touch();
       if (!this.$v.password.$invalid) {
-        console.log("work");
+        let password = new FormData();
+        password.append("password", this.password.password);
+        await profileService.updateUserPassword(password);
       }
     },
   },

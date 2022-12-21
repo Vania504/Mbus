@@ -4,7 +4,11 @@
     :width="$vuetify.breakpoint.xs ? '90%' : '900px'"
     style="overflow: hidden"
   >
-    <modal-header title="Реєстрація користувача" @close="$emit('close')" :showCloseIcon="true"/>
+    <modal-header
+      title="Реєстрація користувача"
+      @close="$emit('close')"
+      :showCloseIcon="true"
+    />
     <v-card style="overflow: hidden">
       <v-row justify="center" class="pt-10">
         <v-col cols="10" lg="7" md="7" sm="7" xl="7">
@@ -13,7 +17,7 @@
             outlined
             v-model="user.username"
             color="7B8892"
-            placeholder="Ім'я користувача"
+            placeholder="Прізвище"
             :error-messages="usernameError"
             @blur="$v.user.username.$touch()"
           />
@@ -52,7 +56,7 @@
             justify="start"
             class="py-0 mb-5"
           >
-            <v-checkbox color="#085895"/>
+            <v-checkbox color="#085895" />
             <v-col
               cols="10"
               lg="11"
@@ -203,7 +207,7 @@ export default {
         return errors;
       }
       !this.$v.user.username.required &&
-        errors.push("Поле ім'я користувача обов'язкове");
+        errors.push("Поле прізвище обов'язкове");
       return errors;
     },
     emailError() {

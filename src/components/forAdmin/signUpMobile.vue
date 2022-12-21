@@ -37,7 +37,7 @@
           color="#085895"
           v-model="user.username"
           :append-icon="usernameError.length ? 'mdi-alert-circle-outline' : ''"
-          label="Ім'я користувача"
+          label="Прізвище"
           placeholder="Введіть тут.."
           :error-messages="usernameError"
         />

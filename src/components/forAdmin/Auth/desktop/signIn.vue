@@ -1,87 +1,91 @@
 <template>
-  <v-dialog
-    v-model="visibility"
-    :width="$vuetify.breakpoint.xs ? '90%' : '900px'"
-    style="overflow: hidden"
-  >
-    <error-snackbar v-if="showErrorSnackbar" :snackbarText="snackbarText" />
-    <v-card
+  <div>
+    <v-dialog
+      v-model="visibility"
       :width="$vuetify.breakpoint.xs ? '90%' : '900px'"
-      height="390px"
-      class="mb-15"
+      style="overflow: hidden"
     >
-      <modal-header
-        title="Вхід користувача"
-        @close="$emit('close')"
-        :showCloseIcon="true"
-      />
-      <v-card style="overflow: hidden" height="390px">
-        <v-row justify="center" class="pt-10">
-          <v-col cols="10" lg="7" md="7" sm="7" xl="7">
-            <v-text-field
-              dense
-              outlined
-              v-model.trim="user.email"
-              color="7B8892"
-              placeholder="Email"
-              :error-messages="emailError"
-              @blur="$v.user.email.$touch()"
-            />
-            <v-text-field
-              dense
-              outlined
-              v-model.trim="user.password"
-              color="7B8892"
-              placeholder="Пароль"
-              :type="showPassword ? 'text' : 'password'"
-              :error-messages="passwordError"
-              @blur="$v.user.password.$touch()"
-              :hide-details="!passwordError.length"
-              :append-icon="
-                showPassword ? 'mdi-eye-outline' : 'mdi-eye-off-outline'
-              "
-              @click:append="showPassword = !showPassword"
-            />
-            <v-row no-gutters align="center" class="py-0">
-              <v-row no-gutters align="center" justify="start" class="py-0">
-                <v-checkbox color="#085895" v-model="rememberMe" />
-                <span>Запам'ятати мене</span>
+      <error-snackbar v-if="showErrorSnackbar" :snackbarText="snackbarText" />
+      <v-card
+        :width="$vuetify.breakpoint.xs ? '90%' : '900px'"
+        height="390px"
+        class="mb-15"
+      >
+        <modal-header
+          title="Вхід користувача"
+          @close="$emit('close')"
+          :showCloseIcon="true"
+        />
+        <v-card style="overflow: hidden" height="390px">
+          <v-row justify="center" class="pt-10">
+            <v-col cols="10" lg="7" md="7" sm="7" xl="7">
+              <v-text-field
+                dense
+                outlined
+                v-model.trim="user.email"
+                color="7B8892"
+                placeholder="Email"
+                :error-messages="emailError"
+                @blur="$v.user.email.$touch()"
+              />
+              <v-text-field
+                dense
+                outlined
+                v-model.trim="user.password"
+                color="7B8892"
+                placeholder="Пароль"
+                :type="showPassword ? 'text' : 'password'"
+                :error-messages="passwordError"
+                @blur="$v.user.password.$touch()"
+                :hide-details="!passwordError.length"
+                :append-icon="
+                  showPassword ? 'mdi-eye-outline' : 'mdi-eye-off-outline'
+                "
+                @click:append="showPassword = !showPassword"
+              />
+              <v-row no-gutters align="center" class="py-0">
+                <v-row no-gutters align="center" justify="start" class="py-0">
+                  <v-checkbox color="#085895" v-model="rememberMe" />
+                  <span>Запам'ятати мене</span>
+                </v-row>
+                <v-row no-gutters align="center" justify="end" class="py-0">
+                  <span
+                    @click="$emit('resetPassword')"
+                    class="signInTextStyle pointer"
+                    >Забули пароль</span
+                  >
+                </v-row>
               </v-row>
-              <v-row no-gutters align="center" justify="end" class="py-0">
-                <span
-                  @click="$emit('close'), $router.push('/reset_password')"
-                  class="signInTextStyle pointer"
-                  >Забули пароль</span
-                >
-              </v-row>
-            </v-row>
-            <v-btn
-              style="text-transform: none; font-size: 16px"
-              width="208px"
-              height="39px"
-              class="white--text"
-              color="#085895"
-              @click="signIn"
-              >Увійти</v-btn
-            >
-            <v-row no-gutters align="center">
-              <v-col>
-                <v-divider class="mt-10 mb-5 mr-5 px-15 divider" />
-              </v-col>
-              <p class="mt-9">або</p>
-              <v-col>
-                <v-divider class="mt-10 mb-5 ml-5 px-15 divider" /> </v-col
-            ></v-row>
-            <div class="mb-5">
-              <span class="signInTextStyle pointer" @click="$emit('goToSignUp')"
-                >Зареєструватись</span
+              <v-btn
+                style="text-transform: none; font-size: 16px"
+                width="208px"
+                height="39px"
+                class="white--text"
+                color="#085895"
+                @click="signIn"
+                >Увійти</v-btn
               >
-            </div>
-          </v-col>
-        </v-row>
+              <v-row no-gutters align="center">
+                <v-col>
+                  <v-divider class="mt-10 mb-5 mr-5 px-15 divider" />
+                </v-col>
+                <p class="mt-9">або</p>
+                <v-col>
+                  <v-divider class="mt-10 mb-5 ml-5 px-15 divider" /> </v-col
+              ></v-row>
+              <div class="mb-5">
+                <span
+                  class="signInTextStyle pointer"
+                  @click="$emit('goToSignUp')"
+                  >Зареєструватись</span
+                >
+              </div>
+            </v-col>
+          </v-row>
+        </v-card>
       </v-card>
-    </v-card>
-  </v-dialog>
+    </v-dialog>
+  </div>
 </template>
 
 <script>

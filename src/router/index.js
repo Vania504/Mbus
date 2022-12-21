@@ -67,11 +67,6 @@ const routes = [
         component: () => import('@/components/forAdmin/Auth/desktop/signIn.vue'),
     },
     {
-        path: '/reset_password',
-        name: 'reset_password',
-        component: () => import('@/views/forAdmin/resetPassword.vue'),
-    },
-    {
         path: '/reset_password/:code',
         name: 'reset_password_code',
         component: () => import('@/views/forAdmin/inputNewPassword.vue'),

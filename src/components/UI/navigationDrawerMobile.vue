@@ -3,12 +3,17 @@
     <sign-in-mobile
       v-if="signIn"
       @back="signIn = false"
+      @resetPassword="(signIn = false), (resetPassword = true)"
       @goToSignUp="(signIn = false), (signUp = true)"
     />
     <sign-up-mobile
       v-else-if="signUp"
       @back="signUp = false"
       @goToSignIn="(signUp = false), (signIn = true)"
+    />
+    <reset-password-mobile
+      v-else-if="resetPassword"
+      @back="resetPassword = false"
     />
     <div v-else>
       <div
@@ -160,11 +165,13 @@ import { mapGetters } from "vuex";
 import confirmModal from "./modals/confirmModal.vue";
 import signUpMobile from "../forAdmin/Auth/mobile/signUpMobile.vue";
 import signInMobile from "../forAdmin/Auth/mobile/signInMobile.vue";
+import ResetPasswordMobile from "../forAdmin/Auth/mobile/resetPasswordMobile.vue";
 export default {
   components: {
     confirmModal,
     signInMobile,
     signUpMobile,
+    ResetPasswordMobile,
   },
   data: () => ({
     group: "",
@@ -172,6 +179,7 @@ export default {
     showConfirmModal: false,
     signIn: false,
     signUp: false,
+    resetPassword: false,
   }),
   props: {
     showNavigationDrawer: {

@@ -282,6 +282,9 @@
       v-if="showSignInModal"
       :visible="showSignInModal"
       @close="showSignInModal = false"
+      @resetPassword="
+        (showSignInModal = false), (showResetPasswordModal = true)
+      "
       @goToSignUp="(showSignInModal = false), (showSignUpModal = true)"
     />
     <confirm-modal
@@ -296,6 +299,11 @@
       :visible="showMyTicketModal"
       @close="showMyTicketModal = false"
     />
+    <reset-password-modal
+      v-if="showResetPasswordModal"
+      :visible="showResetPasswordModal"
+      @close="showResetPasswordModal = false"
+    />
   </div>
 </template>
 
@@ -303,6 +311,7 @@
 import { mapGetters } from "vuex";
 import signIn from "./forAdmin/Auth/desktop/signIn.vue";
 import signUpModal from "./forAdmin/Auth/desktop/signUpModal.vue";
+import ResetPasswordModal from "./forAdmin/resetPassword/resetPasswordModal.vue";
 import MyTicketModal from "./forUser/myTicket/myTicketModal.vue";
 import MobileSearchMenu from "./UI/mobileSearchMenu.vue";
 import ConfirmModal from "./UI/modals/confirmModal.vue";
@@ -315,6 +324,7 @@ export default {
     MyTicketModal,
     searchRoutesField,
     MobileSearchMenu,
+    ResetPasswordModal,
   },
   name: "appHeader",
   data: () => ({
@@ -341,6 +351,7 @@ export default {
     showSignUpModal: false,
     showConfirmModal: false,
     showMyTicketModal: false,
+    showResetPasswordModal: false,
     menu: false,
     selectedItem: 0,
   }),

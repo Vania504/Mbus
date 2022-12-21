@@ -46,6 +46,7 @@
             <img
               :src="require(`@/assets/img/mobileMenu/${item.icon}`)"
               :style="index == 0 ? '' : 'margin-left: 25px;'"
+              style="z-index: 20"
           /></router-link>
           <img
             v-else-if="
@@ -54,6 +55,7 @@
             "
             :src="require(`@/assets/img/mobileMenu/${item.icon}`)"
             :style="index == 0 ? '' : 'margin-left: 25px;'"
+            style="z-index: 20"
             @click="$emit('other')"
           />
           <div
@@ -61,7 +63,7 @@
               $route.path == '/transportation_rules' ||
               $route.path == '/irregular_transportation'
             "
-            style="padding-bottom: 5px; text-align: left"
+            style="padding-bottom: 5px; text-align: left; z-index: 20"
             :style="index == 0 ? '' : 'margin-left: 15px;'"
             @click="$emit('other')"
           >
@@ -78,9 +80,9 @@
               ></div>
               <img
                 :src="require(`@/assets/img/mobileMenu/${item.icon}`)"
-                style="margin-left: 10px"
+                style="margin-left: 10px; z-index: 20"
               />
-              <v-col class="py-0 ml-1" cols="1">
+              <v-col class="py-0 ml-1" cols="1" style="z-index: 20">
                 <span>{{ item.title }}</span></v-col
               >
             </v-row>
@@ -115,11 +117,7 @@
                   :src="require(`@/assets/img/mobileMenu/${item.icon}`)"
                   style="margin-left: 10px; z-index: 20"
                 />
-                <v-col
-                  class="py-0 ml-1"
-                  cols="1"
-                  style="z-index: 20"
-                >
+                <v-col class="py-0 ml-1" cols="1" style="z-index: 20">
                   <div :style="index == 3 ? 'width: 90px' : ''">
                     <span>{{ item.title }}</span>
                   </div>

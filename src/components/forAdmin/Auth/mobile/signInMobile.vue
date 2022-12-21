@@ -75,6 +75,7 @@
                 letter-spacing: 0.1em;
                 color: #085895;
               "
+              @click="$emit('resetPassword')"
               >Забули пароль</span
             >
           </v-row>

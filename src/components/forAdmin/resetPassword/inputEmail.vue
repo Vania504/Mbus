@@ -1,51 +1,64 @@
 <template>
   <div>
-    <error-snackbar v-if="showErrorSnackbar" :snackbarText="snackbarText"/>
-    <v-row justify="center" no-gutters class="mt-15 mb-15">
-      <v-card width="600px">
-        <v-col class="px-0 py-0">
-          <modal-header
-            title="Зміна паролю"
-            @close="$emit('close')"
-            :showCloseIcon="false"
-          />
-          <v-card width="600px" @keypress.enter="sendEmail">
-            <v-col class="pt-5">
-              <v-text-field
-                color="#085895"
-                class="mt-5"
-                label="Email"
-                type="email"
-                dense
-                outlined
-                v-model="email"
-                :error-messages="emailError"
-              />
-              <v-btn color="#085895" dark @click="sendEmail">Надіслати</v-btn>
-            </v-col>
-          </v-card>
-        </v-col>
-      </v-card>
-    </v-row>
+    <error-snackbar v-if="showErrorSnackbar" :snackbarText="snackbarText" />
+    <v-card
+      width="900px"
+      height="350px"
+      style="display: flex; justify-content: center; align-items: center"
+    >
+      <v-col class="px-0 py-0 mb-10" cols="6" >
+        <v-text-field
+          color="#085895"
+          class="rounded-0"
+          label="Введіть ваш Email"
+          type="email"
+          dense
+          outlined
+          v-model="email"
+          :error-messages="emailError"
+        />
+        <v-row no-gutters justify="end" style="margin-top: 5px">
+          <v-btn
+            text
+            style="
+              font-weight: 400;
+              font-size: 16px;
+              line-height: 19px;
+              text-transform: none;
+              letter-spacing: 0.1em;
+              color: #50616e; 
+            "
+            @click="$emit('close')"
+            >Скасувати</v-btn
+          >
+          <v-btn
+            color="#085895"
+            width="200px"
+            height="35px"
+            dark
+            @click="sendEmail"
+            >Скинути пароль</v-btn
+          >
+        </v-row>
+      </v-col>
+    </v-card>
   </div>
 </template>
   
   <script>
 import { validationMixin } from "vuelidate";
 import { required, email } from "vuelidate/lib/validators";
-import modalHeader from "@/components/UI/modalHeader";
 import authService from "@/requests/admin/authService";
-import errorSnackbar from '@/components/UI/errorSnackbar.vue'
+import errorSnackbar from "@/components/UI/errorSnackbar.vue";
 export default {
   mixins: [validationMixin],
   components: {
-    modalHeader,
-    errorSnackbar
+    errorSnackbar,
   },
   data: () => ({
     email: "",
     showErrorSnackbar: false,
-    snackbarText: '',
+    snackbarText: "",
   }),
   validations: {
     email: {
@@ -59,15 +72,17 @@ export default {
       this.showErrorSnackbar = false;
       if (!this.$v.$invalid) {
         let email = new FormData();
-        email.append('email', this.email)
-        await authService.resetPassword(email).then(() => {
-           localStorage.setItem('userEmail', this.email);
-          this.$emit('successSendEmail')
-        })
-        .catch(() => {
-          this.snackbarText = "Користувача з таким email не існує"
-          this.showErrorSnackbar = true;
-        })
+        email.append("email", this.email);
+        await authService
+          .resetPassword(email)
+          .then(() => {
+            localStorage.setItem("userEmail", this.email);
+            this.$emit("successSendEmail");
+          })
+          .catch(() => {
+            this.snackbarText = "Користувача з таким email не існує";
+            this.showErrorSnackbar = true;
+          });
       }
     },
   },

@@ -22,11 +22,23 @@ export default {
 		})
 		return res.data
 	},
-	async resetPassword(form){
+	async resetPassword(form) {
 		const response = await requestService.post(`/resetRequest`, form)
 		return response?.data
 	},
-	async changePassword(form){
+	async getUsers() {
+		const response = await requestService.get(`/users`, {
+			headers: { Authorization: `Bearer ${store.getters.loggedUser.token}` }
+		})
+		return response?.data
+	},
+	async updateUser(id, form) {
+		const response = await requestService.post(`/user/${id}`, form, {
+			headers: { Authorization: `Bearer ${store.getters.loggedUser.token}` }
+		})
+		return response?.data
+	},
+	async changePassword(form) {
 		const response = await requestService.post(`/changePassword`, form)
 		return response?.data
 	}

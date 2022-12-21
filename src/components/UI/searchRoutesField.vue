@@ -145,6 +145,7 @@
               ><span class="peopleTypeStyle">Дорослий:</span></v-col
             >
             <v-icon
+              :color="quantityAdult == 0 ? '' : '#085895'"
               @click="quantityAdult > 0 ? quantityAdult-- : (quantityAdult = 0)"
               >mdi-minus-circle-outline</v-icon
             >
@@ -153,13 +154,17 @@
               class="peopleTypeStyle"
               >{{ quantityAdult }}</output
             >
-            <v-icon @click="quantityAdult++">mdi-plus-circle-outline</v-icon>
+            <v-icon color="#085895" @click="quantityAdult++"
+              >mdi-plus-circle-outline</v-icon
+            >
           </v-row>
           <v-row no-gutters align="center" justify="start" class="mt-5">
             <v-col cols="6" style="text-align: left"
               ><span class="peopleTypeStyle">Дитячий:</span></v-col
             >
-            <v-icon @click="quantityKid > 0 ? quantityKid-- : (quantityKid = 0)"
+            <v-icon
+              :color="quantityKid == 0 ? '' : '#085895'"
+              @click="quantityKid > 0 ? quantityKid-- : (quantityKid = 0)"
               >mdi-minus-circle-outline</v-icon
             >
             <output
@@ -167,7 +172,9 @@
               class="peopleTypeStyle"
               >{{ quantityKid }}</output
             >
-            <v-icon @click="quantityKid++">mdi-plus-circle-outline</v-icon>
+            <v-icon color="#085895" @click="quantityKid++"
+              >mdi-plus-circle-outline</v-icon
+            >
           </v-row>
         </v-card>
       </v-menu>

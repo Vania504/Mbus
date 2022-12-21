@@ -21,7 +21,11 @@
           :item-text="'name'"
           :item-value="'name'"
           v-model="start_route"
-        />
+        >
+          <template v-slot:prepend-inner>
+            <img class="pt-1" src="@/assets/img/mobileMenu/placeIcon.svg" />
+          </template>
+        </v-autocomplete>
         <v-autocomplete
           background-color="white"
           prepend-inner-icon="mdi-map-marker-outline"
@@ -35,7 +39,11 @@
           v-model="end_route"
           :disabled="nextCities.length == 0"
           hide-details
-        />
+        >
+          <template v-slot:prepend-inner>
+            <img class="pt-1" src="@/assets/img/mobileMenu/placeIcon.svg" />
+          </template>
+        </v-autocomplete>
         <v-row no-gutters align="center">
           <v-col class="px-0 py-0">
             <v-text-field
@@ -54,7 +62,16 @@
                     })
                   : ''
               "
-            />
+            >
+              <template v-slot:prepend-inner>
+                <img
+                  @click="showChooseDateMenu = true"
+                  class="pointer"
+                  style="padding-top: 2px"
+                  src="@/assets/img/mobileMenu/calendarIcon.svg"
+                />
+              </template>
+            </v-text-field>
           </v-col>
           <v-col class="px-0 py-0" style="text-align: center"
             ><v-text-field
@@ -69,7 +86,17 @@
                 rounded-rb-lg rounded-bl-0 rounded-t-0
                 quantityPeopleTextField
               "
-          /></v-col>
+            >
+              <template v-slot:prepend-inner>
+                <v-icon
+                  @click="showQuantityPeopleMenu = true"
+                  class="pointer"
+                  color="#085895"
+                  >mdi-account-outline</v-icon
+                ></template
+              >
+            </v-text-field></v-col
+          >
         </v-row>
         <v-btn
           width="150px"

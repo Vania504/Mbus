@@ -7,21 +7,27 @@
         placeholder="Звідки"
         outlined
         dense
-        class="rounded-l-lg"
+        class="rounded-l-lg rounded-r-0"
         :items="Object.values(startCities)"
         :item-text="'name'"
         :item-value="'name'"
         v-model="start_route"
         :error-messages="startRouteError"
-      />
+      >
+        <template v-slot:prepend-inner>
+          <img class="pt-1" src="@/assets/img/mobileMenu/placeIcon.svg" />
+        </template>
+      </v-autocomplete>
     </v-col>
     <div
-      style=" 
+      style="
         background-color: white;
         width: 34px;
-        height: 38px;
-        margin-top: 13px;
+        height: 40px;
+        margin-top: 12px;
         cursor: pointer;
+        border-top: 1px solid #085895;
+        border-bottom: 1px solid #085895;
       "
       @click="reverseItem"
     >
@@ -30,7 +36,6 @@
     <v-col cols="3" class="px-0">
       <v-autocomplete
         background-color="white"
-        prepend-inner-icon="mdi-map-marker-outline"
         placeholder="Куди"
         outlined
         dense
@@ -41,7 +46,11 @@
         v-model="end_route"
         :disabled="!nextCities.length"
         :error-messages="endRouteError"
-      />
+      >
+        <template v-slot:prepend-inner>
+          <img class="pt-1" src="@/assets/img/mobileMenu/placeIcon.svg" />
+        </template>
+      </v-autocomplete>
     </v-col>
     <v-col cols="2" class="px-0">
       <v-menu
@@ -69,10 +78,17 @@
             "
             v-bind="attrs"
             v-on="on"
-            @click:prepend-inner="showChooseDateMenu = true"
             hide-details
             :error-messages="dateError"
-          />
+          >
+            <template v-slot:prepend-inner>
+              <img
+                @click="showChooseDateMenu = true"
+                class="pointer"
+                style="padding-top: 2px"
+                src="@/assets/img/mobileMenu/calendarIcon.svg"
+              /> </template
+          ></v-text-field>
         </template>
         <v-date-picker
           v-model="date"
@@ -104,17 +120,24 @@
             v-bind="attrs"
             v-on="on"
             background-color="white"
-            prepend-inner-icon="mdi-account-outline"
             placeholder="1"
             outlined
             dense
             v-model="quantity_people"
             class="rounded-l-0 rounded-r-lg"
             @click="isClose = false"
-            @click:prepend-inner="showQuantityPeopleMenu = true"
             hide-details
             :error-messages="quantityPeopleError"
-          />
+          >
+            <template v-slot:prepend-inner>
+              <v-icon
+                @click="showQuantityPeopleMenu = true"
+                class="pointer"
+                color="#085895"
+                >mdi-account-outline</v-icon
+              ></template
+            ></v-text-field
+          >
         </template>
         <v-card width="261px" style="padding: 15px 30px 15px 30px">
           <v-row no-gutters align="center" justify="start">

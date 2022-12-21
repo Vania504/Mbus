@@ -102,6 +102,8 @@
                   :style="
                     index == 4
                       ? 'width: 90px;'
+                      : index == 1
+                      ? 'width: 130px;'
                       : index == 2
                       ? 'width: 120px;'
                       : index == 3
@@ -111,9 +113,13 @@
                 ></div>
                 <img
                   :src="require(`@/assets/img/mobileMenu/${item.icon}`)"
-                  style="margin-left: 10px"
+                  style="margin-left: 10px; z-index: 20"
                 />
-                <v-col class="py-0 ml-1" cols="1">
+                <v-col
+                  class="py-0 ml-1"
+                  cols="1"
+                  style="z-index: 20"
+                >
                   <div :style="index == 3 ? 'width: 90px' : ''">
                     <span>{{ item.title }}</span>
                   </div>

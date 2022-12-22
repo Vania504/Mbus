@@ -174,8 +174,9 @@ import RecentlyAddImageModal from "@/components/UI/recentlyAddImageModal.vue";
 import requestFormData from "@/requests/requestFormData";
 import smallItemImage from "@/components/UI/smallItemImage";
 import errorSnackbar from "@/components/UI/errorSnackbar.vue";
+import modalMixin from "@/mixins/modalMixin";
 export default {
-  mixins: [validationMixin],
+  mixins: [validationMixin, modalMixin],
   components: {
     modalHeader,
     recentlyAddImageModal,
@@ -276,9 +277,6 @@ export default {
     },
   },
   props: {
-    visible: {
-      require: true,
-    },
     isEdit: {
       require: true,
     },
@@ -405,14 +403,6 @@ export default {
     },
   },
   computed: {
-    visibility: {
-      get() {
-        return this.visible;
-      },
-      set() {
-        this.$emit("close");
-      },
-    },
     modelNameError() {
       const errors = [];
       if (!this.$v.bus.model_name.$dirty) {

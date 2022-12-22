@@ -1,7 +1,7 @@
 <template>
   <v-dialog v-model="visibility" width="600px">
     <v-card>
-      <v-col style="text-align: center; padding: 15px;">
+      <v-col style="text-align: center; padding: 15px">
         <img
           src="@/assets/img/bookingTicketIcon/timeIcon.svg"
           alt="time icon"
@@ -26,10 +26,10 @@
             width="127px"
             height="35px"
             color="#085895"
-            style="border-radius: 5px; margin-left: 20px;"
+            style="border-radius: 5px; margin-left: 20px"
             class="white--text"
             @click="$router.push('/')"
-          >На головну
+            >На головну
           </v-btn>
         </v-row>
       </v-col>
@@ -38,22 +38,9 @@
 </template>
 
 <script>
+import modalMixin from "@/mixins/modalMixin";
 export default {
-  props: {
-    visible: {
-      require: true,
-    },
-  },
-  computed: {
-    visibility: {
-      get() {
-        return this.visible;
-      },
-      set() {
-        this.$emit("close");
-      },
-    },
-  },
+  mixins: [modalMixin],
 };
 </script>
 

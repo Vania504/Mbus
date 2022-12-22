@@ -55,11 +55,10 @@
 </template>
 
 <script>
+import modalMixin from "@/mixins/modalMixin";
 export default {
+  mixins: [modalMixin],
   props: {
-    visible: {
-      require: true,
-    },
     modalTitle: {
       require: true,
     },
@@ -68,16 +67,6 @@ export default {
     },
     deleted: {
       require: false,
-    },
-  },
-  computed: {
-    visibility: {
-      get() {
-        return this.visible;
-      },
-      set() {
-        this.$emit("close");
-      },
     },
   },
 };

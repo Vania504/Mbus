@@ -462,8 +462,9 @@ import requestFormData from "@/requests/requestFormData";
 import recentlyAddImageModal from "@/components/UI/recentlyAddImageModal";
 import smallItemImage from "@/components/UI/smallItemImage";
 import ErrorSnackbar from "@/components/UI/errorSnackbar.vue";
+import modalMixin from "@/mixins/modalMixin";
 export default {
-  mixins: [validationMixin],
+  mixins: [validationMixin, modalMixin],
   components: {
     modalHeader,
     routeShedule,
@@ -572,9 +573,6 @@ export default {
     },
   },
   props: {
-    visible: {
-      require: true,
-    },
     isEdit: {
       require: false,
     },
@@ -836,11 +834,6 @@ export default {
     },
   },
   computed: {
-    visibility: {
-      get() {
-        return this.visible;
-      },
-    },
     routeNameStartError() {
       const errors = [];
       if (!this.$v.route.route_name_start.$dirty) {

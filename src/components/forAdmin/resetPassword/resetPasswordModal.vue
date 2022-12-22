@@ -55,7 +55,9 @@
   <script>
 import inputEmail from "./inputEmail.vue";
 import modalHeader from "@/components/UI/modalHeader.vue";
+import modalMixin from "@/mixins/modalMixin";
 export default {
+  mixins: [modalMixin],
   components: {
     inputEmail,
     modalHeader,

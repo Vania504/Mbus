@@ -73,30 +73,17 @@
 </template>
 
 <script>
+import modalMixin from "@/mixins/modalMixin";
 export default {
+  mixins: [modalMixin],
   data: () => ({
     date: "",
     date1: "",
     date2: "",
   }),
-  props: {
-    visible: {
-      require: true,
-    },
-  },
   methods: {
     closeModal(date) {
       this.$emit("setDate", date);
-    },
-  },
-  computed: {
-    visibility: {
-      get() {
-        return this.visible;
-      },
-      set() {
-        this.$emit("close");
-      },
     },
   },
   watch: {

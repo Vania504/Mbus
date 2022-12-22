@@ -115,8 +115,9 @@ import { validationMixin } from "vuelidate";
 import { required, email, minLength, sameAs } from "vuelidate/lib/validators";
 import authService from "@/requests/admin/authService";
 import { mapActions } from "vuex";
+import modalMixin from "@/mixins/modalMixin";
 export default {
-  mixins: [validationMixin],
+  mixins: [validationMixin, modalMixin],
   components: {
     modalHeader,
   },
@@ -171,11 +172,6 @@ export default {
       },
     },
   },
-  props: {
-    visible: {
-      require: true,
-    },
-  },
   methods: {
     ...mapActions(["updateInfo"]),
     async signUp() {
@@ -193,14 +189,6 @@ export default {
     },
   },
   computed: {
-    visibility: {
-      get() {
-        return this.visible;
-      },
-      set() {
-        this.$emit("close");
-      },
-    },
     usernameError() {
       const errors = [];
       if (!this.$v.user.username.$dirty) {

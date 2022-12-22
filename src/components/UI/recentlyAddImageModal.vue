@@ -44,7 +44,9 @@ import imageService from "@/requests/admin/imageService";
 import Loader from "./Loader.vue";
 import recentlyImage from "@/components/UI/recentlyImage";
 import errorSnackbar from "@/components/UI/errorSnackbar.vue";
+import modalMixin from "@/mixins/modalMixin";
 export default {
+  mixins: [modalMixin],
   components: {
     Loader,
     recentlyImage,
@@ -61,9 +63,6 @@ export default {
     maxImageSize: 2097152,
   }),
   props: {
-    visible: {
-      require: true,
-    },
     type: {
       require: true,
     },
@@ -107,16 +106,6 @@ export default {
     },
     choseImage(image) {
       this.$emit("choseImage", image);
-    },
-  },
-  computed: {
-    visibility: {
-      get() {
-        return this.visible;
-      },
-      set() {
-        this.$emit("close");
-      },
     },
   },
   watch: {

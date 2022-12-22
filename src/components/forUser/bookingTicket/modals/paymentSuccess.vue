@@ -23,22 +23,9 @@
 </template>
   
   <script>
+import modalMixin from "@/mixins/modalMixin";
 export default {
-  props: {
-    visible: {
-      require: true,
-    },
-  },
-  computed: {
-    visibility: {
-      get() {
-        return this.visible;
-      },
-      set() {
-        this.$emit("close");
-      },
-    },
-  },
+  mixins: [modalMixin],
 };
 </script>
   

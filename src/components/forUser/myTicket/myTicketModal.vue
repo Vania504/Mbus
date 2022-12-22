@@ -6,26 +6,13 @@
 
 <script>
 import MyTicketContent from "./myTicketContent.vue";
+import modalMixin from "@/mixins/modalMixin";
 export default {
+  mixins: [modalMixin],
   components: { MyTicketContent },
   data: () => ({
     myTicketsList: [],
   }),
-  props: {
-    visible: {
-      require: true,
-    },
-  },
-  computed: {
-    visibility: {
-      get() {
-        return this.visible;
-      },
-      set() {
-        this.$emit("close");
-      },
-    },
-  },
 };
 </script>
 

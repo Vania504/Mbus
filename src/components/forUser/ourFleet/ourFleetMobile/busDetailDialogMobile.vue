@@ -55,7 +55,7 @@
                 height="30px"
                 src="@/assets/img/busServiceIcon/chairIcon.png"
               /><span class="ml-3"
-                >{{bus.seats}}<span class="drivingSeats">+2</span> місць</span
+                >{{ bus.seats }}<span class="drivingSeats">+2</span> місць</span
               ></v-row
             >
           </v-row>
@@ -69,7 +69,7 @@
               color: black;
             "
           >
-          <span style="color: #085895">{{ bus.model }}</span>
+            <span style="color: #085895">{{ bus.model }}</span>
             {{ bus.description }}
           </p>
         </v-col>
@@ -82,7 +82,9 @@
 import { Swiper, SwiperSlide } from "vue-awesome-swiper";
 import "swiper/css/swiper.css";
 import modalHeader from "@/components/UI/modalHeader";
+import modalMixin from "@/mixins/modalMixin";
 export default {
+  mixins: [modalMixin],
   name: "swiper-example-loop-group",
   title: "Loop mode with multiple slides per group",
   components: {
@@ -166,21 +168,8 @@ export default {
     },
   }),
   props: {
-    visible: {
-      require: true,
-    },
     bus: {
       require: true,
-    }
-  },
-  computed: {
-    visibility: {
-      get() {
-        return this.visible;
-      },
-      set() {
-        this.$emit("close");
-      },
     },
   },
 };

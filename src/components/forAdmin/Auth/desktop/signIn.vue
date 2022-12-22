@@ -95,8 +95,9 @@ import { required, email } from "vuelidate/lib/validators";
 import authService from "@/requests/admin/authService";
 import { mapActions } from "vuex";
 import errorSnackbar from "@/components/UI/errorSnackbar";
+import modalMixin from "@/mixins/modalMixin";
 export default {
-  mixins: [validationMixin],
+  mixins: [validationMixin, modalMixin],
   components: {
     modalHeader,
     errorSnackbar,
@@ -117,11 +118,6 @@ export default {
       password: {
         required,
       },
-    },
-  },
-  props: {
-    visible: {
-      require: true,
     },
   },
   methods: {
@@ -158,14 +154,6 @@ export default {
     },
   },
   computed: {
-    visibility: {
-      get() {
-        return this.visible;
-      },
-      set() {
-        this.$emit("close");
-      },
-    },
     emailError() {
       const errors = [];
       if (!this.$v.user.email.$dirty) {

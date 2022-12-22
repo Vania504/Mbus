@@ -136,7 +136,9 @@
 import VueQRCodeComponent from "vue-qrcode-component";
 import VueHtml2pdf from "vue-html2pdf";
 import PdfTicket from "@/components/forUser/pdfTicket.vue";
+import modalMixin from "@/mixins/modalMixin";
 export default {
+  mixins: [modalMixin],
   components: {
     VueQRCodeComponent,
     VueHtml2pdf,
@@ -146,11 +148,6 @@ export default {
     downloadPDF: false,
     sendEmail: false,
   }),
-  props: {
-    visible: {
-      require: true,
-    },
-  },
   methods: {
     sendQrToEmail() {
       this.sendEmail = true;
@@ -158,16 +155,6 @@ export default {
     downloadQrToPDF() {
       this.downloadPDF = true;
       this.$refs.html2Pdf.generatePdf();
-    },
-  },
-  computed: {
-    visibility: {
-      get() {
-        return this.visible;
-      },
-      set() {
-        this.$emit("close");
-      },
     },
   },
 };

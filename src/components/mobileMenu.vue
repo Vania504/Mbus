@@ -83,8 +83,10 @@
                 style="margin-left: 10px; z-index: 20"
               />
               <v-col class="py-0 ml-1" cols="1" style="z-index: 20">
-                <span>{{ item.title }}</span></v-col
-              >
+                <v-expand-x-transition>
+                  <p v-if="showText">{{ item.title }}</p>
+                </v-expand-x-transition>
+              </v-col>
             </v-row>
           </div>
           <router-link :to="item.path" v-else>
@@ -117,9 +119,12 @@
                   :src="require(`@/assets/img/mobileMenu/${item.icon}`)"
                   style="margin-left: 10px; z-index: 20"
                 />
+
                 <v-col class="py-0 ml-1" cols="1" style="z-index: 20">
                   <div :style="index == 3 ? 'width: 90px' : ''">
-                    <span>{{ item.title }}</span>
+                    <v-expand-x-transition>
+                      <div v-if="showText">{{ item.title }}</div>
+                    </v-expand-x-transition>
                   </div>
                 </v-col>
               </v-row>
@@ -175,6 +180,7 @@ export default {
   components: { filtersList },
   data: () => ({
     showFilterList: false,
+    showText: true,
     filtersListId: [],
     menuItems: [
       {
@@ -216,6 +222,20 @@ export default {
     applyFilters() {
       this.$emit("setFiltersList", this.filtersListId);
       this.showFilterList = false;
+    },
+    setShowText() {
+      this.showText = true;
+    },
+  },
+  watch: {
+    "$route.path": {
+      deep: true,
+      handler() {
+          (this.showText = false),
+          setTimeout(() => {
+            this.setShowText();
+          }, 100);
+      },
     },
   },
 };

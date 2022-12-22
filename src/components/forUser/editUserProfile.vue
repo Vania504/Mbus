@@ -101,34 +101,42 @@
                       "
                       @click:append="showCurrentPassword = !showCurrentPassword"
                     />
-                    <v-text-field
-                      outlined
-                      dense
-                      color="#164B78"
-                      placeholder="Введіть тут.."
-                      label="Новий пароль"
-                      class="rounded-lg"
-                      v-model="password.password"
-                      :type="showNewPassword ? 'text' : 'password'"
-                      :append-icon="showNewPassword ? 'mdi-eye' : 'mdi-eye-off'"
-                      @click:append="showNewPassword = !showNewPassword"
-                      v-if="isChangePassword"
-                    />
-                    <v-text-field
-                      outlined
-                      dense
-                      color="#164B78"
-                      placeholder="Введіть тут.."
-                      label="Повторіть пароль"
-                      class="rounded-lg"
-                      v-model="password.confirm_password"
-                      :type="showConfirmPassword ? 'text' : 'password'"
-                      :append-icon="
-                        showConfirmPassword ? 'mdi-eye' : 'mdi-eye-off'
-                      "
-                      @click:append="showConfirmPassword = !showConfirmPassword"
-                      v-if="isChangePassword"
-                    />
+                    <v-expand-transition>
+                      <v-text-field
+                        outlined
+                        dense
+                        color="#164B78"
+                        placeholder="Введіть тут.."
+                        label="Новий пароль"
+                        class="rounded-lg"
+                        v-model="password.password"
+                        :type="showNewPassword ? 'text' : 'password'"
+                        :append-icon="
+                          showNewPassword ? 'mdi-eye' : 'mdi-eye-off'
+                        "
+                        @click:append="showNewPassword = !showNewPassword"
+                        v-if="isChangePassword"
+                      />
+                    </v-expand-transition>
+                    <v-expand-transition>
+                      <v-text-field
+                        outlined
+                        dense
+                        color="#164B78"
+                        placeholder="Введіть тут.."
+                        label="Повторіть пароль"
+                        class="rounded-lg"
+                        v-model="password.confirm_password"
+                        :type="showConfirmPassword ? 'text' : 'password'"
+                        :append-icon="
+                          showConfirmPassword ? 'mdi-eye' : 'mdi-eye-off'
+                        "
+                        @click:append="
+                          showConfirmPassword = !showConfirmPassword
+                        "
+                        v-if="isChangePassword"
+                      />
+                    </v-expand-transition>
                   </v-col>
                   <span
                     class="changePasswordText"

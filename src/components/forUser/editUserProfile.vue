@@ -163,7 +163,7 @@
                   style="margin-top: 40px"
                 >
                   <v-btn
-                    width="150px"
+                    :width="$vuetify.breakpoint.xs ? '120px' : '150px'"
                     height="35px"
                     :disabled="
                       isChangePassword
@@ -171,8 +171,12 @@
                         : $v.user.$invalid
                     "
                     color="#164B78"
+                    :style="
+                      $vuetify.breakpoint.xs
+                        ? 'margin-right: 10px;'
+                        : 'margin-right: 30px;'
+                    "
                     style="
-                      margin-right: 30px;
                       font-weight: 400;
                       font-size: 16px;
                       line-height: 19px;
@@ -185,7 +189,7 @@
                     Зберегти
                   </v-btn>
                   <v-btn
-                    width="150px"
+                    :width="$vuetify.breakpoint.xs ? '120px' : '150px'"
                     height="35px"
                     color="#164B78"
                     style="

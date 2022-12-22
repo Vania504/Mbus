@@ -82,16 +82,29 @@
 </template>
 
 <script>
-import modalMixin from "@/mixins/modalMixin";
 export default {
-  mixins: [modalMixin],
   data: () => ({
     quantityAdult: 0,
     quantityKid: 0,
   }),
+  props: {
+    visible: {
+      require: true,
+    },
+  },
   methods: {
     closeModal() {
       this.$emit("close", this.quantityAdult + this.quantityKid);
+    },
+  },
+  computed: {
+    visibility: {
+      get() {
+        return this.visible;
+      },
+      set() {
+        this.closeModal();
+      },
     },
   },
 };

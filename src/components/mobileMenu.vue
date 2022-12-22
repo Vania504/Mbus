@@ -234,7 +234,7 @@ export default {
           (this.showText = false),
           setTimeout(() => {
             this.setShowText();
-          }, 100);
+          }, 10);
       },
     },
   },

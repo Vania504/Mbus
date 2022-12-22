@@ -36,7 +36,6 @@
           filter: blur(45px);
         "
       ></div>
-
       <v-row no-gutters align="center" class="pt-3" justify="center">
         <div v-for="(item, index) in menuItems" :key="item.id">
           <router-link
@@ -56,12 +55,13 @@
             :src="require(`@/assets/img/mobileMenu/${item.icon}`)"
             :style="index == 0 ? '' : 'margin-left: 25px;'"
             style="z-index: 20"
-            @click="$emit('other')"
+            @click="$emit('other'), $router.push('/other')"
           />
           <div
             v-else-if="
               $route.path == '/transportation_rules' ||
-              $route.path == '/irregular_transportation'
+              $route.path == '/irregular_transportation' ||
+              $route.path == '/other'
             "
             style="padding-bottom: 5px; text-align: left; z-index: 20"
             :style="index == 0 ? '' : 'margin-left: 15px;'"
@@ -74,7 +74,7 @@
                   background: #cbe0f0;
                   position: absolute;
                   height: 40px;
-                  opacity: 0.4; 
+                  opacity: 0.4;
                   width: 90px;
                 "
               ></div>
@@ -84,7 +84,9 @@
               />
               <v-col class="py-0 ml-1" cols="1" style="z-index: 20">
                 <v-expand-x-transition>
-                  <p v-if="showText">{{ item.title }}</p>
+                  <div style="color: #1976d2" v-if="showText">
+                    {{ item.title }}
+                  </div>
                 </v-expand-x-transition>
               </v-col>
             </v-row>
@@ -223,7 +225,7 @@ export default {
         id: 5,
         title: "Інше",
         icon: "moreIcon.svg",
-        path: "/irregular_transportation",
+        path: "/other",
       },
     ],
   }),

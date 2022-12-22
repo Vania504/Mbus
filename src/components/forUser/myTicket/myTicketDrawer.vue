@@ -2,10 +2,10 @@
   <v-navigation-drawer
     v-model="visible"
     absolute
-    right
-    temporary
+    top
     style="z-index: 50; border-radius: 0px"
     width="100%"
+    permanent
   >
     <sign-in-mobile
       v-if="signIn"
@@ -37,9 +37,9 @@ export default {
       require: true,
     },
   },
-  mounted() {
-    this.visible = this.showMyTicketDrawer;
-  },
+  // mounted() {
+  //   this.visible = this.showMyTicketDrawer;
+  // },
 };
 </script>
 

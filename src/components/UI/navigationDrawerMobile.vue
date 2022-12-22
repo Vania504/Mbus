@@ -1,5 +1,5 @@
 <template>
-  <v-navigation-drawer v-model="visible" absolute right temporary width="100%">
+  <v-navigation-drawer permanent v-model="visible" absolute right width="100%">
     <sign-in-mobile
       v-if="signIn"
       @back="signIn = false"
@@ -200,12 +200,10 @@ export default {
     ...mapGetters(["loggedUser"]),
   },
   watch: {
-    visible: {
+    "$route.path": {
       deep: true,
       handler() {
-        if (this.visible == false) {
-          this.$emit("close");
-        }
+        this.$emit("close");
       },
     },
   },

@@ -158,7 +158,7 @@
               align="center"
               justify="center"
               class="px-0 pl-2"
-              style="padding-top: 10px;"
+              style="padding-top: 10px"
             >
               <v-btn
                 width="25%"
@@ -217,7 +217,9 @@
         </v-row>
       </v-col>
     </v-card>
-    <ticket-card-detail v-if="showTicketDetail" />
+    <v-expand-transition>
+      <ticket-card-detail v-show="showTicketDetail" />
+    </v-expand-transition>
     <confirm-modal
       v-if="showConfirmModal"
       :visible="showConfirmModal"

@@ -74,7 +74,7 @@
                   background: #cbe0f0;
                   position: absolute;
                   height: 40px;
-                  opacity: 0.4;
+                  opacity: 0.4; 
                   width: 90px;
                 "
               ></div>
@@ -121,7 +121,19 @@
                 />
 
                 <v-col class="py-0 ml-1" cols="1" style="z-index: 20">
-                  <div :style="index == 3 ? 'width: 90px' : ''">
+                  <div
+                    :style="
+                      index == 4
+                        ? 'width: 50px;'
+                        : index == 1
+                        ? 'width: 90px;'
+                        : index == 2
+                        ? 'width: 70px;'
+                        : index == 3
+                        ? 'width: 90px'
+                        : 'width: 85px;'
+                    "
+                  >
                     <v-expand-x-transition>
                       <div v-if="showText">{{ item.title }}</div>
                     </v-expand-x-transition>
@@ -231,7 +243,7 @@ export default {
     "$route.path": {
       deep: true,
       handler() {
-          (this.showText = false),
+        (this.showText = false),
           setTimeout(() => {
             this.setShowText();
           }, 10);

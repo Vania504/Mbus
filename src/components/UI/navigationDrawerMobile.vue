@@ -74,7 +74,7 @@
               letter-spacing: 0.055em;
               color: #243949;
             "
-            >{{ loggedUser.first_name }} &nbsp; {{ loggedUser.last_name }}</span
+            >{{ loggedUser.first_name }}&nbsp;{{ loggedUser.last_name }}</span
           >
           <v-row
             no-gutters

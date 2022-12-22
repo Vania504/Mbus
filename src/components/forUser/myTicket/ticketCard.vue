@@ -255,7 +255,9 @@
         </v-row>
       </v-card-actions>
     </v-card>
-    <ticket-card-detail v-if="showTicketDetail" />
+    <v-expand-transition>
+      <ticket-card-detail v-show="showTicketDetail" class="mb-3"/>
+    </v-expand-transition>
     <confirm-modal
       v-if="showConfirmModal"
       :visible="showConfirmModal"

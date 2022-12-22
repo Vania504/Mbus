@@ -95,7 +95,7 @@
                 open-on-hover
                 botoom
                 offset-y
-                width="200px"
+                min-width="200px"
                 nudge-left="30px"
                 v-model="menu"
               >
@@ -110,7 +110,7 @@
                     </v-row>
                   </div>
                 </template>
-                <v-card width="200px" height="110px" style="overflow: hidden">
+                <v-card min-width="200px" height="110px" style="overflow: hidden">
                   <v-row no-gutters justify="center">
                     <v-col style="text-align: left">
                       <v-row
@@ -137,7 +137,7 @@
                           <img
                             height="20px"
                             width="20px"
-                            class="pointer"
+                            class="pointer ml-3"
                             src="@/assets/img/editProfileIcon.svg"
                             @click="$router.push('/edit_profile')"
                           />

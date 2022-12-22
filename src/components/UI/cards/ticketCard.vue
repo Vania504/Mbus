@@ -209,7 +209,7 @@
             style="
               text-decoration-line: underline;
               color: #6b7c8a;
-              margin-left: 14px; 
+              margin-left: 14px;
             "
             class="pointer textStyleInBtn"
           >
@@ -317,14 +317,18 @@
       modalTitle="Квиток маршруту видалено"
       @close="successDeleteTicket = false"
     />
+    <v-expand-transition>
+      <ticket-card-detail v-show="showTicketDetail" class="mb-3" />
+    </v-expand-transition>
   </div>
 </template>
 
 <script>
 import confirmModal from "../modals/confirmModal.vue";
 import SuccessModal from "../modals/successModal.vue";
+import ticketCardDetail from "@/components/forUser/myTicket/ticketCardDetail.vue";
 export default {
-  components: { confirmModal, SuccessModal },
+  components: { confirmModal, SuccessModal, ticketCardDetail },
   data: () => ({
     status: "Inactive",
     showTicketDetail: false,

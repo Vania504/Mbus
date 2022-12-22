@@ -1,5 +1,9 @@
 <template>
   <div class="pageBackground">
+    <success-snackbar
+      v-if="showSuccessSnackbar"
+      snackbarText="Ваші дані успішно оновлені"
+    />
     <v-main>
       <v-container>
         <v-row no-gutters justify="center">
@@ -168,13 +172,13 @@
                       color: #ffffff;
                       text-transform: none;
                     "
+                    @click="updateUserData"
                   >
                     Зберегти
                   </v-btn>
                   <v-btn
                     width="150px"
                     height="35px"
-                    disabled
                     color="#164B78"
                     style="
                       font-weight: 400;
@@ -184,6 +188,7 @@
                       color: #ffffff;
                       text-transform: none;
                     "
+                    @click="$router.push('/')"
                   >
                     Скасувати
                   </v-btn> </v-row
@@ -201,7 +206,10 @@
 import { validationMixin } from "vuelidate";
 import { email, required, minLength, sameAs } from "vuelidate/lib/validators";
 import profileService from "@/requests/main/profileService";
+import { mapActions } from "vuex";
+import successSnackbar from "../UI/successSnackbar.vue";
 export default {
+  components: { successSnackbar },
   mixins: [validationMixin],
   data: () => ({
     user: {},
@@ -210,6 +218,7 @@ export default {
     showNewPassword: false,
     showConfirmPassword: false,
     isChangePassword: false,
+    showSuccessSnackbar: false,
   }),
   validations: {
     user: {
@@ -271,6 +280,7 @@ export default {
     this.getUserProfile();
   },
   methods: {
+    ...mapActions(["updateInfoLogged"]),
     async getUserProfile() {
       let response = await profileService.getUserProfile();
       console.log("user Profile: ", response);
@@ -278,6 +288,7 @@ export default {
     },
     async updateUserData() {
       this.$v.user.$touch();
+      this.showSuccessSnackbar = false;
       if (!this.$v.user.$invalid) {
         let user = new FormData();
         user.append("first_name", this.user.first_name);
@@ -285,7 +296,13 @@ export default {
         user.append("phone_number", this.user.phone_number);
         user.append("email", this.user.email);
         await profileService.updateUserProfile(user).then(() => {
+          this.updateInfoLogged({
+            email: this.user.email,
+            first_name: this.user.first_name,
+            last_name: this.user.last_name,
+          });
           this.getUserProfile();
+          this.showSuccessSnackbar = true;
         });
         if (this.isChangePassword) {
           this.updateUserPassword();

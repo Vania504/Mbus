@@ -42,7 +42,7 @@
                   color: #4c5d6c;
                   padding-right: 5px;
                 "
-                >пн. 14 лист.<span 
+                >пн. 14 лист.<span
                   style="
                     font-weight: 500;
                     font-size: 14px;
@@ -122,9 +122,7 @@
                 </span>
               </div>
               <!-- Space for only other screen -->
-              <br
-                v-if="!$vuetify.breakpoint.xs"
-              />
+              <br v-if="!$vuetify.breakpoint.xs" />
               <div
                 :style="
                   $vuetify.breakpoint.xs
@@ -248,7 +246,12 @@
           style="position: absolute; bottom: 0px; width: 100%"
         >
           <!-- Bus for other screen -->
-          <v-row no-gutters align="center" class="mt-6" v-if="!$vuetify.breakpoint.xs">
+          <v-row
+            no-gutters
+            align="center"
+            class="mt-6"
+            v-if="!$vuetify.breakpoint.xs"
+          >
             <span
               style="
                 font-weight: 400;
@@ -334,7 +337,9 @@
         </v-row>
       </v-card-actions>
     </v-card>
-    <ticket-card-detail v-if="showTicketDetail" />
+    <v-expand-transition>
+      <ticket-card-detail v-show="showTicketDetail" class="mb-3" />
+    </v-expand-transition>
   </v-col>
 </template>
   

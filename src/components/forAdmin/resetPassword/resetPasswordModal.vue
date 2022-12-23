@@ -64,7 +64,7 @@ export default {
   },
   data: () => ({
     isSuccessSendEmail: false,
-    email: "golinskijandtij416@gmail.com",
+    email: "",
   }),
   props: {
     visible: {
@@ -74,7 +74,7 @@ export default {
   methods: {
     successSendEmail(email) {
       this.email = email;
-      this.issSuccessSendEmail = true;
+      this.isSuccessSendEmail = true;
     },
   },
   computed: {

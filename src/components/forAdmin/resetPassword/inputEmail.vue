@@ -77,7 +77,7 @@ export default {
           .resetPassword(email)
           .then(() => {
             localStorage.setItem("userEmail", this.email);
-            this.$emit("successSendEmail");
+            this.$emit("successSendEmail", this.email);
           })
           .catch(() => {
             this.snackbarText = "Користувача з таким email не існує";

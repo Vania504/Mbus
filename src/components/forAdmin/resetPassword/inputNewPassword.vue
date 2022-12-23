@@ -131,13 +131,13 @@ export default {
         form.append("password_confirmation", this.password.confirm_password);
         authService.changePassword(form).then(() => {
           this.successChangePassword = true;
-          setTimeout(this.pushToLogin, 1000);
+          setTimeout(this.pushToMain, 1000);
           localStorage.clear();
         });
       }
     },
-    pushToLogin() {
-      this.$router.push("/login");
+    pushToMain() {
+      this.$router.push("/");
     },
   },
   computed: {

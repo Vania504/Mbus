@@ -7,7 +7,7 @@
             <template v-slot:default="{ active }">
               <v-list-item-icon>
                 <v-icon :color="active ? '#085895' : '#243949'"
-                  >mdi-widgets</v-icon
+                  >mdi-widgets-outline</v-icon
                 >
               </v-list-item-icon>
               <v-list-item-title
@@ -55,6 +55,20 @@
                 style="text-align: left"
                 :class="active ? 'blueSpan' : 'darkBlueSpan'"
                 >Повідомлення</v-list-item-title
+              ></template
+            >
+          </v-list-item>
+          <v-list-item link>
+            <template v-slot:default="{ active }">
+              <v-list-item-icon>
+                <v-icon :color="active ? '#085895' : '#243949'">
+                  mdi-account-group-outline</v-icon
+                >
+              </v-list-item-icon>
+              <v-list-item-title
+                style="text-align: left"
+                :class="active ? 'blueSpan' : 'darkBlueSpan'"
+                >Користувачі</v-list-item-title
               ></template
             >
           </v-list-item>

@@ -27,6 +27,7 @@
           border-radius: 30px;
         "
         :style="status == 0 ? 'background: #cbe0f0;' : ''"
+        @click="$emit('getTripsByStatus', 'Active')"
       >
         Активні
       </v-btn>
@@ -42,10 +43,11 @@
           font-size: 14px;
           line-height: 16px;
           letter-spacing: 0.1em;
-          text-transform: none;
+          text-transform: none;  
           border-radius: 30px;
         "
         :style="status == 1 ? 'background: #cbe0f0' : ''"
+        @click="$emit('getTripsByStatus', 'Inactive')"
       >
         Неактивні
       </v-btn>

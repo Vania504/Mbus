@@ -53,7 +53,11 @@
           </div>
         </v-col>
         <v-col
-          cols="3" xl="3" lg="3" md="3" sm="9"
+          cols="3"
+          xl="3"
+          lg="3"
+          md="3"
+          sm="9"
           :style="
             !$vuetify.breakpoint.xl
               ? 'padding-right: 50px; padding-left: 40px'
@@ -74,11 +78,9 @@
                 outlined
                 label="Дата"
                 color="#085895"
-                prepend-inner-icon="mdi-calendar"
                 v-bind="attrs"
                 v-on="on"
                 @click="isClose = false"
-                @click:prepend-inner="on.click"
                 hide-details
                 v-model="ticket.dates"
                 :error-messages="datesError"
@@ -86,6 +88,14 @@
                   datesError.length ? 'mdi-alert-circle-outline' : ''
                 "
               >
+                <template v-slot:prepend-inner>
+                  <img
+                    @click="(menu = true), (isClose = false)"
+                    class="pointer"
+                    style="padding-top: 2px"
+                    src="@/assets/img/mobileMenu/calendarIcon.svg"
+                  />
+                </template>
               </v-text-field>
             </template>
             <v-row no-gutters align="center" justify="center">
@@ -152,7 +162,7 @@
           >
             <template slot="selection" slot-scope="{ item }">
               <span class="autocompleteSelectedItem">
-                {{ item.model }} {{ item }}
+                {{ item.model }}
               </span></template
             >
             <template slot="item" slot-scope="{ item }">
@@ -339,6 +349,17 @@ export default {
       deep: true,
       handler() {
         this.$v.$touch();
+        if (!this.$v.invalid) {
+          this.$emit("setBasicData", this.ticket);
+        }
+      },
+    },
+    "ticket.bus": {
+      deep: true,
+      handler() {
+        let bus = this.buses.data.filter((bus) => bus.id == this.ticket.bus);
+        let seats = bus[0].seats;
+        this.$emit("setQuantityBusSeats", seats);
       },
     },
   },

@@ -1,6 +1,6 @@
 import Vue from 'vue';
 import VueRouter from 'vue-router';
-import store from '../store';
+//import store from '../store';
 
 Vue.use(VueRouter);
 
@@ -82,15 +82,15 @@ const router = new VueRouter({
     routes,
 });
 
-router.beforeEach((to, from, next) => {
-    if (to.matched.some(record => record.meta.requiresLogin) && store.getters.loggedUser == null) {
-        next({ name: 'main' })
-    } else if (to.matched.some(record => record.meta.requiresLogin) && store.getters.loggedUser.role_id !== 3) {
-        next({ name: 'main' })
-    }
-    else {
-        next();
-    }
-})
+// router.beforeEach((to, from, next) => {
+//     if (to.matched.some(record => record.meta.requiresLogin) && store.getters.loggedUser == null) {
+//         next({ name: 'main' })
+//     } else if (to.matched.some(record => record.meta.requiresLogin) && store.getters.loggedUser.role_id !== 3) {
+//         next({ name: 'main' })
+//     }
+//     else {
+//         next();
+//     }
+// })
 
 export default router;

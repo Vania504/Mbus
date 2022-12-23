@@ -266,7 +266,7 @@
           v-if="isAdmin && status == 'Inactive'"
           class="textStyleInBtn"
           style="color: #960909; text-transform: none; font-size: 12px"
-          @click="showConfirmModalDelete = true"
+          @click="showConfirmModalDelete = true, tripId = 1"
         >
           Видалити маршрут
         </v-btn>
@@ -310,13 +310,6 @@
       @confirm="deleteRoute"
       @close="showConfirmModal = false"
     />
-    <success-modal
-      v-if="successDeleteTicket"
-      :visible="successDeleteTicket"
-      :deleted="true"
-      modalTitle="Квиток маршруту видалено"
-      @close="successDeleteTicket = false"
-    />
     <v-expand-transition>
       <ticket-card-detail v-show="showTicketDetail" class="mb-3" />
     </v-expand-transition>
@@ -325,16 +318,15 @@
 
 <script>
 import confirmModal from "../modals/confirmModal.vue";
-import SuccessModal from "../modals/successModal.vue";
 import ticketCardDetail from "@/components/forUser/myTicket/ticketCardDetail.vue";
 export default {
-  components: { confirmModal, SuccessModal, ticketCardDetail },
+  components: { confirmModal, ticketCardDetail },
   data: () => ({
     status: "Inactive",
     showTicketDetail: false,
     showConfirmModal: false,
     showConfirmModalDelete: false,
-    successDeleteTicket: false,
+    tripId: 0,
   }),
   props: {
     isAdmin: {
@@ -347,7 +339,7 @@ export default {
     },
     deleteRoute() {
       this.showConfirmModalDelete = false;
-      this.successDeleteTicket = true;
+      this.$emit('deleteTrip', this.tripId);
     },
   },
 };

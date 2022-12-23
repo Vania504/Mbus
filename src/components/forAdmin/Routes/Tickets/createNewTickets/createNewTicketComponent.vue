@@ -8,7 +8,7 @@
         style="
           font-weight: 400;
           font-size: 14px;
-          line-height: 16px; 
+          line-height: 16px;
           letter-spacing: 0.1em;
           color: #243949;
         "
@@ -16,9 +16,20 @@
         >Назад</span
       >
     </v-row>
-    <basic-data :touch="touch"/>
-    <seats-in-bus />
-    <additional-information />
+    <basic-data
+      :touch="touch"
+      @setBasicData="setBasicData"
+      @setQuantityBusSeats="setQuantityBusSeats"
+    />
+    <seats-in-bus
+      :touch="touch"
+      @setSeats="setSeats"
+      :quantityBusSeats="quantityBusSeats"
+    />
+    <additional-information
+      :touch="touch"
+      @setAdditionalInformation="setAdditionalInformation"
+    />
     <v-row no-gutters justify="center">
       <v-btn
         width="200px"
@@ -34,7 +45,7 @@
           letter-spacing: 0.1em;
           text-transform: none;
         "
-        @click="createNewTicket"
+        @click="setTouch"
       >
         Створити
       </v-btn>
@@ -46,16 +57,44 @@
 import basicData from "./basicData.vue";
 import SeatsInBus from "./seatsInBus.vue";
 import additionalInformation from "./additionalInformation.vue";
+import tripsService from "@/requests/admin/tripsService";
 export default {
   components: { basicData, SeatsInBus, additionalInformation },
   data: () => ({
     touch: false,
+    tripBasicData: {},
+    tripSeats: 0,
+    quantityBusSeats: 0,
+    tripAdditionalInformation: {},
   }),
   methods: {
-    createNewTicket(){
+    setTouch() {
       this.touch = true;
-    }
-  }
+      setTimeout(this.createNewTicket, 1000);
+    },
+    async createNewTicket() {
+      let form = new FormData();
+      form.append("route_id", this.basicData.route);
+      form.append("bus_id", this.basicData.bus),
+        form.append("price_adult", this.basicData.price),
+        form.append("price_child", this.basicData.price);
+      form.append("seats", this.tripSeats);
+      form.append("status", "Active");
+      await tripsService.createTrip(form);
+    },
+    setBasicData(data) {
+      this.tripBasicData = data;
+    },
+    setSeats(data) {
+      this.tripSeats = data;
+    },
+    setQuantityBusSeats(seats) {
+      this.quantityBusSeats = seats;
+    },
+    setAdditionalInformation(data) {
+      this.tripAdditionalInformation = data;
+    },
+  },
 };
 </script>
 

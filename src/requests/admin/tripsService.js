@@ -11,8 +11,10 @@ export default {
         return response?.data
     },
     async getTripsByStatus(status) {
-        const response = await requestService.get(`/trips/${status}`)
-        return response?.data
+        const response = await requestService.get(`/trips/${status}`, {
+            headers: { Authorization: `Bearer ${store.getters.loggedUser.token}` }
+        })
+        return response?.data.data
     },
     async getTripById(id) {
         const response = await requestService.get(`/trips/${id}`)

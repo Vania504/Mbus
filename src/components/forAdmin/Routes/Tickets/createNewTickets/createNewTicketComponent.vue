@@ -74,15 +74,21 @@ export default {
     },
     async createNewTicket() {
       let form = new FormData();
-      form.append("route_id", this.basicData.route);
-      form.append("bus_id", this.basicData.bus),
-        form.append("price_adult", this.basicData.price),
-        form.append("price_child", this.basicData.price);
+      let date = new Date();
+      let stringDate = `${date.getFullYear()}-${date.getMonth() + 1}-${
+        date.getDate()
+      } 23:00:00`;
+      form.append("route_id", this.tripBasicData.route);
+      form.append("bus_id", this.tripBasicData.bus),
+        form.append("price_adult", this.tripBasicData.price),
+        form.append("price_child", this.tripBasicData.price);
       form.append("seats", this.tripSeats);
+      form.append("departure_date", stringDate);
       form.append("status", "Active");
       await tripsService.createTrip(form);
     },
     setBasicData(data) {
+      console.log("setBasicData", data);
       this.tripBasicData = data;
     },
     setSeats(data) {

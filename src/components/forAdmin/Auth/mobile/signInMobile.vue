@@ -187,7 +187,7 @@ export default {
             email: this.user.email,
             password: this.user.password,
             token: response.authorisation.token,
-            role_id: response.user.role_id,
+            role_id: response.user.role.role_id,
             first_name: response.user.first_name,
             last_name: response.user.last_name,
             timeout: timeout,

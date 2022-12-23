@@ -11,14 +11,14 @@
           border-radius: 10px;
           display: flex;
         "
-        v-for="i in 9"
-        :key="i"
+        v-for="trip in tripsList"
+        :key="trip.id"
       >
         <div style="width: 25px; text-align: right">
           <img src="@/assets/img/dottedLine.svg" />
         </div>
         <div style="width: 95%">
-          <ticket-card :isAdmin="true" @deleteTrip="deleteTrip" />
+          <ticket-card :isAdmin="true" :trip="trip" @deleteTrip="deleteTrip" />
         </div>
       </div>
     </v-col>
@@ -77,9 +77,7 @@ export default {
       this.showLoader = true;
       let response = await tripsService.getTripsByStatus(status);
       this.tripsList = response.data;
-      setTimeout(() => {
-        this.showLoader = false;
-      }, 2000);
+      this.showLoader = false;
     },
     async deleteTrip(id) {
       await tripsService.deleteTrip(id).then(() => {

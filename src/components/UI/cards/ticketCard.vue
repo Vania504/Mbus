@@ -266,7 +266,7 @@
           v-if="isAdmin && status == 'Inactive'"
           class="textStyleInBtn"
           style="color: #960909; text-transform: none; font-size: 12px"
-          @click="showConfirmModalDelete = true, tripId = 1"
+          @click="(showConfirmModalDelete = true), (tripId = 1)"
         >
           Видалити маршрут
         </v-btn>
@@ -332,6 +332,9 @@ export default {
     isAdmin: {
       require: false,
     },
+    trip: {
+      require: true,
+    },
   },
   methods: {
     cancelRoute() {
@@ -339,7 +342,7 @@ export default {
     },
     deleteRoute() {
       this.showConfirmModalDelete = false;
-      this.$emit('deleteTrip', this.tripId);
+      this.$emit("deleteTrip", this.tripId);
     },
   },
 };

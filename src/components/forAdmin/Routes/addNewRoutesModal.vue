@@ -1,6 +1,10 @@
 <template>
   <v-dialog v-model="visibility" width="725px" persistent>
     <error-snackbar :snackbarText="errorSnackbarText" v-if="errorSnackbar" />
+    <success-snackbar
+      :snackbarText="successSnackbarText"
+      v-if="showSuccessSnackbar"
+    />
     <modal-header
       :title="isEdit ? 'Редагувати маршрут' : 'Новий маршрут'"
       @close="closeModal"
@@ -463,6 +467,8 @@ import recentlyAddImageModal from "@/components/UI/recentlyAddImageModal";
 import smallItemImage from "@/components/UI/smallItemImage";
 import ErrorSnackbar from "@/components/UI/errorSnackbar.vue";
 import modalMixin from "@/mixins/modalMixin";
+import SuccessSnackbar from "@/components/UI/successSnackbar.vue";
+import routesService from "@/requests/admin/routesService";
 export default {
   mixins: [validationMixin, modalMixin],
   components: {
@@ -471,6 +477,7 @@ export default {
     recentlyAddImageModal,
     smallItemImage,
     ErrorSnackbar,
+    SuccessSnackbar,
   },
   data: () => ({
     route: {
@@ -530,6 +537,8 @@ export default {
     routesSheduleKey: 0,
     showRecentlyImage: false,
     errorSnackbar: false,
+    showSuccessSnackbar: false,
+    successSnackbarText: "",
     errorSnackbarText: "",
     routeImages: [],
     routeStatus: [
@@ -633,7 +642,7 @@ export default {
         setTimeout(() => (this.errorSnackbar = true), 100);
       }
     },
-    editRoute() {
+    async editRoute() {
       this.$v.$touch();
       if (!this.$v.$invalid) {
         let daysOfDepartureFiltered = [];
@@ -663,7 +672,11 @@ export default {
           images: images,
         };
         let route = requestFormData.jsonToFormData(data);
-        this.$emit("editRoute", this.route.id, route);
+        await routesService.updateRoute(this.route.id, route).then(() => {
+          this.$emit("successEdit");
+          this.successSnackbarText = "Маршрут успішно оновлено";
+          this.showSuccessSnackbar = true;
+        });
       }
     },
     editCity(country, city, index) {
@@ -725,7 +738,7 @@ export default {
       this.routeImages.push(image);
     },
     setRoute() {
-      console.log(this.route, this.routeDetailInfo, this.isEdit)
+      console.log(this.route, this.routeDetailInfo, this.isEdit);
       this.$set(this.route, "id", this.routeDetailInfo.id);
       this.$set(this.route, "route_name_start", this.routeDetailInfo.departure);
       this.$set(this.route, "route_name_end", this.routeDetailInfo.destination);

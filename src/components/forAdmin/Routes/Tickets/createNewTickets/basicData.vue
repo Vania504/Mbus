@@ -182,6 +182,7 @@
             <v-text-field
               dense
               outlined
+              disabled
               label="Час відправлення"
               placeholder="00:00"
               color="#085895"
@@ -219,6 +220,7 @@
       :visible="isEditRoute"
       :routeDetailInfo="routeDetailInfo"
       :busList="buses"
+      @successEdit="successEditRoute"
       @close="isEditRoute = false"
     />
   </v-card>
@@ -279,9 +281,13 @@ export default {
     this.getBuses();
   },
   methods: {
-    async getRoutes() {
+    async getRoutes(isEdit) {
       let response = await routesService.getRouteForAdmin();
       this.routes = response.data.data;
+      if (isEdit) {
+        this.isEditRoute = false;
+        this.setRouteDepartureTime();
+      }
     },
     async getBuses() {
       let response = await ourFleetService.getBuses();
@@ -290,8 +296,14 @@ export default {
     async editRoute(id) {
       let response = await routesService.getRoute(id);
       this.routeDetailInfo = response.data;
-      console.log("detail", this.routeDetailInfo);
       this.isEditRoute = true;
+    },
+    setRouteDepartureTime() {
+      let route = this.routes.filter((route) => route.id == this.ticket.route);
+      this.ticket.start_time = route[0].departure_time;
+    },
+    successEditRoute() {
+      this.getRoutes(true);
     },
   },
   computed: {
@@ -357,9 +369,17 @@ export default {
     "ticket.bus": {
       deep: true,
       handler() {
-        let bus = this.buses.data.filter((bus) => bus.id == this.ticket.bus);
-        let seats = bus[0].seats;
-        this.$emit("setQuantityBusSeats", seats);
+        if (this.ticket.bus !== "") {
+          let bus = this.buses.data.filter((bus) => bus.id == this.ticket.bus);
+          let seats = bus[0].seats;
+          this.$emit("setQuantityBusSeats", seats);
+        }
+      },
+    },
+    "ticket.route": {
+      deep: true,
+      handler() {
+        this.setRouteDepartureTime();
       },
     },
   },

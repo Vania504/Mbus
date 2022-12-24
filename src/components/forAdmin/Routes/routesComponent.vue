@@ -1,5 +1,6 @@
 <template>
   <div v-if="!loader">
+    <success-snackbar v-if="showSuccessSnackbar" :snackbarText="successSnackbarText" />
     <routes-header-admin @setActiveCategory="setActiveCategory" />
     <div v-if="activeCategory == 0">
       <div style="padding: 15px 0px 0px 25px">
@@ -32,7 +33,7 @@
       :routeDetailInfo="routeDetailInfo"
       :busList="busList"
       @createRoute="createRoute"
-      @editRoute="editRoute"
+      @successEdit="successEditRoute"
       @close="(showCreateRouteModal = false), (isEdit = false)"
     />
   </div>
@@ -79,13 +80,6 @@ export default {
         this.getRoutes();
       }
     },
-    async editRoute(id, route) {
-      let response = await routesService.updateRoute(id, route);
-      if (response.status == "success") {
-        this.showModal = false;
-        this.getRoutes();
-      }
-    },
     async getRoutes() {
       let response = await routesService.getRouteForAdmin();
       this.routes = response.data;
@@ -106,6 +100,11 @@ export default {
       if (response.status == "success") {
         this.getRoutes();
       }
+    },
+    successEditRoute(){
+      this.getRoutes();
+      this.showCreateRouteModal = false;
+      this.isEdit = false;
     },
     setActiveCategory(activeCategory) {
       this.activeCategory = activeCategory;

@@ -58,7 +58,7 @@ export default {
       form.append("first_name", user.first_name);
       form.append("last_name", user.last_name);
       form.append("role_id", user.role.role_id);
-      form.append("phone_numbers", user.phone_number);
+      form.append("phone_number", user.phone_number.replace(/\D+/g, ""));
       form.append("email", user.email);
       await authService.createUser(form).then(() => {
         this.getUsers();
@@ -69,7 +69,7 @@ export default {
       form.append("first_name", user.first_name);
       form.append("last_name", user.last_name);
       form.append("role_id", user.role.role_id);
-      form.append("phone_numbers", user.phone_number);
+      form.append("phone_number", user.phone_number.replace(/\D+/g, ""));
       form.append("email", user.email);
       await authService.updateUser(user.id, form).then(() => {
         this.getUsers();

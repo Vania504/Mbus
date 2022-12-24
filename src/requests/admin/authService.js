@@ -32,6 +32,12 @@ export default {
 		})
 		return response?.data
 	},
+	async createUser(form) {
+		const response = await requestService.post(`/user`, form, {
+			headers: { Authorization: `Bearer ${store.getters.loggedUser.token}` }
+		})
+		return response?.data
+	},
 	async updateUser(id, form) {
 		const response = await requestService.post(`/user/${id}`, form, {
 			headers: { Authorization: `Bearer ${store.getters.loggedUser.token}` }

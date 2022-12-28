@@ -1,5 +1,9 @@
 <template>
   <v-col style="text-align: left">
+    <success-snackbar
+      v-if="showSuccessSnackbar"
+      snackbarText="Рейс успішно створений"
+    />
     <v-row no-gutters align="center">
       <v-icon color="black" @click="$emit('back')" class="pointer"
         >mdi-menu-left</v-icon
@@ -58,10 +62,12 @@ import basicData from "./basicData.vue";
 import SeatsInBus from "./seatsInBus.vue";
 import additionalInformation from "./additionalInformation.vue";
 import tripsService from "@/requests/admin/tripsService";
+import SuccessSnackbar from "@/components/UI/successSnackbar.vue";
 export default {
-  components: { basicData, SeatsInBus, additionalInformation },
+  components: { basicData, SeatsInBus, additionalInformation, SuccessSnackbar },
   data: () => ({
     touch: false,
+    showSuccessSnackbar: false,
     tripBasicData: {},
     tripSeats: 0,
     quantityBusSeats: 0,
@@ -74,18 +80,26 @@ export default {
     },
     async createNewTicket() {
       let form = new FormData();
-      let date = new Date(this.tripBasicData.dates[0]);
-      let departure_date = `${date.getFullYear()}-${
-        date.getMonth() + 1
-      }-${date.getDate()} ${date.getHours()}:${date.getMinutes()}:${date.getSeconds()}`;
+      let start_date = new Date(this.tripBasicData.dates[0]);
+      let end_date = new Date(this.tripBasicData.dates[1]);
+      let departure_date = `${start_date.getFullYear()}-${
+        start_date.getMonth() + 1
+      }-${start_date.getDate()} ${this.tripBasicData.start_time}:00`;
+      let arrival_date = `${end_date.getFullYear()}-${
+        end_date.getMonth() + 1
+      }-${end_date.getDate()} ${this.tripBasicData.end_time}:00`;
       form.append("route_id", this.tripBasicData.route);
       form.append("bus_id", this.tripBasicData.bus),
         form.append("price_adult", this.tripBasicData.price),
         form.append("price_child", this.tripBasicData.price);
       form.append("seats", this.tripSeats);
       form.append("departure_date", departure_date);
+      form.append("arrival_date", arrival_date);
       form.append("status", "Active");
-      await tripsService.createTrip(form);
+      await tripsService.createTrip(form).then(() => {
+        this.showSuccessSnackbar = true;
+        this.$emit("back");
+      });
     },
     setBasicData(data) {
       console.log("setBasicData", data);

@@ -1,6 +1,6 @@
 <template>
   <div v-if="!loader">
-    <success-snackbar v-if="showSuccessSnackbar" :snackbarText="successSnackbarText" />
+    <!-- <success-snackbar v-if="showSuccessSnackbar" :snackbarText="successSnackbarText" /> -->
     <routes-header-admin @setActiveCategory="setActiveCategory" />
     <div v-if="activeCategory == 0">
       <div style="padding: 15px 0px 0px 25px">

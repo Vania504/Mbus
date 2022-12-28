@@ -120,13 +120,15 @@
                 locale="uk"
                 no-title
                 :min="
-                  new Date(
-                    new Date().getTime() +
-                      1 * 60 * 60 * 1000 -
-                      new Date().getTimezoneOffset() * 60000
-                  )
-                    .toISOString()
-                    .substr(0, 10)
+                  ticket.dates[0]
+                    ? new Date(ticket.dates[0]).toISOString().substr(0, 10)
+                    : new Date(
+                        new Date().getTime() +
+                          1 * 60 * 60 * 1000 -
+                          new Date().getTimezoneOffset() * 60000
+                      )
+                        .toISOString()
+                        .substr(0, 10)
                 "
               ></v-date-picker>
             </v-row>
@@ -182,11 +184,11 @@
             <v-text-field
               dense
               outlined
-              disabled
               label="Час відправлення"
               placeholder="00:00"
               color="#085895"
               v-mask="'##:##'"
+              type="time"
               v-model="ticket.start_time"
               :error-messages="startTimeError"
               :append-icon="
@@ -245,7 +247,7 @@ export default {
     routes: [],
     buses: [],
     ticket: {
-      dates: [],
+      dates: [""],
     },
     routeDetailInfo: {},
     menu: "",

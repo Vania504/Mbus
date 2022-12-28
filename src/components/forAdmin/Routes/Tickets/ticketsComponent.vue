@@ -18,7 +18,12 @@
           <img src="@/assets/img/dottedLine.svg" />
         </div>
         <div style="width: 95%">
-          <ticket-card :isAdmin="true" :trip="trip" @deleteTrip="deleteTrip" />
+          <ticket-card
+            :isAdmin="true"
+            :trip="trip"
+            @deleteTrip="deleteTrip"
+            @cancelTrip="cancelTrip"
+          />
         </div>
       </div>
     </v-col>
@@ -31,7 +36,10 @@
           @click="$emit('createNewTicket')"
         />
         <status-filter-card @getTripsByStatus="getTripsByStatus" />
-        <availabele-route-filter />
+        <availabele-route-filter
+          :availableRoutes="availableRoutes"
+          @choosedRoutes="getTripsByRoutes"
+        />
       </v-row>
     </v-col>
     <success-modal
@@ -53,6 +61,7 @@ import tripsService from "@/requests/admin/tripsService";
 import { mapGetters, mapActions } from "vuex";
 import Loader from "@/components/UI/Loader.vue";
 import successModal from "@/components/UI/modals/successModal.vue";
+import routesService from "@/requests/admin/routesService";
 export default {
   components: {
     createNewOutlineBtn,
@@ -65,11 +74,13 @@ export default {
   data: () => ({
     status: "0",
     tripsList: [],
+    availableRoutes: [],
     showLoader: false,
     successDeleteTicket: false,
   }),
   mounted() {
     this.getTripsByStatus("Active");
+    this.getAvailableRoutes();
   },
   methods: {
     ...mapActions(["updateLoader"]),
@@ -79,10 +90,32 @@ export default {
       this.tripsList = response.data;
       this.showLoader = false;
     },
+    async getTripsByRoutes() {
+      console.log("getTripsByRoute work..")
+    },
+    async cancelTrip(trip) {
+      let form = new FormData();
+      form.append("route_id", trip.route.id);
+      form.append("bus_id", trip.bus.id),
+        form.append("price_adult", trip.price_adult),
+        form.append("price_child", trip.price_child);
+      form.append("seats", trip.seats);
+      form.append("departure_date", trip.departure_date);
+      form.append("arrival_date", trip.arrival_date);
+      form.append("status", "Canceled");
+      await tripsService.updateTrip(trip.id, form).then(() => {
+        this.getTripsByStatus("Active");
+      });
+    },
     async deleteTrip(id) {
       await tripsService.deleteTrip(id).then(() => {
         this.successDeleteTicket = true;
+        this.getTripsByStatus("Active");
       });
+    },
+    async getAvailableRoutes() {
+      let response = await routesService.getRoutes();
+      this.availableRoutes = response.data.data;
     },
   },
   computed: {

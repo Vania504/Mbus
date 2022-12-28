@@ -47,7 +47,7 @@
           border-radius: 30px;
         "
         :style="status == 1 ? 'background: #cbe0f0' : ''"
-        @click="$emit('getTripsByStatus', 'Inactive')"
+        @click="$emit('getTripsByStatus', 'Canceled')"
       >
         Неактивні
       </v-btn>

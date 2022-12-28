@@ -56,7 +56,7 @@
               letter-spacing: 0.1em;
               color: #243949;
             "
-            >{{ route.title }}</span
+            >{{ route.departure }} - {{ route.destination }}</span
           >
         </template>
       </v-radio>
@@ -68,33 +68,20 @@
 export default {
   data: () => ({
     choosedRoutes: [],
-    availableRoutes: [
-      {
-        id: 1,
-        title: "Гдиня - Чернівці",
-      },
-      {
-        id: 2,
-        title: "Гдиня - Чернівці",
-      },
-      {
-        id: 3,
-        title: "Гдиня - Чернівці",
-      },
-      {
-        id: 4,
-        title: "Гдиня - Чернівці",
-      },
-      {
-        id: 5,
-        title: "Гдиня - Чернівці",
-      },
-      {
-        id: 6,
-        title: "Гдиня - Чернівці",
-      },
-    ],
   }),
+  props: {
+    availableRoutes: {
+      require: true,
+    },
+  },
+  watch: {
+    choosedRoutes: {
+      deep: true,
+      handler() {
+        this.$emit("choosedRoutes", this.choosedRoutes);
+      },
+    },
+  },
 };
 </script>
 
